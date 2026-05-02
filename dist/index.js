@@ -67,7 +67,7 @@ function CardContent({ children }) {
 // src/components/card/CardTitle.tsx
 import { jsx as jsx5 } from "react/jsx-runtime";
 function CardTitle({ children }) {
-  return /* @__PURE__ */ jsx5("h3", { className: "font-anton text-2xl uppercase tracking-[-0.02em] font-semibold", children });
+  return /* @__PURE__ */ jsx5("h3", { className: "font-anton text-2xl uppercase tracking-[-0.02em] group-hover:underline", children });
 }
 
 // src/components/card/CardMeta.tsx
