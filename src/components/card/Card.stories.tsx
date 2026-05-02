@@ -27,7 +27,7 @@ export const Default: Story = {
         />
       </CardMedia>
       <CardContent>
-        <CardTitle>Card Title</CardTitle>
+        <CardTitle>Denim Patchwork Flat Cap</CardTitle>
         <CardMeta>Meta Information</CardMeta>
         <p className="mt-4 text-sm text-gray-600">
           This is a sample card content. It can include any React nodes.
