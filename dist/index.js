@@ -20,6 +20,66 @@ function Button({
   }
   return /* @__PURE__ */ jsx("button", { className: styles, ...props, children });
 }
+
+// src/components/card/Card.tsx
+import clsx2 from "clsx";
+import { jsx as jsx2 } from "react/jsx-runtime";
+function Card({ children, className, interactive = true }) {
+  return /* @__PURE__ */ jsx2(
+    "article",
+    {
+      className: clsx2(
+        "group relative border-4 border-black bg-[#F5F5F3] shadow-[8px_8px_0_#0B0B0C]",
+        interactive && "transition hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] hover:cursor-pointer",
+        className
+      ),
+      children
+    }
+  );
+}
+
+// src/components/card/CardMedia.tsx
+import clsx3 from "clsx";
+import { jsx as jsx3 } from "react/jsx-runtime";
+function CardMedia({
+  children,
+  className,
+  aspect = "4/3"
+}) {
+  return /* @__PURE__ */ jsx3("div", { className: clsx3("border-b-4 border-black", className), children: /* @__PURE__ */ jsx3(
+    "div",
+    {
+      className: clsx3(
+        "relative overflow-hidden bg-white",
+        `aspect-[${aspect}]`
+      ),
+      children
+    }
+  ) });
+}
+
+// src/components/card/CardContent.tsx
+import { jsx as jsx4 } from "react/jsx-runtime";
+function CardContent({ children }) {
+  return /* @__PURE__ */ jsx4("div", { className: "p-5", children });
+}
+
+// src/components/card/CardTitle.tsx
+import { jsx as jsx5 } from "react/jsx-runtime";
+function CardTitle({ children }) {
+  return /* @__PURE__ */ jsx5("h3", { className: "font-anton text-2xl uppercase tracking-[-0.02em]", children });
+}
+
+// src/components/card/CardMeta.tsx
+import { jsx as jsx6 } from "react/jsx-runtime";
+function CardMeta({ children }) {
+  return /* @__PURE__ */ jsx6("div", { className: "mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs font-black uppercase", children });
+}
 export {
-  Button
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  CardMeta,
+  CardTitle
 };

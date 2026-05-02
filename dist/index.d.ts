@@ -9,4 +9,30 @@ type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 declare function Button({ children, href, variant, className, ...props }: ButtonProps): react_jsx_runtime.JSX.Element;
 
-export { Button };
+type CardProps = {
+    children: ReactNode;
+    className?: string;
+    interactive?: boolean;
+};
+declare function Card({ children, className, interactive }: CardProps): react_jsx_runtime.JSX.Element;
+
+type CardMediaProps = {
+    children: ReactNode;
+    className?: string;
+    aspect?: string;
+};
+declare function CardMedia({ children, className, aspect, }: CardMediaProps): react_jsx_runtime.JSX.Element;
+
+declare function CardContent({ children }: {
+    children: ReactNode;
+}): react_jsx_runtime.JSX.Element;
+
+declare function CardTitle({ children }: {
+    children: ReactNode;
+}): react_jsx_runtime.JSX.Element;
+
+declare function CardMeta({ children }: {
+    children: ReactNode;
+}): react_jsx_runtime.JSX.Element;
+
+export { Button, Card, CardContent, CardMedia, CardMeta, CardTitle };
