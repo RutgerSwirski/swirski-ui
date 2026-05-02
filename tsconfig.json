@@ -12,6 +12,6 @@
     "isolatedModules": true,
     "types": ["react"]
   },
-  "include": ["src"],
+  "include": ["src", ".storybook"],
   "exclude": ["node_modules", "dist"]
 }
