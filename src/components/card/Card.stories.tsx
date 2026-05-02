@@ -21,7 +21,7 @@ export const Default: Story = {
     <Card>
       <CardMedia aspect="16/9">
         <img
-          src="https://source.unsplash.com/random/800x450"
+          src="https://source.unsplash.com/random/800x600"
           alt="Random Unsplash"
           className="object-cover w-full h-full"
         />
