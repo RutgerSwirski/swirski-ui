@@ -73,9 +73,16 @@ import { jsx as jsx6 } from "react/jsx-runtime";
 function CardMeta({ children }) {
   return /* @__PURE__ */ jsx6("div", { className: "mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs font-black uppercase", children });
 }
+
+// src/components/card/CardBadge.tsx
+import { jsx as jsx7 } from "react/jsx-runtime";
+function CardBadge({ children }) {
+  return /* @__PURE__ */ jsx7("span", { className: "absolute left-2 top-2 z-20 border-2 border-black bg-[#F5F5F3] px-2 py-1 text-xs font-black uppercase", children });
+}
 export {
   Button,
   Card,
+  CardBadge,
   CardContent,
   CardMedia,
   CardMeta,

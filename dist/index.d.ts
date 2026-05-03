@@ -35,4 +35,8 @@ declare function CardMeta({ children }: {
     children: ReactNode;
 }): react_jsx_runtime.JSX.Element;
 
-export { Button, Card, CardContent, CardMedia, CardMeta, CardTitle };
+declare function CardBadge({ children }: {
+    children: React.ReactNode;
+}): react_jsx_runtime.JSX.Element;
+
+export { Button, Card, CardBadge, CardContent, CardMedia, CardMeta, CardTitle };
