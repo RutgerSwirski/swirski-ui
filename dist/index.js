@@ -80,7 +80,7 @@ function CardMeta({ children }) {
 // src/components/card/CardBadge.tsx
 import { jsx as jsx7 } from "react/jsx-runtime";
 function CardBadge({ children }) {
-  return /* @__PURE__ */ jsx7("span", { className: "absolute left-2 top-2 z-20 border-2 border-black bg-transparent px-2 py-1 text-xs font-black uppercase", children });
+  return /* @__PURE__ */ jsx7("span", { className: "absolute left-3 top-3 -rotate-3 border-2 border-black bg-[#FFD400] px-2 py-1 font-anton text-sm uppercase shadow-[2px_2px_0_#0B0B0C]", children });
 }
 
 // src/components/container/Container.tsx
