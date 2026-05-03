@@ -11,7 +11,7 @@ export function ImageFrame({
         relative overflow-hidden 
         border-2 border-black 
         bg-[#F5F5F3]
-        shadow-[3px_3px_0_#0B0B0C]
+        shadow-[5px_5px_0_#0B0B0C]
         ${className}
       `}
     >
