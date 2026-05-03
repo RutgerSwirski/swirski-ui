@@ -23,8 +23,9 @@ type CardMediaProps = {
 };
 declare function CardMedia({ children, className, aspect, }: CardMediaProps): react_jsx_runtime.JSX.Element;
 
-declare function CardContent({ children }: {
+declare function CardContent({ children, className, }: {
     children: ReactNode;
+    className?: string;
 }): react_jsx_runtime.JSX.Element;
 
 declare function CardTitle({ children }: {

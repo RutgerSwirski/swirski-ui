@@ -58,8 +58,11 @@ function CardMedia({
 
 // src/components/card/CardContent.tsx
 import { jsx as jsx4 } from "react/jsx-runtime";
-function CardContent({ children }) {
-  return /* @__PURE__ */ jsx4("div", { className: "p-5", children });
+function CardContent({
+  children,
+  className
+}) {
+  return /* @__PURE__ */ jsx4("div", { className: `p-5 ${className}`, children });
 }
 
 // src/components/card/CardTitle.tsx
