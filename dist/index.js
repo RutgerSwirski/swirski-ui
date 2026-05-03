@@ -122,7 +122,7 @@ function ImageFrame({
       `,
       children: [
         children,
-        caption && /* @__PURE__ */ jsx10("p", { className: "absolute bottom-2 left-2 right-2 text-center text-xs font-black uppercase", children: caption })
+        caption && /* @__PURE__ */ jsx10("p", { className: "absolute bottom-2 left-2 right-2 text-center text-xs font-black uppercase bg-[#F5F5F3] border-2 border-black w-fit p-2", children: caption })
       ]
     }
   );

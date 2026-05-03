@@ -20,7 +20,7 @@ export function ImageFrame({
       {children}
 
       {caption && (
-        <p className="absolute bottom-2 left-2 right-2 text-center text-xs font-black uppercase">
+        <p className="absolute bottom-2 left-2 right-2 text-center text-xs font-black uppercase bg-[#F5F5F3] border-2 border-black w-fit p-2">
           {caption}
         </p>
       )}
