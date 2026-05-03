@@ -36,8 +36,9 @@ declare function CardMeta({ children }: {
     children: ReactNode;
 }): react_jsx_runtime.JSX.Element;
 
-declare function CardBadge({ children }: {
+declare function CardBadge({ children, className, }: {
     children: React.ReactNode;
+    className?: string;
 }): react_jsx_runtime.JSX.Element;
 
 declare function Container({ children, className, }: {
