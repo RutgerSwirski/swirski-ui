@@ -104,12 +104,13 @@ function DotGrid({ className = "" }) {
 }
 
 // src/components/image-frame/ImageFrame.tsx
-import { jsx as jsx10 } from "react/jsx-runtime";
+import { jsx as jsx10, jsxs } from "react/jsx-runtime";
 function ImageFrame({
   children,
-  className = ""
+  className = "",
+  caption
 }) {
-  return /* @__PURE__ */ jsx10(
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       className: `
@@ -119,7 +120,10 @@ function ImageFrame({
         shadow-[5px_5px_0_#0B0B0C]
         ${className}
       `,
-      children
+      children: [
+        children,
+        caption && /* @__PURE__ */ jsx10("p", { className: "absolute bottom-2 left-2 right-2 text-center text-xs font-black uppercase", children: caption })
+      ]
     }
   );
 }

@@ -1,9 +1,11 @@
 export function ImageFrame({
   children,
   className = "",
+  caption,
 }: {
   children: React.ReactNode;
   className?: string;
+  caption?: string;
 }) {
   return (
     <div
@@ -16,6 +18,12 @@ export function ImageFrame({
       `}
     >
       {children}
+
+      {caption && (
+        <p className="absolute bottom-2 left-2 right-2 text-center text-xs font-black uppercase">
+          {caption}
+        </p>
+      )}
     </div>
   );
 }

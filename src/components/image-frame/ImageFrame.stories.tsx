@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "Image Frame",
+    caption: "Caption",
   },
   render: (args) => (
     <div className="w-80">

@@ -49,9 +49,10 @@ declare function DotGrid({ className }: {
     className?: string;
 }): react_jsx_runtime.JSX.Element;
 
-declare function ImageFrame({ children, className, }: {
+declare function ImageFrame({ children, className, caption, }: {
     children: React.ReactNode;
     className?: string;
+    caption?: string;
 }): react_jsx_runtime.JSX.Element;
 
 declare function SectionLabel({ children, className, }: {
