@@ -24,8 +24,8 @@ function Button({
 // src/components/card/Card.tsx
 import clsx2 from "clsx";
 import { jsx as jsx2 } from "react/jsx-runtime";
-var base = "group relative border-4 border-black bg-[#F5F5F3] shadow-[8px_8px_0_#0B0B0C]";
-var interactiveStyles = "transition-all duration-150 hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] active:translate-y-1 active:translate-x-1 active:shadow-[4px_4px_0_#0B0B0C] cursor-pointer";
+var base = "group relative border-4 border-black bg-[#F5F5F3]";
+var interactiveStyles = "transition-all duration-150 hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] active:translate-y-2 active:shadow-[4px_4px_0_#0B0B0C] cursor-pointer";
 function Card({ children, className, interactive = true }) {
   return /* @__PURE__ */ jsx2(
     "article",
