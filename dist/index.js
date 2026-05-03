@@ -24,15 +24,13 @@ function Button({
 // src/components/card/Card.tsx
 import clsx2 from "clsx";
 import { jsx as jsx2 } from "react/jsx-runtime";
+var base = "group relative border-4 border-black bg-[#F5F5F3] shadow-[8px_8px_0_#0B0B0C]";
+var interactiveStyles = "transition-all duration-150 hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] active:translate-y-1 active:translate-x-1 active:shadow-[4px_4px_0_#0B0B0C] cursor-pointer";
 function Card({ children, className, interactive = true }) {
   return /* @__PURE__ */ jsx2(
     "article",
     {
-      className: clsx2(
-        "group relative border-4 border-black bg-[#F5F5F3] shadow-[8px_8px_0_#0B0B0C]",
-        interactive && "transition hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] hover:cursor-pointer",
-        className
-      ),
+      className: clsx2(base, interactive ? interactiveStyles : "", className),
       children
     }
   );
@@ -67,7 +65,7 @@ function CardContent({ children }) {
 // src/components/card/CardTitle.tsx
 import { jsx as jsx5 } from "react/jsx-runtime";
 function CardTitle({ children }) {
-  return /* @__PURE__ */ jsx5("h3", { className: "font-anton text-2xl uppercase tracking-[-0.02em] group-hover:underline", children });
+  return /* @__PURE__ */ jsx5("h3", { className: "mt-3 font-anton text-2xl uppercase tracking-[-0.02em] group-hover:underline", children });
 }
 
 // src/components/card/CardMeta.tsx
