@@ -40,4 +40,44 @@ declare function CardBadge({ children }: {
     children: React.ReactNode;
 }): react_jsx_runtime.JSX.Element;
 
-export { Button, Card, CardBadge, CardContent, CardMedia, CardMeta, CardTitle };
+declare function Container({ children, className, }: {
+    children: React.ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function DotGrid({ className }: {
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function ImageFrame({ children, className, }: {
+    children: React.ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function SectionLabel({ children, className, }: {
+    children: React.ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function HeroActions({ children, className, }: {
+    children: React.ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function HeroKicker({ children, className, }: {
+    children: React.ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function HeroLead({ children, className, }: {
+    children: ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function HeroTitle({ children, className, variant, }: {
+    children: ReactNode;
+    className?: string;
+    variant?: "editorial" | "loud";
+}): react_jsx_runtime.JSX.Element;
+
+export { Button, Card, CardBadge, CardContent, CardMedia, CardMeta, CardTitle, Container, DotGrid, HeroActions, HeroKicker, HeroLead, HeroTitle, ImageFrame, SectionLabel };
