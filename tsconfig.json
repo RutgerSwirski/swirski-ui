@@ -10,7 +10,10 @@
     "emitDeclarationOnly": false,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "types": ["react"]
+    "types": ["react"],
+    "paths": {
+      "@swirski/*": ["./src/*"]
+    }
   },
   "include": ["src", ".storybook"],
   "exclude": ["node_modules", "dist"]

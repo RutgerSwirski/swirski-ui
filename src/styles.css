@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@import "@fontsource/anton";
+@import "@fontsource/bangers";
+
+@theme inline {
+  --font-anton: "Anton", sans-serif;
+  --font-bangers: "Bangers", cursive;
+}

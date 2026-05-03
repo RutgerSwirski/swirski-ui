@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
@@ -24,6 +24,8 @@
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
+    "@fontsource/anton": "^5.2.7",
+    "@fontsource/bangers": "^5.2.8",
     "clsx": "^2.1.1"
   },
   "devDependencies": {
