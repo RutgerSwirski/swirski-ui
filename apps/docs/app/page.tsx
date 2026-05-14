@@ -1,5 +1,7 @@
 // apps/docs/app/page.tsx
 
+import Hero from "@/components/Hero";
+import NavBar from "@/components/NavBar";
 import {
   Button,
   Card,
@@ -14,6 +16,7 @@ import {
   HeroActions,
   HeroKicker,
 } from "@swirski/ui";
+import Link from "next/dist/client/link";
 
 const foundations = [
   {
@@ -65,70 +68,10 @@ export default function HomePage() {
         <DotGrid className="absolute inset-0 opacity-20 text-[#0057FF]" />
 
         <Container className="relative z-10">
-          <header className="flex min-h-20 items-center justify-between gap-5 py-5">
-            <a
-              href="/"
-              className="font-anton text-3xl uppercase leading-none tracking-normal"
-            >
-              Swirski UI
-            </a>
-
-            <nav
-              aria-label="Docs navigation"
-              className="hidden items-center gap-2 text-sm font-black uppercase md:flex"
-            >
-              <Button
-                variant="blue"
-                // className="border-4 border-black bg-[#FFD400] px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
-                href="/components"
-              >
-                Components
-              </Button>
-
-              <Button
-                variant="white"
-                // className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
-                href="#start"
-              >
-                Start
-              </Button>
-            </nav>
-          </header>
+          <NavBar />
 
           <section className="grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:grid-cols-[1fr_0.92fr] lg:py-20">
-            <div>
-              <HeroKicker>Docs for the Swirski visual system</HeroKicker>
-
-              <HeroTitle className="mt-5 max-w-3xl text-6xl md:text-8xl">
-                Design loud.
-                <br />
-                Ship sharp.
-              </HeroTitle>
-
-              <HeroLead className="mt-7 max-w-2xl text-xl text-black/75">
-                A practical reference for composing Swirski Studio and Swirski
-                Dev style interfaces with the shared UI package: expressive,
-                structured and ready for real product screens.
-              </HeroLead>
-
-              <HeroActions className="mt-9">
-                <Button href="/components">Browse components</Button>
-                <Button href="#start" variant="white">
-                  Get started
-                </Button>
-              </HeroActions>
-
-              {/* <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
-                {["React", "Tailwind", "TypeScript"].map((item) => (
-                  <div
-                    key={item}
-                    className="border-4 border-black bg-[#F5F5F3] px-4 py-3 text-sm font-black uppercase shadow-[5px_5px_0_#0B0B0C]"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div> */}
-            </div>
+            <Hero />
 
             <ImageFrame className="bg-[#0B0B0C] p-4 border-4 text-black shadow-[14px_14px_0_#0057FF]">
               {/* <div className="border-4 border-black bg-[#F5F5F3] p-4 text-[#0B0B0C]"> */}
@@ -209,7 +152,7 @@ export default function HomePage() {
               <Card
                 key={item.title}
                 interactive={false}
-                className="bg-white shadow-[8px_8px_0_#0B0B0C]"
+                className="bg-white shadow-[7px_7px_0_#0B0B0C]"
               >
                 <CardContent>
                   <p className="mb-6 w-fit border-4 border-black bg-[#FF3131] px-3 py-2 font-anton text-xl uppercase text-black">
@@ -236,13 +179,14 @@ export default function HomePage() {
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {packageLinks.map((item) => (
-              <a
+              <Button
+                variant="white"
                 key={item}
-                href="/components"
-                className="border-4 border-black bg-white px-5 py-5 font-black uppercase shadow-[6px_6px_0_#0B0B0C] transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+                href={`/components/${item.toLowerCase()}`}
+                // className="text-black border-4 border-black bg-white px-5 py-5 font-black uppercase transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
               >
                 {item}
-              </a>
+              </Button>
             ))}
           </div>
         </section>
