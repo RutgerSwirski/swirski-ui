@@ -7,7 +7,9 @@ import {
   Card,
   CardTitle,
   CardContent,
+  DiagonalLines,
   DotGrid,
+  LineGrid,
   HeroTitle,
   HeroLead,
   SectionLabel,
@@ -40,7 +42,9 @@ const packageLinks = [
   "Button",
   "Card",
   "Container",
+  "DiagonalLines",
   "DotGrid",
+  "LineGrid",
   "Hero",
   "ImageFrame",
   "SectionLabel",
@@ -61,11 +65,42 @@ const workflow = [
   },
 ];
 
+function getComponentHref(name: string) {
+  return `/components/${name
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .toLowerCase()}`;
+}
+
 export default function HomePage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
-        <DotGrid className="absolute inset-0 opacity-20 text-[#0057FF]" />
+        <DotGrid
+          className="inset-0"
+          color="#0057FF"
+          opacity={0.16}
+          spacing={13}
+          dotSize={1.2}
+        />
+        <LineGrid
+          className="inset-0"
+          color="#0057FF"
+          opacity={0.1}
+          spacing={28}
+          thickness={1}
+          accentEvery={4}
+          accentThickness={3}
+        />
+        <DiagonalLines
+          className="inset-0"
+          angle={-35}
+          color="#FF3131"
+          opacity={0.07}
+          spacing={36}
+          thickness={3}
+          accentEvery={5}
+          accentThickness={8}
+        />
 
         <Container className="relative z-10">
           <NavBar />
@@ -182,7 +217,7 @@ export default function HomePage() {
               <Button
                 variant="white"
                 key={item}
-                href={`/components/${item.toLowerCase()}`}
+                href={getComponentHref(item)}
                 // className="text-black border-4 border-black bg-white px-5 py-5 font-black uppercase transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
               >
                 {item}
