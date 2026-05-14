@@ -27,6 +27,15 @@ export type ComponentDoc = {
   importCode: string;
   usageCode: string;
   preview: React.ReactNode;
+  props: PropDoc[];
+};
+
+export type PropDoc = {
+  name: string;
+  type: string;
+  defaultValue?: string;
+  required?: boolean;
+  description: string;
 };
 
 export const componentDocs: ComponentDoc[] = [
@@ -39,6 +48,35 @@ export const componentDocs: ComponentDoc[] = [
     importCode: `import { Button } from "@swirski/ui";`,
     usageCode: `<Button href="/pieces">View pieces</Button>`,
     preview: <Button href="/pieces">View pieces</Button>,
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Button label or inline content.",
+      },
+      {
+        name: "href",
+        type: "string",
+        description: "Renders the button as an anchor when provided.",
+      },
+      {
+        name: "variant",
+        type: '"blue" | "yellow" | "white"',
+        defaultValue: '"blue"',
+        description: "Applies the Swirski color treatment.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root button or anchor.",
+      },
+      {
+        name: "...buttonProps",
+        type: "ButtonHTMLAttributes<HTMLButtonElement>",
+        description: "Forwarded when the component renders a button.",
+      },
+    ],
   },
   {
     slug: "cursor",
@@ -62,6 +100,49 @@ export const componentDocs: ComponentDoc[] = [
         </div>
       </CursorProvider>
     ),
+    props: [
+      {
+        name: "CursorProvider.children",
+        type: "ReactNode",
+        required: true,
+        description: "Content that should receive the Swirski cursor styles.",
+      },
+      {
+        name: "CursorProvider.cursor",
+        type: "CursorId",
+        description: "Controlled cursor id.",
+      },
+      {
+        name: "CursorProvider.defaultCursor",
+        type: "CursorId",
+        defaultValue: '"bolt"',
+        description: "Initial cursor when the provider is uncontrolled.",
+      },
+      {
+        name: "CursorProvider.storageKey",
+        type: "string | false",
+        defaultValue: '"swirski-cursor"',
+        description: "Local storage key, or false to skip persistence.",
+      },
+      {
+        name: "CursorDock.position",
+        type: '"fixed" | "absolute"',
+        defaultValue: '"fixed"',
+        description: "Positions the dock against the viewport or parent.",
+      },
+      {
+        name: "CursorDock.side",
+        type: '"left" | "right"',
+        defaultValue: '"right"',
+        description: "Side where the cursor dock opens.",
+      },
+      {
+        name: "CursorDock.label",
+        type: "string",
+        defaultValue: '"Choose cursor"',
+        description: "Accessible label for the dock trigger.",
+      },
+    ],
   },
   {
     slug: "card",
@@ -82,6 +163,36 @@ export const componentDocs: ComponentDoc[] = [
         </CardContent>
       </Card>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Card body content.",
+      },
+      {
+        name: "interactive",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Enables hover and active movement styles.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the card root.",
+      },
+      {
+        name: "CardContent.className",
+        type: "string",
+        description: "Adds classes to the padded content wrapper.",
+      },
+      {
+        name: "CardTitle.children",
+        type: "ReactNode",
+        required: true,
+        description: "Title content rendered inside the card heading.",
+      },
+    ],
   },
   {
     slug: "hero-title",
@@ -92,6 +203,25 @@ export const componentDocs: ComponentDoc[] = [
     importCode: `import { HeroTitle } from "@swirski/ui";`,
     usageCode: `<HeroTitle>Build expressive interfaces.</HeroTitle>`,
     preview: <HeroTitle>Build expressive interfaces.</HeroTitle>,
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Heading content.",
+      },
+      {
+        name: "variant",
+        type: '"editorial" | "loud"',
+        defaultValue: '"editorial"',
+        description: "Reserved visual variant hook for title treatments.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the heading.",
+      },
+    ],
   },
   {
     slug: "hero-lead",
@@ -108,6 +238,19 @@ export const componentDocs: ComponentDoc[] = [
         A small UI library for expressive, editorial web interfaces.
       </HeroLead>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Lead paragraph content.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the paragraph.",
+      },
+    ],
   },
   {
     slug: "dot-grid",
@@ -142,6 +285,52 @@ export const componentDocs: ComponentDoc[] = [
         />
       </div>
     ),
+    props: [
+      {
+        name: "color",
+        type: "string",
+        defaultValue: '"currentColor"',
+        description: "Primary dot color.",
+      },
+      {
+        name: "opacity",
+        type: "CSSProperties['opacity']",
+        description: "Opacity applied to the grid layer.",
+      },
+      {
+        name: "spacing",
+        type: "number | string",
+        defaultValue: "13",
+        description: "Distance between dots.",
+      },
+      {
+        name: "dotSize",
+        type: "number | string",
+        defaultValue: "1.2",
+        description: "Primary dot radius.",
+      },
+      {
+        name: "accentColor",
+        type: "string",
+        description: "Optional color for larger accent dots.",
+      },
+      {
+        name: "accentEvery",
+        type: "number",
+        description: "Adds an accent dot every N grid cells when greater than 1.",
+      },
+      {
+        name: "accentDotSize",
+        type: "number | string",
+        defaultValue: "3",
+        description: "Accent dot radius.",
+      },
+      {
+        name: "...divProps",
+        type: 'Omit<HTMLAttributes<HTMLDivElement>, "color">',
+        description: "Forwarded to the root div.",
+      },
+    ],
   },
   {
     slug: "line-grid",
@@ -182,6 +371,69 @@ export const componentDocs: ComponentDoc[] = [
         />
       </div>
     ),
+    props: [
+      {
+        name: "color",
+        type: "string",
+        defaultValue: '"#0B0B0C"',
+        description: "Fallback color for horizontal and vertical lines.",
+      },
+      {
+        name: "opacity",
+        type: "CSSProperties['opacity']",
+        defaultValue: "0.2",
+        description: "Opacity applied to the grid layer.",
+      },
+      {
+        name: "spacing",
+        type: "number | string",
+        defaultValue: "18",
+        description: "Fallback spacing for both directions.",
+      },
+      {
+        name: "thickness",
+        type: "number | string",
+        defaultValue: "1",
+        description: "Fallback line thickness for both directions.",
+      },
+      {
+        name: "direction",
+        type: '"both" | "horizontal" | "vertical"',
+        defaultValue: '"both"',
+        description: "Which line directions to render.",
+      },
+      {
+        name: "horizontalColor",
+        type: "string",
+        description: "Overrides the horizontal line color.",
+      },
+      {
+        name: "verticalColor",
+        type: "string",
+        description: "Overrides the vertical line color.",
+      },
+      {
+        name: "accentColor",
+        type: "string",
+        description: "Optional color for heavier accent lines.",
+      },
+      {
+        name: "accentEvery",
+        type: "number",
+        description: "Adds accent lines every N cells when greater than 1.",
+      },
+      {
+        name: "accentThickness",
+        type: "number | string",
+        defaultValue: "3",
+        description: "Thickness for accent lines.",
+      },
+      {
+        name: "...divProps",
+        type: 'Omit<HTMLAttributes<HTMLDivElement>, "color">',
+        description: "Forwarded to the root div.",
+      },
+    ],
   },
   {
     slug: "diagonal-lines",
@@ -218,5 +470,58 @@ export const componentDocs: ComponentDoc[] = [
         />
       </div>
     ),
+    props: [
+      {
+        name: "angle",
+        type: "number | string",
+        defaultValue: "-45",
+        description: "Line angle in degrees or any CSS angle value.",
+      },
+      {
+        name: "color",
+        type: "string",
+        defaultValue: '"#0B0B0C"',
+        description: "Primary stripe color.",
+      },
+      {
+        name: "opacity",
+        type: "CSSProperties['opacity']",
+        defaultValue: "0.2",
+        description: "Opacity applied to the stripe layer.",
+      },
+      {
+        name: "spacing",
+        type: "number | string",
+        defaultValue: "18",
+        description: "Distance before the pattern repeats.",
+      },
+      {
+        name: "thickness",
+        type: "number | string",
+        defaultValue: "2",
+        description: "Primary stripe thickness.",
+      },
+      {
+        name: "accentColor",
+        type: "string",
+        description: "Optional color for heavier accent stripes.",
+      },
+      {
+        name: "accentEvery",
+        type: "number",
+        description: "Adds accent stripes every N repeats when greater than 1.",
+      },
+      {
+        name: "accentThickness",
+        type: "number | string",
+        defaultValue: "5",
+        description: "Thickness for accent stripes.",
+      },
+      {
+        name: "...divProps",
+        type: 'Omit<HTMLAttributes<HTMLDivElement>, "color">',
+        description: "Forwarded to the root div.",
+      },
+    ],
   },
 ];
