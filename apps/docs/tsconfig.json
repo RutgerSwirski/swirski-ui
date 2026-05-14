@@ -23,6 +23,9 @@
       }
     ],
     "paths": {
+      "@swirski/ui": [
+        "../../packages/ui/src/index.ts"
+      ],
       "@/*": [
         "./*"
       ]

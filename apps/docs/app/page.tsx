@@ -44,9 +44,18 @@ const packageLinks = [
 ];
 
 const workflow = [
-  "Install the package in a Next.js or React app.",
-  "Import only the primitives the screen needs.",
-  "Compose with Swirski type, borders, shadows and accent color.",
+  {
+    title: "Install",
+    body: "Install the package in a Next.js or React app.",
+  },
+  {
+    title: "Import",
+    body: "Import only the primitives the screen needs.",
+  },
+  {
+    title: "Compose",
+    body: "Compose with Swirski type, borders, shadows and accent color.",
+  },
 ];
 
 export default function HomePage() {
@@ -68,24 +77,27 @@ export default function HomePage() {
               aria-label="Docs navigation"
               className="hidden items-center gap-2 text-sm font-black uppercase md:flex"
             >
-              <a
-                className="border-4 border-black bg-[#FFD400] px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
+              <Button
+                variant="yellow"
+                // className="border-4 border-black bg-[#FFD400] px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
                 href="/components"
               >
                 Components
-              </a>
-              <a
-                className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
+              </Button>
+              <Button
+                variant="blue"
+                // className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
                 href="#system"
               >
                 System
-              </a>
-              <a
-                className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
+              </Button>
+              <Button
+                variant="white"
+                // className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
                 href="#start"
               >
                 Start
-              </a>
+              </Button>
             </nav>
           </header>
 
@@ -112,7 +124,7 @@ export default function HomePage() {
                 </Button>
               </HeroActions>
 
-              <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+              {/* <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
                 {["React", "Tailwind", "TypeScript"].map((item) => (
                   <div
                     key={item}
@@ -121,67 +133,69 @@ export default function HomePage() {
                     {item}
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
 
-            <ImageFrame className="bg-[#0B0B0C] p-4 text-white shadow-[14px_14px_0_#0057FF]">
-              <div className="border-4 border-white bg-[#F5F5F3] p-4 text-[#0B0B0C]">
-                <div className="flex items-center justify-between border-b-4 border-black pb-4">
-                  <span className="font-anton text-3xl uppercase">Docs</span>
-                  <code className="border-4 border-black bg-[#FFD400] px-3 py-2 text-xs font-black uppercase">
-                    @swirski/ui
-                  </code>
-                </div>
+            <ImageFrame className="bg-[#0B0B0C] p-4 border-4 text-black shadow-[14px_14px_0_#0057FF]">
+              {/* <div className="border-4 border-black bg-[#F5F5F3] p-4 text-[#0B0B0C]"> */}
+              <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                <span className="font-anton text-3xl uppercase">Docs</span>
+                <code className="border-2 border-black bg-[#FFD400] px-3 py-2 text-xs font-black uppercase">
+                  @swirski/ui
+                </code>
+              </div>
 
-                <div className="mt-4 grid gap-4">
+              <div className="mt-4 grid gap-4">
+                <Card
+                  interactive={false}
+                  className="bg-white shadow-[8px_8px_0_#0B0B0C] drop-shadow-none!"
+                >
+                  <CardContent className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
+                    <div>
+                      <p className="text-xs font-black uppercase text-black/55">
+                        Install
+                      </p>
+                      <code className="mt-2 block break-words text-lg font-black">
+                        pnpm add @swirski/ui
+                      </code>
+                    </div>
+
+                    {/* insert copy to clipboard button */}
+                    <Button variant="white" className="ml-auto mt-4 md:mt-0">
+                      Copy
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <div className="grid gap-4 sm:grid-cols-2">
                   <Card
                     interactive={false}
-                    className="bg-white shadow-[8px_8px_0_#0B0B0C]"
+                    className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
                   >
-                    <CardContent className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
-                      <div>
-                        <p className="text-xs font-black uppercase text-black/55">
-                          Install
-                        </p>
-                        <code className="mt-2 block break-words text-lg font-black">
-                          pnpm add @swirski/ui
-                        </code>
-                      </div>
-                      <Button href="/components" variant="yellow">
-                        Open library
-                      </Button>
+                    <CardContent>
+                      <CardTitle>Studio</CardTitle>
+                      <p className="mt-3 text-sm font-bold leading-6">
+                        Clean hierarchy with hard graphic accents and useful
+                        component states.
+                      </p>
                     </CardContent>
                   </Card>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <Card
-                      interactive={false}
-                      className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
-                    >
-                      <CardContent>
-                        <CardTitle>Studio</CardTitle>
-                        <p className="mt-3 text-sm font-bold leading-6">
-                          Clean hierarchy with hard graphic accents and useful
-                          component states.
-                        </p>
-                      </CardContent>
-                    </Card>
-
-                    <Card
-                      interactive={false}
-                      className="bg-[#0057FF] text-white shadow-[8px_8px_0_#0B0B0C]"
-                    >
-                      <CardContent>
-                        <CardTitle>Dev</CardTitle>
-                        <p className="mt-3 text-sm font-bold leading-6">
-                          Built for docs, portfolio surfaces and production
-                          interfaces.
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
+                  <Card
+                    interactive={false}
+                    className="bg-[#0057FF] text-black shadow-[8px_8px_0_#0B0B0C]"
+                  >
+                    <CardContent>
+                      <CardTitle>Dev</CardTitle>
+                      <p className="mt-3 text-sm font-bold leading-6">
+                        Built for docs, portfolio surfaces and production
+                        interfaces.
+                      </p>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
+              {/* </div> */}
             </ImageFrame>
           </section>
         </Container>
@@ -210,7 +224,7 @@ export default function HomePage() {
                 className="bg-white shadow-[8px_8px_0_#0B0B0C]"
               >
                 <CardContent>
-                  <p className="mb-6 w-fit border-4 border-black bg-[#FF3131] px-3 py-2 font-anton text-xl uppercase text-white">
+                  <p className="mb-6 w-fit border-4 border-black bg-[#FF3131] px-3 py-2 font-anton text-xl uppercase text-black">
                     {item.label}
                   </p>
                   <CardTitle>{item.title}</CardTitle>
@@ -258,21 +272,24 @@ export default function HomePage() {
 
           <Card
             interactive={false}
-            className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
+            className="bg-[#0B0B0C] text-black shadow-[10px_10px_0_#FFD400]"
           >
             <CardContent className="p-6">
               <ol className="grid gap-4">
-                {workflow.map((step, index) => (
+                {workflow.map(({ title, body }, index) => (
                   <li
-                    key={step}
-                    className="grid grid-cols-[3rem_1fr] gap-4 border-b-4 border-white/20 pb-4 last:border-b-0 last:pb-0"
+                    key={title}
+                    className="grid grid-cols-[3rem_1fr] gap-4 border-b-4 border-black/20 pb-4 last:border-b-0 last:pb-0"
                   >
-                    <span className="font-anton text-3xl text-[#FFD400]">
+                    <span className="font-anton text-3xl text-black">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-base font-bold leading-7">
-                      {step}
-                    </span>
+                    <div className="grid gap-1">
+                      <span className="text-xl font-bold leading-7">
+                        {title}
+                      </span>
+                      <p className="text-sm leading-7 text-black/70">{body}</p>
+                    </div>
                   </li>
                 ))}
               </ol>

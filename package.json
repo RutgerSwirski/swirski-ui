@@ -3,6 +3,7 @@
   "private": false,
   "scripts": {
     "dev": "pnpm --filter docs dev",
+    "storybook": "pnpm --filter @swirski/ui storybook",
     "build": "pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
     "dev:ui": "pnpm --filter @swirski/ui dev"
