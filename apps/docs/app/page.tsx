@@ -5,20 +5,13 @@ import NavBar from "@/components/NavBar";
 import {
   Button,
   Card,
-  CardTitle,
   CardContent,
-  DiagonalLines,
-  DotGrid,
-  LineGrid,
-  HeroTitle,
-  HeroLead,
-  SectionLabel,
+  CardTitle,
   Container,
+  DotGrid,
   ImageFrame,
-  HeroActions,
-  HeroKicker,
+  SectionLabel,
 } from "@swirski/ui";
-import Link from "next/dist/client/link";
 
 const foundations = [
   {
@@ -81,25 +74,6 @@ export default function HomePage() {
           opacity={0.16}
           spacing={13}
           dotSize={1.2}
-        />
-        <LineGrid
-          className="inset-0"
-          color="#0057FF"
-          opacity={0.1}
-          spacing={28}
-          thickness={1}
-          accentEvery={4}
-          accentThickness={3}
-        />
-        <DiagonalLines
-          className="inset-0"
-          angle={-35}
-          color="#FF3131"
-          opacity={0.07}
-          spacing={36}
-          thickness={3}
-          accentEvery={5}
-          accentThickness={8}
         />
 
         <Container className="relative z-10">
