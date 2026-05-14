@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DotGrid } from "./DotGrid";
+import { LineGrid } from "./LineGrid";
 
 const meta = {
-  title: "Components/DotGrid",
-  component: DotGrid,
-} satisfies Meta<typeof DotGrid>;
+  title: "Components/LineGrid",
+  component: LineGrid,
+} satisfies Meta<typeof LineGrid>;
 
 export default meta;
 
@@ -16,7 +16,7 @@ export const Default: Story = {
   },
   render: (args) => (
     <div className="relative h-100 w-100 overflow-hidden bg-white">
-      <DotGrid {...args} />
+      <LineGrid {...args} />
     </div>
   ),
 };
@@ -24,17 +24,20 @@ export const Default: Story = {
 export const PopArt: Story = {
   args: {
     accentColor: "#FF3131",
-    accentDotSize: 5,
-    accentEvery: 5,
+    accentEvery: 4,
+    accentThickness: 5,
     className: "inset-0",
-    color: "#0B0B0C",
-    opacity: 0.38,
-    spacing: 14,
-    dotSize: 1.8,
+    horizontalColor: "#0B0B0C",
+    horizontalSpacing: 18,
+    horizontalThickness: 2,
+    opacity: 0.34,
+    verticalColor: "#0057FF",
+    verticalSpacing: 26,
+    verticalThickness: 1,
   },
   render: (args) => (
     <div className="relative h-100 w-100 overflow-hidden bg-[#FFD400]">
-      <DotGrid {...args} />
+      <LineGrid {...args} />
     </div>
   ),
 };
