@@ -4,6 +4,8 @@ export * from "./components/card/index";
 
 export * from "./components/container/index";
 
+export * from "./components/cursor/index";
+
 export * from "./components/dot-grid/index";
 
 export * from "./components/image-frame/index";

@@ -3,6 +3,8 @@ import {
   Card,
   CardContent,
   CardTitle,
+  CursorDock,
+  CursorProvider,
   HeroTitle,
   HeroLead,
 } from "@swirski/ui";
@@ -11,7 +13,13 @@ export type ComponentDoc = {
   slug: string;
   title: string;
   description: string;
-  category: "Typography" | "Layout" | "Cards" | "Buttons" | "Media";
+  category:
+    | "Typography"
+    | "Layout"
+    | "Cards"
+    | "Buttons"
+    | "Media"
+    | "Interaction";
   importCode: string;
   usageCode: string;
   preview: React.ReactNode;
@@ -27,6 +35,29 @@ export const componentDocs: ComponentDoc[] = [
     importCode: `import { Button } from "@swirski/ui";`,
     usageCode: `<Button href="/pieces">View pieces</Button>`,
     preview: <Button href="/pieces">View pieces</Button>,
+  },
+  {
+    slug: "cursor",
+    title: "Cursor",
+    description:
+      "A playful pixel-art cursor provider with arrow, hover hand and click hand states.",
+    category: "Interaction",
+    importCode: `import { CursorProvider, CursorDock } from "@swirski/ui";`,
+    usageCode: `<CursorProvider>
+  <CursorDock />
+  <main>Your app content</main>
+</CursorProvider>`,
+    preview: (
+      <CursorProvider className="relative min-h-64 space-y-6 overflow-hidden p-2">
+        <CursorDock position="absolute" />
+        <div className="flex flex-wrap items-center gap-4">
+          <Button variant="yellow">Hover me</Button>
+          <a className="font-black underline" href="/components/cursor">
+            Link cursor
+          </a>
+        </div>
+      </CursorProvider>
+    ),
   },
   {
     slug: "card",
