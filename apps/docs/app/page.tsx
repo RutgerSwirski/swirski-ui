@@ -1,36 +1,285 @@
 // apps/docs/app/page.tsx
-import Link from "next/link";
+
+import {
+  Button,
+  Card,
+  CardTitle,
+  CardContent,
+  DotGrid,
+  HeroTitle,
+  HeroLead,
+  SectionLabel,
+  Container,
+  ImageFrame,
+  HeroActions,
+  HeroKicker,
+} from "@swirski/ui";
+
+const foundations = [
+  {
+    label: "01",
+    title: "Editorial bones",
+    body: "Big condensed type, direct copy and layouts that feel composed before they feel decorated.",
+  },
+  {
+    label: "02",
+    title: "Studio contrast",
+    body: "Black structure, warm surfaces and primary-color accents carried through the component API.",
+  },
+  {
+    label: "03",
+    title: "Dev-ready parts",
+    body: "React primitives with predictable props, Tailwind-friendly class hooks and docs that stay close to usage.",
+  },
+];
+
+const packageLinks = [
+  "Button",
+  "Card",
+  "Container",
+  "DotGrid",
+  "Hero",
+  "ImageFrame",
+  "SectionLabel",
+];
+
+const workflow = [
+  "Install the package in a Next.js or React app.",
+  "Import only the primitives the screen needs.",
+  "Compose with Swirski type, borders, shadows and accent color.",
+];
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen px-6 py-24 md:px-16 lg:px-32">
-      <section className="max-w-4xl">
-        <p className="mb-4 text-sm font-black uppercase tracking-widest">
-          @swirski/ui
-        </p>
+    <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
+      <div className="relative border-b-4 border-black bg-white">
+        <DotGrid className="absolute inset-0 opacity-20 text-[#0057FF]" />
 
-        <h1 className="text-6xl font-black tracking-tight md:text-8xl">
-          Swirski UI
-        </h1>
+        <Container className="relative z-10">
+          <header className="flex min-h-20 items-center justify-between gap-5 py-5">
+            <a
+              href="/"
+              className="font-anton text-3xl uppercase leading-none tracking-normal"
+            >
+              Swirski UI
+            </a>
 
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-700">
-          A growing component library for expressive, editorial and creative web
-          interfaces.
-        </p>
+            <nav
+              aria-label="Docs navigation"
+              className="hidden items-center gap-2 text-sm font-black uppercase md:flex"
+            >
+              <a
+                className="border-4 border-black bg-[#FFD400] px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
+                href="/components"
+              >
+                Components
+              </a>
+              <a
+                className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
+                href="#system"
+              >
+                System
+              </a>
+              <a
+                className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
+                href="#start"
+              >
+                Start
+              </a>
+            </nav>
+          </header>
 
-        <div className="mt-10 flex flex-wrap gap-4">
-          <Link
-            href="/components"
-            className="border-2 border-black bg-black px-5 py-3 text-sm font-black uppercase tracking-widest text-white shadow-[5px_5px_0_#000]"
+          <section className="grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:grid-cols-[1fr_0.92fr] lg:py-20">
+            <div>
+              <HeroKicker>Docs for the Swirski visual system</HeroKicker>
+
+              <HeroTitle className="mt-5 max-w-3xl text-6xl md:text-8xl">
+                Design loud.
+                <br />
+                Ship sharp.
+              </HeroTitle>
+
+              <HeroLead className="mt-7 max-w-2xl text-xl text-black/75">
+                A practical reference for composing Swirski Studio and Swirski
+                Dev style interfaces with the shared UI package: expressive,
+                structured and ready for real product screens.
+              </HeroLead>
+
+              <HeroActions className="mt-9">
+                <Button href="/components">Browse components</Button>
+                <Button href="#start" variant="white">
+                  Get started
+                </Button>
+              </HeroActions>
+
+              <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+                {["React", "Tailwind", "TypeScript"].map((item) => (
+                  <div
+                    key={item}
+                    className="border-4 border-black bg-[#F5F5F3] px-4 py-3 text-sm font-black uppercase shadow-[5px_5px_0_#0B0B0C]"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <ImageFrame className="bg-[#0B0B0C] p-4 text-white shadow-[14px_14px_0_#0057FF]">
+              <div className="border-4 border-white bg-[#F5F5F3] p-4 text-[#0B0B0C]">
+                <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                  <span className="font-anton text-3xl uppercase">Docs</span>
+                  <code className="border-4 border-black bg-[#FFD400] px-3 py-2 text-xs font-black uppercase">
+                    @swirski/ui
+                  </code>
+                </div>
+
+                <div className="mt-4 grid gap-4">
+                  <Card
+                    interactive={false}
+                    className="bg-white shadow-[8px_8px_0_#0B0B0C]"
+                  >
+                    <CardContent className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
+                      <div>
+                        <p className="text-xs font-black uppercase text-black/55">
+                          Install
+                        </p>
+                        <code className="mt-2 block break-words text-lg font-black">
+                          pnpm add @swirski/ui
+                        </code>
+                      </div>
+                      <Button href="/components" variant="yellow">
+                        Open library
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Card
+                      interactive={false}
+                      className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
+                    >
+                      <CardContent>
+                        <CardTitle>Studio</CardTitle>
+                        <p className="mt-3 text-sm font-bold leading-6">
+                          Clean hierarchy with hard graphic accents and useful
+                          component states.
+                        </p>
+                      </CardContent>
+                    </Card>
+
+                    <Card
+                      interactive={false}
+                      className="bg-[#0057FF] text-white shadow-[8px_8px_0_#0B0B0C]"
+                    >
+                      <CardContent>
+                        <CardTitle>Dev</CardTitle>
+                        <p className="mt-3 text-sm font-bold leading-6">
+                          Built for docs, portfolio surfaces and production
+                          interfaces.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </ImageFrame>
+          </section>
+        </Container>
+      </div>
+
+      <Container className="py-16 md:py-20">
+        <section id="system">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <SectionLabel>System</SectionLabel>
+              <h2 className="mt-6 max-w-3xl font-anton text-5xl uppercase leading-none md:text-7xl">
+                The same language, calmer docs.
+              </h2>
+            </div>
+            <p className="max-w-sm text-base font-bold leading-7 text-black/65">
+              The docs should feel like a working studio surface: clear first,
+              expressive second, unmistakably Swirski throughout.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {foundations.map((item) => (
+              <Card
+                key={item.title}
+                interactive={false}
+                className="bg-white shadow-[8px_8px_0_#0B0B0C]"
+              >
+                <CardContent>
+                  <p className="mb-6 w-fit border-4 border-black bg-[#FF3131] px-3 py-2 font-anton text-xl uppercase text-white">
+                    {item.label}
+                  </p>
+                  <CardTitle>{item.title}</CardTitle>
+                  <p className="mt-4 text-sm font-bold leading-7 text-black/70">
+                    {item.body}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="grid gap-8 py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20">
+          <div>
+            <SectionLabel>Library</SectionLabel>
+            <p className="mt-6 text-lg font-bold leading-8 text-black/70">
+              A compact component surface for building Swirski pages without
+              rebuilding the style rules on every screen.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {packageLinks.map((item) => (
+              <a
+                key={item}
+                href="/components"
+                className="border-4 border-black bg-white px-5 py-5 font-black uppercase shadow-[6px_6px_0_#0B0B0C] transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section
+          id="start"
+          className="grid gap-8 border-y-4 border-black py-16 md:grid-cols-[1fr_1fr]"
+        >
+          <div>
+            <SectionLabel>Start</SectionLabel>
+            <h2 className="mt-6 font-anton text-5xl uppercase leading-none md:text-7xl">
+              Compose the page, then tune the voice.
+            </h2>
+          </div>
+
+          <Card
+            interactive={false}
+            className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
           >
-            View components
-          </Link>
-
-          <code className="border-2 border-black bg-white px-5 py-3 text-sm font-bold shadow-[5px_5px_0_#000]">
-            pnpm add @swirski/ui
-          </code>
-        </div>
-      </section>
+            <CardContent className="p-6">
+              <ol className="grid gap-4">
+                {workflow.map((step, index) => (
+                  <li
+                    key={step}
+                    className="grid grid-cols-[3rem_1fr] gap-4 border-b-4 border-white/20 pb-4 last:border-b-0 last:pb-0"
+                  >
+                    <span className="font-anton text-3xl text-[#FFD400]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-base font-bold leading-7">
+                      {step}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </CardContent>
+          </Card>
+        </section>
+      </Container>
     </main>
   );
 }

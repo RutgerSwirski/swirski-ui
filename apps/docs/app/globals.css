@@ -1,2 +1,33 @@
 /* apps/docs/app/globals.css */
+
 @import "tailwindcss";
+
+@source "../../../packages/ui/src";
+
+@theme {
+  --font-anton: var(--font-anton);
+  --font-bangers: var(--font-bangers);
+  --font-inter: var(--font-inter);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-anton {
+    font-family: var(--font-anton), Impact, sans-serif;
+    font-weight: 400;
+  }
+
+  .font-bangers {
+    font-family: var(--font-bangers), Impact, fantasy;
+    font-weight: 400;
+  }
+
+  .font-inter {
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+}
