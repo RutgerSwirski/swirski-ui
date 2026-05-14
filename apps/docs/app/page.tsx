@@ -78,19 +78,13 @@ export default function HomePage() {
               className="hidden items-center gap-2 text-sm font-black uppercase md:flex"
             >
               <Button
-                variant="yellow"
+                variant="blue"
                 // className="border-4 border-black bg-[#FFD400] px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
                 href="/components"
               >
                 Components
               </Button>
-              <Button
-                variant="blue"
-                // className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
-                href="#system"
-              >
-                System
-              </Button>
+
               <Button
                 variant="white"
                 // className="border-4 border-black bg-white px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
@@ -146,10 +140,7 @@ export default function HomePage() {
               </div>
 
               <div className="mt-4 grid gap-4">
-                <Card
-                  interactive={false}
-                  className="bg-white shadow-[8px_8px_0_#0B0B0C] drop-shadow-none!"
-                >
+                <Card interactive={false} className="bg-white">
                   <CardContent className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
                     <div>
                       <p className="text-xs font-black uppercase text-black/55">
@@ -168,10 +159,7 @@ export default function HomePage() {
                 </Card>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <Card
-                    interactive={false}
-                    className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
-                  >
+                  <Card interactive={false} className="bg-[#FFD400] ">
                     <CardContent>
                       <CardTitle>Studio</CardTitle>
                       <p className="mt-3 text-sm font-bold leading-6">
@@ -183,7 +171,7 @@ export default function HomePage() {
 
                   <Card
                     interactive={false}
-                    className="bg-[#0057FF] text-black shadow-[8px_8px_0_#0B0B0C]"
+                    className="bg-[#0057FF] text-black "
                   >
                     <CardContent>
                       <CardTitle>Dev</CardTitle>
