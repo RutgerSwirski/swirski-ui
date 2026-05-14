@@ -1,0 +1,25 @@
+# dependencies
+node_modules
+
+# build output
+build
+
+# local env
+.env
+.env.local
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# editor
+.vscode
+.idea
+
+# TypeScript
+*.tsbuildinfo
+
+# npm
+.npmrc

@@ -1,45 +1,11 @@
 {
-  "name": "@rutgerswirski/ui",
-  "version": "1.0.0",
+  "name": "swirski-ui-workspace",
   "private": false,
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts",
-    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
-    "build-storybook": "storybook build"
-  },
-  "peerDependencies": {
-    "react": "^18 || ^19",
-    "react-dom": "^18 || ^19"
-  },
-  "dependencies": {
-    "@fontsource/anton": "^5.2.7",
-    "@fontsource/bangers": "^5.2.8",
-    "clsx": "^2.1.1"
-  },
-  "devDependencies": {
-    "@storybook/addon-docs": "^10.3.6",
-    "@storybook/react-vite": "^10.3.6",
-    "@tailwindcss/postcss": "^4.2.4",
-    "@types/react": "^19.2.14",
-    "postcss": "^8.5.13",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "storybook": "^10.3.6",
-    "tailwindcss": "^4.2.4",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vite": "^8.0.10"
+    "dev": "pnpm --filter docs dev",
+    "storybook": "pnpm --filter @swirski/ui storybook",
+    "build": "pnpm --filter docs build",
+    "build:ui": "pnpm --filter @swirski/ui build",
+    "dev:ui": "pnpm --filter @swirski/ui dev"
   }
 }
