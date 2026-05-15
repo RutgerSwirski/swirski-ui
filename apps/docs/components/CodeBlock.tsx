@@ -15,8 +15,8 @@ export default function CodeBlock({ code, className = "" }: CodeBlockProps) {
         className="absolute right-3 top-3 z-10"
       />
 
-      <pre className="block max-w-full whitespace-pre-wrap break-words p-5 pr-20 text-sm font-bold leading-7 text-white [overflow-wrap:anywhere] sm:pr-28">
-        <code className="block min-w-0 whitespace-pre-wrap">{code}</code>
+      <pre className="block max-h-[32rem] max-w-full overflow-auto whitespace-pre p-5 pr-20 text-sm font-bold leading-7 text-white sm:pr-28">
+        <code className="block min-w-max whitespace-pre">{code}</code>
       </pre>
     </div>
   );

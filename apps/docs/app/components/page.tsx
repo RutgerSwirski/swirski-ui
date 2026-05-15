@@ -85,6 +85,7 @@ export default function ComponentsPage() {
                 Missing a component?
                 <br />
                 <a
+                  target="_blank"
                   href="https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=rutgerswirski&labels=missing-component&template=component.md&title=Add+%60[component-name]%60+component"
                   className="font-bold underline"
                 >
