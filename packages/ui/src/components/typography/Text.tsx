@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactNode, createElement } from "react";
 import clsx from "clsx";
 
-export type TextSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type TextSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type TextTone = "default" | "muted" | "subtle" | "inverted";
 export type TextWeight = "regular" | "medium" | "bold" | "black";
 export type TextElement = "p" | "span" | "div";
@@ -20,6 +20,8 @@ const sizeStyles: Record<TextSize, string> = {
   md: "text-base leading-7",
   lg: "text-lg leading-8",
   xl: "text-xl leading-9",
+
+  "2xl": "text-2xl leading-10",
 };
 
 const toneStyles: Record<TextTone, string> = {
