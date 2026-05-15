@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import CodeBlock from "@/components/CodeBlock";
 import {
   playgroundDefinitions,
   type PlaygroundControl,
@@ -10,6 +11,7 @@ import {
 
 type ComponentPlaygroundProps = {
   slug: string;
+  fallbackUsageCode: string;
 };
 
 const fieldClass =
@@ -122,7 +124,23 @@ function ControlField({
   );
 }
 
-export default function ComponentPlayground({ slug }: ComponentPlaygroundProps) {
+function UsageCodePanel({ code }: { code: string }) {
+  return (
+    <section id="usage" className="scroll-mt-8">
+      <div className="mb-4 flex items-center gap-3">
+        <span className="h-5 w-5 border-4 border-black bg-[#FF3131]" />
+        <h2 className="font-anton text-4xl uppercase leading-none">Usage</h2>
+      </div>
+
+      <CodeBlock code={code} />
+    </section>
+  );
+}
+
+export default function ComponentPlayground({
+  slug,
+  fallbackUsageCode,
+}: ComponentPlaygroundProps) {
   const definition = playgroundDefinitions[slug];
   const defaultValues = useMemo(
     () => (definition ? getDefaultValues(definition.controls) : {}),
@@ -136,20 +154,24 @@ export default function ComponentPlayground({ slug }: ComponentPlaygroundProps) 
 
   if (!definition) {
     return (
-      <section id="playground" className="scroll-mt-8">
-        <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
-            <h2 className="font-anton text-4xl uppercase leading-none">
-              Playground
-            </h2>
+      <>
+        <section id="playground" className="scroll-mt-8">
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
+              <h2 className="font-anton text-4xl uppercase leading-none">
+                Playground
+              </h2>
+            </div>
           </div>
-        </div>
 
-        <div className="border-4 border-black bg-white p-6 font-bold leading-7 shadow-[10px_10px_0_#0B0B0C]">
-          This component does not have editable controls yet.
-        </div>
-      </section>
+          <div className="border-4 border-black bg-white p-6 font-bold leading-7 shadow-[10px_10px_0_#0B0B0C]">
+            This component does not have editable controls yet.
+          </div>
+        </section>
+
+        <UsageCodePanel code={fallbackUsageCode} />
+      </>
     );
   }
 
@@ -161,41 +183,45 @@ export default function ComponentPlayground({ slug }: ComponentPlaygroundProps) 
   }
 
   return (
-    <section id="playground" className="scroll-mt-8">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
-          <h2 className="font-anton text-4xl uppercase leading-none">
-            Playground
-          </h2>
-        </div>
+    <>
+      <section id="playground" className="scroll-mt-8">
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
+            <h2 className="font-anton text-4xl uppercase leading-none">
+              Playground
+            </h2>
+          </div>
 
-        <p className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C]">
-          {definition.controls.length} controls
-        </p>
-      </div>
-
-      <div className="grid border-4 border-black bg-white shadow-[10px_10px_0_#0B0B0C] lg:grid-cols-[1fr_18rem]">
-        <div className="min-h-80 bg-[#F5F5F3] p-6 md:p-10">
-          {definition.render(values)}
-        </div>
-
-        <div className="border-t-4 border-black bg-white p-5 lg:border-l-4 lg:border-t-0">
-          <p className="mb-4 text-xs font-black uppercase text-black/55">
-            Controls
+          <p className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C]">
+            {definition.controls.length} controls
           </p>
-          <div className="grid gap-4">
-            {definition.controls.map((control) => (
-              <ControlField
-                key={control.name}
-                control={control}
-                value={values[control.name] ?? control.defaultValue}
-                onChange={(value) => updateValue(control.name, value)}
-              />
-            ))}
+        </div>
+
+        <div className="grid border-4 border-black bg-white shadow-[10px_10px_0_#0B0B0C] lg:grid-cols-[1fr_18rem]">
+          <div className="min-h-80 bg-[#F5F5F3] p-6 md:p-10">
+            {definition.render(values)}
+          </div>
+
+          <div className="border-t-4 border-black bg-white p-5 lg:border-l-4 lg:border-t-0">
+            <p className="mb-4 text-xs font-black uppercase text-black/55">
+              Controls
+            </p>
+            <div className="grid gap-4">
+              {definition.controls.map((control) => (
+                <ControlField
+                  key={control.name}
+                  control={control}
+                  value={values[control.name] ?? control.defaultValue}
+                  onChange={(value) => updateValue(control.name, value)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <UsageCodePanel code={definition.getCode(values)} />
+    </>
   );
 }

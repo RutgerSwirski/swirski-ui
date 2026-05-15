@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import CodeBlock from "@/components/CodeBlock";
 import ComponentPlayground from "@/components/ComponentPlayground";
 import NavBar from "@/components/NavBar";
 import { componentDocs, type ComponentDoc } from "@/content/components";
@@ -49,16 +50,16 @@ const breakdownItems = [
     body: "Editable controls for the props that shape the visible example.",
   },
   {
+    title: "Usage",
+    body: "A pasteable snippet that updates with the playground controls.",
+  },
+  {
     title: "Props",
     body: "A compact reference for the component API and defaults.",
   },
   {
     title: "Import",
     body: "The smallest package import needed for this component.",
-  },
-  {
-    title: "Usage",
-    body: "A pasteable starting point for composing the primitive.",
   },
 ];
 
@@ -82,9 +83,7 @@ function CodePanel({
         <h2 className="font-anton text-4xl uppercase leading-none">{title}</h2>
       </div>
 
-      <pre className="overflow-x-auto border-4 border-black bg-[#0B0B0C] p-5 text-sm font-bold leading-7 text-white shadow-[7px_7px_0_#0057FF]">
-        <code>{code}</code>
-      </pre>
+      <CodeBlock code={code} />
     </section>
   );
 }
@@ -215,9 +214,8 @@ export default async function ComponentPage({ params }: Props) {
                   {String(componentIndex + 1).padStart(2, "0")}
                 </p>
               </div>
-              <code className="border-4 border-black bg-white px-4 py-3 text-sm font-black shadow-[6px_6px_0_#0B0B0C]">
-                {component.importCode}
-              </code>
+
+              <CodeBlock code={component.importCode} />
             </div>
           </section>
         </Container>
@@ -281,6 +279,8 @@ export default async function ComponentPage({ params }: Props) {
           </aside>
 
           <div className="grid gap-12">
+            <CodePanel title="Import" code={component.importCode} />
+
             <section id="preview" className="scroll-mt-8">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
                 <div className="flex items-center gap-3">
@@ -311,21 +311,18 @@ export default async function ComponentPage({ params }: Props) {
               </div>
             </section>
 
-            <ComponentPlayground slug={component.slug} />
+            <ComponentPlayground
+              slug={component.slug}
+              fallbackUsageCode={component.usageCode}
+            />
 
             <PropTable component={component} />
-
-            <CodePanel title="Import" code={component.importCode} />
-            <CodePanel
-              title="Usage"
-              code={component.usageCode}
-              accent="bg-[#FF3131]"
-            />
 
             <section className="grid gap-4 border-t-4 border-black pt-8 md:grid-cols-2">
               <Button
                 href={`/components/${previousComponent.slug}`}
                 variant="white"
+                className="w-fit"
               >
                 Previous: {previousComponent.title}
               </Button>
