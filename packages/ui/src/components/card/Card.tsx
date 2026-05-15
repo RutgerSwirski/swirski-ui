@@ -11,7 +11,7 @@ type CardProps = {
 const base = "group relative border-4 border-black bg-[#F5F5F3]";
 
 const interactiveStyles =
-  "transition-all duration-150 hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] active:translate-y-2 active:shadow-[4px_4px_0_#0B0B0C] cursor-pointer";
+  "transition-all duration-150 hover:-translate-y-2 hover:shadow-[12px_12px_0_#0B0B0C] active:translate-y-2 active:shadow-[4px_4px_0_#0B0B0C]";
 
 export function Card({ children, className, interactive = true }: CardProps) {
   return (

@@ -17,14 +17,15 @@ import {
   DiagonalLines,
   DotGrid,
   Field,
+  FieldError,
   FieldHint,
-  HeroTitle,
-  HeroLead,
   Input,
   Label,
   LineGrid,
   Switch,
+  Text,
   Textarea,
+  Title,
 } from "@swirski/ui";
 
 export type ComponentDoc = {
@@ -73,6 +74,36 @@ export const componentDocs: ComponentDoc[] = [
         <Badge tone="black">Studio</Badge>
       </div>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Badge text or inline content.",
+      },
+      {
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white" | "black"',
+        defaultValue: '"yellow"',
+        description: "Applies one of the Swirski status color treatments.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        defaultValue: '"md"',
+        description: "Controls the compact badge padding and text size.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root span.",
+      },
+      {
+        name: "...spanProps",
+        type: "HTMLAttributes<HTMLSpanElement>",
+        description: "Forwarded to the root span.",
+      },
+    ],
   },
   {
     slug: "alert",
@@ -93,6 +124,41 @@ export const componentDocs: ComponentDoc[] = [
         </AlertDescription>
       </Alert>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Alert content, usually AlertTitle and AlertDescription.",
+      },
+      {
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white"',
+        defaultValue: '"yellow"',
+        description: "Applies the alert surface color.",
+      },
+      {
+        name: "role",
+        type: "AriaRole",
+        defaultValue: '"status"',
+        description: "Accessible live-region role for the alert container.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root alert.",
+      },
+      {
+        name: "AlertTitle.className",
+        type: "string",
+        description: "Adds classes to the title heading.",
+      },
+      {
+        name: "AlertDescription.className",
+        type: "string",
+        description: "Adds classes to the description paragraph.",
+      },
+    ],
   },
   {
     slug: "button",
@@ -122,9 +188,25 @@ export const componentDocs: ComponentDoc[] = [
         description: "Applies the Swirski color treatment.",
       },
       {
+        name: "icon",
+        type: '"arrow-up-right" | "github"',
+        description: "Adds a bundled icon beside the label.",
+      },
+      {
+        name: "iconSide",
+        type: '"left" | "right"',
+        defaultValue: '"left"',
+        description: "Controls where the optional icon is rendered.",
+      },
+      {
         name: "className",
         type: "string",
         description: "Adds classes to the root button or anchor.",
+      },
+      {
+        name: "...anchorProps",
+        type: "AnchorHTMLAttributes<HTMLAnchorElement>",
+        description: "Forwarded when the component renders an anchor.",
       },
       {
         name: "...buttonProps",
@@ -205,7 +287,14 @@ export const componentDocs: ComponentDoc[] = [
     description:
       "A form field set with label, input, textarea and hint primitives built from native elements.",
     category: "Forms",
-    importCode: `import { Field, FieldHint, Input, Label, Textarea } from "@swirski/ui";`,
+    importCode: `import {
+  Field,
+  FieldError,
+  FieldHint,
+  Input,
+  Label,
+  Textarea,
+} from "@swirski/ui";`,
     usageCode: `<Field>
   <Label htmlFor="email">Email</Label>
   <Input id="email" placeholder="studio@swirski.dev" />
@@ -221,9 +310,47 @@ export const componentDocs: ComponentDoc[] = [
         <Field>
           <Label htmlFor="docs-message">Message</Label>
           <Textarea id="docs-message" placeholder="Tell us what you are building." />
+          <FieldError>This is where validation feedback can sit.</FieldError>
         </Field>
       </div>
     ),
+    props: [
+      {
+        name: "Field.className",
+        type: "string",
+        description: "Adds classes to the field wrapper.",
+      },
+      {
+        name: "Label.htmlFor",
+        type: "string",
+        description: "Connects the label to an input or textarea id.",
+      },
+      {
+        name: "Label.className",
+        type: "string",
+        description: "Adds classes to the label.",
+      },
+      {
+        name: "Input",
+        type: "InputHTMLAttributes<HTMLInputElement>",
+        description: "Forwards native input props and refs.",
+      },
+      {
+        name: "Textarea",
+        type: "TextareaHTMLAttributes<HTMLTextAreaElement>",
+        description: "Forwards native textarea props and refs.",
+      },
+      {
+        name: "FieldHint.className",
+        type: "string",
+        description: "Adds classes to helper text.",
+      },
+      {
+        name: "FieldError.className",
+        type: "string",
+        description: "Adds classes to validation text.",
+      },
+    ],
   },
   {
     slug: "checkbox",
@@ -243,6 +370,39 @@ export const componentDocs: ComponentDoc[] = [
         description="A compact, native checkbox with a custom Swirski mark."
       />
     ),
+    props: [
+      {
+        name: "label",
+        type: "ReactNode",
+        description: "Visible label rendered beside the checkbox.",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Optional supporting text below the label.",
+      },
+      {
+        name: "containerClassName",
+        type: "string",
+        description: "Adds classes to the root label wrapper.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the hidden native checkbox input.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Disables interaction and dims the wrapper.",
+      },
+      {
+        name: "...inputProps",
+        type: 'Omit<InputHTMLAttributes<HTMLInputElement>, "type">',
+        description: "Forwarded to the native checkbox input.",
+      },
+    ],
   },
   {
     slug: "switch",
@@ -259,6 +419,39 @@ export const componentDocs: ComponentDoc[] = [
         description="Use switch semantics without giving up native form behavior."
       />
     ),
+    props: [
+      {
+        name: "label",
+        type: "ReactNode",
+        description: "Visible label rendered beside the switch.",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Optional supporting text below the label.",
+      },
+      {
+        name: "containerClassName",
+        type: "string",
+        description: "Adds classes to the root label wrapper.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the hidden native checkbox input.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Disables interaction and dims the wrapper.",
+      },
+      {
+        name: "...inputProps",
+        type: 'Omit<InputHTMLAttributes<HTMLInputElement>, "type">',
+        description: "Forwarded to the native switch input.",
+      },
+    ],
   },
   {
     slug: "accordion",
@@ -296,6 +489,45 @@ export const componentDocs: ComponentDoc[] = [
         </AccordionItem>
       </Accordion>
     ),
+    props: [
+      {
+        name: "Accordion.className",
+        type: "string",
+        description: "Adds classes to the accordion wrapper.",
+      },
+      {
+        name: "AccordionItem.open",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Uses the native details open state.",
+      },
+      {
+        name: "AccordionItem.className",
+        type: "string",
+        description: "Adds classes to the details element.",
+      },
+      {
+        name: "AccordionTrigger.children",
+        type: "ReactNode",
+        required: true,
+        description: "Summary label for the disclosure item.",
+      },
+      {
+        name: "AccordionTrigger.className",
+        type: "string",
+        description: "Adds classes to the summary element.",
+      },
+      {
+        name: "AccordionContent.className",
+        type: "string",
+        description: "Adds classes to the content panel.",
+      },
+      {
+        name: "...detailsProps",
+        type: "DetailsHTMLAttributes<HTMLDetailsElement>",
+        description: "Forwarded to each accordion item.",
+      },
+    ],
   },
   {
     slug: "card",
@@ -348,14 +580,23 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
-    slug: "hero-title",
-    title: "HeroTitle",
+    slug: "title",
+    title: "Title",
     description:
-      "A large expressive heading component for landing pages and editorial sections.",
+      "A responsive heading primitive with Mantine-style order and size controls.",
     category: "Typography",
-    importCode: `import { HeroTitle } from "@swirski/ui";`,
-    usageCode: `<HeroTitle>Build expressive interfaces.</HeroTitle>`,
-    preview: <HeroTitle>Build expressive interfaces.</HeroTitle>,
+    importCode: `import { Title } from "@swirski/ui";`,
+    usageCode: `<Title order={1} size="display">Build expressive interfaces.</Title>`,
+    preview: (
+      <div className="grid gap-4">
+        <Title order={1} size="display">
+          Build expressive interfaces.
+        </Title>
+        <Title order={2} size="h3" tone="muted">
+          Without naming every heading after a page section.
+        </Title>
+      </div>
+    ),
     props: [
       {
         name: "children",
@@ -364,44 +605,94 @@ export const componentDocs: ComponentDoc[] = [
         description: "Heading content.",
       },
       {
-        name: "variant",
-        type: '"editorial" | "loud"',
-        defaultValue: '"editorial"',
-        description: "Reserved visual variant hook for title treatments.",
+        name: "order",
+        type: "1 | 2 | 3 | 4 | 5 | 6",
+        defaultValue: "1",
+        description: "Chooses the semantic heading element.",
+      },
+      {
+        name: "size",
+        type: '"display" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"',
+        description: "Overrides the visual heading scale.",
+      },
+      {
+        name: "tone",
+        type: '"default" | "muted" | "inverted"',
+        defaultValue: '"default"',
+        description: "Applies the standard title color treatment.",
       },
       {
         name: "className",
         type: "string",
         description: "Adds classes to the heading.",
       },
+      {
+        name: "...headingProps",
+        type: "HTMLAttributes<HTMLHeadingElement>",
+        description: "Forwarded to the rendered heading element.",
+      },
     ],
   },
   {
-    slug: "hero-lead",
-    title: "HeroLead",
+    slug: "text",
+    title: "Text",
     description:
-      "A supporting text component for hero sections and page introductions.",
+      "A general text primitive for body copy, supporting text and compact labels.",
     category: "Typography",
-    importCode: `import { HeroLead } from "@swirski/ui";`,
-    usageCode: `<HeroLead>
+    importCode: `import { Text } from "@swirski/ui";`,
+    usageCode: `<Text size="xl" tone="muted" weight="bold">
   A small UI library for expressive, editorial web interfaces.
-</HeroLead>`,
+</Text>`,
     preview: (
-      <HeroLead>
-        A small UI library for expressive, editorial web interfaces.
-      </HeroLead>
+      <div className="grid max-w-xl gap-3">
+        <Text size="xl" tone="muted" weight="bold">
+          A small UI library for expressive, editorial web interfaces.
+        </Text>
+        <Text size="sm" tone="subtle">
+          Use it for lead copy, helper text, labels and dense interface notes.
+        </Text>
+      </div>
     ),
     props: [
       {
         name: "children",
         type: "ReactNode",
         required: true,
-        description: "Lead paragraph content.",
+        description: "Text content.",
+      },
+      {
+        name: "component",
+        type: '"p" | "span" | "div"',
+        defaultValue: '"p"',
+        description: "Chooses the rendered text element.",
+      },
+      {
+        name: "size",
+        type: '"xs" | "sm" | "md" | "lg" | "xl"',
+        defaultValue: '"md"',
+        description: "Applies the standard text scale.",
+      },
+      {
+        name: "tone",
+        type: '"default" | "muted" | "subtle" | "inverted"',
+        defaultValue: '"default"',
+        description: "Applies the standard text color treatment.",
+      },
+      {
+        name: "weight",
+        type: '"regular" | "medium" | "bold" | "black"',
+        defaultValue: '"regular"',
+        description: "Applies the text weight.",
       },
       {
         name: "className",
         type: "string",
-        description: "Adds classes to the paragraph.",
+        description: "Adds classes to the rendered element.",
+      },
+      {
+        name: "...elementProps",
+        type: "HTMLAttributes<HTMLElement>",
+        description: "Forwarded to the rendered text element.",
       },
     ],
   },

@@ -1,6 +1,6 @@
-// HeroLead.tsx
 import clsx from "clsx";
 import type { ReactNode } from "react";
+import { Text } from "../typography";
 
 export function HeroLead({
   children,
@@ -10,10 +10,8 @@ export function HeroLead({
   className?: string;
 }) {
   return (
-    <p
-      className={`mt-6 max-w-xl text-lg leading-relaxed text-black/70 ${className}`}
-    >
+    <Text size="lg" tone="muted" className={clsx("mt-6 max-w-xl", className)}>
       {children}
-    </p>
+    </Text>
   );
 }

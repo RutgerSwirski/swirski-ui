@@ -1,27 +1,27 @@
 import {
-  HeroKicker,
-  HeroTitle,
-  HeroLead,
+  Badge,
   HeroActions,
   Button,
+  Text,
+  Title,
 } from "@swirski/ui";
 
 export default function Hero() {
   return (
     <div>
-      <HeroKicker>Docs for the Swirski visual system</HeroKicker>
+      <Badge tone="yellow">Docs for the Swirski visual system</Badge>
 
-      <HeroTitle className="mt-5 max-w-3xl text-6xl md:text-8xl">
+      <Title order={1} size="display" className="mt-5 max-w-3xl">
         Design loud.
         <br />
         Ship sharp.
-      </HeroTitle>
+      </Title>
 
-      <HeroLead className="mt-7 max-w-2xl text-xl text-black/75">
+      <Text size="xl" tone="muted" weight="bold" className="mt-7 max-w-2xl">
         A practical reference for composing Swirski Studio and Swirski Dev style
         interfaces with the shared UI package: expressive, structured and ready
         for real product screens.
-      </HeroLead>
+      </Text>
 
       <HeroActions className="mt-9">
         <Button href="/get-started"

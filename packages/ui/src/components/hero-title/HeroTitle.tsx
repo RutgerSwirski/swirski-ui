@@ -1,5 +1,5 @@
-// HeroTitle.tsx
 import type { ReactNode } from "react";
+import { Title } from "../typography";
 
 export function HeroTitle({
   children,
@@ -9,10 +9,8 @@ export function HeroTitle({
   className?: string;
 }) {
   return (
-    <h1
-      className={`font-anton uppercase text-8xl leading-[0.9] tracking-[-0.02em] ${className}`}
-    >
+    <Title order={1} size="display" className={className}>
       {children}
-    </h1>
+    </Title>
   );
 }

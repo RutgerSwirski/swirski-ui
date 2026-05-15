@@ -28,6 +28,8 @@ export * from "./components/section-label/index";
 
 export * from "./components/switch/index";
 
+export * from "./components/typography/index";
+
 export { HeroActions } from "./components/hero-actions/HeroActions";
 
 export { HeroKicker } from "./components/hero-kicker/HeroKicker";
