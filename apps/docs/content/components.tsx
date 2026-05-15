@@ -6,7 +6,15 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
+  Avatar,
+  AvatarFallback,
   Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Button,
   Card,
   CardContent,
@@ -15,18 +23,62 @@ import {
   CursorDock,
   CursorProvider,
   DiagonalLines,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   DotGrid,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Field,
   FieldError,
   FieldHint,
   Input,
   Label,
   LineGrid,
+  Loader,
+  Pagination,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Progress,
+  RadioGroup,
   Select,
+  Separator,
+  Skeleton,
+  Slider,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Text,
   Textarea,
   Title,
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  Tooltip,
 } from "@swirski/ui";
 
 export type ComponentDoc = {
@@ -779,6 +831,427 @@ export const componentDocs: ComponentDoc[] = [
         type: "HTMLAttributes<HTMLElement>",
         description: "Forwarded to the rendered text element.",
       },
+    ],
+  },
+  {
+    slug: "dialog",
+    title: "Dialog",
+    description:
+      "A modal overlay for confirmations, details and focused forms.",
+    category: "Interaction",
+    importCode: `import { Dialog, DialogContent, DialogTrigger } from "@swirski/ui";`,
+    usageCode: `<Dialog>
+  <DialogTrigger>Open dialog</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Delete piece?</DialogTitle>
+      <DialogDescription>This action needs confirmation.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose>Cancel</DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>`,
+    preview: (
+      <Dialog>
+        <DialogTrigger>Open dialog</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete piece?</DialogTitle>
+            <DialogDescription>This action needs confirmation.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose>Cancel</DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    ),
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open state." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "onOpenChange", type: "(open: boolean) => void", description: "Called when the dialog opens or closes." },
+      { name: "className", type: "string", description: "Available on trigger, content and layout slots." },
+    ],
+  },
+  {
+    slug: "popover",
+    title: "Popover",
+    description:
+      "A floating panel for filters, quick settings and small editable surfaces.",
+    category: "Interaction",
+    importCode: `import { Popover, PopoverContent, PopoverTrigger } from "@swirski/ui";`,
+    usageCode: `<Popover>
+  <PopoverTrigger>Filters</PopoverTrigger>
+  <PopoverContent>Quick controls live here.</PopoverContent>
+</Popover>`,
+    preview: (
+      <Popover>
+        <PopoverTrigger>Filters</PopoverTrigger>
+        <PopoverContent>
+          <Text size="sm" weight="bold" tone="muted">
+            Quick controls live here.
+          </Text>
+        </PopoverContent>
+      </Popover>
+    ),
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open state." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "align", type: '"start" | "end"', defaultValue: '"start"', description: "Aligns the content to the trigger." },
+      { name: "className", type: "string", description: "Adds classes to root, trigger or content slots." },
+    ],
+  },
+  {
+    slug: "dropdown-menu",
+    title: "DropdownMenu",
+    description:
+      "A compact actions menu for navs, profile menus and table rows.",
+    category: "Interaction",
+    importCode: `import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@swirski/ui";`,
+    usageCode: `<DropdownMenu>
+  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`,
+    preview: (
+      <DropdownMenu>
+        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem>Duplicate</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+    props: [
+      { name: "DropdownMenuTrigger", type: "ButtonHTMLAttributes<HTMLButtonElement>", description: "Button props forwarded to the trigger." },
+      { name: "DropdownMenuContent.align", type: '"start" | "end"', defaultValue: '"start"', description: "Aligns the menu to the trigger." },
+      { name: "DropdownMenuItem", type: "ButtonHTMLAttributes<HTMLButtonElement>", description: "Button props forwarded to each item." },
+    ],
+  },
+  {
+    slug: "tooltip",
+    title: "Tooltip",
+    description: "A compact hover/focus label for icon buttons and dense UI.",
+    category: "Interaction",
+    importCode: `import { Tooltip } from "@swirski/ui";`,
+    usageCode: `<Tooltip content="Save changes">
+  <Button>Save</Button>
+</Tooltip>`,
+    preview: (
+      <Tooltip content="Save changes">
+        <Button>Save</Button>
+      </Tooltip>
+    ),
+    props: [
+      { name: "content", type: "ReactNode", required: true, description: "Tooltip label content." },
+      { name: "children", type: "ReactNode", required: true, description: "Element that owns the tooltip." },
+      { name: "className", type: "string", description: "Adds classes to the tooltip wrapper." },
+    ],
+  },
+  {
+    slug: "tabs",
+    title: "Tabs",
+    description: "Tabbed sections for settings, dashboards and previews.",
+    category: "Interaction",
+    importCode: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";`,
+    usageCode: `<Tabs defaultValue="preview">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">Preview content</TabsContent>
+  <TabsContent value="code">Code content</TabsContent>
+</Tabs>`,
+    preview: (
+      <Tabs defaultValue="preview">
+        <TabsList>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+        <TabsContent value="preview">Preview content</TabsContent>
+        <TabsContent value="code">Code content</TabsContent>
+      </Tabs>
+    ),
+    props: [
+      { name: "defaultValue", type: "string", required: true, description: "Initial active tab value." },
+      { name: "value", type: "string", description: "Controlled active tab value." },
+      { name: "onValueChange", type: "(value: string) => void", description: "Called when a tab is selected." },
+      { name: "TabsTrigger.value", type: "string", required: true, description: "Value this trigger activates." },
+    ],
+  },
+  {
+    slug: "table",
+    title: "Table",
+    description: "A bold base table for data lists before adding DataTable behavior.",
+    category: "Layout",
+    importCode: `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@swirski/ui";`,
+    usageCode: `<Table>
+  <TableHead>
+    <TableRow><TableHeader>Name</TableHeader><TableHeader>Status</TableHeader></TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow><TableCell>Studio</TableCell><TableCell>Live</TableCell></TableRow>
+  </TableBody>
+</Table>`,
+    preview: (
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>Name</TableHeader>
+            <TableHeader>Status</TableHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Studio</TableCell>
+            <TableCell>Live</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Docs</TableCell>
+            <TableCell>Draft</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    ),
+    props: [
+      { name: "Table", type: "TableHTMLAttributes<HTMLTableElement>", description: "Props forwarded to the table element." },
+      { name: "TableHeader", type: "ThHTMLAttributes<HTMLTableCellElement>", description: "Props forwarded to header cells." },
+      { name: "TableCell", type: "TdHTMLAttributes<HTMLTableCellElement>", description: "Props forwarded to body cells." },
+    ],
+  },
+  {
+    slug: "toast",
+    title: "Toast",
+    description: "Status messages for save states, confirmations and errors.",
+    category: "Feedback",
+    importCode: `import { Toast, ToastDescription, ToastTitle } from "@swirski/ui";`,
+    usageCode: `<Toast tone="yellow">
+  <ToastTitle>Saved</ToastTitle>
+  <ToastDescription>Your changes are live.</ToastDescription>
+</Toast>`,
+    preview: (
+      <Toast tone="yellow">
+        <ToastTitle>Saved</ToastTitle>
+        <ToastDescription>Your changes are live.</ToastDescription>
+      </Toast>
+    ),
+    props: [
+      { name: "tone", type: '"blue" | "yellow" | "red" | "white"', defaultValue: '"yellow"', description: "Applies the toast color treatment." },
+      { name: "ToastProvider", type: "{ children: ReactNode }", description: "Provider for managed toasts and useToast." },
+      { name: "useToast", type: "() => ToastContextValue", description: "Adds and removes managed toasts." },
+    ],
+  },
+  {
+    slug: "progress",
+    title: "Progress",
+    description: "A simple progress meter for loading and completion states.",
+    category: "Feedback",
+    importCode: `import { Progress } from "@swirski/ui";`,
+    usageCode: `<Progress value={64} />`,
+    preview: <Progress value={64} />,
+    props: [
+      { name: "value", type: "number", defaultValue: "0", description: "Current progress value." },
+      { name: "max", type: "number", defaultValue: "100", description: "Maximum progress value." },
+      { name: "className", type: "string", description: "Adds classes to the progress track." },
+    ],
+  },
+  {
+    slug: "loader",
+    title: "Loader",
+    description: "A compact loading spinner for pending states.",
+    category: "Feedback",
+    importCode: `import { Loader } from "@swirski/ui";`,
+    usageCode: `<Loader size="md" />`,
+    preview: <Loader size="lg" />,
+    props: [
+      { name: "size", type: '"sm" | "md" | "lg"', defaultValue: '"md"', description: "Controls the spinner size." },
+      { name: "className", type: "string", description: "Adds classes to the spinner." },
+    ],
+  },
+  {
+    slug: "skeleton",
+    title: "Skeleton",
+    description: "A placeholder block for loading layouts.",
+    category: "Feedback",
+    importCode: `import { Skeleton } from "@swirski/ui";`,
+    usageCode: `<Skeleton className="h-24 w-full" />`,
+    preview: (
+      <div className="grid max-w-sm gap-3">
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-24 w-full" />
+      </div>
+    ),
+    props: [
+      { name: "className", type: "string", description: "Controls the skeleton size and extra styling." },
+      { name: "...divProps", type: "HTMLAttributes<HTMLDivElement>", description: "Forwarded to the root div." },
+    ],
+  },
+  {
+    slug: "radio-group",
+    title: "RadioGroup",
+    description: "A native radio group for choosing one option from a set.",
+    category: "Forms",
+    importCode: `import { RadioGroup } from "@swirski/ui";`,
+    usageCode: `<RadioGroup
+  name="tone"
+  defaultValue="blue"
+  options={[
+    { value: "blue", label: "Blue" },
+    { value: "yellow", label: "Yellow" },
+  ]}
+/>`,
+    preview: (
+      <RadioGroup
+        name="docs-tone"
+        defaultValue="blue"
+        options={[
+          { value: "blue", label: "Blue", description: "Sharp product surfaces." },
+          { value: "yellow", label: "Yellow", description: "Loud editorial moments." },
+        ]}
+      />
+    ),
+    props: [
+      { name: "name", type: "string", required: true, description: "Native radio group name." },
+      { name: "options", type: "RadioGroupOption[]", required: true, description: "Options rendered as radio inputs." },
+      { name: "value", type: "string", description: "Controlled selected value." },
+      { name: "defaultValue", type: "string", description: "Initial selected value." },
+      { name: "onValueChange", type: "(value: string) => void", description: "Called when the selected value changes." },
+    ],
+  },
+  {
+    slug: "slider",
+    title: "Slider",
+    description: "A native range input for numeric controls.",
+    category: "Forms",
+    importCode: `import { Slider } from "@swirski/ui";`,
+    usageCode: `<Slider defaultValue={64} min={0} max={100} />`,
+    preview: <Slider defaultValue={64} min={0} max={100} />,
+    props: [
+      { name: "...inputProps", type: "InputHTMLAttributes<HTMLInputElement>", description: "Forwarded to the native range input." },
+      { name: "className", type: "string", description: "Adds classes to the range input." },
+    ],
+  },
+  {
+    slug: "avatar",
+    title: "Avatar",
+    description: "A framed user image or fallback for accounts, comments and navs.",
+    category: "Layout",
+    importCode: `import { Avatar, AvatarFallback, AvatarImage } from "@swirski/ui";`,
+    usageCode: `<Avatar>
+  <AvatarFallback>RS</AvatarFallback>
+</Avatar>`,
+    preview: (
+      <Avatar>
+        <AvatarFallback>RS</AvatarFallback>
+      </Avatar>
+    ),
+    props: [
+      { name: "Avatar", type: "HTMLAttributes<HTMLDivElement>", description: "Props forwarded to the root avatar." },
+      { name: "AvatarImage", type: "ImgHTMLAttributes<HTMLImageElement>", description: "Props forwarded to the image." },
+      { name: "AvatarFallback", type: "HTMLAttributes<HTMLSpanElement>", description: "Props forwarded to the fallback." },
+    ],
+  },
+  {
+    slug: "breadcrumb",
+    title: "Breadcrumb",
+    description: "Navigation trail primitives for docs and app pages.",
+    category: "Layout",
+    importCode: `import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@swirski/ui";`,
+    usageCode: `<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Docs</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem><BreadcrumbPage>Components</BreadcrumbPage></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>`,
+    preview: (
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Docs</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Components</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    ),
+    props: [
+      { name: "Breadcrumb", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the nav." },
+      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement>", description: "Props forwarded to links." },
+      { name: "BreadcrumbPage", type: "HTMLAttributes<HTMLSpanElement>", description: "Current page item." },
+    ],
+  },
+  {
+    slug: "pagination",
+    title: "Pagination",
+    description: "Page controls for tables, lists and archives.",
+    category: "Layout",
+    importCode: `import { Pagination } from "@swirski/ui";`,
+    usageCode: `<Pagination page={2} total={5} />`,
+    preview: <Pagination page={2} total={5} />,
+    props: [
+      { name: "page", type: "number", required: true, description: "Current page." },
+      { name: "total", type: "number", required: true, description: "Total number of pages." },
+      { name: "onPageChange", type: "(page: number) => void", description: "Called when a page button is pressed." },
+    ],
+  },
+  {
+    slug: "separator",
+    title: "Separator",
+    description: "A small visual divider for sections, menus and dense layouts.",
+    category: "Layout",
+    importCode: `import { Separator } from "@swirski/ui";`,
+    usageCode: `<Separator />`,
+    preview: <Separator />,
+    props: [
+      { name: "orientation", type: '"horizontal" | "vertical"', defaultValue: '"horizontal"', description: "Divider direction." },
+      { name: "className", type: "string", description: "Adds classes to the divider." },
+    ],
+  },
+  {
+    slug: "drawer",
+    title: "Drawer",
+    description: "A side sheet for mobile menus, settings panels and command surfaces.",
+    category: "Interaction",
+    importCode: `import { Drawer, DrawerContent, DrawerTrigger } from "@swirski/ui";`,
+    usageCode: `<Drawer>
+  <DrawerTrigger>Open drawer</DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Settings</DrawerTitle>
+      <DrawerDescription>Panel content lives here.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerClose>Close</DrawerClose>
+  </DrawerContent>
+</Drawer>`,
+    preview: (
+      <Drawer>
+        <DrawerTrigger>Open drawer</DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Settings</DrawerTitle>
+            <DrawerDescription>Panel content lives here.</DrawerDescription>
+          </DrawerHeader>
+          <DrawerClose>Close</DrawerClose>
+        </DrawerContent>
+      </Drawer>
+    ),
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open state." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "DrawerContent.side", type: '"left" | "right" | "top" | "bottom"', defaultValue: '"right"', description: "Where the drawer enters from." },
+      { name: "onOpenChange", type: "(open: boolean) => void", description: "Called when the drawer opens or closes." },
     ],
   },
   {
