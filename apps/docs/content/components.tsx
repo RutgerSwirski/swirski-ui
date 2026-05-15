@@ -251,6 +251,11 @@ export const componentDocs: ComponentDoc[] = [
         description: "Renders the button as an anchor when provided.",
       },
       {
+        name: "as",
+        type: "ElementType",
+        description: "Custom component used for the root element, such as Next.js Link.",
+      },
+      {
         name: "variant",
         type: '"blue" | "yellow" | "white"',
         defaultValue: '"blue"',
@@ -1537,7 +1542,7 @@ useClickOutside(ref, () => setOpen(false), {
     ),
     props: [
       { name: "Breadcrumb", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the nav." },
-      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement>", description: "Props forwarded to links." },
+      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement> & { as?: ElementType }", description: "Props forwarded to links. Use as to render framework links like Next.js Link." },
       { name: "BreadcrumbPage", type: "HTMLAttributes<HTMLSpanElement>", description: "Current page item." },
     ],
   },

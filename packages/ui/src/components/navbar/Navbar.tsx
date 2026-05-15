@@ -21,7 +21,7 @@ export function Navbar({ className, ...props }: NavbarProps) {
   return (
     <header
       className={clsx(
-        "flex min-h-20 items-center justify-between gap-4 border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-paper)] px-4 py-4 text-[var(--sw-color-ink)] sm:px-6",
+        "flex min-h-20 items-center justify-between gap-4 border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-4 text-[var(--sw-color-ink)] sm:px-6",
         className,
       )}
       {...props}

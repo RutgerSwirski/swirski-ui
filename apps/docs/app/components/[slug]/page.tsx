@@ -20,6 +20,7 @@ import {
   Text,
   Title,
 } from "@swirski/ui";
+import Link from "next/link";
 
 type Props = {
   params: Promise<{
@@ -89,7 +90,7 @@ function CodePanel({
 
 function PropTable({ component }: { component: ComponentDoc }) {
   return (
-    <section id="props" className="scroll-mt-8">
+    <section id="props" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
         <div className="flex items-center gap-3">
           <span className="h-5 w-5 border-4 border-black bg-[#FF3131]" />
@@ -101,7 +102,8 @@ function PropTable({ component }: { component: ComponentDoc }) {
         <Badge tone="white">{component.props.length} documented</Badge>
       </div>
 
-      <Table className="min-w-[48rem]">
+      <div className="w-full min-w-0 max-w-full overflow-hidden pb-3 pr-3">
+        <Table className="min-w-[48rem]">
         <TableHead>
           <TableRow>
             <TableHeader>Prop</TableHeader>
@@ -133,7 +135,8 @@ function PropTable({ component }: { component: ComponentDoc }) {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+        </Table>
+      </div>
     </section>
   );
 }
@@ -161,7 +164,7 @@ export default async function ComponentPage({ params }: Props) {
     componentDocs[(componentIndex + 1) % componentDocs.length];
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
         <DotGrid
           className="inset-0"
@@ -174,11 +177,11 @@ export default async function ComponentPage({ params }: Props) {
         <Container className="relative z-10">
           <NavBar />
 
-          <section className="grid gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16">
-            <div className="max-w-4xl">
+          <section className="grid min-w-0 gap-8 py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-end">
+            <div className="min-w-0 max-w-4xl">
               <SectionLabel>{component.category}</SectionLabel>
 
-              <Title className="mt-6" size="display">
+              <Title className="mt-6 break-words" size="display">
                 {component.title}
               </Title>
 
@@ -192,7 +195,7 @@ export default async function ComponentPage({ params }: Props) {
               </Text>
             </div>
 
-            <div className="grid w-full min-w-0 max-w-sm gap-3 md:w-80">
+            <div className="grid w-full min-w-0 max-w-sm gap-3 sm:max-w-sm lg:max-w-none">
               <div
                 className={`border-4 border-black p-4 shadow-[6px_6px_0_#0B0B0C] ${categoryStyles[component.category]}`}
               >
@@ -203,22 +206,24 @@ export default async function ComponentPage({ params }: Props) {
                 >
                   Component
                 </Text>
+
                 <Title className="mt-1 text-current" order={2} size="h2">
                   {String(componentIndex + 1).padStart(2, "0")}
                 </Title>
               </div>
-              <Button>Request Changes</Button>
+
+              <Button className="w-full">Request Changes</Button>
             </div>
           </section>
         </Container>
       </div>
 
       <Container className="py-16 md:py-20">
-        <div className="grid gap-10 lg:grid-cols-[16rem_1fr]">
-          <aside className="lg:sticky lg:top-8 lg:self-start">
+        <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]">
+          <aside className="min-w-0 lg:sticky lg:top-8 lg:self-start">
             <Card
               interactive={false}
-              className="bg-white shadow-[7px_7px_0_#0B0B0C]"
+              className="min-w-0 bg-white shadow-[7px_7px_0_#0B0B0C]"
             >
               <CardContent>
                 <Text
@@ -249,7 +254,7 @@ export default async function ComponentPage({ params }: Props) {
           <div className="grid min-w-0 gap-12">
             <CodePanel title="Import" code={component.importCode} />
 
-            <section id="preview" className="scroll-mt-8">
+            <section id="preview" className="min-w-0 scroll-mt-8">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="h-5 w-5 border-4 border-black bg-[#FFD400]" />
@@ -261,16 +266,25 @@ export default async function ComponentPage({ params }: Props) {
                 <Badge tone="white">Live render</Badge>
               </div>
 
-              <div className="border-4 border-black bg-white shadow-[10px_10px_0_#0B0B0C]">
-                <div className="flex items-center justify-between border-b-4 border-black bg-[#0B0B0C] px-4 py-3 text-white">
-                  <Title order={3} size="h5" tone="inverted">
+              <div className="w-full min-w-0 max-w-full overflow-hidden border-4 border-black bg-white shadow-[6px_6px_0_#0B0B0C] sm:shadow-[10px_10px_0_#0B0B0C]">
+                <div className="flex min-w-0 items-center justify-between gap-3 border-b-4 border-black bg-[#0B0B0C] px-4 py-3 text-white">
+                  <Title
+                    className="min-w-0 break-words"
+                    order={3}
+                    size="h5"
+                    tone="inverted"
+                  >
                     {component.title}
                   </Title>
-                  <Badge size="sm">Preview</Badge>
+                  <Badge className="shrink-0" size="sm">
+                    Preview
+                  </Badge>
                 </div>
 
-                <div className="min-h-72 overflow-hidden bg-[#F5F5F3] p-6 md:p-10">
-                  {component.preview}
+                <div className="w-full min-w-0 max-w-full overflow-x-auto overflow-y-visible bg-[#F5F5F3] p-4 sm:min-h-72 sm:p-6 md:p-10">
+                  <div className="w-max min-w-full max-w-none">
+                    {component.preview}
+                  </div>
                 </div>
               </div>
             </section>
@@ -282,17 +296,19 @@ export default async function ComponentPage({ params }: Props) {
 
             <PropTable component={component} />
 
-            <section className="grid gap-4 border-t-4 border-black pt-8 md:grid-cols-2">
+            <section className="grid grid-cols-1 gap-4 border-t-4 border-black pt-8 sm:grid-cols-2 md:items-center">
               <Button
+              as={Link}
                 href={`/components/${previousComponent.slug}`}
                 variant="white"
-                className="w-fit"
+                className="w-full text-xs sm:text-sm"
               >
                 Previous: {previousComponent.title}
               </Button>
               <Button
+              as={Link}
                 href={`/components/${nextComponent.slug}`}
-                className="md:ml-auto"
+                className="w-full items-center gap-2 text-xs sm:text-sm"
               >
                 Next: {nextComponent.title}
               </Button>

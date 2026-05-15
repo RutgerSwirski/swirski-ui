@@ -61,7 +61,7 @@ const workflow = [
 
 export default function CliPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
         <DotGrid
           className="inset-0"
