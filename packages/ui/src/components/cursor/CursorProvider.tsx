@@ -38,56 +38,58 @@ export type CursorProviderProps = {
 };
 
 const cursorSelectorStyles = `
-[data-swirski-cursor] {
-  cursor: var(--swirski-cursor);
-}
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  [data-swirski-cursor] {
+    cursor: var(--swirski-cursor);
+  }
 
-[data-swirski-cursor] :is(
-  a,
-  button,
-  summary,
-  label,
-  select,
-  input[type="button"],
-  input[type="checkbox"],
-  input[type="radio"],
-  input[type="reset"],
-  input[type="submit"],
-  [role="button"],
-  [data-cursor="pointer"]
-) {
-  cursor: var(--swirski-cursor-pointer);
-}
+  [data-swirski-cursor] :is(
+    a,
+    button,
+    summary,
+    label,
+    select,
+    input[type="button"],
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="reset"],
+    input[type="submit"],
+    [role="button"],
+    [data-cursor="pointer"]
+  ) {
+    cursor: var(--swirski-cursor-pointer);
+  }
 
-[data-swirski-cursor] :is(
-  a,
-  button,
-  summary,
-  label,
-  select,
-  input[type="button"],
-  input[type="checkbox"],
-  input[type="radio"],
-  input[type="reset"],
-  input[type="submit"],
-  [role="button"],
-  [data-cursor="pointer"],
-  [data-cursor="active"]
-):active {
-  cursor: var(--swirski-cursor-active);
-}
+  [data-swirski-cursor] :is(
+    a,
+    button,
+    summary,
+    label,
+    select,
+    input[type="button"],
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="reset"],
+    input[type="submit"],
+    [role="button"],
+    [data-cursor="pointer"],
+    [data-cursor="active"]
+  ):active {
+    cursor: var(--swirski-cursor-active);
+  }
 
-[data-swirski-cursor][data-swirski-cursor-pressed="true"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] * {
-  cursor: var(--swirski-cursor-active);
-}
+  [data-swirski-cursor][data-swirski-cursor-pressed="true"],
+  [data-swirski-cursor][data-swirski-cursor-pressed="true"] * {
+    cursor: var(--swirski-cursor-active);
+  }
 
-[data-swirski-cursor] :is(
-  input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="reset"]):not([type="submit"]),
-  textarea,
-  [contenteditable="true"]
-) {
-  cursor: text;
+  [data-swirski-cursor] :is(
+    input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="reset"]):not([type="submit"]),
+    textarea,
+    [contenteditable="true"]
+  ) {
+    cursor: text;
+  }
 }
 `;
 

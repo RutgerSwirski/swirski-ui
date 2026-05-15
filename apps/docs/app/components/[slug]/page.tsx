@@ -98,9 +98,7 @@ function PropTable({ component }: { component: ComponentDoc }) {
           </Title>
         </div>
 
-        <Badge tone="white">
-          {component.props.length} documented
-        </Badge>
+        <Badge tone="white">{component.props.length} documented</Badge>
       </div>
 
       <Table className="min-w-[48rem]">
@@ -209,8 +207,7 @@ export default async function ComponentPage({ params }: Props) {
                   {String(componentIndex + 1).padStart(2, "0")}
                 </Title>
               </div>
-
-              <CodeBlock code={component.importCode} />
+              <Button>Request Changes</Button>
             </div>
           </section>
         </Container>

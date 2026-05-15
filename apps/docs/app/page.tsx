@@ -14,6 +14,12 @@ import {
   SectionLabel,
   Text,
   Title,
+  MobileMenu,
+  MobileMenuContent,
+  MobileMenuLink,
+  MobileMenuNav,
+  MobileMenuTrigger,
+  NavbarActions,
 } from "@swirski/ui";
 
 const foundations = [
@@ -209,11 +215,7 @@ export default function HomePage() {
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {packageLinks.map((item) => (
-              <Button
-                variant="white"
-                key={item}
-                href={getComponentHref(item)}
-              >
+              <Button variant="white" key={item} href={getComponentHref(item)}>
                 {item}
               </Button>
             ))}

@@ -36,6 +36,8 @@ export * from "./components/image-frame/index";
 
 export * from "./components/loader/index";
 
+export * from "./components/navbar/index";
+
 export * from "./components/pagination/index";
 
 export * from "./components/popover/index";
