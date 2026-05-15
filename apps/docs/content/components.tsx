@@ -6,7 +6,15 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
+  Avatar,
+  AvatarFallback,
   Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Button,
   Card,
   CardContent,
@@ -15,16 +23,63 @@ import {
   CursorDock,
   CursorProvider,
   DiagonalLines,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   DotGrid,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Field,
+  FieldError,
   FieldHint,
-  HeroTitle,
-  HeroLead,
   Input,
   Label,
   LineGrid,
+  Loader,
+  Pagination,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Progress,
+  RadioGroup,
+  Select,
+  Separator,
+  Skeleton,
+  Slider,
   Switch,
+  SwirskiProvider,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Text,
   Textarea,
+  Title,
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  Tooltip,
 } from "@swirski/ui";
 
 export type ComponentDoc = {
@@ -39,12 +94,23 @@ export type ComponentDoc = {
     | "Disclosure"
     | "Feedback"
     | "Forms"
+    | "Hooks"
     | "Media"
+    | "Theming"
     | "Interaction"
     | "Backgrounds";
   importCode: string;
   usageCode: string;
   preview: React.ReactNode;
+  props: PropDoc[];
+};
+
+export type PropDoc = {
+  name: string;
+  type: string;
+  defaultValue?: string;
+  required?: boolean;
+  description: string;
 };
 
 export const componentDocs: ComponentDoc[] = [
@@ -64,6 +130,36 @@ export const componentDocs: ComponentDoc[] = [
         <Badge tone="black">Studio</Badge>
       </div>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Badge text or inline content.",
+      },
+      {
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white" | "black"',
+        defaultValue: '"yellow"',
+        description: "Applies one of the Swirski status color treatments.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md"',
+        defaultValue: '"md"',
+        description: "Controls the compact badge padding and text size.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root span.",
+      },
+      {
+        name: "...spanProps",
+        type: "HTMLAttributes<HTMLSpanElement>",
+        description: "Forwarded to the root span.",
+      },
+    ],
   },
   {
     slug: "alert",
@@ -84,6 +180,41 @@ export const componentDocs: ComponentDoc[] = [
         </AlertDescription>
       </Alert>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Alert content, usually AlertTitle and AlertDescription.",
+      },
+      {
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white"',
+        defaultValue: '"yellow"',
+        description: "Applies the alert surface color.",
+      },
+      {
+        name: "role",
+        type: "AriaRole",
+        defaultValue: '"status"',
+        description: "Accessible live-region role for the alert container.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root alert.",
+      },
+      {
+        name: "AlertTitle.className",
+        type: "string",
+        description: "Adds classes to the title heading.",
+      },
+      {
+        name: "AlertDescription.className",
+        type: "string",
+        description: "Adds classes to the description paragraph.",
+      },
+    ],
   },
   {
     slug: "button",
@@ -94,6 +225,51 @@ export const componentDocs: ComponentDoc[] = [
     importCode: `import { Button } from "@swirski/ui";`,
     usageCode: `<Button href="/pieces">View pieces</Button>`,
     preview: <Button href="/pieces">View pieces</Button>,
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Button label or inline content.",
+      },
+      {
+        name: "href",
+        type: "string",
+        description: "Renders the button as an anchor when provided.",
+      },
+      {
+        name: "variant",
+        type: '"blue" | "yellow" | "white"',
+        defaultValue: '"blue"',
+        description: "Applies the Swirski color treatment.",
+      },
+      {
+        name: "icon",
+        type: '"arrow-up-right" | "github"',
+        description: "Adds a bundled icon beside the label.",
+      },
+      {
+        name: "iconSide",
+        type: '"left" | "right"',
+        defaultValue: '"left"',
+        description: "Controls where the optional icon is rendered.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root button or anchor.",
+      },
+      {
+        name: "...anchorProps",
+        type: "AnchorHTMLAttributes<HTMLAnchorElement>",
+        description: "Forwarded when the component renders an anchor.",
+      },
+      {
+        name: "...buttonProps",
+        type: "ButtonHTMLAttributes<HTMLButtonElement>",
+        description: "Forwarded when the component renders a button.",
+      },
+    ],
   },
   {
     slug: "cursor",
@@ -101,22 +277,65 @@ export const componentDocs: ComponentDoc[] = [
     description:
       "A playful pixel-art cursor provider with arrow, hover hand and click hand states.",
     category: "Interaction",
-    importCode: `import { CursorProvider, CursorDock } from "@swirski/ui";`,
+    importCode: `import { Button, CursorProvider, CursorDock } from "@swirski/ui";`,
     usageCode: `<CursorProvider>
   <CursorDock />
-  <main>Your app content</main>
+  <Button href="/components">Hover me</Button>
 </CursorProvider>`,
     preview: (
       <CursorProvider className="relative min-h-64 space-y-6 overflow-hidden p-2">
         <CursorDock position="absolute" />
         <div className="flex flex-wrap items-center gap-4">
           <Button variant="yellow">Hover me</Button>
-          <a className="font-black underline" href="/components/cursor">
+          <Button href="/components/cursor" variant="white">
             Link cursor
-          </a>
+          </Button>
         </div>
       </CursorProvider>
     ),
+    props: [
+      {
+        name: "CursorProvider.children",
+        type: "ReactNode",
+        required: true,
+        description: "Content that should receive the Swirski cursor styles.",
+      },
+      {
+        name: "CursorProvider.cursor",
+        type: "CursorId",
+        description: "Controlled cursor id.",
+      },
+      {
+        name: "CursorProvider.defaultCursor",
+        type: "CursorId",
+        defaultValue: '"bolt"',
+        description: "Initial cursor when the provider is uncontrolled.",
+      },
+      {
+        name: "CursorProvider.storageKey",
+        type: "string | false",
+        defaultValue: '"swirski-cursor"',
+        description: "Local storage key, or false to skip persistence.",
+      },
+      {
+        name: "CursorDock.position",
+        type: '"fixed" | "absolute"',
+        defaultValue: '"fixed"',
+        description: "Positions the dock against the viewport or parent.",
+      },
+      {
+        name: "CursorDock.side",
+        type: '"left" | "right"',
+        defaultValue: '"right"',
+        description: "Side where the cursor dock opens.",
+      },
+      {
+        name: "CursorDock.label",
+        type: "string",
+        defaultValue: '"Choose cursor"',
+        description: "Accessible label for the dock trigger.",
+      },
+    ],
   },
   {
     slug: "field",
@@ -124,7 +343,14 @@ export const componentDocs: ComponentDoc[] = [
     description:
       "A form field set with label, input, textarea and hint primitives built from native elements.",
     category: "Forms",
-    importCode: `import { Field, FieldHint, Input, Label, Textarea } from "@swirski/ui";`,
+    importCode: `import {
+  Field,
+  FieldError,
+  FieldHint,
+  Input,
+  Label,
+  Textarea,
+} from "@swirski/ui";`,
     usageCode: `<Field>
   <Label htmlFor="email">Email</Label>
   <Input id="email" placeholder="studio@swirski.dev" />
@@ -140,9 +366,131 @@ export const componentDocs: ComponentDoc[] = [
         <Field>
           <Label htmlFor="docs-message">Message</Label>
           <Textarea id="docs-message" placeholder="Tell us what you are building." />
+          <FieldError>This is where validation feedback can sit.</FieldError>
         </Field>
       </div>
     ),
+    props: [
+      {
+        name: "Field.className",
+        type: "string",
+        description: "Adds classes to the field wrapper.",
+      },
+      {
+        name: "Label.htmlFor",
+        type: "string",
+        description: "Connects the label to an input or textarea id.",
+      },
+      {
+        name: "Label.className",
+        type: "string",
+        description: "Adds classes to the label.",
+      },
+      {
+        name: "Input",
+        type: "InputHTMLAttributes<HTMLInputElement>",
+        description: "Forwards native input props and refs.",
+      },
+      {
+        name: "Textarea",
+        type: "TextareaHTMLAttributes<HTMLTextAreaElement>",
+        description: "Forwards native textarea props and refs.",
+      },
+      {
+        name: "FieldHint.className",
+        type: "string",
+        description: "Adds classes to helper text.",
+      },
+      {
+        name: "FieldError.className",
+        type: "string",
+        description: "Adds classes to validation text.",
+      },
+    ],
+  },
+  {
+    slug: "select",
+    title: "Select",
+    description:
+      "A custom dropdown picker for option sets, playground controls and compact forms.",
+    category: "Forms",
+    importCode: `import { Select } from "@swirski/ui";`,
+    usageCode: `<Select
+  placeholder="Pick a tone"
+  options={[
+    { value: "yellow", label: "Yellow" },
+    { value: "blue", label: "Blue" },
+    { value: "red", label: "Red" },
+  ]}
+/>`,
+    preview: (
+      <div className="max-w-sm">
+        <Select
+          defaultValue="yellow"
+          options={[
+            { value: "yellow", label: "Yellow" },
+            { value: "blue", label: "Blue" },
+            { value: "red", label: "Red" },
+            { value: "white", label: "White" },
+          ]}
+        />
+      </div>
+    ),
+    props: [
+      {
+        name: "options",
+        type: "SelectOption[]",
+        required: true,
+        description: "Options shown in the dropdown list.",
+      },
+      {
+        name: "value",
+        type: "string",
+        description: "Controlled selected option value.",
+      },
+      {
+        name: "defaultValue",
+        type: "string",
+        description: "Initial selected option value when uncontrolled.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Called when a new option is selected.",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        defaultValue: '"Select an option"',
+        description: "Text shown when no option is selected.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Disables the trigger and prevents selection.",
+      },
+      {
+        name: "name",
+        type: "string",
+        description: "Adds a hidden input for native form submission.",
+      },
+      {
+        name: "triggerClassName",
+        type: "string",
+        description: "Adds classes to the dropdown trigger.",
+      },
+      {
+        name: "contentClassName",
+        type: "string",
+        description: "Adds classes to the dropdown content panel.",
+      },
+      {
+        name: "optionClassName",
+        type: "string",
+        description: "Adds classes to each dropdown option.",
+      },
+    ],
   },
   {
     slug: "checkbox",
@@ -162,6 +510,39 @@ export const componentDocs: ComponentDoc[] = [
         description="A compact, native checkbox with a custom Swirski mark."
       />
     ),
+    props: [
+      {
+        name: "label",
+        type: "ReactNode",
+        description: "Visible label rendered beside the checkbox.",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Optional supporting text below the label.",
+      },
+      {
+        name: "containerClassName",
+        type: "string",
+        description: "Adds classes to the root label wrapper.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the hidden native checkbox input.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Disables interaction and dims the wrapper.",
+      },
+      {
+        name: "...inputProps",
+        type: 'Omit<InputHTMLAttributes<HTMLInputElement>, "type">',
+        description: "Forwarded to the native checkbox input.",
+      },
+    ],
   },
   {
     slug: "switch",
@@ -178,6 +559,39 @@ export const componentDocs: ComponentDoc[] = [
         description="Use switch semantics without giving up native form behavior."
       />
     ),
+    props: [
+      {
+        name: "label",
+        type: "ReactNode",
+        description: "Visible label rendered beside the switch.",
+      },
+      {
+        name: "description",
+        type: "ReactNode",
+        description: "Optional supporting text below the label.",
+      },
+      {
+        name: "containerClassName",
+        type: "string",
+        description: "Adds classes to the root label wrapper.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the hidden native checkbox input.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Disables interaction and dims the wrapper.",
+      },
+      {
+        name: "...inputProps",
+        type: 'Omit<InputHTMLAttributes<HTMLInputElement>, "type">',
+        description: "Forwarded to the native switch input.",
+      },
+    ],
   },
   {
     slug: "accordion",
@@ -215,6 +629,45 @@ export const componentDocs: ComponentDoc[] = [
         </AccordionItem>
       </Accordion>
     ),
+    props: [
+      {
+        name: "Accordion.className",
+        type: "string",
+        description: "Adds classes to the accordion wrapper.",
+      },
+      {
+        name: "AccordionItem.open",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Uses the native details open state.",
+      },
+      {
+        name: "AccordionItem.className",
+        type: "string",
+        description: "Adds classes to the details element.",
+      },
+      {
+        name: "AccordionTrigger.children",
+        type: "ReactNode",
+        required: true,
+        description: "Summary label for the disclosure item.",
+      },
+      {
+        name: "AccordionTrigger.className",
+        type: "string",
+        description: "Adds classes to the summary element.",
+      },
+      {
+        name: "AccordionContent.className",
+        type: "string",
+        description: "Adds classes to the content panel.",
+      },
+      {
+        name: "...detailsProps",
+        type: "DetailsHTMLAttributes<HTMLDetailsElement>",
+        description: "Forwarded to each accordion item.",
+      },
+    ],
   },
   {
     slug: "card",
@@ -222,45 +675,839 @@ export const componentDocs: ComponentDoc[] = [
     description:
       "A bordered content block for projects, pieces, links and previews.",
     category: "Cards",
-    importCode: `import { Card, CardContent, CardTitle } from "@swirski/ui";`,
+    importCode: `import { Card, CardContent, CardTitle, Text } from "@swirski/ui";`,
     usageCode: `<Card>
   <CardContent>
     <CardTitle>Patchwork Jacket</CardTitle>
+    <Text className="mt-3" tone="muted" weight="bold">
+      A framed content primitive with Swirski borders and shadows.
+    </Text>
   </CardContent>
 </Card>`,
     preview: (
       <Card>
         <CardContent>
           <CardTitle>Patchwork Jacket</CardTitle>
+          <Text className="mt-3" tone="muted" weight="bold">
+            A framed content primitive with Swirski borders and shadows.
+          </Text>
         </CardContent>
       </Card>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Card body content.",
+      },
+      {
+        name: "interactive",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Enables hover and active movement styles.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the card root.",
+      },
+      {
+        name: "CardContent.className",
+        type: "string",
+        description: "Adds classes to the padded content wrapper.",
+      },
+      {
+        name: "CardTitle.children",
+        type: "ReactNode",
+        required: true,
+        description: "Title content rendered inside the card heading.",
+      },
+    ],
   },
   {
-    slug: "hero-title",
-    title: "HeroTitle",
+    slug: "title",
+    title: "Title",
     description:
-      "A large expressive heading component for landing pages and editorial sections.",
+      "A responsive heading primitive with Mantine-style order and size controls.",
     category: "Typography",
-    importCode: `import { HeroTitle } from "@swirski/ui";`,
-    usageCode: `<HeroTitle>Build expressive interfaces.</HeroTitle>`,
-    preview: <HeroTitle>Build expressive interfaces.</HeroTitle>,
-  },
-  {
-    slug: "hero-lead",
-    title: "HeroLead",
-    description:
-      "A supporting text component for hero sections and page introductions.",
-    category: "Typography",
-    importCode: `import { HeroLead } from "@swirski/ui";`,
-    usageCode: `<HeroLead>
-  A small UI library for expressive, editorial web interfaces.
-</HeroLead>`,
+    importCode: `import { Title } from "@swirski/ui";`,
+    usageCode: `<Title order={1} size="display">Build expressive interfaces.</Title>`,
     preview: (
-      <HeroLead>
-        A small UI library for expressive, editorial web interfaces.
-      </HeroLead>
+      <div className="grid gap-4">
+        <Title order={1} size="display">
+          Build expressive interfaces.
+        </Title>
+        <Title order={2} size="h3" tone="muted">
+          Without naming every heading after a page section.
+        </Title>
+      </div>
     ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Heading content.",
+      },
+      {
+        name: "order",
+        type: "1 | 2 | 3 | 4 | 5 | 6",
+        defaultValue: "1",
+        description: "Chooses the semantic heading element.",
+      },
+      {
+        name: "size",
+        type: '"display" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"',
+        description: "Overrides the visual heading scale.",
+      },
+      {
+        name: "tone",
+        type: '"default" | "muted" | "inverted"',
+        defaultValue: '"default"',
+        description: "Applies the standard title color treatment.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the heading.",
+      },
+      {
+        name: "...headingProps",
+        type: "HTMLAttributes<HTMLHeadingElement>",
+        description: "Forwarded to the rendered heading element.",
+      },
+    ],
+  },
+  {
+    slug: "text",
+    title: "Text",
+    description:
+      "A general text primitive for body copy, supporting text and compact labels.",
+    category: "Typography",
+    importCode: `import { Text } from "@swirski/ui";`,
+    usageCode: `<Text size="xl" tone="muted" weight="bold">
+  A small UI library for expressive, editorial web interfaces.
+</Text>`,
+    preview: (
+      <div className="grid max-w-xl gap-3">
+        <Text size="xl" tone="muted" weight="bold">
+          A small UI library for expressive, editorial web interfaces.
+        </Text>
+        <Text size="sm" tone="subtle">
+          Use it for lead copy, helper text, labels and dense interface notes.
+        </Text>
+      </div>
+    ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Text content.",
+      },
+      {
+        name: "component",
+        type: '"p" | "span" | "div"',
+        defaultValue: '"p"',
+        description: "Chooses the rendered text element.",
+      },
+      {
+        name: "size",
+        type: '"xs" | "sm" | "md" | "lg" | "xl"',
+        defaultValue: '"md"',
+        description: "Applies the standard text scale.",
+      },
+      {
+        name: "tone",
+        type: '"default" | "muted" | "subtle" | "inverted"',
+        defaultValue: '"default"',
+        description: "Applies the standard text color treatment.",
+      },
+      {
+        name: "weight",
+        type: '"regular" | "medium" | "bold" | "black"',
+        defaultValue: '"regular"',
+        description: "Applies the text weight.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the rendered element.",
+      },
+      {
+        name: "...elementProps",
+        type: "HTMLAttributes<HTMLElement>",
+        description: "Forwarded to the rendered text element.",
+      },
+    ],
+  },
+  {
+    slug: "swirski-provider",
+    title: "SwirskiProvider",
+    description:
+      "Theme provider for Swirski tokens, color schemes and per-app brand overrides.",
+    category: "Theming",
+    importCode: `import { SwirskiProvider, createSwirskiTheme } from "@swirski/ui";`,
+    usageCode: `const theme = createSwirskiTheme({
+  colorBlue: "#0047FF",
+  colorYellow: "#FFE45C",
+  shadowMd: "8px 8px 0 var(--sw-color-shadow)",
+});
+
+<SwirskiProvider theme={theme}>
+  <App />
+</SwirskiProvider>`,
+    preview: (
+      <SwirskiProvider
+        theme={{
+          colorBlue: "#5E2BFF",
+          colorYellow: "#B8FF3D",
+          colorShadow: "#5E2BFF",
+        }}
+      >
+        <div className="grid max-w-md gap-4 border-4 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-paper)] p-5 shadow-[var(--sw-shadow-md)]">
+          <Title order={3} size="h4">
+            Token tuned
+          </Title>
+          <Text tone="muted" weight="bold">
+            Components inside the provider read the same CSS variables.
+          </Text>
+          <Button>Theme button</Button>
+        </div>
+      </SwirskiProvider>
+    ),
+    props: [
+      {
+        name: "colorScheme",
+        type: '"light" | "dark"',
+        defaultValue: '"light"',
+        description: "Selects the default light or dark token set.",
+      },
+      {
+        name: "theme",
+        type: "SwirskiTheme",
+        description: "Overrides any Swirski token or adds custom CSS variables.",
+      },
+      {
+        name: "createSwirskiTheme",
+        type: "(theme: SwirskiTheme) => SwirskiTheme",
+        description: "Small helper for typed theme objects.",
+      },
+      {
+        name: "useSwirskiTheme",
+        type: "() => SwirskiThemeTokens",
+        description: "Reads the resolved theme inside React components.",
+      },
+    ],
+  },
+  {
+    slug: "use-disclosure",
+    title: "useDisclosure",
+    description:
+      "Boolean open/close/toggle state for dialogs, drawers, popovers and custom disclosure UI.",
+    category: "Hooks",
+    importCode: `import { useDisclosure } from "@swirski/ui";`,
+    usageCode: `const [opened, handlers] = useDisclosure(false);
+
+<Button onClick={handlers.toggle}>
+  {opened ? "Close" : "Open"}
+</Button>`,
+    preview: (
+      <Card interactive={false} className="max-w-md bg-white shadow-[7px_7px_0_#0B0B0C]">
+        <CardContent>
+          <Badge tone="blue">Disclosure state</Badge>
+          <Text className="mt-4" tone="muted" weight="bold">
+            Returns opened plus open, close, toggle and set handlers.
+          </Text>
+        </CardContent>
+      </Card>
+    ),
+    props: [
+      { name: "defaultOpened", type: "boolean", defaultValue: "false", description: "Initial uncontrolled disclosure state." },
+      { name: "options.value", type: "boolean", description: "Controlled disclosure state." },
+      { name: "options.onChange", type: "(opened: boolean) => void", description: "Called whenever state changes." },
+      { name: "return", type: "[boolean, UseDisclosureHandlers]", description: "Current state and handler object." },
+    ],
+  },
+  {
+    slug: "use-controllable-state",
+    title: "useControllableState",
+    description:
+      "A small helper for components that support both controlled and uncontrolled state.",
+    category: "Hooks",
+    importCode: `import { useControllableState } from "@swirski/ui";`,
+    usageCode: `const [value, setValue] = useControllableState({
+  value: props.value,
+  defaultValue: props.defaultValue ?? "",
+  onChange: props.onValueChange,
+});`,
+    preview: (
+      <Alert tone="yellow">
+        <AlertTitle>Internal helper</AlertTitle>
+        <AlertDescription>
+          Use this to keep component APIs consistent across Swirski primitives.
+        </AlertDescription>
+      </Alert>
+    ),
+    props: [
+      { name: "value", type: "T", description: "Controlled value." },
+      { name: "defaultValue", type: "T", required: true, description: "Uncontrolled initial value." },
+      { name: "onChange", type: "(value: T) => void", description: "Called when the setter resolves a value." },
+      { name: "return", type: "[T, Dispatch<SetStateAction<T>>]", description: "Current value and setter." },
+    ],
+  },
+  {
+    slug: "use-click-outside",
+    title: "useClickOutside",
+    description:
+      "Runs a callback when pointer events happen outside a referenced element.",
+    category: "Hooks",
+    importCode: `import { useClickOutside } from "@swirski/ui";`,
+    usageCode: `const ref = useRef<HTMLDivElement>(null);
+
+useClickOutside(ref, () => setOpen(false), {
+  enabled: open,
+});`,
+    preview: (
+      <Popover defaultOpen>
+        <PopoverTrigger>Outside click</PopoverTrigger>
+        <PopoverContent>
+          <Text weight="bold" tone="muted">
+            Useful for popovers, menus and custom panels.
+          </Text>
+        </PopoverContent>
+      </Popover>
+    ),
+    props: [
+      { name: "ref", type: "RefObject<HTMLElement | null>", required: true, description: "Element that owns the inside area." },
+      { name: "handler", type: "(event: Event) => void", required: true, description: "Runs when the event target is outside the ref." },
+      { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns listeners on or off." },
+      { name: "options.events", type: 'Array<"mousedown" | "pointerdown" | "touchstart">', defaultValue: '["pointerdown"]', description: "Events to listen for." },
+    ],
+  },
+  {
+    slug: "use-escape-key",
+    title: "useEscapeKey",
+    description: "Runs a callback when Escape is pressed.",
+    category: "Hooks",
+    importCode: `import { useEscapeKey } from "@swirski/ui";`,
+    usageCode: `useEscapeKey(() => setOpen(false), {
+  enabled: open,
+});`,
+    preview: (
+      <Badge tone="black">Escape listener for overlays</Badge>
+    ),
+    props: [
+      { name: "handler", type: "(event: KeyboardEvent) => void", required: true, description: "Runs when Escape is pressed." },
+      { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns the key listener on or off." },
+      { name: "options.target", type: "Document | HTMLElement | Window | null", description: "Event target, defaults to document." },
+    ],
+  },
+  {
+    slug: "use-local-storage",
+    title: "useLocalStorage",
+    description: "Persists React state in localStorage with serializer hooks.",
+    category: "Hooks",
+    importCode: `import { useLocalStorage } from "@swirski/ui";`,
+    usageCode: `const [cursor, setCursor, clearCursor] = useLocalStorage(
+  "swirski-cursor",
+  "bolt",
+);`,
+    preview: (
+      <Card interactive={false} className="max-w-md bg-[#FFD400]">
+        <CardContent>
+          <CardTitle>Persistent settings</CardTitle>
+          <Text className="mt-3" weight="bold">
+            Good for cursor choice, theme choice and docs preferences.
+          </Text>
+        </CardContent>
+      </Card>
+    ),
+    props: [
+      { name: "key", type: "string", required: true, description: "localStorage key." },
+      { name: "defaultValue", type: "T", required: true, description: "Fallback value." },
+      { name: "options.serialize", type: "(value: T) => string", description: "Custom serializer." },
+      { name: "options.deserialize", type: "(value: string) => T", description: "Custom parser." },
+      { name: "return", type: "[T, Dispatch<SetStateAction<T>>, () => void]", description: "Value, setter and remove function." },
+    ],
+  },
+  {
+    slug: "use-media-query",
+    title: "useMediaQuery",
+    description: "Tracks a CSS media query in React state.",
+    category: "Hooks",
+    importCode: `import { useMediaQuery } from "@swirski/ui";`,
+    usageCode: `const isDesktop = useMediaQuery("(min-width: 1024px)");`,
+    preview: <Badge tone="blue">Responsive state hook</Badge>,
+    props: [
+      { name: "query", type: "string", required: true, description: "CSS media query to observe." },
+      { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the browser runs the query." },
+      { name: "return", type: "boolean", description: "Whether the query currently matches." },
+    ],
+  },
+  {
+    slug: "use-reduced-motion",
+    title: "useReducedMotion",
+    description: "Reads the user preference for reduced motion.",
+    category: "Hooks",
+    importCode: `import { useReducedMotion } from "@swirski/ui";`,
+    usageCode: `const reducedMotion = useReducedMotion();`,
+    preview: <Badge tone="yellow">Motion preference</Badge>,
+    props: [
+      { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the media query runs." },
+      { name: "return", type: "boolean", description: "True when prefers-reduced-motion is reduce." },
+    ],
+  },
+  {
+    slug: "use-clipboard",
+    title: "useClipboard",
+    description: "Copies text to the clipboard and tracks copied/error state.",
+    category: "Hooks",
+    importCode: `import { useClipboard } from "@swirski/ui";`,
+    usageCode: `const clipboard = useClipboard();
+
+<Button onClick={() => clipboard.copy("pnpm add @swirski/ui")}>
+  {clipboard.copied ? "Copied" : "Copy"}
+</Button>`,
+    preview: (
+      <Card interactive={false} className="max-w-md bg-white">
+        <CardContent>
+          <Badge tone="yellow">Clipboard</Badge>
+          <Text className="mt-4" tone="muted" weight="bold">
+            Used by the docs copy buttons and handy for snippets.
+          </Text>
+        </CardContent>
+      </Card>
+    ),
+    props: [
+      { name: "options.timeout", type: "number", defaultValue: "1600", description: "Copied-state reset delay in milliseconds." },
+      { name: "copied", type: "boolean", description: "True immediately after a successful copy." },
+      { name: "copy", type: "(value: string) => Promise<void>", description: "Copies text to the clipboard." },
+      { name: "error", type: "Error | null", description: "Last copy error." },
+      { name: "reset", type: "() => void", description: "Clears copied and error state." },
+    ],
+  },
+  {
+    slug: "dialog",
+    title: "Dialog",
+    description:
+      "A modal overlay for confirmations, details and focused forms.",
+    category: "Interaction",
+    importCode: `import { Dialog, DialogContent, DialogTrigger } from "@swirski/ui";`,
+    usageCode: `<Dialog>
+  <DialogTrigger>Open dialog</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Delete piece?</DialogTitle>
+      <DialogDescription>This action needs confirmation.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose>Cancel</DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>`,
+    preview: (
+      <Dialog>
+        <DialogTrigger>Open dialog</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete piece?</DialogTitle>
+            <DialogDescription>This action needs confirmation.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose>Cancel</DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    ),
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open state." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "onOpenChange", type: "(open: boolean) => void", description: "Called when the dialog opens or closes." },
+      { name: "className", type: "string", description: "Available on trigger, content and layout slots." },
+    ],
+  },
+  {
+    slug: "popover",
+    title: "Popover",
+    description:
+      "A floating panel for filters, quick settings and small editable surfaces.",
+    category: "Interaction",
+    importCode: `import { Popover, PopoverContent, PopoverTrigger } from "@swirski/ui";`,
+    usageCode: `<Popover>
+  <PopoverTrigger>Filters</PopoverTrigger>
+  <PopoverContent>Quick controls live here.</PopoverContent>
+</Popover>`,
+    preview: (
+      <Popover>
+        <PopoverTrigger>Filters</PopoverTrigger>
+        <PopoverContent>
+          <Text size="sm" weight="bold" tone="muted">
+            Quick controls live here.
+          </Text>
+        </PopoverContent>
+      </Popover>
+    ),
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open state." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "align", type: '"start" | "end"', defaultValue: '"start"', description: "Aligns the content to the trigger." },
+      { name: "className", type: "string", description: "Adds classes to root, trigger or content slots." },
+    ],
+  },
+  {
+    slug: "dropdown-menu",
+    title: "DropdownMenu",
+    description:
+      "A compact actions menu for navs, profile menus and table rows.",
+    category: "Interaction",
+    importCode: `import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@swirski/ui";`,
+    usageCode: `<DropdownMenu>
+  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`,
+    preview: (
+      <DropdownMenu>
+        <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem>Duplicate</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+    props: [
+      { name: "DropdownMenuTrigger", type: "ButtonHTMLAttributes<HTMLButtonElement>", description: "Button props forwarded to the trigger." },
+      { name: "DropdownMenuContent.align", type: '"start" | "end"', defaultValue: '"start"', description: "Aligns the menu to the trigger." },
+      { name: "DropdownMenuItem", type: "ButtonHTMLAttributes<HTMLButtonElement>", description: "Button props forwarded to each item." },
+    ],
+  },
+  {
+    slug: "tooltip",
+    title: "Tooltip",
+    description: "A compact hover/focus label for icon buttons and dense UI.",
+    category: "Interaction",
+    importCode: `import { Tooltip } from "@swirski/ui";`,
+    usageCode: `<Tooltip content="Save changes">
+  <Button>Save</Button>
+</Tooltip>`,
+    preview: (
+      <Tooltip content="Save changes">
+        <Button>Save</Button>
+      </Tooltip>
+    ),
+    props: [
+      { name: "content", type: "ReactNode", required: true, description: "Tooltip label content." },
+      { name: "children", type: "ReactNode", required: true, description: "Element that owns the tooltip." },
+      { name: "className", type: "string", description: "Adds classes to the tooltip wrapper." },
+    ],
+  },
+  {
+    slug: "tabs",
+    title: "Tabs",
+    description: "Tabbed sections for settings, dashboards and previews.",
+    category: "Interaction",
+    importCode: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";`,
+    usageCode: `<Tabs defaultValue="preview">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">Preview content</TabsContent>
+  <TabsContent value="code">Code content</TabsContent>
+</Tabs>`,
+    preview: (
+      <Tabs defaultValue="preview">
+        <TabsList>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+        <TabsContent value="preview">Preview content</TabsContent>
+        <TabsContent value="code">Code content</TabsContent>
+      </Tabs>
+    ),
+    props: [
+      { name: "defaultValue", type: "string", required: true, description: "Initial active tab value." },
+      { name: "value", type: "string", description: "Controlled active tab value." },
+      { name: "onValueChange", type: "(value: string) => void", description: "Called when a tab is selected." },
+      { name: "TabsTrigger.value", type: "string", required: true, description: "Value this trigger activates." },
+    ],
+  },
+  {
+    slug: "table",
+    title: "Table",
+    description: "A bold base table for data lists before adding DataTable behavior.",
+    category: "Layout",
+    importCode: `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@swirski/ui";`,
+    usageCode: `<Table>
+  <TableHead>
+    <TableRow><TableHeader>Name</TableHeader><TableHeader>Status</TableHeader></TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow><TableCell>Studio</TableCell><TableCell>Live</TableCell></TableRow>
+  </TableBody>
+</Table>`,
+    preview: (
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>Name</TableHeader>
+            <TableHeader>Status</TableHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Studio</TableCell>
+            <TableCell>Live</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Docs</TableCell>
+            <TableCell>Draft</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    ),
+    props: [
+      { name: "Table", type: "TableHTMLAttributes<HTMLTableElement>", description: "Props forwarded to the table element." },
+      { name: "TableHeader", type: "ThHTMLAttributes<HTMLTableCellElement>", description: "Props forwarded to header cells." },
+      { name: "TableCell", type: "TdHTMLAttributes<HTMLTableCellElement>", description: "Props forwarded to body cells." },
+    ],
+  },
+  {
+    slug: "toast",
+    title: "Toast",
+    description: "Status messages for save states, confirmations and errors.",
+    category: "Feedback",
+    importCode: `import { Toast, ToastDescription, ToastTitle } from "@swirski/ui";`,
+    usageCode: `<Toast tone="yellow">
+  <ToastTitle>Saved</ToastTitle>
+  <ToastDescription>Your changes are live.</ToastDescription>
+</Toast>`,
+    preview: (
+      <Toast tone="yellow">
+        <ToastTitle>Saved</ToastTitle>
+        <ToastDescription>Your changes are live.</ToastDescription>
+      </Toast>
+    ),
+    props: [
+      { name: "tone", type: '"blue" | "yellow" | "red" | "white"', defaultValue: '"yellow"', description: "Applies the toast color treatment." },
+      { name: "ToastProvider", type: "{ children: ReactNode }", description: "Provider for managed toasts and useToast." },
+      { name: "useToast", type: "() => ToastContextValue", description: "Adds and removes managed toasts." },
+    ],
+  },
+  {
+    slug: "progress",
+    title: "Progress",
+    description: "A simple progress meter for loading and completion states.",
+    category: "Feedback",
+    importCode: `import { Progress } from "@swirski/ui";`,
+    usageCode: `<Progress value={64} />`,
+    preview: <Progress value={64} />,
+    props: [
+      { name: "value", type: "number", defaultValue: "0", description: "Current progress value." },
+      { name: "max", type: "number", defaultValue: "100", description: "Maximum progress value." },
+      { name: "className", type: "string", description: "Adds classes to the progress track." },
+    ],
+  },
+  {
+    slug: "loader",
+    title: "Loader",
+    description: "A compact loading spinner for pending states.",
+    category: "Feedback",
+    importCode: `import { Loader } from "@swirski/ui";`,
+    usageCode: `<Loader size="md" />`,
+    preview: <Loader size="lg" />,
+    props: [
+      { name: "size", type: '"sm" | "md" | "lg"', defaultValue: '"md"', description: "Controls the spinner size." },
+      { name: "className", type: "string", description: "Adds classes to the spinner." },
+    ],
+  },
+  {
+    slug: "skeleton",
+    title: "Skeleton",
+    description: "A placeholder block for loading layouts.",
+    category: "Feedback",
+    importCode: `import { Skeleton } from "@swirski/ui";`,
+    usageCode: `<Skeleton className="h-24 w-full" />`,
+    preview: (
+      <div className="grid max-w-sm gap-3">
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-24 w-full" />
+      </div>
+    ),
+    props: [
+      { name: "className", type: "string", description: "Controls the skeleton size and extra styling." },
+      { name: "...divProps", type: "HTMLAttributes<HTMLDivElement>", description: "Forwarded to the root div." },
+    ],
+  },
+  {
+    slug: "radio-group",
+    title: "RadioGroup",
+    description: "A native radio group for choosing one option from a set.",
+    category: "Forms",
+    importCode: `import { RadioGroup } from "@swirski/ui";`,
+    usageCode: `<RadioGroup
+  name="tone"
+  defaultValue="blue"
+  options={[
+    { value: "blue", label: "Blue" },
+    { value: "yellow", label: "Yellow" },
+  ]}
+/>`,
+    preview: (
+      <RadioGroup
+        name="docs-tone"
+        defaultValue="blue"
+        options={[
+          { value: "blue", label: "Blue", description: "Sharp product surfaces." },
+          { value: "yellow", label: "Yellow", description: "Loud editorial moments." },
+        ]}
+      />
+    ),
+    props: [
+      { name: "name", type: "string", required: true, description: "Native radio group name." },
+      { name: "options", type: "RadioGroupOption[]", required: true, description: "Options rendered as radio inputs." },
+      { name: "value", type: "string", description: "Controlled selected value." },
+      { name: "defaultValue", type: "string", description: "Initial selected value." },
+      { name: "onValueChange", type: "(value: string) => void", description: "Called when the selected value changes." },
+    ],
+  },
+  {
+    slug: "slider",
+    title: "Slider",
+    description: "A native range input for numeric controls.",
+    category: "Forms",
+    importCode: `import { Slider } from "@swirski/ui";`,
+    usageCode: `<Slider defaultValue={64} min={0} max={100} />`,
+    preview: <Slider defaultValue={64} min={0} max={100} />,
+    props: [
+      { name: "...inputProps", type: "InputHTMLAttributes<HTMLInputElement>", description: "Forwarded to the native range input." },
+      { name: "className", type: "string", description: "Adds classes to the range input." },
+    ],
+  },
+  {
+    slug: "avatar",
+    title: "Avatar",
+    description: "A framed user image or fallback for accounts, comments and navs.",
+    category: "Layout",
+    importCode: `import { Avatar, AvatarFallback, AvatarImage } from "@swirski/ui";`,
+    usageCode: `<Avatar>
+  <AvatarFallback>RS</AvatarFallback>
+</Avatar>`,
+    preview: (
+      <Avatar>
+        <AvatarFallback>RS</AvatarFallback>
+      </Avatar>
+    ),
+    props: [
+      { name: "Avatar", type: "HTMLAttributes<HTMLDivElement>", description: "Props forwarded to the root avatar." },
+      { name: "AvatarImage", type: "ImgHTMLAttributes<HTMLImageElement>", description: "Props forwarded to the image." },
+      { name: "AvatarFallback", type: "HTMLAttributes<HTMLSpanElement>", description: "Props forwarded to the fallback." },
+    ],
+  },
+  {
+    slug: "breadcrumb",
+    title: "Breadcrumb",
+    description: "Navigation trail primitives for docs and app pages.",
+    category: "Layout",
+    importCode: `import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@swirski/ui";`,
+    usageCode: `<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Docs</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem><BreadcrumbPage>Components</BreadcrumbPage></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>`,
+    preview: (
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Docs</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Components</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    ),
+    props: [
+      { name: "Breadcrumb", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the nav." },
+      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement>", description: "Props forwarded to links." },
+      { name: "BreadcrumbPage", type: "HTMLAttributes<HTMLSpanElement>", description: "Current page item." },
+    ],
+  },
+  {
+    slug: "pagination",
+    title: "Pagination",
+    description: "Page controls for tables, lists and archives.",
+    category: "Layout",
+    importCode: `import { Pagination } from "@swirski/ui";`,
+    usageCode: `<Pagination page={2} total={5} />`,
+    preview: <Pagination page={2} total={5} />,
+    props: [
+      { name: "page", type: "number", required: true, description: "Current page." },
+      { name: "total", type: "number", required: true, description: "Total number of pages." },
+      { name: "onPageChange", type: "(page: number) => void", description: "Called when a page button is pressed." },
+    ],
+  },
+  {
+    slug: "separator",
+    title: "Separator",
+    description: "A small visual divider for sections, menus and dense layouts.",
+    category: "Layout",
+    importCode: `import { Separator } from "@swirski/ui";`,
+    usageCode: `<Separator />`,
+    preview: <Separator />,
+    props: [
+      { name: "orientation", type: '"horizontal" | "vertical"', defaultValue: '"horizontal"', description: "Divider direction." },
+      { name: "className", type: "string", description: "Adds classes to the divider." },
+    ],
+  },
+  {
+    slug: "drawer",
+    title: "Drawer",
+    description: "A side sheet for mobile menus, settings panels and command surfaces.",
+    category: "Interaction",
+    importCode: `import { Drawer, DrawerContent, DrawerTrigger } from "@swirski/ui";`,
+    usageCode: `<Drawer>
+  <DrawerTrigger>Open drawer</DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Settings</DrawerTitle>
+      <DrawerDescription>Panel content lives here.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerClose>Close</DrawerClose>
+  </DrawerContent>
+</Drawer>`,
+    preview: (
+      <Drawer>
+        <DrawerTrigger>Open drawer</DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Settings</DrawerTitle>
+            <DrawerDescription>Panel content lives here.</DrawerDescription>
+          </DrawerHeader>
+          <DrawerClose>Close</DrawerClose>
+        </DrawerContent>
+      </Drawer>
+    ),
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open state." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "DrawerContent.side", type: '"left" | "right" | "top" | "bottom"', defaultValue: '"right"', description: "Where the drawer enters from." },
+      { name: "onOpenChange", type: "(open: boolean) => void", description: "Called when the drawer opens or closes." },
+    ],
   },
   {
     slug: "dot-grid",
@@ -295,6 +1542,52 @@ export const componentDocs: ComponentDoc[] = [
         />
       </div>
     ),
+    props: [
+      {
+        name: "color",
+        type: "string",
+        defaultValue: '"currentColor"',
+        description: "Primary dot color.",
+      },
+      {
+        name: "opacity",
+        type: "CSSProperties['opacity']",
+        description: "Opacity applied to the grid layer.",
+      },
+      {
+        name: "spacing",
+        type: "number | string",
+        defaultValue: "13",
+        description: "Distance between dots.",
+      },
+      {
+        name: "dotSize",
+        type: "number | string",
+        defaultValue: "1.2",
+        description: "Primary dot radius.",
+      },
+      {
+        name: "accentColor",
+        type: "string",
+        description: "Optional color for larger accent dots.",
+      },
+      {
+        name: "accentEvery",
+        type: "number",
+        description: "Adds an accent dot every N grid cells when greater than 1.",
+      },
+      {
+        name: "accentDotSize",
+        type: "number | string",
+        defaultValue: "3",
+        description: "Accent dot radius.",
+      },
+      {
+        name: "...divProps",
+        type: 'Omit<HTMLAttributes<HTMLDivElement>, "color">',
+        description: "Forwarded to the root div.",
+      },
+    ],
   },
   {
     slug: "line-grid",
@@ -335,6 +1628,69 @@ export const componentDocs: ComponentDoc[] = [
         />
       </div>
     ),
+    props: [
+      {
+        name: "color",
+        type: "string",
+        defaultValue: '"#0B0B0C"',
+        description: "Fallback color for horizontal and vertical lines.",
+      },
+      {
+        name: "opacity",
+        type: "CSSProperties['opacity']",
+        defaultValue: "0.2",
+        description: "Opacity applied to the grid layer.",
+      },
+      {
+        name: "spacing",
+        type: "number | string",
+        defaultValue: "18",
+        description: "Fallback spacing for both directions.",
+      },
+      {
+        name: "thickness",
+        type: "number | string",
+        defaultValue: "1",
+        description: "Fallback line thickness for both directions.",
+      },
+      {
+        name: "direction",
+        type: '"both" | "horizontal" | "vertical"',
+        defaultValue: '"both"',
+        description: "Which line directions to render.",
+      },
+      {
+        name: "horizontalColor",
+        type: "string",
+        description: "Overrides the horizontal line color.",
+      },
+      {
+        name: "verticalColor",
+        type: "string",
+        description: "Overrides the vertical line color.",
+      },
+      {
+        name: "accentColor",
+        type: "string",
+        description: "Optional color for heavier accent lines.",
+      },
+      {
+        name: "accentEvery",
+        type: "number",
+        description: "Adds accent lines every N cells when greater than 1.",
+      },
+      {
+        name: "accentThickness",
+        type: "number | string",
+        defaultValue: "3",
+        description: "Thickness for accent lines.",
+      },
+      {
+        name: "...divProps",
+        type: 'Omit<HTMLAttributes<HTMLDivElement>, "color">',
+        description: "Forwarded to the root div.",
+      },
+    ],
   },
   {
     slug: "diagonal-lines",
@@ -371,5 +1727,58 @@ export const componentDocs: ComponentDoc[] = [
         />
       </div>
     ),
+    props: [
+      {
+        name: "angle",
+        type: "number | string",
+        defaultValue: "-45",
+        description: "Line angle in degrees or any CSS angle value.",
+      },
+      {
+        name: "color",
+        type: "string",
+        defaultValue: '"#0B0B0C"',
+        description: "Primary stripe color.",
+      },
+      {
+        name: "opacity",
+        type: "CSSProperties['opacity']",
+        defaultValue: "0.2",
+        description: "Opacity applied to the stripe layer.",
+      },
+      {
+        name: "spacing",
+        type: "number | string",
+        defaultValue: "18",
+        description: "Distance before the pattern repeats.",
+      },
+      {
+        name: "thickness",
+        type: "number | string",
+        defaultValue: "2",
+        description: "Primary stripe thickness.",
+      },
+      {
+        name: "accentColor",
+        type: "string",
+        description: "Optional color for heavier accent stripes.",
+      },
+      {
+        name: "accentEvery",
+        type: "number",
+        description: "Adds accent stripes every N repeats when greater than 1.",
+      },
+      {
+        name: "accentThickness",
+        type: "number | string",
+        defaultValue: "5",
+        description: "Thickness for accent stripes.",
+      },
+      {
+        name: "...divProps",
+        type: 'Omit<HTMLAttributes<HTMLDivElement>, "color">',
+        description: "Forwarded to the root div.",
+      },
+    ],
   },
 ];

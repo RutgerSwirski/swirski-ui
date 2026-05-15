@@ -1,8 +1,4 @@
-import {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ReactNode,
-} from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
 
 type ButtonBaseProps = {
@@ -10,6 +6,7 @@ type ButtonBaseProps = {
   icon?: "arrow-up-right" | "github";
   iconSide?: "left" | "right";
   variant?: "blue" | "yellow" | "white";
+  withShadow?: boolean;
   className?: string;
 };
 
@@ -26,12 +23,18 @@ type ButtonNativeProps = ButtonBaseProps &
 export type ButtonProps = ButtonLinkProps | ButtonNativeProps;
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 hover:cursor-pointer border-4 border-black px-6 py-3 font-black uppercase transition-all duration-200 shadow-[6px_6px_0_#0B0B0C] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2";
+  "inline-flex items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-6 py-3 font-black uppercase transition-all duration-200";
+
+const shadowFeedbackStyles =
+  "shadow-[var(--sw-shadow-md)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2";
+
+const flatFeedbackStyles =
+  "hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 active:scale-[0.98]";
 
 const variants = {
-  blue: "bg-[#0057FF] text-white",
-  yellow: "bg-[#FFD400] text-black",
-  white: "bg-white text-black",
+  blue: "bg-[var(--sw-color-blue)] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]",
+  white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 
 export function Button({
@@ -40,11 +43,19 @@ export function Button({
   icon,
   iconSide = "left",
   variant = "blue",
+  withShadow = true,
   className,
   ...props
 }: ButtonProps) {
-  const styles = clsx(baseStyles, variants[variant], className);
+  const styles = clsx(
+    baseStyles,
+    variants[variant],
+    withShadow ? shadowFeedbackStyles : flatFeedbackStyles,
+    className,
+  );
+
   const iconElement = icon ? <ButtonIcon icon={icon} /> : null;
+
   const content = (
     <>
       {iconSide === "left" && iconElement}

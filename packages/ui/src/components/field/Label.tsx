@@ -1,10 +1,9 @@
 import { LabelHTMLAttributes } from "react";
 import clsx from "clsx";
 
-export function Label({
-  className,
-  ...props
-}: LabelHTMLAttributes<HTMLLabelElement>) {
+export type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;
+
+export function Label({ className, ...props }: LabelProps) {
   return (
     <label
       className={clsx("text-sm font-black uppercase tracking-wide", className)}

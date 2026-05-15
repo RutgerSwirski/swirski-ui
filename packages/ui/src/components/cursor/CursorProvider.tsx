@@ -42,59 +42,98 @@ const cursorSelectorStyles = `
   cursor: var(--swirski-cursor);
 }
 
-[data-swirski-cursor] a,
-[data-swirski-cursor] button,
-[data-swirski-cursor] summary,
-[data-swirski-cursor] label,
-[data-swirski-cursor] select,
-[data-swirski-cursor] input[type="button"],
-[data-swirski-cursor] input[type="checkbox"],
-[data-swirski-cursor] input[type="radio"],
-[data-swirski-cursor] input[type="reset"],
-[data-swirski-cursor] input[type="submit"],
-[data-swirski-cursor] [role="button"],
-[data-swirski-cursor] [data-cursor="pointer"] {
+[data-swirski-cursor] :is(
+  a,
+  button,
+  summary,
+  label,
+  select,
+  input[type="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="reset"],
+  input[type="submit"],
+  [role="button"],
+  [data-cursor="pointer"]
+) {
   cursor: var(--swirski-cursor-pointer);
 }
 
-[data-swirski-cursor] a:active,
-[data-swirski-cursor] button:active,
-[data-swirski-cursor] summary:active,
-[data-swirski-cursor] label:active,
-[data-swirski-cursor] select:active,
-[data-swirski-cursor] input[type="button"]:active,
-[data-swirski-cursor] input[type="checkbox"]:active,
-[data-swirski-cursor] input[type="radio"]:active,
-[data-swirski-cursor] input[type="reset"]:active,
-[data-swirski-cursor] input[type="submit"]:active,
-[data-swirski-cursor] [role="button"]:active,
-[data-swirski-cursor] [data-cursor="active"] {
+[data-swirski-cursor] :is(
+  a,
+  button,
+  summary,
+  label,
+  select,
+  input[type="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="reset"],
+  input[type="submit"],
+  [role="button"],
+  [data-cursor="pointer"],
+  [data-cursor="active"]
+):active {
   cursor: var(--swirski-cursor-active);
 }
 
 [data-swirski-cursor][data-swirski-cursor-pressed="true"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] a,
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] button,
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] summary,
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] label,
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] select,
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] input[type="button"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] input[type="checkbox"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] input[type="radio"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] input[type="reset"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] input[type="submit"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] [role="button"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] [data-cursor="pointer"],
-[data-swirski-cursor][data-swirski-cursor-pressed="true"] [data-cursor="active"] {
+[data-swirski-cursor][data-swirski-cursor-pressed="true"] * {
   cursor: var(--swirski-cursor-active);
 }
 
-[data-swirski-cursor] input,
-[data-swirski-cursor] textarea,
-[data-swirski-cursor] [contenteditable="true"] {
+[data-swirski-cursor] :is(
+  input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="reset"]):not([type="submit"]),
+  textarea,
+  [contenteditable="true"]
+) {
   cursor: text;
 }
 `;
+
+function getStoredCursor(
+  storageKey: string | false,
+  cursors: SwirskiCursor[],
+): CursorId | null {
+  if (storageKey === false || typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const storedCursor = window.localStorage.getItem(storageKey);
+
+    if (!storedCursor) {
+      return null;
+    }
+
+    const exists = cursors.some((cursor) => cursor.id === storedCursor);
+
+    return exists ? (storedCursor as CursorId) : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeCursor(storageKey: string | false, cursorId: CursorId) {
+  if (storageKey === false || typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(storageKey, cursorId);
+  } catch {
+    // Ignore storage errors, for example private browsing or blocked storage.
+  }
+}
+
+function findCursor(cursors: SwirskiCursor[], cursorId: CursorId) {
+  return (
+    cursors.find((cursor) => cursor.id === cursorId) ??
+    getSwirskiCursor(cursorId) ??
+    cursors[0] ??
+    swirskiCursors[0]
+  );
+}
 
 export function CursorProvider({
   children,
@@ -105,23 +144,23 @@ export function CursorProvider({
   onCursorChange,
   storageKey = "swirski-cursor",
 }: CursorProviderProps) {
-  const [selectedCursor, setSelectedCursor] = useState<CursorId>(defaultCursor);
-  const [isPressed, setIsPressed] = useState(false);
   const isControlled = cursor !== undefined;
-  const cursorId = cursor ?? selectedCursor;
-  const activeCursor =
-    cursors.find((item) => item.id === cursorId) ?? getSwirskiCursor(cursorId);
+
+  const [selectedCursor, setSelectedCursor] = useState<CursorId>(() => {
+    return defaultCursor;
+  });
+
+  const [isPressed, setIsPressed] = useState(false);
 
   useEffect(() => {
-    if (isControlled || storageKey === false || typeof window === "undefined") {
+    if (isControlled) {
       return;
     }
 
-    const storedCursor = window.localStorage.getItem(storageKey);
-    const hasStoredCursor = cursors.some((item) => item.id === storedCursor);
+    const storedCursor = getStoredCursor(storageKey, cursors);
 
-    if (hasStoredCursor) {
-      setSelectedCursor(storedCursor as CursorId);
+    if (storedCursor) {
+      setSelectedCursor(storedCursor);
     }
   }, [cursors, isControlled, storageKey]);
 
@@ -130,7 +169,9 @@ export function CursorProvider({
       return;
     }
 
-    const releaseCursor = () => setIsPressed(false);
+    const releaseCursor = () => {
+      setIsPressed(false);
+    };
 
     window.addEventListener("pointerup", releaseCursor);
     window.addEventListener("pointercancel", releaseCursor);
@@ -145,22 +186,31 @@ export function CursorProvider({
     };
   }, [isPressed]);
 
+  const cursorId = cursor ?? selectedCursor;
+
+  const activeCursor = useMemo(() => {
+    return findCursor(cursors, cursorId);
+  }, [cursors, cursorId]);
+
   const setCursor = useCallback(
     (nextCursor: CursorId) => {
+      const cursorExists = cursors.some((cursor) => cursor.id === nextCursor);
+
+      if (!cursorExists) {
+        return;
+      }
+
       if (!isControlled) {
         setSelectedCursor(nextCursor);
       }
 
-      if (storageKey !== false && typeof window !== "undefined") {
-        window.localStorage.setItem(storageKey, nextCursor);
-      }
-
+      storeCursor(storageKey, nextCursor);
       onCursorChange?.(nextCursor);
     },
-    [isControlled, onCursorChange, storageKey],
+    [cursors, isControlled, onCursorChange, storageKey],
   );
 
-  const value = useMemo(
+  const value = useMemo<CursorContextValue>(
     () => ({
       cursor: activeCursor,
       cursorId: activeCursor.id,
@@ -171,26 +221,25 @@ export function CursorProvider({
   );
 
   const style = {
-    "--swirski-cursor-active": activeCursor.active,
     "--swirski-cursor": activeCursor.cursor,
     "--swirski-cursor-pointer": activeCursor.pointer,
+    "--swirski-cursor-active": activeCursor.active,
   } as CSSProperties;
 
   return (
     <CursorContext.Provider value={value}>
       <style>{cursorSelectorStyles}</style>
+
       <div
         className={clsx("min-h-full", className)}
         data-swirski-cursor={activeCursor.id}
         data-swirski-cursor-pressed={isPressed ? "true" : undefined}
-        onPointerDownCapture={(event) => {
-          if (event.pointerType !== "mouse") {
-            return;
-          }
-
-          setIsPressed(true);
-        }}
         style={style}
+        onPointerDownCapture={(event) => {
+          if (event.pointerType === "mouse") {
+            setIsPressed(true);
+          }
+        }}
       >
         {children}
       </div>
