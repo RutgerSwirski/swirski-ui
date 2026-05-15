@@ -77,8 +77,9 @@ export default function ComponentsPage() {
 
             <div className="grid w-full max-w-sm grid-cols-2 gap-3 md:w-80">
               <Card
+                withShadow={false}
                 interactive={false}
-                className="bg-[#FFD400] shadow-[6px_6px_0_#0B0B0C]"
+                className="bg-[#FFD400] "
               >
                 <CardContent>
                   <Text
@@ -96,17 +97,14 @@ export default function ComponentsPage() {
               </Card>
               <Card
                 interactive={false}
-                className="bg-[#0057FF] text-white shadow-[6px_6px_0_#0B0B0C]"
+                withShadow={false}
+                className="bg-[#0057FF]"
               >
                 <CardContent>
-                  <Text
-                    className="uppercase text-white/70"
-                    size="xs"
-                    weight="black"
-                  >
+                  <Text className="uppercase" size="xs" weight="black">
                     Groups
                   </Text>
-                  <Title className="mt-1 text-current" order={2} size="h2">
+                  <Title className="mt-1" order={2} size="h2">
                     {categories.length}
                   </Title>
                 </CardContent>
@@ -114,7 +112,8 @@ export default function ComponentsPage() {
 
               <Card
                 interactive={false}
-                className="col-span-2 bg-white shadow-[6px_6px_0_#0B0B0C]"
+                withShadow={false}
+                className="col-span-2 bg-white"
               >
                 <CardContent>
                   <Text weight="bold">Missing a component?</Text>
@@ -136,10 +135,7 @@ export default function ComponentsPage() {
       <Container className="py-16 md:py-20">
         <section className="grid gap-8 lg:grid-cols-[16rem_1fr]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <Card
-              interactive={false}
-              className="bg-white shadow-[7px_7px_0_#0B0B0C]"
-            >
+            <Card interactive={false} className="bg-white">
               <CardContent>
                 <Text className="mb-4 uppercase" tone="muted" weight="black">
                   Categories
@@ -215,11 +211,7 @@ export default function ComponentsPage() {
                               {component.title}
                             </Title>
 
-                            <Text
-                              className="mt-4"
-                              tone="muted"
-                              weight="medium"
-                            >
+                            <Text className="mt-4" tone="muted" weight="medium">
                               {component.description}
                             </Text>
                           </CardContent>
