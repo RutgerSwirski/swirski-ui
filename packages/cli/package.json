@@ -1,0 +1,17 @@
+{
+  "name": "@swirski/cli",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "swirski": "./src/index.js",
+    "swirski-ui": "./src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "list": "node src/index.js list"
+  }
+}

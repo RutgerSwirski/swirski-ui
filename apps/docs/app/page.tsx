@@ -39,23 +39,26 @@ const packageLinks = [
   "DiagonalLines",
   "DotGrid",
   "LineGrid",
-  "Hero",
+  "SwirskiProvider",
+  "Title",
+  "Text",
   "ImageFrame",
-  "SectionLabel",
+  "Dialog",
+  "Select",
 ];
 
 const workflow = [
   {
     title: "Install",
-    body: "Install the package in a Next.js or React app.",
+    body: "Install the package, or use the CLI to copy components into your app.",
   },
   {
-    title: "Import",
-    body: "Import only the primitives the screen needs.",
+    title: "Theme",
+    body: "Wrap your app in SwirskiProvider and override tokens when the brand needs it.",
   },
   {
     title: "Compose",
-    body: "Compose with Swirski type, borders, shadows and accent color.",
+    body: "Use imports or registry-copied source with the same Swirski tokens.",
   },
 ];
 
@@ -100,13 +103,13 @@ export default function HomePage() {
                         Install
                       </p>
                       <code className="mt-2 block break-words text-lg font-black">
-                        pnpm add @swirski/ui
+                        pnpm add @swirski/ui @swirski/cli
                       </code>
                     </div>
 
                     {/* insert copy to clipboard button */}
                     <CopyToClipboard
-                      value="pnpm add @swirski/ui"
+                      value="pnpm add @swirski/ui @swirski/cli"
                       label="Copy"
                       copiedLabel="Copied"
                     />
@@ -237,6 +240,12 @@ export default function HomePage() {
                   </li>
                 ))}
               </ol>
+              <div className="mt-6 border-4 border-black bg-[#FFD400] p-4 font-black text-black">
+                <p className="text-xs uppercase text-black/55">CLI</p>
+                <code className="mt-2 block break-words">
+                  swirski init && swirski add button card dialog
+                </code>
+              </div>
             </CardContent>
           </Card>
         </section>

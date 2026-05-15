@@ -23,8 +23,8 @@ const sizeStyles: Record<TitleSize, string> = {
 };
 
 const toneStyles: Record<TitleTone, string> = {
-  default: "text-[#0B0B0C]",
-  muted: "text-black/70",
+  default: "text-[var(--sw-color-ink)]",
+  muted: "text-[var(--sw-color-muted)]",
   inverted: "text-white",
 };
 

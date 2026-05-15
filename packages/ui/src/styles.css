@@ -3,6 +3,46 @@
 @import "@fontsource/anton";
 @import "@fontsource/bangers";
 
+:root,
+[data-swirski-color-scheme="light"] {
+  --sw-color-ink: #0b0b0c;
+  --sw-color-paper: #f5f5f3;
+  --sw-color-surface: #ffffff;
+  --sw-color-muted: rgba(11, 11, 12, 0.68);
+  --sw-color-blue: #0057ff;
+  --sw-color-yellow: #ffd400;
+  --sw-color-red: #ff3131;
+  --sw-color-white: #ffffff;
+  --sw-color-black: #0b0b0c;
+  --sw-color-shadow: #0b0b0c;
+  --sw-color-focus: #0057ff;
+  --sw-border-width: 4px;
+  --sw-shadow-sm: 3px 3px 0 var(--sw-color-shadow);
+  --sw-shadow-md: 6px 6px 0 var(--sw-color-shadow);
+  --sw-shadow-lg: 10px 10px 0 var(--sw-color-shadow);
+  --sw-font-body: var(--font-inter, system-ui, sans-serif);
+  --sw-font-heading: var(--font-anton, "Anton", sans-serif);
+  --sw-font-display: var(--font-bangers, "Bangers", cursive);
+}
+
+[data-swirski-color-scheme="dark"] {
+  --sw-color-ink: #f7f7f2;
+  --sw-color-paper: #121212;
+  --sw-color-surface: #1d1d1f;
+  --sw-color-muted: rgba(247, 247, 242, 0.68);
+  --sw-color-white: #1d1d1f;
+  --sw-color-black: #f7f7f2;
+  --sw-color-shadow: #ffd400;
+  --sw-color-focus: #ffd400;
+}
+
+.swirski-provider {
+  min-height: 100%;
+  background: var(--sw-color-paper);
+  color: var(--sw-color-ink);
+  font-family: var(--sw-font-body);
+}
+
 @theme inline {
   --font-anton: "Anton", sans-serif;
   --font-bangers: "Bangers", cursive;

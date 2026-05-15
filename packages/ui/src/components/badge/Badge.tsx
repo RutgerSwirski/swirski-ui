@@ -10,11 +10,11 @@ export type BadgeProps = {
 } & HTMLAttributes<HTMLSpanElement>;
 
 const toneStyles: Record<BadgeTone, string> = {
-  blue: "bg-[#0057FF] text-white",
-  yellow: "bg-[#FFD400] text-black",
-  red: "bg-[#FF3131] text-white",
-  white: "bg-white text-black",
-  black: "bg-[#0B0B0C] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]",
+  red: "bg-[var(--sw-color-red)] text-white",
+  white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
+  black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
 const sizeStyles = {
@@ -32,7 +32,7 @@ export function Badge({
   return (
     <span
       className={clsx(
-        "inline-flex w-fit items-center border-2 border-black font-black uppercase leading-none tracking-wide shadow-[3px_3px_0_#0B0B0C]",
+        "inline-flex w-fit items-center border-2 border-[color:var(--sw-color-ink)] font-black uppercase leading-none tracking-wide shadow-[var(--sw-shadow-sm)]",
         toneStyles[tone],
         sizeStyles[size],
         className,

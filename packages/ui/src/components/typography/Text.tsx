@@ -23,9 +23,9 @@ const sizeStyles: Record<TextSize, string> = {
 };
 
 const toneStyles: Record<TextTone, string> = {
-  default: "text-[#0B0B0C]",
-  muted: "text-black/70",
-  subtle: "text-black/55",
+  default: "text-[var(--sw-color-ink)]",
+  muted: "text-[var(--sw-color-muted)]",
+  subtle: "text-[var(--sw-color-muted)] opacity-80",
   inverted: "text-white",
 };
 

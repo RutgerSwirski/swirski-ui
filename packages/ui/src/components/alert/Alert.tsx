@@ -8,10 +8,10 @@ export type AlertProps = {
 } & HTMLAttributes<HTMLDivElement>;
 
 const toneStyles: Record<AlertTone, string> = {
-  blue: "bg-[#0057FF] text-white",
-  yellow: "bg-[#FFD400] text-black",
-  red: "bg-[#FF3131] text-white",
-  white: "bg-white text-black",
+  blue: "bg-[var(--sw-color-blue)] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]",
+  red: "bg-[var(--sw-color-red)] text-white",
+  white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 
 export function Alert({
@@ -25,7 +25,7 @@ export function Alert({
     <div
       role={role}
       className={clsx(
-        "border-4 border-black p-5 shadow-[6px_6px_0_#0B0B0C]",
+        "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] p-5 shadow-[var(--sw-shadow-md)]",
         toneStyles[tone],
         className,
       )}

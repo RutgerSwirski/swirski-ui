@@ -6,6 +6,7 @@
     "storybook": "pnpm --filter @swirski/ui storybook",
     "build": "pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
-    "dev:ui": "pnpm --filter @swirski/ui dev"
+    "dev:ui": "pnpm --filter @swirski/ui dev",
+    "registry:list": "pnpm --filter @swirski/cli start list"
   }
 }

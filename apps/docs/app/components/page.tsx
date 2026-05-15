@@ -20,6 +20,7 @@ const categoryStyles: Record<ComponentDoc["category"], string> = {
   Feedback: "bg-[#0B0B0C] text-white",
   Forms: "bg-white text-black",
   Media: "bg-[#F5F5F3] text-black",
+  Theming: "bg-[#0057FF] text-white",
   Interaction: "bg-[#FFD400] text-black",
   Backgrounds: "bg-[#0B0B0C] text-white",
 };

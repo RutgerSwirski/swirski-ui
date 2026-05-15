@@ -27,6 +27,7 @@ const categoryStyles: Record<ComponentDoc["category"], string> = {
   Feedback: "bg-[#0B0B0C] text-white",
   Forms: "bg-white text-black",
   Media: "bg-[#F5F5F3] text-black",
+  Theming: "bg-[#0057FF] text-white",
   Interaction: "bg-[#FFD400] text-black",
   Backgrounds: "bg-[#0B0B0C] text-white",
 };
@@ -41,6 +42,7 @@ const categoryNotes: Record<ComponentDoc["category"], string> = {
   Feedback: "Status and messaging primitives for compact interface signals.",
   Forms: "Native form controls with Swirski borders, shadows and focus states.",
   Media: "Image and visual wrappers for framed editorial surfaces.",
+  Theming: "Token and provider APIs for app-level customization.",
   Interaction: "Behavioral primitives that add playful system-level feedback.",
   Backgrounds:
     "Pattern primitives for texture, poster fields and graphic panels.",
