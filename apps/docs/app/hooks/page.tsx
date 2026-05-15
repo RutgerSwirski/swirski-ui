@@ -154,10 +154,11 @@ export default function HooksPage() {
 
                     return (
                       <Button
+                        withShadow={false}
                         key={hook}
                         href={doc ? `/components/${doc.slug}` : "/components"}
                         variant="white"
-                        className="justify-start text-xs"
+                        className="justify-start text-sm"
                       >
                         {hook}
                       </Button>
@@ -217,8 +218,8 @@ export default function HooksPage() {
               Disclosure state.
             </Title>
             <Text className="mt-5" tone="muted" weight="bold">
-              `useDisclosure` is the everyday hook for open/close UI. It
-              returns the current boolean state and a small handler object.
+              `useDisclosure` is the everyday hook for open/close UI. It returns
+              the current boolean state and a small handler object.
             </Text>
             <Button className="mt-6" href="/components/use-disclosure">
               Open hook docs

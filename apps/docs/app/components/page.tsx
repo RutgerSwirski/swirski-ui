@@ -13,34 +13,27 @@ import {
 } from "@swirski/ui";
 import Link from "next/link";
 
-const categoryStyles: Record<ComponentDoc["category"], string> = {
-  Typography: "bg-[#FFD400] text-black",
-  Layout: "bg-white text-black",
-  Cards: "bg-[#0057FF] text-white",
-  Buttons: "bg-[#FF3131] text-white",
-  Disclosure: "bg-[#FFD400] text-black",
-  Feedback: "bg-[#0B0B0C] text-white",
-  Forms: "bg-white text-black",
-  Hooks: "bg-[#FF3131] text-white",
-  Media: "bg-[#F5F5F3] text-black",
-  Theming: "bg-[#0057FF] text-white",
-  Interaction: "bg-[#FFD400] text-black",
-  Backgrounds: "bg-[#0B0B0C] text-white",
-};
-
 const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
 
 const categories = Array.from(
   new Set(componentDocs.map((component) => component.category)),
 );
 
+const componentsWithIndex = componentDocs.map((component, index) => ({
+  ...component,
+  index,
+}));
+
 const componentsByCategory = categories.map((category) => ({
   category,
-  components: componentDocs.filter(
+  components: componentsWithIndex.filter(
     (component) => component.category === category,
   ),
 }));
 
+function slugify(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
 export default function ComponentsPage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
@@ -79,7 +72,7 @@ export default function ComponentsPage() {
               <Card
                 withShadow={false}
                 interactive={false}
-                className="bg-[#FFD400] "
+                className="bg-[#FFD400]"
               >
                 <CardContent>
                   <Text
@@ -98,13 +91,17 @@ export default function ComponentsPage() {
               <Card
                 interactive={false}
                 withShadow={false}
-                className="bg-[#0057FF]"
+                className="bg-[#0057FF]! text-white!"
               >
                 <CardContent>
-                  <Text className="uppercase" size="xs" weight="black">
+                  <Text
+                    className="uppercase text-current"
+                    size="xs"
+                    weight="black"
+                  >
                     Groups
                   </Text>
-                  <Title className="mt-1" order={2} size="h2">
+                  <Title className="mt-1 text-current" order={2} size="h2">
                     {categories.length}
                   </Title>
                 </CardContent>
@@ -118,6 +115,7 @@ export default function ComponentsPage() {
                 <CardContent>
                   <Text weight="bold">Missing a component?</Text>
                   <Button
+                    withShadow={false}
                     className="mt-4"
                     target="_blank"
                     href="https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=rutgerswirski&labels=missing-component&template=component.md&title=Add+%60[component-name]%60+component"
@@ -144,8 +142,9 @@ export default function ComponentsPage() {
                   {categories.map((category) => (
                     <Button
                       key={category}
-                      href={`#${category.toLowerCase()}`}
+                      href={`#${slugify(category)}`}
                       variant="white"
+                      withShadow={false}
                       className="justify-start text-xs"
                     >
                       {category}
@@ -160,25 +159,21 @@ export default function ComponentsPage() {
             {componentsByCategory.map(({ category, components }) => (
               <section
                 key={category}
-                id={category.toLowerCase()}
+                id={slugify(category)}
                 className="scroll-mt-8"
               >
-                <div className="mb-5 flex flex-wrap items-end justify-between gap-4 border-b-4 border-black pb-4">
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-4 border-b-4 border-black pb-4">
                   <Title order={2} size="h3">
                     {category}
                   </Title>
-                  <Badge tone="white">
+                  <Badge withShadow={false} tone="white">
                     {components.length}{" "}
                     {components.length === 1 ? "component" : "components"}
                   </Badge>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 2xl:grid-cols-2">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                   {components.map((component) => {
-                    const index = componentDocs.findIndex(
-                      (item) => item.slug === component.slug,
-                    );
-
                     return (
                       <Link
                         key={component.slug}
@@ -186,20 +181,19 @@ export default function ComponentsPage() {
                         className="group block min-w-0"
                       >
                         <Card
-                          className={`${cardStyles[index % cardStyles.length]} flex h-full min-h-[16rem] flex-col`}
+                          className={`${cardStyles[component.index % cardStyles.length]} flex h-full min-h-[12rem] flex-col`}
                         >
                           <CardContent className="flex h-full flex-col">
                             <div className="flex items-start justify-between gap-4">
-                              <Badge
-                                className={categoryStyles[component.category]}
-                              >
+                              <Badge withShadow={false} tone="white">
                                 {component.category}
                               </Badge>
+
                               <Text
                                 className="font-anton text-3xl leading-none text-black/25"
                                 component="span"
                               >
-                                {String(index + 1).padStart(2, "0")}
+                                {String(component.index + 1).padStart(2, "0")}
                               </Text>
                             </div>
 

@@ -25,8 +25,11 @@ export type ButtonProps = ButtonLinkProps | ButtonNativeProps;
 const baseStyles =
   "inline-flex items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-6 py-3 font-black uppercase transition-all duration-200";
 
-const shadowStyles =
+const shadowFeedbackStyles =
   "shadow-[var(--sw-shadow-md)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2";
+
+const flatFeedbackStyles =
+  "hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 active:scale-[0.98]";
 
 const variants = {
   blue: "bg-[var(--sw-color-blue)] text-white",
@@ -47,7 +50,7 @@ export function Button({
   const styles = clsx(
     baseStyles,
     variants[variant],
-    withShadow && shadowStyles,
+    withShadow ? shadowFeedbackStyles : flatFeedbackStyles,
     className,
   );
 

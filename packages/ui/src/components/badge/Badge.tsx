@@ -7,6 +7,7 @@ export type BadgeProps = {
   children: ReactNode;
   tone?: BadgeTone;
   size?: "sm" | "md";
+  withShadow?: boolean;
 } & HTMLAttributes<HTMLSpanElement>;
 
 const toneStyles: Record<BadgeTone, string> = {
@@ -18,8 +19,8 @@ const toneStyles: Record<BadgeTone, string> = {
 };
 
 const sizeStyles = {
-  sm: "px-2 py-1 text-[0.68rem]",
-  md: "px-3 py-1.5 text-xs",
+  sm: "px-2 py-1 text-xs",
+  md: "px-3 py-1.5 text-sm",
 };
 
 export function Badge({
@@ -27,14 +28,16 @@ export function Badge({
   tone = "yellow",
   size = "md",
   className,
+  withShadow = true,
   ...props
 }: BadgeProps) {
   return (
     <span
       className={clsx(
-        "inline-flex w-fit items-center border-2 border-[color:var(--sw-color-ink)] font-black uppercase leading-none tracking-wide shadow-[var(--sw-shadow-sm)]",
+        "inline-flex w-fit items-center border-2 border-[color:var(--sw-color-ink)] font-black uppercase leading-none tracking-wide",
         toneStyles[tone],
         sizeStyles[size],
+        withShadow && "shadow-(--sw-shadow-sm)",
         className,
       )}
       {...props}
