@@ -22,6 +22,7 @@
     { "name": "image-frame", "category": "media", "description": "Framed image surface.", "source": "packages/ui/src/components/image-frame" },
     { "name": "line-grid", "category": "backgrounds", "description": "Line grid background primitive.", "source": "packages/ui/src/components/line-grid" },
     { "name": "loader", "category": "feedback", "description": "Loading spinner.", "source": "packages/ui/src/components/loader" },
+    { "name": "navbar", "category": "layout", "description": "Header and mobile navigation primitives.", "source": "packages/ui/src/components/navbar" },
     { "name": "pagination", "category": "layout", "description": "Page controls.", "source": "packages/ui/src/components/pagination" },
     { "name": "popover", "category": "interaction", "description": "Floating content panel.", "source": "packages/ui/src/components/popover" },
     { "name": "progress", "category": "feedback", "description": "Progress meter.", "source": "packages/ui/src/components/progress" },

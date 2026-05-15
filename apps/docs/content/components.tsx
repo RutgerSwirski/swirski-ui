@@ -51,6 +51,19 @@ import {
   Label,
   LineGrid,
   Loader,
+  MobileMenu,
+  MobileMenuClose,
+  MobileMenuContent,
+  MobileMenuHeader,
+  MobileMenuLink,
+  MobileMenuNav,
+  MobileMenuTitle,
+  MobileMenuTrigger,
+  Navbar,
+  NavbarActions,
+  NavbarBrand,
+  NavbarLink,
+  NavbarNav,
   Pagination,
   Popover,
   PopoverContent,
@@ -236,6 +249,11 @@ export const componentDocs: ComponentDoc[] = [
         name: "href",
         type: "string",
         description: "Renders the button as an anchor when provided.",
+      },
+      {
+        name: "as",
+        type: "ElementType",
+        description: "Custom component used for the root element, such as Next.js Link.",
       },
       {
         name: "variant",
@@ -1416,6 +1434,87 @@ useClickOutside(ref, () => setOpen(false), {
     ],
   },
   {
+    slug: "navbar",
+    title: "Navbar",
+    description:
+      "Composable header primitives with a reusable hamburger menu for mobile navigation.",
+    category: "Layout",
+    importCode: `import {
+  MobileMenu,
+  MobileMenuContent,
+  MobileMenuLink,
+  MobileMenuNav,
+  MobileMenuTrigger,
+  Navbar,
+  NavbarActions,
+  NavbarBrand,
+  NavbarLink,
+  NavbarNav,
+} from "@swirski/ui";`,
+    usageCode: `<Navbar>
+  <NavbarBrand href="/">Swirski UI</NavbarBrand>
+  <NavbarNav aria-label="Main navigation">
+    <NavbarLink href="/components" active>Components</NavbarLink>
+    <NavbarLink href="/hooks">Hooks</NavbarLink>
+    <NavbarLink href="/cli">CLI</NavbarLink>
+  </NavbarNav>
+  <NavbarActions>
+    <MobileMenu>
+      <MobileMenuTrigger />
+      <MobileMenuContent>
+        <MobileMenuNav aria-label="Mobile navigation">
+          <MobileMenuLink href="/components" active>Components</MobileMenuLink>
+          <MobileMenuLink href="/hooks">Hooks</MobileMenuLink>
+          <MobileMenuLink href="/cli">CLI</MobileMenuLink>
+        </MobileMenuNav>
+      </MobileMenuContent>
+    </MobileMenu>
+  </NavbarActions>
+</Navbar>`,
+    preview: (
+      <Navbar className="w-full border-[length:var(--sw-border-width)] bg-white">
+        <NavbarBrand href="/">Swirski UI</NavbarBrand>
+        <NavbarNav aria-label="Main navigation">
+          <NavbarLink href="/components" active>
+            Components
+          </NavbarLink>
+          <NavbarLink href="/hooks">Hooks</NavbarLink>
+          <NavbarLink href="/cli">CLI</NavbarLink>
+        </NavbarNav>
+        <NavbarActions>
+          <MobileMenu>
+            <MobileMenuTrigger />
+            <MobileMenuContent>
+              <MobileMenuHeader>
+                <MobileMenuTitle>Menu</MobileMenuTitle>
+                <MobileMenuClose aria-label="Close navigation menu">
+                  x
+                </MobileMenuClose>
+              </MobileMenuHeader>
+              <MobileMenuNav aria-label="Mobile navigation">
+                <MobileMenuLink href="/components" active>
+                  Components
+                </MobileMenuLink>
+                <MobileMenuLink href="/hooks">Hooks</MobileMenuLink>
+                <MobileMenuLink href="/cli">CLI</MobileMenuLink>
+              </MobileMenuNav>
+            </MobileMenuContent>
+          </MobileMenu>
+        </NavbarActions>
+      </Navbar>
+    ),
+    props: [
+      { name: "Navbar", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the root header." },
+      { name: "NavbarBrand", type: "AnchorHTMLAttributes<HTMLAnchorElement>", description: "Props forwarded to the brand link." },
+      { name: "NavbarNav", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the desktop nav." },
+      { name: "NavbarLink.active", type: "boolean", defaultValue: "false", description: "Marks a link as the current page." },
+      { name: "MobileMenu.open", type: "boolean", description: "Controlled mobile menu open state." },
+      { name: "MobileMenu.defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
+      { name: "MobileMenuContent.side", type: '"left" | "right"', defaultValue: '"right"', description: "Side used for the menu panel." },
+      { name: "MobileMenuLink.closeOnSelect", type: "boolean", defaultValue: "true", description: "Closes the menu after a link is selected." },
+    ],
+  },
+  {
     slug: "breadcrumb",
     title: "Breadcrumb",
     description: "Navigation trail primitives for docs and app pages.",
@@ -1443,7 +1542,7 @@ useClickOutside(ref, () => setOpen(false), {
     ),
     props: [
       { name: "Breadcrumb", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the nav." },
-      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement>", description: "Props forwarded to links." },
+      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement> & { as?: ElementType }", description: "Props forwarded to links. Use as to render framework links like Next.js Link." },
       { name: "BreadcrumbPage", type: "HTMLAttributes<HTMLSpanElement>", description: "Current page item." },
     ],
   },

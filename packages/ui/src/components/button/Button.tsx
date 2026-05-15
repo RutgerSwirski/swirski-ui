@@ -1,7 +1,13 @@
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ElementType,
+  ReactNode,
+} from "react";
 import clsx from "clsx";
 
 type ButtonBaseProps = {
+  as?: ElementType;
   children: ReactNode;
   icon?: "arrow-up-right" | "github";
   iconSide?: "left" | "right";
@@ -23,7 +29,7 @@ type ButtonNativeProps = ButtonBaseProps &
 export type ButtonProps = ButtonLinkProps | ButtonNativeProps;
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-6 py-3 font-black uppercase transition-all duration-200";
+  "inline-flex max-w-full items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-6 py-3 font-black uppercase transition-all duration-200";
 
 const shadowFeedbackStyles =
   "shadow-[var(--sw-shadow-md)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2";
@@ -38,6 +44,7 @@ const variants = {
 };
 
 export function Button({
+  as,
   children,
   href,
   icon,
@@ -59,30 +66,34 @@ export function Button({
   const content = (
     <>
       {iconSide === "left" && iconElement}
-      <span>{children}</span>
+      <span className="min-w-0 break-words">{children}</span>
       {iconSide === "right" && iconElement}
     </>
   );
 
   if (href) {
+    const Component = as ?? "a";
+
     return (
-      <a
+      <Component
         {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
         href={href}
         className={styles}
       >
         {content}
-      </a>
+      </Component>
     );
   }
 
+  const Component = as ?? "button";
+
   return (
-    <button
+    <Component
       className={styles}
       {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {content}
-    </button>
+    </Component>
   );
 }
 

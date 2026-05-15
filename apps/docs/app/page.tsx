@@ -14,6 +14,12 @@ import {
   SectionLabel,
   Text,
   Title,
+  MobileMenu,
+  MobileMenuContent,
+  MobileMenuLink,
+  MobileMenuNav,
+  MobileMenuTrigger,
+  NavbarActions,
 } from "@swirski/ui";
 
 const foundations = [
@@ -72,7 +78,7 @@ function getComponentHref(name: string) {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
         <DotGrid
           className="inset-0"
@@ -209,11 +215,7 @@ export default function HomePage() {
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {packageLinks.map((item) => (
-              <Button
-                variant="white"
-                key={item}
-                href={getComponentHref(item)}
-              >
+              <Button variant="white" key={item} href={getComponentHref(item)}>
                 {item}
               </Button>
             ))}

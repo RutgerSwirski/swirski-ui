@@ -6,7 +6,7 @@ export function Table({
   ...props
 }: TableHTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="overflow-x-auto border-4 border-black bg-white shadow-[8px_8px_0_#0B0B0C]">
+    <div className="w-full min-w-0 max-w-full overflow-x-auto border-4 border-black bg-white shadow-[5px_5px_0_#0B0B0C] sm:shadow-[8px_8px_0_#0B0B0C]">
       <table
         className={clsx("w-full min-w-96 border-collapse text-left", className)}
         {...props}

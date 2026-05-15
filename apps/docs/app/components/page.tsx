@@ -36,7 +36,7 @@ function slugify(value: string) {
 }
 export default function ComponentsPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
         <DotGrid
           className="inset-0"
@@ -49,11 +49,11 @@ export default function ComponentsPage() {
         <Container className="relative z-10">
           <NavBar />
 
-          <section className="grid gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16">
-            <div className="max-w-4xl">
+          <section className="grid min-w-0 gap-8 py-12 md:grid-cols-1 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-end">
+            <div className="min-w-0 max-w-4xl">
               <SectionLabel>Components</SectionLabel>
 
-              <Title className="mt-6" size="h1">
+              <Title className="mt-6 break-words" size="h1">
                 Component index.
               </Title>
 
@@ -68,7 +68,7 @@ export default function ComponentsPage() {
               </Text>
             </div>
 
-            <div className="grid w-full max-w-sm grid-cols-2 gap-3 md:w-80">
+            <div className="grid w-full min-w-0 grid-cols-2 gap-3 sm:max-w-sm lg:max-w-none">
               <Card
                 withShadow={false}
                 interactive={false}
@@ -88,10 +88,11 @@ export default function ComponentsPage() {
                   </Title>
                 </CardContent>
               </Card>
+
               <Card
                 interactive={false}
                 withShadow={false}
-                className="bg-[#0057FF]! text-white!"
+                className="!bg-[#0057FF] !text-white"
               >
                 <CardContent>
                   <Text
@@ -116,7 +117,7 @@ export default function ComponentsPage() {
                   <Text weight="bold">Missing a component?</Text>
                   <Button
                     withShadow={false}
-                    className="mt-4"
+                    className="mt-4 max-w-full"
                     target="_blank"
                     href="https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=rutgerswirski&labels=missing-component&template=component.md&title=Add+%60[component-name]%60+component"
                     variant="white"
@@ -131,9 +132,9 @@ export default function ComponentsPage() {
       </div>
 
       <Container className="py-16 md:py-20">
-        <section className="grid gap-8 lg:grid-cols-[16rem_1fr]">
-          <aside className="lg:sticky lg:top-8 lg:self-start">
-            <Card interactive={false} className="bg-white">
+        <section className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]">
+          <aside className="min-w-0 lg:sticky lg:top-8 lg:self-start">
+            <Card interactive={false} className="min-w-0 bg-white">
               <CardContent>
                 <Text className="mb-4 uppercase" tone="muted" weight="black">
                   Categories
@@ -155,7 +156,7 @@ export default function ComponentsPage() {
             </Card>
           </aside>
 
-          <div className="grid gap-12">
+          <div className="grid min-w-0 gap-12">
             {componentsByCategory.map(({ category, components }) => (
               <section
                 key={category}

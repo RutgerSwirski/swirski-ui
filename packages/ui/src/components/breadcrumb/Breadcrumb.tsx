@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import { AnchorHTMLAttributes, ElementType, HTMLAttributes } from "react";
 import clsx from "clsx";
 
 export function Breadcrumb({
@@ -28,10 +28,16 @@ export function BreadcrumbItem({
 }
 
 export function BreadcrumbLink({
+  as: Component = "a",
   className,
   ...props
-}: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  return <a className={clsx("underline decoration-4 underline-offset-4", className)} {...props} />;
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { as?: ElementType }) {
+  return (
+    <Component
+      className={clsx("underline decoration-4 underline-offset-4", className)}
+      {...props}
+    />
+  );
 }
 
 export function BreadcrumbPage({

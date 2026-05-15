@@ -24,7 +24,7 @@ export function CursorDock({
   return (
     <div
       className={clsx(
-        "group top-1/2 z-50 flex -translate-y-1/2 items-center gap-0",
+        "group top-1/2 z-50 hidden -translate-y-1/2 items-center gap-0 lg:flex",
         position === "fixed" ? "fixed" : "absolute",
         side === "right" ? "right-0 flex-row" : "left-0 flex-row-reverse",
         className,

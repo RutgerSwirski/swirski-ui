@@ -169,7 +169,7 @@ export default function ComponentPlayground({
   if (!definition) {
     return (
       <>
-        <section id="playground" className="scroll-mt-8">
+        <section id="playground" className="min-w-0 scroll-mt-8">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
             <div className="flex items-center gap-3">
               <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
@@ -181,7 +181,7 @@ export default function ComponentPlayground({
 
           <Card
             interactive={false}
-            className="bg-white shadow-[10px_10px_0_#0B0B0C]"
+            className="min-w-0 overflow-hidden bg-white shadow-[6px_6px_0_#0B0B0C] sm:shadow-[10px_10px_0_#0B0B0C]"
           >
             <CardContent>
               <Text weight="bold">
@@ -205,7 +205,7 @@ export default function ComponentPlayground({
 
   return (
     <>
-      <section id="playground" className="scroll-mt-8">
+      <section id="playground" className="min-w-0 scroll-mt-8">
         <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
           <div className="flex items-center gap-3">
             <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
@@ -221,13 +221,15 @@ export default function ComponentPlayground({
 
         <Card
           interactive={false}
-          className="grid bg-white shadow-[10px_10px_0_#0B0B0C] lg:grid-cols-[1fr_18rem]"
+          className="grid min-w-0 overflow-hidden bg-white shadow-[6px_6px_0_#0B0B0C] sm:shadow-[10px_10px_0_#0B0B0C] lg:grid-cols-[minmax(0,1fr)_18rem]"
         >
-          <div className="min-h-80 bg-[#F5F5F3] p-6 md:p-10">
-            {definition.render(values)}
+          <div className="w-full min-w-0 max-w-full overflow-x-auto overflow-y-visible bg-[#F5F5F3] p-4 sm:min-h-80 sm:p-6 md:p-10">
+            <div className="w-max min-w-full max-w-none">
+              {definition.render(values)}
+            </div>
           </div>
 
-          <div className="border-t-4 border-black bg-white p-5 lg:border-l-4 lg:border-t-0">
+          <div className="min-w-0 border-t-4 border-black bg-white p-4 sm:p-5 lg:border-l-4 lg:border-t-0">
             <Text
               className="mb-4 uppercase"
               size="xs"
