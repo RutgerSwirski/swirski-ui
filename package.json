@@ -7,6 +7,7 @@
     "build": "pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
     "dev:ui": "pnpm --filter @swirski/ui dev",
-    "registry:list": "pnpm --filter @swirski/cli start list"
+    "registry:list": "pnpm --filter @swirski/cli start list",
+    "release:ui": "node scripts/release-ui.mjs"
   }
 }
