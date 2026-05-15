@@ -234,45 +234,15 @@ export default async function ComponentPage({ params }: Props) {
                 </p>
 
                 <div className="grid gap-3">
-                  <a
-                    href="#preview"
-                    className="border-4 border-black bg-[#FFD400] px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-                  >
-                    Preview
-                  </a>
-                  <a
-                    href="#playground"
-                    className="border-4 border-black bg-[#0057FF] px-3 py-2 text-xs font-black uppercase text-white shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-                  >
-                    Playground
-                  </a>
-                  <a
-                    href="#props"
-                    className="border-4 border-black bg-[#FF3131] px-3 py-2 text-xs font-black uppercase text-white shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-                  >
-                    Props
-                  </a>
-                  <a
-                    href="#import"
-                    className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-                  >
-                    Import
-                  </a>
-                  <a
-                    href="#usage"
-                    className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-                  >
-                    Usage
-                  </a>
-                </div>
-
-                <div className="mt-6 border-t-4 border-black pt-5">
-                  <p className="text-xs font-black uppercase text-black/55">
-                    Note
-                  </p>
-                  <p className="mt-2 text-sm font-bold leading-6 text-black/70">
-                    {categoryNotes[component.category]}
-                  </p>
+                  {breakdownItems.map((item) => (
+                    <a
+                      key={item.title}
+                      href={`#${item.title.toLowerCase()}`}
+                      className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+                    >
+                      {item.title}
+                    </a>
+                  ))}
                 </div>
               </CardContent>
             </Card>

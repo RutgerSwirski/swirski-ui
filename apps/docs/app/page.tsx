@@ -1,5 +1,6 @@
 // apps/docs/app/page.tsx
 
+import CopyToClipboard from "@/components/CopyToClipboard";
 import Hero from "@/components/Hero";
 import NavBar from "@/components/NavBar";
 import {
@@ -104,9 +105,11 @@ export default function HomePage() {
                     </div>
 
                     {/* insert copy to clipboard button */}
-                    <Button variant="white" className="ml-auto mt-4 md:mt-0">
-                      Copy
-                    </Button>
+                    <CopyToClipboard
+                      value="pnpm add @swirski/ui"
+                      label="Copy"
+                      copiedLabel="Copied"
+                    />
                   </CardContent>
                 </Card>
 
