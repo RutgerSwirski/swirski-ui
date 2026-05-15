@@ -1,15 +1,30 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
   Button,
   Card,
   CardContent,
   CardTitle,
+  Checkbox,
   CursorDock,
   CursorProvider,
   DiagonalLines,
   DotGrid,
+  Field,
+  FieldHint,
   HeroTitle,
   HeroLead,
+  Input,
+  Label,
   LineGrid,
+  Switch,
+  Textarea,
 } from "@swirski/ui";
 
 export type ComponentDoc = {
@@ -21,6 +36,9 @@ export type ComponentDoc = {
     | "Layout"
     | "Cards"
     | "Buttons"
+    | "Disclosure"
+    | "Feedback"
+    | "Forms"
     | "Media"
     | "Interaction"
     | "Backgrounds";
@@ -39,6 +57,43 @@ export type PropDoc = {
 };
 
 export const componentDocs: ComponentDoc[] = [
+  {
+    slug: "badge",
+    title: "Badge",
+    description:
+      "A compact high-contrast label for statuses, tags and small interface signals.",
+    category: "Feedback",
+    importCode: `import { Badge } from "@swirski/ui";`,
+    usageCode: `<Badge tone="yellow">New drop</Badge>`,
+    preview: (
+      <div className="flex flex-wrap gap-3">
+        <Badge>New drop</Badge>
+        <Badge tone="blue">Featured</Badge>
+        <Badge tone="red">Live</Badge>
+        <Badge tone="black">Studio</Badge>
+      </div>
+    ),
+  },
+  {
+    slug: "alert",
+    title: "Alert",
+    description:
+      "A loud composable feedback block for announcements, errors and status messages.",
+    category: "Feedback",
+    importCode: `import { Alert, AlertTitle, AlertDescription } from "@swirski/ui";`,
+    usageCode: `<Alert tone="yellow">
+  <AlertTitle>Heads up</AlertTitle>
+  <AlertDescription>New components are ready to try.</AlertDescription>
+</Alert>`,
+    preview: (
+      <Alert tone="yellow">
+        <AlertTitle>Heads up</AlertTitle>
+        <AlertDescription>
+          New components are ready to try in your next interface.
+        </AlertDescription>
+      </Alert>
+    ),
+  },
   {
     slug: "button",
     title: "Button",
@@ -143,6 +198,104 @@ export const componentDocs: ComponentDoc[] = [
         description: "Accessible label for the dock trigger.",
       },
     ],
+  },
+  {
+    slug: "field",
+    title: "Field",
+    description:
+      "A form field set with label, input, textarea and hint primitives built from native elements.",
+    category: "Forms",
+    importCode: `import { Field, FieldHint, Input, Label, Textarea } from "@swirski/ui";`,
+    usageCode: `<Field>
+  <Label htmlFor="email">Email</Label>
+  <Input id="email" placeholder="studio@swirski.dev" />
+  <FieldHint>Use the address where clients can reach you.</FieldHint>
+</Field>`,
+    preview: (
+      <div className="grid max-w-md gap-6">
+        <Field>
+          <Label htmlFor="docs-email">Email</Label>
+          <Input id="docs-email" placeholder="studio@swirski.dev" />
+          <FieldHint>Use the address where clients can reach you.</FieldHint>
+        </Field>
+        <Field>
+          <Label htmlFor="docs-message">Message</Label>
+          <Textarea id="docs-message" placeholder="Tell us what you are building." />
+        </Field>
+      </div>
+    ),
+  },
+  {
+    slug: "checkbox",
+    title: "Checkbox",
+    description:
+      "A native checkbox with a chunky Swirski mark, label and optional description.",
+    category: "Forms",
+    importCode: `import { Checkbox } from "@swirski/ui";`,
+    usageCode: `<Checkbox
+  label="Send launch updates"
+  description="A compact, native checkbox with a custom Swirski mark."
+/>`,
+    preview: (
+      <Checkbox
+        defaultChecked
+        label="Send launch updates"
+        description="A compact, native checkbox with a custom Swirski mark."
+      />
+    ),
+  },
+  {
+    slug: "switch",
+    title: "Switch",
+    description:
+      "A native checkbox presented as a switch for binary preferences and settings.",
+    category: "Forms",
+    importCode: `import { Switch } from "@swirski/ui";`,
+    usageCode: `<Switch label="Studio mode" defaultChecked />`,
+    preview: (
+      <Switch
+        defaultChecked
+        label="Studio mode"
+        description="Use switch semantics without giving up native form behavior."
+      />
+    ),
+  },
+  {
+    slug: "accordion",
+    title: "Accordion",
+    description:
+      "A disclosure component built on details and summary, with no client JavaScript required.",
+    category: "Disclosure",
+    importCode: `import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@swirski/ui";`,
+    usageCode: `<Accordion>
+  <AccordionItem open>
+    <AccordionTrigger>What makes it Swirski?</AccordionTrigger>
+    <AccordionContent>
+      Thick borders, punchy color, loud type and plain HTML behavior.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>`,
+    preview: (
+      <Accordion className="max-w-xl">
+        <AccordionItem open>
+          <AccordionTrigger>What makes it Swirski?</AccordionTrigger>
+          <AccordionContent>
+            Thick borders, punchy color, loud type and plain HTML behavior.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionTrigger>Can I customize it?</AccordionTrigger>
+          <AccordionContent>
+            Every piece accepts className and native element props.
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    ),
   },
   {
     slug: "card",
