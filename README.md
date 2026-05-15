@@ -220,6 +220,35 @@ The registry manifest lives at:
 registry/swirski.registry.json
 ```
 
+## Release `@swirski/ui`
+
+After a feature branch has been merged into `main`, release the package from a clean `main` checkout:
+
+```bash
+pnpm release:ui patch
+```
+
+Use `minor` for new backwards-compatible features and `major` for breaking changes:
+
+```bash
+pnpm release:ui minor
+pnpm release:ui major
+```
+
+The release script builds `packages/ui`, bumps `packages/ui/package.json`, publishes the package to npm, creates a release commit and tag, and pushes both to `origin`.
+
+To test the package contents without publishing or changing files:
+
+```bash
+pnpm release:ui patch --dry-run
+```
+
+If npm asks for two-factor auth:
+
+```bash
+pnpm release:ui patch --otp 123456
+```
+
 ## Development
 
 Install dependencies:
