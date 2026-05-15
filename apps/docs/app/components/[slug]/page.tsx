@@ -28,13 +28,15 @@ const categoryStyles: Record<ComponentDoc["category"], string> = {
 };
 
 const categoryNotes: Record<ComponentDoc["category"], string> = {
-  Typography: "Text primitives for Swirski-scale hierarchy and editorial rhythm.",
+  Typography:
+    "Text primitives for Swirski-scale hierarchy and editorial rhythm.",
   Layout: "Structural helpers for keeping page composition consistent.",
   Cards: "Framed content primitives for links, previews and compact stories.",
   Buttons: "Action primitives with strong borders, shadows and pressed states.",
   Media: "Image and visual wrappers for framed editorial surfaces.",
   Interaction: "Behavioral primitives that add playful system-level feedback.",
-  Backgrounds: "Pattern primitives for texture, poster fields and graphic panels.",
+  Backgrounds:
+    "Pattern primitives for texture, poster fields and graphic panels.",
 };
 
 const breakdownItems = [
@@ -121,7 +123,10 @@ function PropTable({ component }: { component: ComponentDoc }) {
           </thead>
           <tbody>
             {component.props.map((prop) => (
-              <tr key={prop.name} className="border-b-4 border-black last:border-b-0">
+              <tr
+                key={prop.name}
+                className="border-b-4 border-black last:border-b-0"
+              >
                 <td className="px-4 py-4 align-top">
                   <code className="font-black">{prop.name}</code>
                   {prop.required && (
@@ -169,7 +174,8 @@ export default async function ComponentPage({ params }: Props) {
     componentDocs[
       (componentIndex - 1 + componentDocs.length) % componentDocs.length
     ];
-  const nextComponent = componentDocs[(componentIndex + 1) % componentDocs.length];
+  const nextComponent =
+    componentDocs[(componentIndex + 1) % componentDocs.length];
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
@@ -187,13 +193,6 @@ export default async function ComponentPage({ params }: Props) {
 
           <section className="grid gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16">
             <div className="max-w-4xl">
-              <a
-                href="/components"
-                className="mb-6 inline-block border-4 border-black bg-white px-4 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-              >
-                Back to index
-              </a>
-
               <SectionLabel>{component.category}</SectionLabel>
 
               <h1 className="mt-6 font-anton text-6xl uppercase leading-none md:text-8xl">
@@ -227,7 +226,10 @@ export default async function ComponentPage({ params }: Props) {
       <Container className="py-16 md:py-20">
         <div className="grid gap-10 lg:grid-cols-[16rem_1fr]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <Card interactive={false} className="bg-white shadow-[7px_7px_0_#0B0B0C]">
+            <Card
+              interactive={false}
+              className="bg-white shadow-[7px_7px_0_#0B0B0C]"
+            >
               <CardContent>
                 <p className="mb-4 text-xs font-black uppercase text-black/55">
                   Breakdown
@@ -313,28 +315,6 @@ export default async function ComponentPage({ params }: Props) {
 
             <PropTable component={component} />
 
-            <section className="grid gap-5 md:grid-cols-3">
-              {breakdownItems.map((item, index) => (
-                <Card
-                  key={item.title}
-                  interactive={false}
-                  className="bg-white shadow-[6px_6px_0_#0B0B0C]"
-                >
-                  <CardContent>
-                    <p className="w-fit border-4 border-black bg-[#FF3131] px-3 py-2 font-anton text-2xl uppercase">
-                      {String(index + 1).padStart(2, "0")}
-                    </p>
-                    <h3 className="mt-4 text-lg font-black uppercase">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm font-bold leading-6 text-black/65">
-                      {item.body}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </section>
-
             <CodePanel title="Import" code={component.importCode} />
             <CodePanel
               title="Usage"
@@ -343,7 +323,10 @@ export default async function ComponentPage({ params }: Props) {
             />
 
             <section className="grid gap-4 border-t-4 border-black pt-8 md:grid-cols-2">
-              <Button href={`/components/${previousComponent.slug}`} variant="white">
+              <Button
+                href={`/components/${previousComponent.slug}`}
+                variant="white"
+              >
                 Previous: {previousComponent.title}
               </Button>
               <Button

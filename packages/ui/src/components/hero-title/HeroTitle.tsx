@@ -4,16 +4,15 @@ import type { ReactNode } from "react";
 export function HeroTitle({
   children,
   className,
-  variant = "editorial",
 }: {
   children: ReactNode;
   className?: string;
-  variant?: "editorial" | "loud";
 }) {
-  const variants = {
-    editorial: "font-anton uppercase leading-[0.9] tracking-[-0.02em]",
-    loud: "font-anton uppercase leading-[0.9] tracking-[-0.02em]",
-  };
-
-  return <h1 className={`${variants[variant]} ${className}`}>{children}</h1>;
+  return (
+    <h1
+      className={`font-anton uppercase text-8xl leading-[0.9] tracking-[-0.02em] ${className}`}
+    >
+      {children}
+    </h1>
+  );
 }
