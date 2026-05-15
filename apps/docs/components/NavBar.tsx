@@ -20,6 +20,7 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/components", label: "Components" },
+  { href: "/examples", label: "Examples" },
   { href: "/hooks", label: "Hooks" },
   { href: "/cli", label: "CLI" },
 ];

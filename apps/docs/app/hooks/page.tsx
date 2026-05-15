@@ -8,6 +8,7 @@ import {
   CardContent,
   Container,
   DotGrid,
+  Grid,
   SectionLabel,
   Table,
   TableBody,
@@ -73,7 +74,11 @@ export default function HooksPage() {
         <Container className="relative z-10">
           <NavBar />
 
-          <section className="grid gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16">
+          <Grid
+            as="section"
+            gap="xl"
+            className="py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16"
+          >
             <div className="max-w-4xl">
               <SectionLabel>Hooks</SectionLabel>
 
@@ -109,12 +114,16 @@ export default function HooksPage() {
                 </Text>
               </CardContent>
             </Card>
-          </section>
+          </Grid>
         </Container>
       </div>
 
-      <Container className="grid gap-14 py-16 md:py-20">
-        <section className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <Grid as={Container} className="gap-14 py-16 md:py-20">
+        <Grid
+          as="section"
+          gap="xl"
+          className="lg:grid-cols-[0.8fr_1.2fr]"
+        >
           <div>
             <SectionLabel>Install</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -127,15 +136,15 @@ export default function HooksPage() {
             </Text>
           </div>
 
-          <div className="grid gap-5">
+          <Grid gap="lg">
             <CodeBlock
               code={`import { useDisclosure, useClipboard } from "@swirski/ui";`}
             />
             <CodeBlock code="swirski add use-disclosure use-clipboard" />
-          </div>
-        </section>
+          </Grid>
+        </Grid>
 
-        <section className="grid gap-5 md:grid-cols-3">
+        <Grid as="section" gap="lg" className="md:grid-cols-3">
           {hookGroups.map((group, index) => (
             <Card
               key={group.title}
@@ -148,7 +157,7 @@ export default function HooksPage() {
                 >
                   {group.title}
                 </Badge>
-                <div className="mt-5 grid gap-3">
+                <Grid gap="sm" className="mt-5">
                   {group.hooks.map((hook) => {
                     const doc = hookDocs.find((item) => item.title === hook);
 
@@ -164,13 +173,17 @@ export default function HooksPage() {
                       </Button>
                     );
                   })}
-                </div>
+                </Grid>
               </CardContent>
             </Card>
           ))}
-        </section>
+        </Grid>
 
-        <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <Grid
+          as="section"
+          gap="xl"
+          className="lg:grid-cols-[0.9fr_1.1fr]"
+        >
           <div>
             <SectionLabel>Recipes</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -209,9 +222,13 @@ export default function HooksPage() {
               })}
             </TableBody>
           </Table>
-        </section>
+        </Grid>
 
-        <section className="grid gap-8 border-y-4 border-black py-14 lg:grid-cols-[0.8fr_1.2fr]">
+        <Grid
+          as="section"
+          gap="xl"
+          className="border-y-4 border-black py-14 lg:grid-cols-[0.8fr_1.2fr]"
+        >
           <div>
             <SectionLabel>Example</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -237,9 +254,9 @@ return (
   </>
 );`}
           />
-        </section>
+        </Grid>
 
-        <section className="grid gap-5 md:grid-cols-2">
+        <Grid as="section" gap="lg" className="md:grid-cols-2">
           {hookDocs.map((hook) => (
             <Link
               key={hook.slug}
@@ -259,8 +276,8 @@ return (
               </Card>
             </Link>
           ))}
-        </section>
-      </Container>
+        </Grid>
+      </Grid>
     </main>
   );
 }

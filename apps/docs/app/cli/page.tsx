@@ -7,6 +7,7 @@ import {
   CardContent,
   Container,
   DotGrid,
+  Grid,
   SectionLabel,
   Table,
   TableBody,
@@ -74,7 +75,11 @@ export default function CliPage() {
         <Container className="relative z-10">
           <NavBar />
 
-          <section className="grid gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16">
+          <Grid
+            as="section"
+            gap="xl"
+            className="py-12 md:grid-cols-[1fr_auto] md:items-end md:py-16"
+          >
             <div className="max-w-4xl">
               <SectionLabel>CLI</SectionLabel>
 
@@ -108,12 +113,16 @@ export default function CliPage() {
                 </Text>
               </CardContent>
             </Card>
-          </section>
+          </Grid>
         </Container>
       </div>
 
-      <Container className="grid gap-14 py-16 md:py-20">
-        <section className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <Grid as={Container} className="gap-14 py-16 md:py-20">
+        <Grid
+          as="section"
+          gap="xl"
+          className="lg:grid-cols-[0.8fr_1.2fr]"
+        >
           <div>
             <SectionLabel>Install</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -125,13 +134,13 @@ export default function CliPage() {
             </Text>
           </div>
 
-          <div className="grid gap-5">
+          <Grid gap="lg">
             <CodeBlock code="pnpm add @swirski/ui" />
             <CodeBlock code="pnpm add -D @swirski/cli" />
-          </div>
-        </section>
+          </Grid>
+        </Grid>
 
-        <section className="grid gap-5 md:grid-cols-3">
+        <Grid as="section" gap="lg" className="md:grid-cols-3">
           {workflow.map((item, index) => (
             <Card
               key={item.title}
@@ -151,9 +160,13 @@ export default function CliPage() {
               </CardContent>
             </Card>
           ))}
-        </section>
+        </Grid>
 
-        <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <Grid
+          as="section"
+          gap="xl"
+          className="lg:grid-cols-[0.9fr_1.1fr]"
+        >
           <div>
             <SectionLabel>Commands</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -186,9 +199,13 @@ export default function CliPage() {
               ))}
             </TableBody>
           </Table>
-        </section>
+        </Grid>
 
-        <section className="grid gap-8 border-y-4 border-black py-14 lg:grid-cols-[0.8fr_1.2fr]">
+        <Grid
+          as="section"
+          gap="xl"
+          className="border-y-4 border-black py-14 lg:grid-cols-[0.8fr_1.2fr]"
+        >
           <div>
             <SectionLabel>Config</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -206,16 +223,20 @@ export default function CliPage() {
   "stylePath": "src/styles.css"
 }`}
           />
-        </section>
+        </Grid>
 
-        <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <Grid
+          as="section"
+          gap="xl"
+          className="lg:grid-cols-[1.1fr_0.9fr]"
+        >
           <Card
             interactive={false}
             className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
           >
             <CardContent className="p-6">
               <Badge tone="yellow">Workspace examples</Badge>
-              <div className="mt-5 grid gap-4">
+              <Grid gap="md" className="mt-5">
                 <CodeBlock
                   className="shadow-none"
                   code={`pnpm registry:list
@@ -223,7 +244,7 @@ pnpm --filter @swirski/cli start add button card dialog
 pnpm --filter @swirski/cli start add use-disclosure use-clipboard
 node packages/cli/src/index.js add select --dry-run`}
                 />
-              </div>
+              </Grid>
             </CardContent>
           </Card>
 
@@ -241,8 +262,8 @@ node packages/cli/src/index.js add select --dry-run`}
               Theme docs
             </Button>
           </div>
-        </section>
-      </Container>
+        </Grid>
+      </Grid>
     </main>
   );
 }

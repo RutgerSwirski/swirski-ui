@@ -7,6 +7,7 @@ import {
   CardContent,
   Container,
   DotGrid,
+  Grid,
   SectionLabel,
   Text,
   Title,
@@ -53,7 +54,11 @@ export default function ComponentsPage() {
         <Container className="relative z-10">
           <NavBar />
 
-          <section className="grid min-w-0 gap-8 py-12 md:grid-cols-1 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-end">
+          <Grid
+            as="section"
+            gap="xl"
+            className="py-12 md:grid-cols-1 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-end"
+          >
             <div className="min-w-0 max-w-4xl">
               <SectionLabel>Components</SectionLabel>
 
@@ -72,7 +77,11 @@ export default function ComponentsPage() {
               </Text>
             </div>
 
-            <div className="grid w-full min-w-0 grid-cols-2 gap-3 sm:max-w-sm lg:max-w-none">
+            <Grid
+              columns={2}
+              gap="sm"
+              className="w-full sm:max-w-sm lg:max-w-none"
+            >
               <Card
                 withShadow={false}
                 interactive={false}
@@ -130,20 +139,24 @@ export default function ComponentsPage() {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
-          </section>
+            </Grid>
+          </Grid>
         </Container>
       </div>
 
       <Container className="py-16 md:py-20">
-        <section className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]">
+        <Grid
+          as="section"
+          gap="xl"
+          className="lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]"
+        >
           <aside className="min-w-0 lg:sticky lg:top-8 lg:self-start">
             <Card interactive={false} className="min-w-0 bg-white">
               <CardContent>
                 <Text className="mb-4 uppercase" tone="muted" weight="black">
                   Categories
                 </Text>
-                <div className="grid gap-3">
+                <Grid gap="sm">
                   {categories.map((category) => (
                     <Button
                       key={category}
@@ -155,12 +168,12 @@ export default function ComponentsPage() {
                       {category}
                     </Button>
                   ))}
-                </div>
+                </Grid>
               </CardContent>
             </Card>
           </aside>
 
-          <div className="grid min-w-0 gap-12">
+          <Grid className="gap-12">
             {componentsByCategory.map(({ category, components }) => (
               <section
                 key={category}
@@ -177,7 +190,7 @@ export default function ComponentsPage() {
                   </Badge>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <Grid columns={1} gap="lg" className="md:grid-cols-2">
                   {components.map((component) => {
                     return (
                       <Link
@@ -218,11 +231,11 @@ export default function ComponentsPage() {
                       </Link>
                     );
                   })}
-                </div>
+                </Grid>
               </section>
             ))}
-          </div>
-        </section>
+          </Grid>
+        </Grid>
       </Container>
     </main>
   );
