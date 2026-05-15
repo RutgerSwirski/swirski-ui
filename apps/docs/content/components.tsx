@@ -116,6 +116,7 @@ export type ComponentDoc = {
   usageCode: string;
   preview: React.ReactNode;
   props: PropDoc[];
+  returns?: PropDoc[];
 };
 
 export type PropDoc = {
@@ -945,7 +946,13 @@ export const componentDocs: ComponentDoc[] = [
       { name: "defaultOpened", type: "boolean", defaultValue: "false", description: "Initial uncontrolled disclosure state." },
       { name: "options.value", type: "boolean", description: "Controlled disclosure state." },
       { name: "options.onChange", type: "(opened: boolean) => void", description: "Called whenever state changes." },
-      { name: "return", type: "[boolean, UseDisclosureHandlers]", description: "Current state and handler object." },
+    ],
+    returns: [
+      { name: "opened", type: "boolean", description: "Current disclosure state." },
+      { name: "handlers.open", type: "() => void", description: "Sets the disclosure state to open." },
+      { name: "handlers.close", type: "() => void", description: "Sets the disclosure state to closed." },
+      { name: "handlers.toggle", type: "() => void", description: "Flips the current disclosure state." },
+      { name: "handlers.set", type: "(opened: boolean) => void", description: "Sets the disclosure state directly." },
     ],
   },
   {
@@ -972,7 +979,10 @@ export const componentDocs: ComponentDoc[] = [
       { name: "value", type: "T", description: "Controlled value." },
       { name: "defaultValue", type: "T", required: true, description: "Uncontrolled initial value." },
       { name: "onChange", type: "(value: T) => void", description: "Called when the setter resolves a value." },
-      { name: "return", type: "[T, Dispatch<SetStateAction<T>>]", description: "Current value and setter." },
+    ],
+    returns: [
+      { name: "value", type: "T", description: "Current controlled or uncontrolled value." },
+      { name: "setValue", type: "Dispatch<SetStateAction<T>>", description: "Updates internal state or calls onChange with the resolved value." },
     ],
   },
   {
@@ -1003,6 +1013,9 @@ useClickOutside(ref, () => setOpen(false), {
       { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns listeners on or off." },
       { name: "options.events", type: 'Array<"mousedown" | "pointerdown" | "touchstart">', defaultValue: '["pointerdown"]', description: "Events to listen for." },
     ],
+    returns: [
+      { name: "return", type: "void", description: "Registers document listeners in an effect and returns no value." },
+    ],
   },
   {
     slug: "use-escape-key",
@@ -1020,6 +1033,9 @@ useClickOutside(ref, () => setOpen(false), {
       { name: "handler", type: "(event: KeyboardEvent) => void", required: true, description: "Runs when Escape is pressed." },
       { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns the key listener on or off." },
       { name: "options.target", type: "Document | HTMLElement | Window | null", description: "Event target, defaults to document." },
+    ],
+    returns: [
+      { name: "return", type: "void", description: "Registers a keydown listener in an effect and returns no value." },
     ],
   },
   {
@@ -1047,7 +1063,11 @@ useClickOutside(ref, () => setOpen(false), {
       { name: "defaultValue", type: "T", required: true, description: "Fallback value." },
       { name: "options.serialize", type: "(value: T) => string", description: "Custom serializer." },
       { name: "options.deserialize", type: "(value: string) => T", description: "Custom parser." },
-      { name: "return", type: "[T, Dispatch<SetStateAction<T>>, () => void]", description: "Value, setter and remove function." },
+    ],
+    returns: [
+      { name: "value", type: "T", description: "Current state, initialized from defaultValue and then hydrated from localStorage." },
+      { name: "setValue", type: "Dispatch<SetStateAction<T>>", description: "Updates React state and persists the serialized value." },
+      { name: "removeValue", type: "() => void", description: "Removes the stored item and resets state to defaultValue." },
     ],
   },
   {
@@ -1061,7 +1081,9 @@ useClickOutside(ref, () => setOpen(false), {
     props: [
       { name: "query", type: "string", required: true, description: "CSS media query to observe." },
       { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the browser runs the query." },
-      { name: "return", type: "boolean", description: "Whether the query currently matches." },
+    ],
+    returns: [
+      { name: "matches", type: "boolean", description: "Whether the media query currently matches." },
     ],
   },
   {
@@ -1074,7 +1096,9 @@ useClickOutside(ref, () => setOpen(false), {
     preview: <Badge tone="yellow">Motion preference</Badge>,
     props: [
       { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the media query runs." },
-      { name: "return", type: "boolean", description: "True when prefers-reduced-motion is reduce." },
+    ],
+    returns: [
+      { name: "reducedMotion", type: "boolean", description: "True when prefers-reduced-motion is reduce." },
     ],
   },
   {
@@ -1100,6 +1124,8 @@ useClickOutside(ref, () => setOpen(false), {
     ),
     props: [
       { name: "options.timeout", type: "number", defaultValue: "1600", description: "Copied-state reset delay in milliseconds." },
+    ],
+    returns: [
       { name: "copied", type: "boolean", description: "True immediately after a successful copy." },
       { name: "copy", type: "(value: string) => Promise<void>", description: "Copies text to the clipboard." },
       { name: "error", type: "Error | null", description: "Last copy error." },

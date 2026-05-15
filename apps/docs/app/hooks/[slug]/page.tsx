@@ -1,6 +1,5 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import CodeBlock from "@/components/CodeBlock";
-import ComponentPlayground from "@/components/ComponentPlayground";
 import NavBar from "@/components/NavBar";
 import { componentDocs, type ComponentDoc } from "@/content/components";
 import {
@@ -28,27 +27,16 @@ type Props = {
   }>;
 };
 
-const categoryStyles: Record<ComponentDoc["category"], string> = {
-  Typography: "bg-[#FFD400] text-black",
-  Layout: "bg-white text-black",
-  Cards: "bg-[#0057FF] text-white",
-  Buttons: "bg-[#FF3131] text-white",
-  Disclosure: "bg-[#FFD400] text-black",
-  Feedback: "bg-[#0B0B0C] text-white",
-  Forms: "bg-white text-black",
-  Hooks: "bg-[#FF3131] text-white",
-  Media: "bg-[#F5F5F3] text-black",
-  Theming: "bg-[#0057FF] text-white",
-  Interaction: "bg-[#FFD400] text-black",
-  Backgrounds: "bg-[#0B0B0C] text-white",
-};
+const hookDocs = componentDocs.filter(
+  (component) => component.category === "Hooks",
+);
 
-const baseBreakdownItems = [
+const breakdownItems = [
   {
-    title: "Preview",
+    title: "Import",
   },
   {
-    title: "Playground",
+    title: "Preview",
   },
   {
     title: "Usage",
@@ -57,16 +45,12 @@ const baseBreakdownItems = [
     title: "Props",
   },
   {
-    title: "Import",
+    title: "Returns",
   },
 ];
 
-const componentOnlyDocs = componentDocs.filter(
-  (component) => component.category !== "Hooks",
-);
-
-function getComponentIndex(slug: string) {
-  return componentOnlyDocs.findIndex((item) => item.slug === slug);
+function getHookIndex(slug: string) {
+  return hookDocs.findIndex((item) => item.slug === slug);
 }
 
 function CodePanel({
@@ -92,7 +76,7 @@ function CodePanel({
   );
 }
 
-function PropTable({ component }: { component: ComponentDoc }) {
+function PropTable({ hook }: { hook: ComponentDoc }) {
   return (
     <section id="props" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -103,7 +87,7 @@ function PropTable({ component }: { component: ComponentDoc }) {
           </Title>
         </div>
 
-        <Badge tone="white">{component.props.length} documented</Badge>
+        <Badge tone="white">{hook.props.length} documented</Badge>
       </div>
 
       <div className="w-full min-w-0 max-w-full overflow-hidden pb-3 pr-3">
@@ -117,7 +101,7 @@ function PropTable({ component }: { component: ComponentDoc }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {component.props.map((prop) => (
+            {hook.props.map((prop) => (
               <TableRow key={prop.name}>
                 <TableCell className="align-top text-[#0B0B0C]">
                   <code className="font-black">{prop.name}</code>
@@ -145,11 +129,7 @@ function PropTable({ component }: { component: ComponentDoc }) {
   );
 }
 
-function ReturnTable({ component }: { component: ComponentDoc }) {
-  if (!component.returns?.length) {
-    return null;
-  }
-
+function ReturnTable({ hook }: { hook: ComponentDoc }) {
   return (
     <section id="returns" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -160,7 +140,7 @@ function ReturnTable({ component }: { component: ComponentDoc }) {
           </Title>
         </div>
 
-        <Badge tone="white">{component.returns.length} documented</Badge>
+        <Badge tone="white">{hook.returns?.length ?? 0} documented</Badge>
       </div>
 
       <div className="w-full min-w-0 max-w-full overflow-hidden pb-3 pr-3">
@@ -173,7 +153,7 @@ function ReturnTable({ component }: { component: ComponentDoc }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {component.returns.map((value) => (
+            {hook.returns?.map((value) => (
               <TableRow key={value.name}>
                 <TableCell className="align-top text-[#0B0B0C]">
                   <code className="font-black">{value.name}</code>
@@ -194,49 +174,30 @@ function ReturnTable({ component }: { component: ComponentDoc }) {
 }
 
 export function generateStaticParams() {
-  return componentOnlyDocs.map((component) => ({
-    slug: component.slug,
+  return hookDocs.map((hook) => ({
+    slug: hook.slug,
   }));
 }
 
-export default async function ComponentPage({ params }: Props) {
+export default async function HookPage({ params }: Props) {
   const { slug } = await params;
-  const componentIndex = getComponentIndex(slug);
-  const component = componentOnlyDocs[componentIndex];
+  const hookIndex = getHookIndex(slug);
+  const hook = hookDocs[hookIndex];
 
-  if (!component) {
-    const hook = componentDocs.find(
-      (item) => item.category === "Hooks" && item.slug === slug,
-    );
-
-    if (hook) {
-      redirect(`/hooks/${hook.slug}`);
-    }
-
+  if (!hook) {
     return notFound();
   }
 
-  const previousComponent =
-    componentOnlyDocs[
-      (componentIndex - 1 + componentOnlyDocs.length) %
-        componentOnlyDocs.length
-    ];
-  const nextComponent =
-    componentOnlyDocs[(componentIndex + 1) % componentOnlyDocs.length];
-  const breakdownItems = component.returns?.length
-    ? [
-        ...baseBreakdownItems.slice(0, 4),
-        { title: "Returns" },
-        ...baseBreakdownItems.slice(4),
-      ]
-    : baseBreakdownItems;
+  const previousHook =
+    hookDocs[(hookIndex - 1 + hookDocs.length) % hookDocs.length];
+  const nextHook = hookDocs[(hookIndex + 1) % hookDocs.length];
 
   return (
     <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
         <DotGrid
           className="inset-0"
-          color="#0057FF"
+          color="#FF3131"
           opacity={0.12}
           spacing={14}
           dotSize={1}
@@ -247,10 +208,10 @@ export default async function ComponentPage({ params }: Props) {
 
           <section className="grid min-w-0 gap-8 py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-end">
             <div className="min-w-0 max-w-4xl">
-              <SectionLabel>{component.category}</SectionLabel>
+              <SectionLabel>Hook</SectionLabel>
 
               <Title className="mt-6 break-words" size="display">
-                {component.title}
+                {hook.title}
               </Title>
 
               <Text
@@ -259,28 +220,28 @@ export default async function ComponentPage({ params }: Props) {
                 tone="muted"
                 weight="bold"
               >
-                {component.description}
+                {hook.description}
               </Text>
             </div>
 
             <div className="grid w-full min-w-0 max-w-sm gap-3 sm:max-w-sm lg:max-w-none">
-              <div
-                className={`border-4 border-black p-4 shadow-[6px_6px_0_#0B0B0C] ${categoryStyles[component.category]}`}
-              >
+              <div className="border-4 border-black bg-[#FF3131] p-4 text-white shadow-[6px_6px_0_#0B0B0C]">
                 <Text
-                  className="uppercase text-current opacity-70"
+                  className="uppercase text-current opacity-80"
                   size="xs"
                   weight="black"
                 >
-                  Component
+                  Hook
                 </Text>
 
                 <Title className="mt-1 text-current" order={2} size="h2">
-                  {String(componentIndex + 1).padStart(2, "0")}
+                  {String(hookIndex + 1).padStart(2, "0")}
                 </Title>
               </div>
 
-              <Button className="w-full">Request Changes</Button>
+              <Button className="w-full" href="/hooks">
+                Back to hooks
+              </Button>
             </div>
           </section>
         </Container>
@@ -320,7 +281,7 @@ export default async function ComponentPage({ params }: Props) {
           </aside>
 
           <div className="grid min-w-0 gap-12">
-            <CodePanel title="Import" code={component.importCode} />
+            <CodePanel title="Import" code={hook.importCode} />
 
             <section id="preview" className="min-w-0 scroll-mt-8">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -342,7 +303,7 @@ export default async function ComponentPage({ params }: Props) {
                     size="h5"
                     tone="inverted"
                   >
-                    {component.title}
+                    {hook.title}
                   </Title>
                   <Badge className="shrink-0" size="sm">
                     Preview
@@ -351,36 +312,33 @@ export default async function ComponentPage({ params }: Props) {
 
                 <div className="w-full min-w-0 max-w-full overflow-x-auto overflow-y-visible bg-[#F5F5F3] p-4 sm:min-h-72 sm:p-6 md:p-10">
                   <div className="w-max min-w-full max-w-none">
-                    {component.preview}
+                    {hook.preview}
                   </div>
                 </div>
               </div>
             </section>
 
-            <ComponentPlayground
-              slug={component.slug}
-              fallbackUsageCode={component.usageCode}
-            />
+            <CodePanel title="Usage" code={hook.usageCode} accent="bg-[#FF3131]" />
 
-            <PropTable component={component} />
+            <PropTable hook={hook} />
 
-            <ReturnTable component={component} />
+            <ReturnTable hook={hook} />
 
             <section className="grid grid-cols-1 gap-4 border-t-4 border-black pt-8 sm:grid-cols-2 md:items-center">
               <Button
-              as={Link}
-                href={`/components/${previousComponent.slug}`}
+                as={Link}
+                href={`/hooks/${previousHook.slug}`}
                 variant="white"
                 className="w-full text-xs sm:text-sm"
               >
-                Previous: {previousComponent.title}
+                Previous: {previousHook.title}
               </Button>
               <Button
-              as={Link}
-                href={`/components/${nextComponent.slug}`}
+                as={Link}
+                href={`/hooks/${nextHook.slug}`}
                 className="w-full items-center gap-2 text-xs sm:text-sm"
               >
-                Next: {nextComponent.title}
+                Next: {nextHook.title}
               </Button>
             </section>
           </div>
