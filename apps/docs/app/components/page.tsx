@@ -15,11 +15,15 @@ import Link from "next/link";
 
 const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
 
-const categories = Array.from(
-  new Set(componentDocs.map((component) => component.category)),
+const componentOnlyDocs = componentDocs.filter(
+  (component) => component.category !== "Hooks",
 );
 
-const componentsWithIndex = componentDocs.map((component, index) => ({
+const categories = Array.from(
+  new Set(componentOnlyDocs.map((component) => component.category)),
+);
+
+const componentsWithIndex = componentOnlyDocs.map((component, index) => ({
   ...component,
   index,
 }));
@@ -84,7 +88,7 @@ export default function ComponentsPage() {
                     Components
                   </Text>
                   <Title className="mt-1" order={2} size="h2">
-                    {componentDocs.length}
+                    {componentOnlyDocs.length}
                   </Title>
                 </CardContent>
               </Card>

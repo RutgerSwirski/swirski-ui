@@ -156,7 +156,7 @@ export default function HooksPage() {
                       <Button
                         withShadow={false}
                         key={hook}
-                        href={doc ? `/components/${doc.slug}` : "/components"}
+                        href={doc ? `/hooks/${doc.slug}` : "/hooks"}
                         variant="white"
                         className="justify-start text-sm"
                       >
@@ -197,7 +197,7 @@ export default function HooksPage() {
                   <TableRow key={recipe.hook}>
                     <TableCell>
                       <Link
-                        href={doc ? `/components/${doc.slug}` : "/components"}
+                        href={doc ? `/hooks/${doc.slug}` : "/hooks"}
                         className="font-black text-[#0B0B0C] underline decoration-4 underline-offset-4"
                       >
                         {recipe.hook}
@@ -221,7 +221,7 @@ export default function HooksPage() {
               `useDisclosure` is the everyday hook for open/close UI. It returns
               the current boolean state and a small handler object.
             </Text>
-            <Button className="mt-6" href="/components/use-disclosure">
+            <Button className="mt-6" href="/hooks/use-disclosure">
               Open hook docs
             </Button>
           </div>
@@ -243,7 +243,7 @@ return (
           {hookDocs.map((hook) => (
             <Link
               key={hook.slug}
-              href={`/components/${hook.slug}`}
+              href={`/hooks/${hook.slug}`}
               className="group block min-w-0"
             >
               <Card className="flex h-full min-h-48 flex-col bg-white">
