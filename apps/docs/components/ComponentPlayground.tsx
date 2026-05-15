@@ -8,6 +8,7 @@ import {
   type PlaygroundValue,
   type PlaygroundValues,
 } from "@/content/playgrounds";
+import { Select } from "@swirski/ui";
 
 type ComponentPlaygroundProps = {
   slug: string;
@@ -37,20 +38,17 @@ function ControlField({
 }) {
   if (control.type === "select") {
     return (
-      <label className={controlLabelClass}>
-        {control.label}
-        <select
-          className={fieldClass}
+      <div className={controlLabelClass}>
+        <span>{control.label}</span>
+        <Select
+          options={control.options.map((option) => ({
+            value: option,
+            label: option,
+          }))}
           value={String(value)}
-          onChange={(event) => onChange(event.target.value)}
-        >
-          {control.options.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
+          onValueChange={onChange}
+        />
+      </div>
     );
   }
 

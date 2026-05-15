@@ -26,6 +26,8 @@ export * from "./components/image-frame/index";
 
 export * from "./components/section-label/index";
 
+export * from "./components/select/index";
+
 export * from "./components/switch/index";
 
 export * from "./components/typography/index";
