@@ -22,6 +22,10 @@ export default function NavBar() {
           Components
         </Button>
 
+        <Button variant="white" href="/hooks">
+          Hooks
+        </Button>
+
         <Button variant="white" href="/cli">
           CLI
         </Button>

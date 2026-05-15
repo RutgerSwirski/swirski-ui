@@ -6,6 +6,7 @@ This is the first-pass local registry used by `@swirski/cli`.
 pnpm --filter @swirski/cli start list
 pnpm --filter @swirski/cli start init
 pnpm --filter @swirski/cli start add button card dialog
+pnpm --filter @swirski/cli start add use-disclosure use-clipboard
 ```
 
 The registry currently copies source from `packages/ui/src/components/*` into
@@ -16,5 +17,6 @@ component so remote installs can use:
 
 ```bash
 swirski add button
+swirski add use-disclosure
 swirski add --all
 ```

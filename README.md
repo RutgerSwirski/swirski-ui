@@ -194,6 +194,7 @@ Swirski UI also ships a first-pass registry workflow inspired by shadcn/ui. It c
 swirski init
 swirski list
 swirski add button card dialog
+swirski add use-disclosure use-clipboard
 swirski add --all
 ```
 
@@ -277,6 +278,7 @@ Swirski UI is actively growing. The component surface is broad, but some complex
 - interaction tests
 - richer Storybook coverage
 - shadcn-compatible remote registry output
+- more hook docs and copied-source hook recipes
 - more composed app patterns like `AppShell`, `Sidebar`, `Command`, `DataTable`, `DatePicker`, and `Dropzone`
 
 ## License

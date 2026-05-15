@@ -66,6 +66,8 @@ export * from "./components/tooltip/index";
 
 export * from "./components/typography/index";
 
+export * from "./hooks/index";
+
 export * from "./theme/index";
 
 export { HeroActions } from "./components/hero-actions/HeroActions";

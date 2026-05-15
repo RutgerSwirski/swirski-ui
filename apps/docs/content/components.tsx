@@ -94,6 +94,7 @@ export type ComponentDoc = {
     | "Disclosure"
     | "Feedback"
     | "Forms"
+    | "Hooks"
     | "Media"
     | "Theming"
     | "Interaction"
@@ -892,6 +893,193 @@ export const componentDocs: ComponentDoc[] = [
         type: "() => SwirskiThemeTokens",
         description: "Reads the resolved theme inside React components.",
       },
+    ],
+  },
+  {
+    slug: "use-disclosure",
+    title: "useDisclosure",
+    description:
+      "Boolean open/close/toggle state for dialogs, drawers, popovers and custom disclosure UI.",
+    category: "Hooks",
+    importCode: `import { useDisclosure } from "@swirski/ui";`,
+    usageCode: `const [opened, handlers] = useDisclosure(false);
+
+<Button onClick={handlers.toggle}>
+  {opened ? "Close" : "Open"}
+</Button>`,
+    preview: (
+      <Card interactive={false} className="max-w-md bg-white shadow-[7px_7px_0_#0B0B0C]">
+        <CardContent>
+          <Badge tone="blue">Disclosure state</Badge>
+          <Text className="mt-4" tone="muted" weight="bold">
+            Returns opened plus open, close, toggle and set handlers.
+          </Text>
+        </CardContent>
+      </Card>
+    ),
+    props: [
+      { name: "defaultOpened", type: "boolean", defaultValue: "false", description: "Initial uncontrolled disclosure state." },
+      { name: "options.value", type: "boolean", description: "Controlled disclosure state." },
+      { name: "options.onChange", type: "(opened: boolean) => void", description: "Called whenever state changes." },
+      { name: "return", type: "[boolean, UseDisclosureHandlers]", description: "Current state and handler object." },
+    ],
+  },
+  {
+    slug: "use-controllable-state",
+    title: "useControllableState",
+    description:
+      "A small helper for components that support both controlled and uncontrolled state.",
+    category: "Hooks",
+    importCode: `import { useControllableState } from "@swirski/ui";`,
+    usageCode: `const [value, setValue] = useControllableState({
+  value: props.value,
+  defaultValue: props.defaultValue ?? "",
+  onChange: props.onValueChange,
+});`,
+    preview: (
+      <Alert tone="yellow">
+        <AlertTitle>Internal helper</AlertTitle>
+        <AlertDescription>
+          Use this to keep component APIs consistent across Swirski primitives.
+        </AlertDescription>
+      </Alert>
+    ),
+    props: [
+      { name: "value", type: "T", description: "Controlled value." },
+      { name: "defaultValue", type: "T", required: true, description: "Uncontrolled initial value." },
+      { name: "onChange", type: "(value: T) => void", description: "Called when the setter resolves a value." },
+      { name: "return", type: "[T, Dispatch<SetStateAction<T>>]", description: "Current value and setter." },
+    ],
+  },
+  {
+    slug: "use-click-outside",
+    title: "useClickOutside",
+    description:
+      "Runs a callback when pointer events happen outside a referenced element.",
+    category: "Hooks",
+    importCode: `import { useClickOutside } from "@swirski/ui";`,
+    usageCode: `const ref = useRef<HTMLDivElement>(null);
+
+useClickOutside(ref, () => setOpen(false), {
+  enabled: open,
+});`,
+    preview: (
+      <Popover defaultOpen>
+        <PopoverTrigger>Outside click</PopoverTrigger>
+        <PopoverContent>
+          <Text weight="bold" tone="muted">
+            Useful for popovers, menus and custom panels.
+          </Text>
+        </PopoverContent>
+      </Popover>
+    ),
+    props: [
+      { name: "ref", type: "RefObject<HTMLElement | null>", required: true, description: "Element that owns the inside area." },
+      { name: "handler", type: "(event: Event) => void", required: true, description: "Runs when the event target is outside the ref." },
+      { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns listeners on or off." },
+      { name: "options.events", type: 'Array<"mousedown" | "pointerdown" | "touchstart">', defaultValue: '["pointerdown"]', description: "Events to listen for." },
+    ],
+  },
+  {
+    slug: "use-escape-key",
+    title: "useEscapeKey",
+    description: "Runs a callback when Escape is pressed.",
+    category: "Hooks",
+    importCode: `import { useEscapeKey } from "@swirski/ui";`,
+    usageCode: `useEscapeKey(() => setOpen(false), {
+  enabled: open,
+});`,
+    preview: (
+      <Badge tone="black">Escape listener for overlays</Badge>
+    ),
+    props: [
+      { name: "handler", type: "(event: KeyboardEvent) => void", required: true, description: "Runs when Escape is pressed." },
+      { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns the key listener on or off." },
+      { name: "options.target", type: "Document | HTMLElement | Window | null", description: "Event target, defaults to document." },
+    ],
+  },
+  {
+    slug: "use-local-storage",
+    title: "useLocalStorage",
+    description: "Persists React state in localStorage with serializer hooks.",
+    category: "Hooks",
+    importCode: `import { useLocalStorage } from "@swirski/ui";`,
+    usageCode: `const [cursor, setCursor, clearCursor] = useLocalStorage(
+  "swirski-cursor",
+  "bolt",
+);`,
+    preview: (
+      <Card interactive={false} className="max-w-md bg-[#FFD400]">
+        <CardContent>
+          <CardTitle>Persistent settings</CardTitle>
+          <Text className="mt-3" weight="bold">
+            Good for cursor choice, theme choice and docs preferences.
+          </Text>
+        </CardContent>
+      </Card>
+    ),
+    props: [
+      { name: "key", type: "string", required: true, description: "localStorage key." },
+      { name: "defaultValue", type: "T", required: true, description: "Fallback value." },
+      { name: "options.serialize", type: "(value: T) => string", description: "Custom serializer." },
+      { name: "options.deserialize", type: "(value: string) => T", description: "Custom parser." },
+      { name: "return", type: "[T, Dispatch<SetStateAction<T>>, () => void]", description: "Value, setter and remove function." },
+    ],
+  },
+  {
+    slug: "use-media-query",
+    title: "useMediaQuery",
+    description: "Tracks a CSS media query in React state.",
+    category: "Hooks",
+    importCode: `import { useMediaQuery } from "@swirski/ui";`,
+    usageCode: `const isDesktop = useMediaQuery("(min-width: 1024px)");`,
+    preview: <Badge tone="blue">Responsive state hook</Badge>,
+    props: [
+      { name: "query", type: "string", required: true, description: "CSS media query to observe." },
+      { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the browser runs the query." },
+      { name: "return", type: "boolean", description: "Whether the query currently matches." },
+    ],
+  },
+  {
+    slug: "use-reduced-motion",
+    title: "useReducedMotion",
+    description: "Reads the user preference for reduced motion.",
+    category: "Hooks",
+    importCode: `import { useReducedMotion } from "@swirski/ui";`,
+    usageCode: `const reducedMotion = useReducedMotion();`,
+    preview: <Badge tone="yellow">Motion preference</Badge>,
+    props: [
+      { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the media query runs." },
+      { name: "return", type: "boolean", description: "True when prefers-reduced-motion is reduce." },
+    ],
+  },
+  {
+    slug: "use-clipboard",
+    title: "useClipboard",
+    description: "Copies text to the clipboard and tracks copied/error state.",
+    category: "Hooks",
+    importCode: `import { useClipboard } from "@swirski/ui";`,
+    usageCode: `const clipboard = useClipboard();
+
+<Button onClick={() => clipboard.copy("pnpm add @swirski/ui")}>
+  {clipboard.copied ? "Copied" : "Copy"}
+</Button>`,
+    preview: (
+      <Card interactive={false} className="max-w-md bg-white">
+        <CardContent>
+          <Badge tone="yellow">Clipboard</Badge>
+          <Text className="mt-4" tone="muted" weight="bold">
+            Used by the docs copy buttons and handy for snippets.
+          </Text>
+        </CardContent>
+      </Card>
+    ),
+    props: [
+      { name: "options.timeout", type: "number", defaultValue: "1600", description: "Copied-state reset delay in milliseconds." },
+      { name: "copied", type: "boolean", description: "True immediately after a successful copy." },
+      { name: "copy", type: "(value: string) => Promise<void>", description: "Copies text to the clipboard." },
+      { name: "error", type: "Error | null", description: "Last copy error." },
+      { name: "reset", type: "() => void", description: "Clears copied and error state." },
     ],
   },
   {

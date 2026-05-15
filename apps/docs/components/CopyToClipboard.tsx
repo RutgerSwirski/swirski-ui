@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useClipboard } from "@swirski/ui";
 
 type CopyToClipboardProps = {
   value: string;
@@ -62,57 +62,29 @@ function CopiedIcon() {
   );
 }
 
-function copyWithTextarea(value: string) {
-  const textarea = document.createElement("textarea");
-  textarea.value = value;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.top = "-9999px";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textarea);
-}
-
 export default function CopyToClipboard({
   value,
   label = "Copy",
   copiedLabel = "Copied",
   className = "",
 }: CopyToClipboardProps) {
-  const [isCopied, setIsCopied] = useState(false);
-
-  useEffect(() => {
-    if (!isCopied) {
-      return;
-    }
-
-    const timeout = window.setTimeout(() => setIsCopied(false), 1600);
-
-    return () => window.clearTimeout(timeout);
-  }, [isCopied]);
+  const { copied, copy } = useClipboard();
 
   async function handleCopy() {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(value);
-    } else {
-      copyWithTextarea(value);
-    }
-
-    setIsCopied(true);
+    await copy(value);
   }
 
   return (
     <button
-      aria-label={isCopied ? copiedLabel : label}
+      aria-label={copied ? copiedLabel : label}
       aria-live="polite"
       className={`grid size-11 place-items-center border-4 border-black bg-[#FFD400] text-black shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none ${className}`}
       onClick={handleCopy}
-      title={isCopied ? copiedLabel : label}
+      title={copied ? copiedLabel : label}
       type="button"
     >
-      {isCopied ? <CopiedIcon /> : <CopyIcon />}
-      <span className="sr-only">{isCopied ? copiedLabel : label}</span>
+      {copied ? <CopiedIcon /> : <CopyIcon />}
+      <span className="sr-only">{copied ? copiedLabel : label}</span>
     </button>
   );
 }

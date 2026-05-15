@@ -34,6 +34,11 @@ const commands = [
       "Copies one or more component source folders into your configured app path.",
   },
   {
+    command: "swirski add use-disclosure use-clipboard",
+    description:
+      "Copies hooks from the registry the same way it copies components.",
+  },
+  {
     command: "swirski add --all",
     description: "Copies every registry entry into your app.",
   },
@@ -84,7 +89,7 @@ export default function CliPage() {
                 weight="bold"
               >
                 Swirski CLI gives the package a shadcn-style path: list the
-                registry, initialize config and copy component source into your
+              registry, initialize config and copy component or hook source into your
                 own app when you want full ownership.
               </Text>
             </div>
@@ -215,6 +220,7 @@ export default function CliPage() {
                   className="shadow-none"
                   code={`pnpm registry:list
 pnpm --filter @swirski/cli start add button card dialog
+pnpm --filter @swirski/cli start add use-disclosure use-clipboard
 node packages/cli/src/index.js add select --dry-run`}
                 />
               </div>
@@ -228,8 +234,8 @@ node packages/cli/src/index.js add select --dry-run`}
             </Title>
             <Text className="mt-5" tone="muted" weight="bold">
               The next registry step is remote, shadcn-compatible JSON output
-              per component, plus dependency metadata and automatic style/token
-              setup.
+              per component and hook, plus richer dependency metadata and
+              automatic style/token setup.
             </Text>
             <Button className="mt-6" href="/components/swirski-provider">
               Theme docs
