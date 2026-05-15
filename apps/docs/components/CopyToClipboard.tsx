@@ -11,12 +11,7 @@ type CopyToClipboardProps = {
 
 function CopyIcon() {
   return (
-    <svg
-      aria-hidden="true"
-      className="size-5"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className="size-5" fill="none" viewBox="0 0 24 24">
       <path
         d="M8 3h12v12h-4v4H4V7h4V3Z"
         fill="#0057FF"
@@ -38,12 +33,7 @@ function CopyIcon() {
 
 function CopiedIcon() {
   return (
-    <svg
-      aria-hidden="true"
-      className="size-5"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className="size-5" fill="none" viewBox="0 0 24 24">
       <path
         d="M4 12.5 9.2 18 20 6"
         stroke="#0B0B0C"
@@ -75,18 +65,19 @@ export default function CopyToClipboard({
   }
 
   return (
-    <Tooltip content={copied ? copiedLabel : label}>
-      <button
-        aria-label={copied ? copiedLabel : label}
-        aria-live="polite"
-        className={`grid size-11 place-items-center border-4 border-black bg-[#FFD400] text-black shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none ${className}`}
-        onClick={handleCopy}
-        title={copied ? copiedLabel : label}
-        type="button"
-      >
-        {copied ? <CopiedIcon /> : <CopyIcon />}
-        <span className="sr-only">{copied ? copiedLabel : label}</span>
-      </button>
-    </Tooltip>
+    <span className={className}>
+      <Tooltip content={copied ? copiedLabel : label}>
+        <button
+          aria-label={copied ? copiedLabel : label}
+          aria-live="polite"
+          className="grid size-11 place-items-center border-4 border-black bg-[#FFD400] text-black shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+          onClick={handleCopy}
+          type="button"
+        >
+          {copied ? <CopiedIcon /> : <CopyIcon />}
+          <span className="sr-only">{copied ? copiedLabel : label}</span>
+        </button>
+      </Tooltip>
+    </span>
   );
 }
