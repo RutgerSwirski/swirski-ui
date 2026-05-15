@@ -241,10 +241,17 @@ export default function HomePage() {
                 ))}
               </ol>
               <div className="mt-6 border-4 border-black bg-[#FFD400] p-4 font-black text-black">
-                <p className="text-xs uppercase text-black/55">CLI</p>
-                <code className="mt-2 block break-words">
-                  swirski init && swirski add button card dialog
-                </code>
+                <div className="flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase text-black/55">CLI</p>
+                    <code className="mt-2 block break-words">
+                      swirski init && swirski add button card dialog
+                    </code>
+                  </div>
+                  <Button href="/cli" variant="white">
+                    CLI docs
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
