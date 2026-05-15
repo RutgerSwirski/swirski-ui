@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import clsx from "clsx";
 
 export type SelectOption = {
@@ -84,8 +85,14 @@ export function Select({
   ...props
 }: SelectProps) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
+  const [contentPosition, setContentPosition] = useState<{
+    left: number;
+    top: number;
+    width: number;
+  } | null>(null);
   const [internalValue, setInternalValue] = useState(
     defaultValue ?? options.find((option) => !option.disabled)?.value ?? "",
   );
@@ -108,7 +115,12 @@ export function Select({
     }
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      if (
+        !rootRef.current?.contains(target) &&
+        !contentRef.current?.contains(target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -117,6 +129,36 @@ export function Select({
 
     return () => {
       window.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setContentPosition(null);
+      return;
+    }
+
+    function updatePosition() {
+      const rect = rootRef.current?.getBoundingClientRect();
+
+      if (!rect) {
+        return;
+      }
+
+      setContentPosition({
+        left: rect.left,
+        top: rect.bottom + 8,
+        width: rect.width,
+      });
+    }
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
     };
   }, [isOpen]);
 
@@ -215,14 +257,23 @@ export function Select({
         </span>
       </button>
 
-      {isOpen && (
+      {isOpen &&
+        contentPosition &&
+        typeof document !== "undefined" &&
+        createPortal(
         <div
+          ref={contentRef}
           className={clsx(
-            "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-50 max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C]",
+            "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C]",
             contentClassName,
           )}
           id={listboxId}
           role="listbox"
+          style={{
+            left: contentPosition.left,
+            top: contentPosition.top,
+            width: contentPosition.width,
+          }}
         >
           {options.map((option, index) => {
             const isSelected = option.value === selectedValue;
@@ -258,7 +309,8 @@ export function Select({
               </button>
             );
           })}
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );

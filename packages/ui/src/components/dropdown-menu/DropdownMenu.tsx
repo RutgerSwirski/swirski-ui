@@ -10,12 +10,14 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import clsx from "clsx";
 
 type DropdownMenuContextValue = {
   open: boolean;
   setOpen: (open: boolean) => void;
   rootRef: React.RefObject<HTMLDivElement | null>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null);
@@ -36,6 +38,7 @@ export function DropdownMenu({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -44,7 +47,12 @@ export function DropdownMenu({
     }
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      if (
+        !rootRef.current?.contains(target) &&
+        !contentRef.current?.contains(target)
+      ) {
         setOpen(false);
       }
     };
@@ -55,7 +63,7 @@ export function DropdownMenu({
   }, [open]);
 
   return (
-    <DropdownMenuContext.Provider value={{ open, setOpen, rootRef }}>
+    <DropdownMenuContext.Provider value={{ open, setOpen, rootRef, contentRef }}>
       <div ref={rootRef} className={clsx("relative w-fit", className)} {...props}>
         {children}
       </div>
@@ -85,24 +93,65 @@ export function DropdownMenuTrigger({
 export function DropdownMenuContent({
   className,
   align = "start",
+  style,
   ...props
 }: HTMLAttributes<HTMLDivElement> & { align?: "start" | "end" }) {
-  const { open } = useDropdownMenu();
+  const { contentRef, open, rootRef } = useDropdownMenu();
+  const [position, setPosition] = useState<{
+    left: number;
+    top: number;
+  } | null>(null);
 
-  if (!open) {
+  useEffect(() => {
+    if (!open) {
+      setPosition(null);
+      return;
+    }
+
+    function updatePosition() {
+      const rect = rootRef.current?.getBoundingClientRect();
+
+      if (!rect) {
+        return;
+      }
+
+      setPosition({
+        left: align === "end" ? rect.right : rect.left,
+        top: rect.bottom + 8,
+      });
+    }
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [align, open, rootRef]);
+
+  if (!open || !position || typeof document === "undefined") {
     return null;
   }
 
-  return (
+  return createPortal(
     <div
+      ref={contentRef}
       className={clsx(
-        "absolute top-[calc(100%+0.5rem)] z-40 min-w-48 border-4 border-black bg-white p-1 shadow-[8px_8px_0_#0B0B0C]",
-        align === "end" ? "right-0" : "left-0",
+        "fixed z-[1000] min-w-48 border-4 border-black bg-white p-1 shadow-[8px_8px_0_#0B0B0C]",
         className,
       )}
       role="menu"
+      style={{
+        left: position.left,
+        top: position.top,
+        transform: align === "end" ? "translateX(-100%)" : undefined,
+        ...style,
+      }}
       {...props}
-    />
+    />,
+    document.body,
   );
 }
 
