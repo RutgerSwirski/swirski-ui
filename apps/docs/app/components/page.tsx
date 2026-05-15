@@ -1,13 +1,15 @@
 import NavBar from "@/components/NavBar";
 import { componentDocs, type ComponentDoc } from "@/content/components";
 import {
+  Badge,
   Button,
   Card,
   CardContent,
-  CardTitle,
   Container,
   DotGrid,
   SectionLabel,
+  Text,
+  Title,
 } from "@swirski/ui";
 import Link from "next/link";
 
@@ -26,7 +28,7 @@ const categoryStyles: Record<ComponentDoc["category"], string> = {
   Backgrounds: "bg-[#0B0B0C] text-white",
 };
 
-const cardStyles = ["bg-white ", "bg-[#FFD400] ", "bg-[#F5F5F3] ", "bg-white"];
+const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
 
 const categories = Array.from(
   new Set(componentDocs.map((component) => component.category)),
@@ -58,45 +60,74 @@ export default function ComponentsPage() {
             <div className="max-w-4xl">
               <SectionLabel>Components</SectionLabel>
 
-              <h1 className="mt-6 font-anton text-5xl uppercase leading-none md:text-7xl">
+              <Title className="mt-6" size="h1">
                 Component index.
-              </h1>
+              </Title>
 
-              <p className="mt-6 max-w-2xl text-lg font-bold leading-8 text-black/70">
+              <Text
+                className="mt-6 max-w-2xl"
+                size="lg"
+                tone="muted"
+                weight="bold"
+              >
                 Scan the shared primitives, jump into a component doc and keep
                 the import close to the preview.
-              </p>
+              </Text>
             </div>
 
             <div className="grid w-full max-w-sm grid-cols-2 gap-3 md:w-80">
-              <div className="border-4 border-black bg-[#FFD400] p-4 shadow-[6px_6px_0_#0B0B0C]">
-                <p className="text-xs font-black uppercase text-black/55">
-                  Components
-                </p>
-                <p className="mt-1 font-anton text-5xl leading-none">
-                  {componentDocs.length}
-                </p>
-              </div>
-              <div className="border-4 border-black bg-[#0057FF] p-4 text-white shadow-[6px_6px_0_#0B0B0C]">
-                <p className="text-xs font-black uppercase text-white/70">
-                  Groups
-                </p>
-                <p className="mt-1 font-anton text-5xl leading-none">
-                  {categories.length}
-                </p>
-              </div>
+              <Card
+                interactive={false}
+                className="bg-[#FFD400] shadow-[6px_6px_0_#0B0B0C]"
+              >
+                <CardContent>
+                  <Text
+                    className="uppercase"
+                    size="xs"
+                    tone="muted"
+                    weight="black"
+                  >
+                    Components
+                  </Text>
+                  <Title className="mt-1" order={2} size="h2">
+                    {componentDocs.length}
+                  </Title>
+                </CardContent>
+              </Card>
+              <Card
+                interactive={false}
+                className="bg-[#0057FF] text-white shadow-[6px_6px_0_#0B0B0C]"
+              >
+                <CardContent>
+                  <Text
+                    className="uppercase text-white/70"
+                    size="xs"
+                    weight="black"
+                  >
+                    Groups
+                  </Text>
+                  <Title className="mt-1 text-current" order={2} size="h2">
+                    {categories.length}
+                  </Title>
+                </CardContent>
+              </Card>
 
-              <div className="col-span-2 border-4 border-black bg-white p-4 shadow-[6px_6px_0_#0B0B0C]">
-                Missing a component?
-                <br />
-                <a
-                  target="_blank"
-                  href="https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=rutgerswirski&labels=missing-component&template=component.md&title=Add+%60[component-name]%60+component"
-                  className="font-bold underline"
-                >
-                  Open an issue.
-                </a>
-              </div>
+              <Card
+                interactive={false}
+                className="col-span-2 bg-white shadow-[6px_6px_0_#0B0B0C]"
+              >
+                <CardContent>
+                  <Text weight="bold">Missing a component?</Text>
+                  <Button
+                    className="mt-4"
+                    target="_blank"
+                    href="https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=rutgerswirski&labels=missing-component&template=component.md&title=Add+%60[component-name]%60+component"
+                    variant="white"
+                  >
+                    Open an issue
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </section>
         </Container>
@@ -105,22 +136,28 @@ export default function ComponentsPage() {
       <Container className="py-16 md:py-20">
         <section className="grid gap-8 lg:grid-cols-[16rem_1fr]">
           <aside className="lg:sticky lg:top-8 lg:self-start">
-            <div className="border-4 border-black bg-white p-4 shadow-[7px_7px_0_#0B0B0C]">
-              <p className="mb-4 text-base font-black uppercase text-black/55">
-                Categories
-              </p>
-              <div className="grid gap-3">
-                {categories.map((category) => (
-                  <a
-                    key={category}
-                    href={`#${category.toLowerCase()}`}
-                    className={`border-4 border-black px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none ${categoryStyles[category]}`}
-                  >
-                    {category}
-                  </a>
-                ))}
-              </div>
-            </div>
+            <Card
+              interactive={false}
+              className="bg-white shadow-[7px_7px_0_#0B0B0C]"
+            >
+              <CardContent>
+                <Text className="mb-4 uppercase" tone="muted" weight="black">
+                  Categories
+                </Text>
+                <div className="grid gap-3">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      href={`#${category.toLowerCase()}`}
+                      variant="white"
+                      className="justify-start text-xs"
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </aside>
 
           <div className="grid gap-12">
@@ -131,13 +168,13 @@ export default function ComponentsPage() {
                 className="scroll-mt-8"
               >
                 <div className="mb-5 flex flex-wrap items-end justify-between gap-4 border-b-4 border-black pb-4">
-                  <h2 className="font-anton text-4xl uppercase leading-none md:text-5xl">
+                  <Title order={2} size="h3">
                     {category}
-                  </h2>
-                  <p className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C]">
+                  </Title>
+                  <Badge tone="white">
                     {components.length}{" "}
                     {components.length === 1 ? "component" : "components"}
-                  </p>
+                  </Badge>
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 2xl:grid-cols-2">
@@ -153,35 +190,38 @@ export default function ComponentsPage() {
                         className="group block min-w-0"
                       >
                         <Card
-                          key={component.slug}
                           className={`${cardStyles[index % cardStyles.length]} flex h-full min-h-[16rem] flex-col`}
                         >
                           <CardContent className="flex h-full flex-col">
                             <div className="flex items-start justify-between gap-4">
-                              <p
-                                className={`w-fit border-4 border-black px-3 py-2 text-xs font-black uppercase  ${categoryStyles[component.category]}`}
+                              <Badge
+                                className={categoryStyles[component.category]}
                               >
                                 {component.category}
-                              </p>
-                              <span className="font-anton text-3xl leading-none text-black/25">
+                              </Badge>
+                              <Text
+                                className="font-anton text-3xl leading-none text-black/25"
+                                component="span"
+                              >
                                 {String(index + 1).padStart(2, "0")}
-                              </span>
+                              </Text>
                             </div>
 
-                            <CardTitle>{component.title}</CardTitle>
+                            <Title
+                              className="mt-5 group-hover:underline"
+                              order={3}
+                              size="h4"
+                            >
+                              {component.title}
+                            </Title>
 
-                            <p className="mt-4 text-base font-semibold leading-7 text-black/70">
+                            <Text
+                              className="mt-4"
+                              tone="muted"
+                              weight="medium"
+                            >
                               {component.description}
-                            </p>
-
-                            {/* <div className="mt-auto pt-6">
-                              <Button
-                                href={`/components/${component.slug}`}
-                                variant={index % 2 === 0 ? "blue" : "white"}
-                              >
-                                Open docs
-                              </Button>
-                            </div> */}
+                            </Text>
                           </CardContent>
                         </Card>
                       </Link>

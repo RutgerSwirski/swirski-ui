@@ -89,8 +89,8 @@ export default function CliPage() {
                 weight="bold"
               >
                 Swirski CLI gives the package a shadcn-style path: list the
-              registry, initialize config and copy component or hook source into your
-                own app when you want full ownership.
+                registry, initialize config and copy component or hook source
+                into your own app when you want full ownership.
               </Text>
             </div>
 
@@ -100,9 +100,9 @@ export default function CliPage() {
             >
               <CardContent>
                 <Badge tone="black">Local registry</Badge>
-                <p className="mt-5 font-anton text-5xl uppercase leading-none">
+                <Title className="mt-5" order={2} size="h2">
                   35+
-                </p>
+                </Title>
                 <Text className="mt-2" size="sm" weight="bold">
                   installable entries in registry/swirski.registry.json
                 </Text>

@@ -20,7 +20,9 @@ import {
 } from "@swirski/ui";
 import Link from "next/link";
 
-const hookDocs = componentDocs.filter((component) => component.category === "Hooks");
+const hookDocs = componentDocs.filter(
+  (component) => component.category === "Hooks",
+);
 
 const hookGroups = [
   {
@@ -98,9 +100,9 @@ export default function HooksPage() {
             >
               <CardContent>
                 <Badge tone="black">Hook entries</Badge>
-                <p className="mt-5 font-anton text-5xl uppercase leading-none">
+                <Title className="mt-5 text-current" order={2} size="h2">
                   {hookDocs.length}
-                </p>
+                </Title>
                 <Text className="mt-2" size="sm" weight="bold" tone="inverted">
                   documented hooks, exported from @swirski/ui and installable
                   through the registry CLI.
@@ -126,7 +128,9 @@ export default function HooksPage() {
           </div>
 
           <div className="grid gap-5">
-            <CodeBlock code={`import { useDisclosure, useClipboard } from "@swirski/ui";`} />
+            <CodeBlock
+              code={`import { useDisclosure, useClipboard } from "@swirski/ui";`}
+            />
             <CodeBlock code="swirski add use-disclosure use-clipboard" />
           </div>
         </section>
@@ -139,7 +143,9 @@ export default function HooksPage() {
               className="bg-white shadow-[7px_7px_0_#0B0B0C]"
             >
               <CardContent>
-                <Badge tone={index === 2 ? "red" : index === 1 ? "blue" : "yellow"}>
+                <Badge
+                  tone={index === 2 ? "red" : index === 1 ? "blue" : "yellow"}
+                >
                   {group.title}
                 </Badge>
                 <div className="mt-5 grid gap-3">
@@ -147,13 +153,14 @@ export default function HooksPage() {
                     const doc = hookDocs.find((item) => item.title === hook);
 
                     return (
-                      <Link
+                      <Button
                         key={hook}
                         href={doc ? `/components/${doc.slug}` : "/components"}
-                        className="border-4 border-black bg-white px-3 py-2 text-xs font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+                        variant="white"
+                        className="justify-start text-xs"
                       >
                         {hook}
-                      </Link>
+                      </Button>
                     );
                   })}
                 </div>

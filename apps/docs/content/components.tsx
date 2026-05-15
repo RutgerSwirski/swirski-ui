@@ -277,19 +277,19 @@ export const componentDocs: ComponentDoc[] = [
     description:
       "A playful pixel-art cursor provider with arrow, hover hand and click hand states.",
     category: "Interaction",
-    importCode: `import { CursorProvider, CursorDock } from "@swirski/ui";`,
+    importCode: `import { Button, CursorProvider, CursorDock } from "@swirski/ui";`,
     usageCode: `<CursorProvider>
   <CursorDock />
-  <main>Your app content</main>
+  <Button href="/components">Hover me</Button>
 </CursorProvider>`,
     preview: (
       <CursorProvider className="relative min-h-64 space-y-6 overflow-hidden p-2">
         <CursorDock position="absolute" />
         <div className="flex flex-wrap items-center gap-4">
           <Button variant="yellow">Hover me</Button>
-          <a className="font-black underline" href="/components/cursor">
+          <Button href="/components/cursor" variant="white">
             Link cursor
-          </a>
+          </Button>
         </div>
       </CursorProvider>
     ),
@@ -675,16 +675,22 @@ export const componentDocs: ComponentDoc[] = [
     description:
       "A bordered content block for projects, pieces, links and previews.",
     category: "Cards",
-    importCode: `import { Card, CardContent, CardTitle } from "@swirski/ui";`,
+    importCode: `import { Card, CardContent, CardTitle, Text } from "@swirski/ui";`,
     usageCode: `<Card>
   <CardContent>
     <CardTitle>Patchwork Jacket</CardTitle>
+    <Text className="mt-3" tone="muted" weight="bold">
+      A framed content primitive with Swirski borders and shadows.
+    </Text>
   </CardContent>
 </Card>`,
     preview: (
       <Card>
         <CardContent>
           <CardTitle>Patchwork Jacket</CardTitle>
+          <Text className="mt-3" tone="muted" weight="bold">
+            A framed content primitive with Swirski borders and shadows.
+          </Text>
         </CardContent>
       </Card>
     ),

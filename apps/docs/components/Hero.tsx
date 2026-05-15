@@ -1,10 +1,4 @@
-import {
-  Badge,
-  HeroActions,
-  Button,
-  Text,
-  Title,
-} from "@swirski/ui";
+import { Badge, Button, HeroActions, Text, Title } from "@swirski/ui";
 
 export default function Hero() {
   return (
@@ -24,29 +18,17 @@ export default function Hero() {
       </Text>
 
       <HeroActions className="mt-9">
-        <Button href="/get-started"
-        // icon="arrow-up-right"
-        // iconSide="right"
-        >Get Started</Button>
-        <Button href="https://github.com/rutgerswirski/@swirski/ui"
-        variant="white"
-        icon="github"
-
+        <Button href="/components" icon="arrow-up-right" iconSide="right">
+          Browse components
+        </Button>
+        <Button
+          href="https://github.com/rutgerswirski/swirski-ui"
+          variant="white"
+          icon="github"
         >
-          GitHub 
+          GitHub
         </Button>
       </HeroActions>
-
-      {/* <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
-                        {["React", "Tailwind", "TypeScript"].map((item) => (
-                          <div
-                            key={item}
-                            className="border-4 border-black bg-[#F5F5F3] px-4 py-3 text-sm font-black uppercase shadow-[5px_5px_0_#0B0B0C]"
-                          >
-                            {item}
-                          </div>
-                        ))}
-                      </div> */}
     </div>
   );
 }

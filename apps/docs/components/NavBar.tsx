@@ -1,4 +1,4 @@
-import { Button } from "@swirski/ui";
+import { Button, Text } from "@swirski/ui";
 
 export default function NavBar() {
   return (
@@ -7,7 +7,12 @@ export default function NavBar() {
         href="/"
         className="font-anton text-3xl uppercase leading-none tracking-normal"
       >
-        Swirski UI
+        <Text
+          className="font-anton text-3xl uppercase leading-none text-current"
+          component="span"
+        >
+          Swirski UI
+        </Text>
       </a>
 
       <nav
@@ -16,7 +21,6 @@ export default function NavBar() {
       >
         <Button
           variant="white"
-          // className="border-4 border-black bg-[#FFD400] px-4 py-2 shadow-[4px_4px_0_#0B0B0C]"
           href="/components"
         >
           Components

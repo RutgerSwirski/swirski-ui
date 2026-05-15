@@ -4,14 +4,16 @@ import CopyToClipboard from "@/components/CopyToClipboard";
 import Hero from "@/components/Hero";
 import NavBar from "@/components/NavBar";
 import {
+  Badge,
   Button,
   Card,
   CardContent,
-  CardTitle,
   Container,
   DotGrid,
   ImageFrame,
   SectionLabel,
+  Text,
+  Title,
 } from "@swirski/ui";
 
 const foundations = [
@@ -86,28 +88,31 @@ export default function HomePage() {
           <section className="grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:grid-cols-[1fr_0.92fr] lg:py-20">
             <Hero />
 
-            <ImageFrame className="bg-[#0B0B0C] p-4 border-4 text-black shadow-[14px_14px_0_#0057FF]">
-              {/* <div className="border-4 border-black bg-[#F5F5F3] p-4 text-[#0B0B0C]"> */}
-              <div className="flex items-center justify-between border-b-4 border-black pb-4">
-                <span className="font-anton text-3xl uppercase">Docs</span>
-                <code className="border-2 border-black bg-[#FFD400] px-3 py-2 text-xs font-black uppercase">
-                  @swirski/ui
-                </code>
+            <ImageFrame className="border-4 bg-[#0B0B0C] p-4 text-white shadow-[14px_14px_0_#0057FF]">
+              <div className="flex items-center justify-between border-b-4 border-white pb-4">
+                <Title order={2} size="h5" tone="inverted">
+                  Docs
+                </Title>
+                <Badge>@swirski/ui</Badge>
               </div>
 
               <div className="mt-4 grid gap-4">
                 <Card interactive={false} className="bg-white">
                   <CardContent className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
                     <div>
-                      <p className="text-xs font-black uppercase text-black/55">
+                      <Text
+                        className="uppercase"
+                        size="xs"
+                        tone="muted"
+                        weight="black"
+                      >
                         Install
-                      </p>
+                      </Text>
                       <code className="mt-2 block break-words text-lg font-black">
                         pnpm add @swirski/ui @swirski/cli
                       </code>
                     </div>
 
-                    {/* insert copy to clipboard button */}
                     <CopyToClipboard
                       value="pnpm add @swirski/ui @swirski/cli"
                       label="Copy"
@@ -119,29 +124,37 @@ export default function HomePage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Card interactive={false} className="bg-[#FFD400] ">
                     <CardContent>
-                      <CardTitle>Studio</CardTitle>
-                      <p className="mt-3 text-sm font-bold leading-6">
+                      <Title order={3} size="h5">
+                        Studio
+                      </Title>
+                      <Text className="mt-3" size="sm" weight="bold">
                         Clean hierarchy with hard graphic accents and useful
                         component states.
-                      </p>
+                      </Text>
                     </CardContent>
                   </Card>
 
                   <Card
                     interactive={false}
-                    className="bg-[#0057FF] text-black "
+                    className="bg-[#0057FF] text-white "
                   >
                     <CardContent>
-                      <CardTitle>Dev</CardTitle>
-                      <p className="mt-3 text-sm font-bold leading-6">
+                      <Title order={3} size="h5" tone="inverted">
+                        Dev
+                      </Title>
+                      <Text
+                        className="mt-3"
+                        size="sm"
+                        tone="inverted"
+                        weight="bold"
+                      >
                         Built for docs, portfolio surfaces and production
                         interfaces.
-                      </p>
+                      </Text>
                     </CardContent>
                   </Card>
                 </div>
               </div>
-              {/* </div> */}
             </ImageFrame>
           </section>
         </Container>
@@ -152,14 +165,14 @@ export default function HomePage() {
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
               <SectionLabel>System</SectionLabel>
-              <h2 className="mt-6 max-w-3xl font-anton text-5xl uppercase leading-none md:text-7xl">
+              <Title className="mt-6 max-w-3xl" order={2} size="h1">
                 The same language, calmer docs.
-              </h2>
+              </Title>
             </div>
-            <p className="max-w-sm text-base font-bold leading-7 text-black/65">
+            <Text className="max-w-sm" tone="muted" weight="bold">
               The docs should feel like a working studio surface: clear first,
               expressive second, unmistakably Swirski throughout.
-            </p>
+            </Text>
           </div>
 
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -170,13 +183,15 @@ export default function HomePage() {
                 className="bg-white shadow-[7px_7px_0_#0B0B0C]"
               >
                 <CardContent>
-                  <p className="mb-6 w-fit border-4 border-black bg-[#FF3131] px-3 py-2 font-anton text-xl uppercase text-black">
+                  <Badge className="mb-6" tone="red">
                     {item.label}
-                  </p>
-                  <CardTitle>{item.title}</CardTitle>
-                  <p className="mt-4 text-sm font-bold leading-7 text-black/70">
+                  </Badge>
+                  <Title order={3} size="h4">
+                    {item.title}
+                  </Title>
+                  <Text className="mt-4" size="sm" tone="muted" weight="bold">
                     {item.body}
-                  </p>
+                  </Text>
                 </CardContent>
               </Card>
             ))}
@@ -186,10 +201,10 @@ export default function HomePage() {
         <section className="grid gap-8 py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20">
           <div>
             <SectionLabel>Library</SectionLabel>
-            <p className="mt-6 text-lg font-bold leading-8 text-black/70">
+            <Text className="mt-6" size="lg" tone="muted" weight="bold">
               A compact component surface for building Swirski pages without
               rebuilding the style rules on every screen.
-            </p>
+            </Text>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -198,7 +213,6 @@ export default function HomePage() {
                 variant="white"
                 key={item}
                 href={getComponentHref(item)}
-                // className="text-black border-4 border-black bg-white px-5 py-5 font-black uppercase transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
               >
                 {item}
               </Button>
@@ -212,30 +226,40 @@ export default function HomePage() {
         >
           <div>
             <SectionLabel>Start</SectionLabel>
-            <h2 className="mt-6 font-anton text-5xl uppercase leading-none md:text-7xl">
+            <Title className="mt-6" order={2} size="h1">
               Compose the page, then tune the voice.
-            </h2>
+            </Title>
           </div>
 
           <Card
             interactive={false}
-            className="bg-[#0B0B0C] text-black shadow-[10px_10px_0_#FFD400]"
+            className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
           >
             <CardContent className="p-6">
               <ol className="grid gap-4">
                 {workflow.map(({ title, body }, index) => (
                   <li
                     key={title}
-                    className="grid grid-cols-[3rem_1fr] gap-4 border-b-4 border-black/20 pb-4 last:border-b-0 last:pb-0"
+                    className="grid grid-cols-[3rem_1fr] gap-4 border-b-4 border-white/20 pb-4 last:border-b-0 last:pb-0"
                   >
-                    <span className="font-anton text-3xl text-black">
+                    <Text
+                      className="font-anton text-3xl leading-none text-current"
+                      component="span"
+                    >
                       {String(index + 1).padStart(2, "0")}
-                    </span>
+                    </Text>
                     <div className="grid gap-1">
-                      <span className="text-xl font-bold leading-7">
+                      <Text
+                        component="span"
+                        size="xl"
+                        tone="inverted"
+                        weight="bold"
+                      >
                         {title}
-                      </span>
-                      <p className="text-sm leading-7 text-black/70">{body}</p>
+                      </Text>
+                      <Text className="text-white/75" size="sm">
+                        {body}
+                      </Text>
                     </div>
                   </li>
                 ))}
@@ -243,7 +267,14 @@ export default function HomePage() {
               <div className="mt-6 border-4 border-black bg-[#FFD400] p-4 font-black text-black">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
-                    <p className="text-xs uppercase text-black/55">CLI</p>
+                    <Text
+                      className="uppercase"
+                      size="xs"
+                      tone="muted"
+                      weight="black"
+                    >
+                      CLI
+                    </Text>
                     <code className="mt-2 block break-words">
                       swirski init && swirski add button card dialog
                     </code>

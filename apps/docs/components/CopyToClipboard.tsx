@@ -1,6 +1,6 @@
 "use client";
 
-import { useClipboard } from "@swirski/ui";
+import { Tooltip, useClipboard } from "@swirski/ui";
 
 type CopyToClipboardProps = {
   value: string;
@@ -75,16 +75,18 @@ export default function CopyToClipboard({
   }
 
   return (
-    <button
-      aria-label={copied ? copiedLabel : label}
-      aria-live="polite"
-      className={`grid size-11 place-items-center border-4 border-black bg-[#FFD400] text-black shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none ${className}`}
-      onClick={handleCopy}
-      title={copied ? copiedLabel : label}
-      type="button"
-    >
-      {copied ? <CopiedIcon /> : <CopyIcon />}
-      <span className="sr-only">{copied ? copiedLabel : label}</span>
-    </button>
+    <Tooltip content={copied ? copiedLabel : label}>
+      <button
+        aria-label={copied ? copiedLabel : label}
+        aria-live="polite"
+        className={`grid size-11 place-items-center border-4 border-black bg-[#FFD400] text-black shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none ${className}`}
+        onClick={handleCopy}
+        title={copied ? copiedLabel : label}
+        type="button"
+      >
+        {copied ? <CopiedIcon /> : <CopyIcon />}
+        <span className="sr-only">{copied ? copiedLabel : label}</span>
+      </button>
+    </Tooltip>
   );
 }

@@ -305,16 +305,17 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         >
           <CardContent>
             <CardTitle>{textValue(values, "title")}</CardTitle>
-            <p className="mt-3 text-sm font-bold leading-6 text-black/65">
+            <Text className="mt-3" size="sm" tone="muted" weight="bold">
               A framed content primitive with Swirski borders and shadows.
-            </p>
+            </Text>
           </CardContent>
         </Card>
       );
     },
     getCode: (values) => {
       const surface = textValue(values, "surface");
-      const surfaceClass = cardSurfaceClasses[surface as keyof typeof cardSurfaceClasses];
+      const surfaceClass =
+        cardSurfaceClasses[surface as keyof typeof cardSurfaceClasses];
       const interactive = booleanValue(values, "interactive");
 
       return `<Card
@@ -323,9 +324,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
 >
   <CardContent>
     <CardTitle>${jsxText(textValue(values, "title"))}</CardTitle>
-    <p className="mt-3 text-sm font-bold leading-6 text-black/65">
+    <Text className="mt-3" size="sm" tone="muted" weight="bold">
       A framed content primitive with Swirski borders and shadows.
-    </p>
+    </Text>
   </CardContent>
 </Card>`;
     },
@@ -1019,9 +1020,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         />
         <div className="flex min-h-48 flex-col justify-center gap-5">
           <Button variant="yellow">Hover me</Button>
-          <a className="w-fit font-black underline" href="#preview">
+          <Button className="w-fit" href="#preview" variant="white">
             Link cursor
-          </a>
+          </Button>
         </div>
       </CursorProvider>
     ),
@@ -1033,9 +1034,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
   <CursorDock position="absolute" side=${jsxString(textValue(values, "side"))} />
   <div className="flex min-h-48 flex-col justify-center gap-5">
     <Button variant="yellow">Hover me</Button>
-    <a className="w-fit font-black underline" href="#preview">
+    <Button className="w-fit" href="#preview" variant="white">
       Link cursor
-    </a>
+    </Button>
   </div>
 </CursorProvider>`,
   },
