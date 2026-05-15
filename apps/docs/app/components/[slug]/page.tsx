@@ -77,7 +77,7 @@ function CodePanel({
   accent?: string;
 }) {
   return (
-    <section id={title.toLowerCase()} className="scroll-mt-8">
+    <section id={title.toLowerCase()} className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex items-center gap-3">
         <span className={`h-5 w-5 border-4 border-black ${accent}`} />
         <h2 className="font-anton text-4xl uppercase leading-none">{title}</h2>
@@ -177,7 +177,7 @@ export default async function ComponentPage({ params }: Props) {
     componentDocs[(componentIndex + 1) % componentDocs.length];
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen overflow-x-clip bg-[#F5F5F3] text-[#0B0B0C]">
       <div className="relative border-b-4 border-black bg-white">
         <DotGrid
           className="inset-0"
@@ -203,7 +203,7 @@ export default async function ComponentPage({ params }: Props) {
               </p>
             </div>
 
-            <div className="grid w-full max-w-sm gap-3 md:w-80">
+            <div className="grid w-full min-w-0 max-w-sm gap-3 md:w-80">
               <div
                 className={`border-4 border-black p-4 shadow-[6px_6px_0_#0B0B0C] ${categoryStyles[component.category]}`}
               >
@@ -278,7 +278,7 @@ export default async function ComponentPage({ params }: Props) {
             </Card>
           </aside>
 
-          <div className="grid gap-12">
+          <div className="grid min-w-0 gap-12">
             <CodePanel title="Import" code={component.importCode} />
 
             <section id="preview" className="scroll-mt-8">

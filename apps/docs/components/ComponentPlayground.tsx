@@ -126,7 +126,7 @@ function ControlField({
 
 function UsageCodePanel({ code }: { code: string }) {
   return (
-    <section id="usage" className="scroll-mt-8">
+    <section id="usage" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex items-center gap-3">
         <span className="h-5 w-5 border-4 border-black bg-[#FF3131]" />
         <h2 className="font-anton text-4xl uppercase leading-none">Usage</h2>
