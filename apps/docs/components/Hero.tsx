@@ -24,9 +24,16 @@ export default function Hero() {
       </HeroLead>
 
       <HeroActions className="mt-9">
-        <Button href="/components">Browse components</Button>
-        <Button href="#start" variant="white">
-          Get started
+        <Button href="/get-started"
+        // icon="arrow-up-right"
+        // iconSide="right"
+        >Get Started</Button>
+        <Button href="https://github.com/rutgerswirski/@swirski/ui"
+        variant="white"
+        icon="github"
+
+        >
+          GitHub 
         </Button>
       </HeroActions>
 
