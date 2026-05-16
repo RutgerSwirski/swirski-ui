@@ -46,7 +46,11 @@ const categoryStyles: Record<ComponentDoc["category"], string> = {
 
 const baseBreakdownItems = [
   {
-    title: "Preview",
+    title: "Import",
+  },
+  {
+    title: "Composition",
+    optional: "compositionCode",
   },
   {
     title: "Playground",
@@ -58,9 +62,10 @@ const baseBreakdownItems = [
     title: "Props",
   },
   {
-    title: "Import",
+    title: "Returns",
+    optional: "returns",
   },
-];
+] as const;
 
 const componentOnlyDocs = componentDocs.filter(
   (component) => component.category !== "Hooks",
@@ -223,13 +228,21 @@ export default async function ComponentPage({ params }: Props) {
     ];
   const nextComponent =
     componentOnlyDocs[(componentIndex + 1) % componentOnlyDocs.length];
-  const breakdownItems = component.returns?.length
-    ? [
-        ...baseBreakdownItems.slice(0, 4),
-        { title: "Returns" },
-        ...baseBreakdownItems.slice(4),
-      ]
-    : baseBreakdownItems;
+  const breakdownItems = baseBreakdownItems.filter((item) => {
+    if (!("optional" in item)) {
+      return true;
+    }
+
+    if (item.optional === "compositionCode") {
+      return Boolean(component.compositionCode);
+    }
+
+    if (item.optional === "returns") {
+      return Boolean(component.returns?.length);
+    }
+
+    return true;
+  });
 
   return (
     <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
@@ -328,6 +341,14 @@ export default async function ComponentPage({ params }: Props) {
 
           <Grid className="gap-12">
             <CodePanel title="Import" code={component.importCode} />
+
+            {component.compositionCode && (
+              <CodePanel
+                title="Composition"
+                code={component.compositionCode}
+                accent="bg-[#FFD400]"
+              />
+            )}
 
             {/* <section id="preview" className="min-w-0 scroll-mt-8">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
