@@ -9,7 +9,7 @@ export type LoaderVariant =
   | "pixel-scan";
 
 export type LoaderTone = "blue" | "yellow" | "red" | "pink" | "green" | "black";
-export type LoaderSize = "sm" | "md" | "lg";
+export type LoaderSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
 export type LoaderProps = {
   variant?: LoaderVariant;
@@ -22,30 +22,41 @@ const rootSizeStyles: Record<LoaderSize, string> = {
   sm: "min-h-5",
   md: "min-h-8",
   lg: "min-h-12",
+  xl: "min-h-16",
+  "2xl": "min-h-20",
 };
 
 const pixelSizeStyles: Record<LoaderSize, string> = {
   sm: "[--sw-loader-pixel:0.35rem] [--sw-loader-gap:0.2rem]",
   md: "[--sw-loader-pixel:0.5rem] [--sw-loader-gap:0.3rem]",
   lg: "[--sw-loader-pixel:0.7rem] [--sw-loader-gap:0.4rem]",
+  xl: "[--sw-loader-pixel:1rem] [--sw-loader-gap:0.5rem]",
+  "2xl": "[--sw-loader-pixel:1.2rem] [--sw-loader-gap:0.6rem]",
 };
 
 const barSizeStyles: Record<LoaderSize, string> = {
   sm: "[--sw-loader-bar-w:0.35rem] [--sw-loader-bar-h:1.15rem] [--sw-loader-gap:0.2rem]",
   md: "[--sw-loader-bar-w:0.5rem] [--sw-loader-bar-h:1.75rem] [--sw-loader-gap:0.3rem]",
   lg: "[--sw-loader-bar-w:0.7rem] [--sw-loader-bar-h:2.5rem] [--sw-loader-gap:0.4rem]",
+  xl: "[--sw-loader-bar-w:1rem] [--sw-loader-bar-h:3.5rem] [--sw-loader-gap:0.5rem]",
+  "2xl":
+    "[--sw-loader-bar-w:1.2rem] [--sw-loader-bar-h:4.5rem] [--sw-loader-gap:0.6rem]",
 };
 
 const scanSizeStyles: Record<LoaderSize, string> = {
   sm: "h-5 w-20",
   md: "h-7 w-28",
   lg: "h-9 w-36",
+  xl: "h-12 w-48",
+  "2xl": "h-16 w-64",
 };
 
 const spinnerSizeStyles: Record<LoaderSize, string> = {
   sm: "size-5 border-[3px]",
   md: "size-8 border-4",
   lg: "size-12 border-[5px]",
+  xl: "size-16 border-[6px]",
+  "2xl": "size-20 border-[7px]",
 };
 
 const toneVars: Record<LoaderTone, string> = {

@@ -1667,7 +1667,7 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         label: "size",
         type: "select",
         defaultValue: "lg",
-        options: ["sm", "md", "lg"],
+        options: ["sm", "md", "lg", "xl", "2xl"],
       },
       {
         name: "tone",
@@ -1687,7 +1687,7 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     render: (values) => (
       <Loader
         tone={textValue(values, "tone") as "blue" | "yellow" | "red" | "black"}
-        size={textValue(values, "size") as "sm" | "md" | "lg"}
+        size={textValue(values, "size") as "sm" | "md" | "lg" | "xl" | "2xl"}
         variant={
           textValue(values, "variant") as
             | "spinner"
