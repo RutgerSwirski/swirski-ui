@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const sourceRegistryPath = path.join(repoRoot, "registry/swirski.registry.json");
-const outputRoot = path.join(repoRoot, "registry/shadcn");
+const outputRoot = path.join(repoRoot, "apps/docs/public");
 const itemsOutputRoot = path.join(outputRoot, "r");
 const registryItemSchema = "https://ui.shadcn.com/schema/registry-item.json";
 const registrySchema = "https://ui.shadcn.com/schema/registry.json";
@@ -171,7 +171,9 @@ function main() {
     writeJson(path.join(itemsOutputRoot, `${item.name}.json`), item);
   }
 
-  console.log(`Generated ${items.length} shadcn registry items in registry/shadcn`);
+  console.log(
+    `Generated ${items.length} shadcn registry items in apps/docs/public`,
+  );
 }
 
 main();
