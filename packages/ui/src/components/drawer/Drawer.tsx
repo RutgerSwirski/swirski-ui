@@ -10,7 +10,9 @@ import {
   useEffect,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { Slot, cn, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type DrawerVariant = "default" | "compact";
 export type DrawerSize = "sm" | "md" | "lg";
@@ -140,6 +142,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
   ...props
 }, ref) {
   const { open, setOpen } = useDrawer();
+  const portalRoot = usePortalRoot();
 
   useEffect(() => {
     if (!open) {
@@ -157,7 +160,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, setOpen]);
 
-  if (!open) {
+  if (!open || !portalRoot) {
     return null;
   }
 
@@ -168,7 +171,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     bottom: "bottom-0 left-0 w-full",
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 bg-black/45">
       <button
         aria-label="Close drawer"
@@ -191,7 +194,8 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       >
         {children}
       </div>
-    </div>
+    </div>,
+    portalRoot,
   );
 });
 

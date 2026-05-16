@@ -11,7 +11,9 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type PopoverVariant = "default" | "compact";
 export type PopoverSize = "sm" | "md" | "lg";
@@ -21,6 +23,7 @@ type PopoverContextValue = {
   open: boolean;
   setOpen: (open: boolean) => void;
   rootRef: React.RefObject<HTMLDivElement | null>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const PopoverContext = createContext<PopoverContextValue | null>(null);
@@ -57,6 +60,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
   ...props
 }, ref) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
   const currentOpen = open ?? internalOpen;
@@ -75,7 +79,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
     }
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      if (
+        !rootRef.current?.contains(target) &&
+        !contentRef.current?.contains(target)
+      ) {
         setOpen(false);
       }
     };
@@ -87,7 +96,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
 
   return (
     <PopoverContext.Provider
-      value={{ open: currentOpen, setOpen, rootRef }}
+      value={{ open: currentOpen, setOpen, rootRef, contentRef }}
     >
       <div
         ref={composeRefs(rootRef, ref)}
@@ -169,26 +178,67 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   variant = "default",
   size = "md",
   tone = "default",
+  style,
   ...props
 }, ref) {
-  const { open } = usePopover();
+  const { contentRef, open, rootRef } = usePopover();
+  const portalRoot = usePortalRoot();
+  const [position, setPosition] = useState<{
+    left: number;
+    top: number;
+  } | null>(null);
 
-  if (!open) {
+  useEffect(() => {
+    if (!open) {
+      setPosition(null);
+      return;
+    }
+
+    function updatePosition() {
+      const rect = rootRef.current?.getBoundingClientRect();
+
+      if (!rect) {
+        return;
+      }
+
+      setPosition({
+        left: align === "end" ? rect.right : rect.left,
+        top: rect.bottom + 8,
+      });
+    }
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [align, open, rootRef]);
+
+  if (!open || !position || !portalRoot) {
     return null;
   }
 
-  return (
+  return createPortal(
     <div
-      ref={ref}
+      ref={composeRefs(contentRef, ref)}
       className={cn(
-        "absolute top-[calc(100%+0.5rem)] z-40 w-72 border-4 border-black bg-white p-4 shadow-[8px_8px_0_#0B0B0C]",
-        align === "end" ? "right-0" : "left-0",
+        "fixed z-[1000] w-72 border-4 border-black bg-white p-4 shadow-[8px_8px_0_#0B0B0C]",
         variant === "compact" && "p-3 shadow-[4px_4px_0_#0B0B0C]",
         className,
       )}
       {...swirskiAttrs("popover-content", { size, tone, variant })}
+      style={{
+        left: position.left,
+        top: position.top,
+        transform: align === "end" ? "translateX(-100%)" : undefined,
+        ...style,
+      }}
       {...props}
-    />
+    />,
+    portalRoot,
   );
 });
 

@@ -13,6 +13,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type SelectVariant = "default" | "filled";
 export type SelectSize = "sm" | "md" | "lg";
@@ -109,6 +110,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
 }, ref) {
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [contentPosition, setContentPosition] = useState<{
@@ -286,62 +288,62 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
 
       {isOpen &&
         contentPosition &&
-        typeof document !== "undefined" &&
+        portalRoot &&
         createPortal(
-        <div
-          ref={contentRef}
-          className={cn(
-            "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C]",
-            contentClassName,
-          )}
-          id={listboxId}
-          role="listbox"
-          {...swirskiAttrs("select-content", { size, tone, variant })}
-          style={{
-            left: contentPosition.left,
-            top: contentPosition.top,
-            width: contentPosition.width,
-          }}
-        >
-          {options.map((option, index) => {
-            const isSelected = option.value === selectedValue;
-            const isHighlighted = index === highlightedIndex;
+          <div
+            ref={contentRef}
+            className={cn(
+              "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C]",
+              contentClassName,
+            )}
+            id={listboxId}
+            role="listbox"
+            {...swirskiAttrs("select-content", { size, tone, variant })}
+            style={{
+              left: contentPosition.left,
+              top: contentPosition.top,
+              width: contentPosition.width,
+            }}
+          >
+            {options.map((option, index) => {
+              const isSelected = option.value === selectedValue;
+              const isHighlighted = index === highlightedIndex;
 
-            return (
-              <button
-                aria-disabled={option.disabled}
-                aria-selected={isSelected}
-                className={cn(
-                  "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
-                  optionSizeStyles[size],
-                  isHighlighted && !option.disabled && "bg-[#FFD400]",
-                  isSelected && "bg-[#0057FF] text-white",
-                  option.disabled
-                    ? "cursor-not-allowed text-black/35"
-                    : "hover:bg-[#FFD400] hover:text-black",
-                  optionClassName,
-                )}
-                disabled={option.disabled}
-                id={`${listboxId}-option-${index}`}
-                key={option.value}
-                onClick={() => selectValue(option.value)}
-                onMouseEnter={() => {
-                  if (!option.disabled) {
-                    setHighlightedIndex(index);
-                  }
-                }}
-                role="option"
-                type="button"
-                {...swirskiAttrs("select-option", { size, tone, variant })}
-              >
-                <span>{optionText(option)}</span>
-                {isSelected && <span aria-hidden="true">x</span>}
-              </button>
-            );
-          })}
-        </div>,
-        document.body,
-      )}
+              return (
+                <button
+                  aria-disabled={option.disabled}
+                  aria-selected={isSelected}
+                  className={cn(
+                    "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
+                    optionSizeStyles[size],
+                    isHighlighted && !option.disabled && "bg-[#FFD400]",
+                    isSelected && "bg-[#0057FF] text-white",
+                    option.disabled
+                      ? "cursor-not-allowed text-black/35"
+                      : "hover:bg-[#FFD400] hover:text-black",
+                    optionClassName,
+                  )}
+                  disabled={option.disabled}
+                  id={`${listboxId}-option-${index}`}
+                  key={option.value}
+                  onClick={() => selectValue(option.value)}
+                  onMouseEnter={() => {
+                    if (!option.disabled) {
+                      setHighlightedIndex(index);
+                    }
+                  }}
+                  role="option"
+                  type="button"
+                  {...swirskiAttrs("select-option", { size, tone, variant })}
+                >
+                  <span>{optionText(option)}</span>
+                  {isSelected && <span aria-hidden="true">x</span>}
+                </button>
+              );
+            })}
+          </div>,
+          portalRoot,
+        )}
     </div>
   );
 });

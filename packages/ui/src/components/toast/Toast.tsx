@@ -9,7 +9,9 @@ import {
   useContext,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { cn, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type ToastTone = "blue" | "yellow" | "red" | "white";
 export type ToastVariant = "solid" | "outline";
@@ -212,8 +214,13 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
   ...props
 }, ref) {
   const { toasts, removeToast } = useToast();
+  const portalRoot = usePortalRoot();
 
-  return (
+  if (!portalRoot) {
+    return null;
+  }
+
+  return createPortal(
     <div
       ref={ref}
       className={cn("fixed bottom-4 right-4 z-50 grid w-80 gap-3", className)}
@@ -233,7 +240,8 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
           </div>
         </Toast>
       ))}
-    </div>
+    </div>,
+    portalRoot,
   );
 });
 
