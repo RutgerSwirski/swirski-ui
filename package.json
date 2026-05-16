@@ -4,8 +4,9 @@
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "storybook": "pnpm --filter @swirski/ui storybook",
-    "build": "pnpm --filter docs build",
+    "build": "pnpm docs:metadata && pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
+    "docs:metadata": "node scripts/build-docs-metadata.mjs",
     "dev:ui": "pnpm --filter @swirski/ui dev",
     "registry:list": "pnpm --filter @swirski/cli start list",
     "registry:shadcn": "node scripts/build-shadcn-registry.mjs",
