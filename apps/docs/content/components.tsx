@@ -118,6 +118,7 @@ export type ComponentDoc = {
     | "Backgrounds";
   importCode: string;
   usageCode: string;
+  compositionCode?: string;
   preview: React.ReactNode;
   props: PropDoc[];
   returns?: PropDoc[];
@@ -402,6 +403,11 @@ export const componentDocs: ComponentDoc[] = [
   <Input id="email" placeholder="studio@swirski.dev" />
   <FieldHint>Use the address where clients can reach you.</FieldHint>
 </Field>`,
+    compositionCode: `Field
+|-- Label
+|-- Input | Textarea | Select | Checkbox | RadioGroup
+|-- FieldHint
+\`-- FieldError`,
     preview: (
       <Grid className="max-w-md gap-6">
         <Field>
@@ -472,6 +478,13 @@ export const componentDocs: ComponentDoc[] = [
     { value: "red", label: "Red" },
   ]}
 />`,
+    compositionCode: `Field
+|-- Label
+|-- Select
+|   \`-- options[]
+|       |-- value
+|       \`-- label
+\`-- FieldHint | FieldError`,
     preview: (
       <div className="max-w-sm">
         <Select
@@ -662,6 +675,10 @@ export const componentDocs: ComponentDoc[] = [
     </AccordionContent>
   </AccordionItem>
 </Accordion>`,
+    compositionCode: `Accordion
+\`-- AccordionItem
+    |-- AccordionTrigger
+    \`-- AccordionContent`,
     preview: (
       <Accordion className="max-w-xl">
         <AccordionItem open>
@@ -733,6 +750,10 @@ export const componentDocs: ComponentDoc[] = [
     </Text>
   </CardContent>
 </Card>`,
+    compositionCode: `Card
+\`-- CardContent
+    |-- CardTitle
+    \`-- children`,
     preview: (
       <Card>
         <CardContent>
@@ -1403,6 +1424,14 @@ useClickOutside(ref, () => setOpen(false), {
     </DialogFooter>
   </DialogContent>
 </Dialog>`,
+    compositionCode: `Dialog
+|-- DialogTrigger
+\`-- DialogContent
+    |-- DialogHeader
+    |   |-- DialogTitle
+    |   \`-- DialogDescription
+    |-- DialogFooter
+    \`-- DialogClose`,
     preview: (
       <Dialog>
         <DialogTrigger>Open dialog</DialogTrigger>
@@ -1450,6 +1479,9 @@ useClickOutside(ref, () => setOpen(false), {
   <PopoverTrigger>Filters</PopoverTrigger>
   <PopoverContent>Quick controls live here.</PopoverContent>
 </Popover>`,
+    compositionCode: `Popover
+|-- PopoverTrigger
+\`-- PopoverContent`,
     preview: (
       <Popover>
         <PopoverTrigger>Filters</PopoverTrigger>
@@ -1500,6 +1532,12 @@ useClickOutside(ref, () => setOpen(false), {
     <DropdownMenuItem>Duplicate</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>`,
+    compositionCode: `DropdownMenu
+|-- DropdownMenuTrigger
+\`-- DropdownMenuContent
+    |-- DropdownMenuItem
+    |-- DropdownMenuSeparator
+    \`-- DropdownMenuItem`,
     preview: (
       <DropdownMenu>
         <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
@@ -1578,6 +1616,10 @@ useClickOutside(ref, () => setOpen(false), {
   <TabsContent value="preview">Preview content</TabsContent>
   <TabsContent value="code">Code content</TabsContent>
 </Tabs>`,
+    compositionCode: `Tabs
+|-- TabsList
+|   \`-- TabsTrigger
+\`-- TabsContent`,
     preview: (
       <Tabs defaultValue="preview">
         <TabsList>
@@ -1628,6 +1670,13 @@ useClickOutside(ref, () => setOpen(false), {
     <TableRow><TableCell>Studio</TableCell><TableCell>Live</TableCell></TableRow>
   </TableBody>
 </Table>`,
+    compositionCode: `Table
+|-- TableHead
+|   \`-- TableRow
+|       \`-- TableHeader
+\`-- TableBody
+    \`-- TableRow
+        \`-- TableCell`,
     preview: (
       <Table>
         <TableHead>
@@ -2131,6 +2180,19 @@ useClickOutside(ref, () => setOpen(false), {
     </MobileMenu>
   </NavbarActions>
 </Navbar>`,
+    compositionCode: `Navbar
+|-- NavbarBrand
+|-- NavbarNav
+|   \`-- NavbarLink
+\`-- NavbarActions
+    \`-- MobileMenu
+        |-- MobileMenuTrigger
+        \`-- MobileMenuContent
+            |-- MobileMenuHeader
+            |   |-- MobileMenuTitle
+            |   \`-- MobileMenuClose
+            \`-- MobileMenuNav
+                \`-- MobileMenuLink`,
     preview: (
       <Navbar className="w-full border-[length:var(--sw-border-width)] bg-white">
         <NavbarBrand href="/">Swirski UI</NavbarBrand>
@@ -2323,6 +2385,13 @@ useClickOutside(ref, () => setOpen(false), {
     <DrawerClose>Close</DrawerClose>
   </DrawerContent>
 </Drawer>`,
+    compositionCode: `Drawer
+|-- DrawerTrigger
+\`-- DrawerContent
+    |-- DrawerHeader
+    |   |-- DrawerTitle
+    |   \`-- DrawerDescription
+    \`-- DrawerClose`,
     preview: (
       <Drawer>
         <DrawerTrigger>Open drawer</DrawerTrigger>
