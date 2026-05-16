@@ -10,6 +10,7 @@ import {
   CardContent,
   Container,
   DotGrid,
+  Grid,
   ImageFrame,
   SectionLabel,
   Text,
@@ -91,43 +92,52 @@ export default function HomePage() {
         <Container className="relative z-10">
           <NavBar />
 
-          <section className="grid min-h-[calc(100vh-5rem)] items-center gap-12 py-16 lg:grid-cols-[1fr_0.92fr] lg:py-20">
+          <Grid
+            as="section"
+            align="center"
+            className="min-h-[calc(100vh-5rem)] gap-12 py-16 lg:grid-cols-[1fr_0.92fr] lg:py-20"
+          >
             <Hero />
 
             <ImageFrame className="border-4 bg-[#0B0B0C] p-4 text-white shadow-[14px_14px_0_#0057FF]">
-              <div className="flex items-center justify-between border-b-4 border-white pb-4">
-                <Title order={2} size="h5" tone="inverted">
+              <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                <Title order={2} size="h5">
                   Docs
                 </Title>
                 <Badge>@swirski/ui</Badge>
               </div>
 
-              <div className="mt-4 grid gap-4">
+              <Grid gap="md" className="mt-4">
                 <Card interactive={false} className="bg-white">
-                  <CardContent className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
-                    <div>
-                      <Text
-                        className="uppercase"
-                        size="xs"
-                        tone="muted"
-                        weight="black"
-                      >
-                        Install
-                      </Text>
-                      <code className="mt-2 block break-words text-lg font-black">
-                        pnpm add @swirski/ui @swirski/cli
-                      </code>
-                    </div>
+                  <CardContent>
+                    <Grid
+                      gap="lg"
+                      className="md:grid-cols-[1fr_auto] md:items-end"
+                    >
+                      <div>
+                        <Text
+                          className="uppercase"
+                          size="xs"
+                          tone="muted"
+                          weight="black"
+                        >
+                          Install
+                        </Text>
+                        <code className="mt-2 block break-words text-lg font-black">
+                          pnpm add @swirski/ui @swirski/cli
+                        </code>
+                      </div>
 
-                    <CopyToClipboard
-                      value="pnpm add @swirski/ui @swirski/cli"
-                      label="Copy"
-                      copiedLabel="Copied"
-                    />
+                      <CopyToClipboard
+                        value="pnpm add @swirski/ui @swirski/cli"
+                        label="Copy"
+                        copiedLabel="Copied"
+                      />
+                    </Grid>
                   </CardContent>
                 </Card>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <Grid gap="md" className="sm:grid-cols-2">
                   <Card interactive={false} className="bg-[#FFD400] ">
                     <CardContent>
                       <Title order={3} size="h5">
@@ -145,24 +155,19 @@ export default function HomePage() {
                     className="bg-[#0057FF] text-white "
                   >
                     <CardContent>
-                      <Title order={3} size="h5" tone="inverted">
+                      <Title order={3} size="h5">
                         Dev
                       </Title>
-                      <Text
-                        className="mt-3"
-                        size="sm"
-                        tone="inverted"
-                        weight="bold"
-                      >
+                      <Text className="mt-3" size="sm" weight="bold">
                         Built for docs, portfolio surfaces and production
                         interfaces.
                       </Text>
                     </CardContent>
                   </Card>
-                </div>
-              </div>
+                </Grid>
+              </Grid>
             </ImageFrame>
-          </section>
+          </Grid>
         </Container>
       </div>
 
@@ -181,7 +186,7 @@ export default function HomePage() {
             </Text>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          <Grid gap="lg" className="mt-10 lg:grid-cols-3">
             {foundations.map((item) => (
               <Card
                 key={item.title}
@@ -201,10 +206,14 @@ export default function HomePage() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          </Grid>
         </section>
 
-        <section className="grid gap-8 py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20">
+        <Grid
+          as="section"
+          gap="xl"
+          className="py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20"
+        >
           <div>
             <SectionLabel>Library</SectionLabel>
             <Text className="mt-6" size="lg" tone="muted" weight="bold">
@@ -213,18 +222,20 @@ export default function HomePage() {
             </Text>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Grid gap="sm" className="sm:grid-cols-2 lg:grid-cols-3">
             {packageLinks.map((item) => (
               <Button variant="white" key={item} href={getComponentHref(item)}>
                 {item}
               </Button>
             ))}
-          </div>
-        </section>
+          </Grid>
+        </Grid>
 
-        <section
+        <Grid
+          as="section"
           id="start"
-          className="grid gap-8 border-y-4 border-black py-16 md:grid-cols-[1fr_1fr]"
+          gap="xl"
+          className="border-y-4 border-black py-16 md:grid-cols-[1fr_1fr]"
         >
           <div>
             <SectionLabel>Start</SectionLabel>
@@ -238,11 +249,13 @@ export default function HomePage() {
             className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
           >
             <CardContent className="p-6">
-              <ol className="grid gap-4">
+              <Grid as="ol" gap="md">
                 {workflow.map(({ title, body }, index) => (
-                  <li
+                  <Grid
+                    as="li"
                     key={title}
-                    className="grid grid-cols-[3rem_1fr] gap-4 border-b-4 border-white/20 pb-4 last:border-b-0 last:pb-0"
+                    gap="md"
+                    className="grid-cols-[3rem_1fr] border-b-4 border-white/20 pb-4 last:border-b-0 last:pb-0"
                   >
                     <Text
                       className="font-anton text-3xl leading-none text-current"
@@ -250,22 +263,17 @@ export default function HomePage() {
                     >
                       {String(index + 1).padStart(2, "0")}
                     </Text>
-                    <div className="grid gap-1">
-                      <Text
-                        component="span"
-                        size="xl"
-                        tone="inverted"
-                        weight="bold"
-                      >
+                    <Grid className="gap-1">
+                      <Text component="span" size="xl" weight="bold">
                         {title}
                       </Text>
                       <Text className="text-white/75" size="sm">
                         {body}
                       </Text>
-                    </div>
-                  </li>
+                    </Grid>
+                  </Grid>
                 ))}
-              </ol>
+              </Grid>
               <div className="mt-6 border-4 border-black bg-[#FFD400] p-4 font-black text-black">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
@@ -288,7 +296,7 @@ export default function HomePage() {
               </div>
             </CardContent>
           </Card>
-        </section>
+        </Grid>
       </Container>
     </main>
   );

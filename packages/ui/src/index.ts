@@ -30,6 +30,8 @@ export * from "./components/dropdown-menu/index";
 
 export * from "./components/field/index";
 
+export * from "./components/grid/index";
+
 export * from "./components/line-grid/index";
 
 export * from "./components/image-frame/index";

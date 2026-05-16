@@ -9,7 +9,15 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
+  Avatar,
+  AvatarFallback,
   Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Button,
   Card,
   CardContent,
@@ -18,18 +26,77 @@ import {
   CursorDock,
   CursorProvider,
   DiagonalLines,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   DotGrid,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Field,
   FieldError,
   FieldHint,
+  Grid,
   Input,
   Label,
   LineGrid,
+  Loader,
+  MobileMenu,
+  MobileMenuClose,
+  MobileMenuContent,
+  MobileMenuHeader,
+  MobileMenuLink,
+  MobileMenuNav,
+  MobileMenuTitle,
+  MobileMenuTrigger,
+  Navbar,
+  NavbarActions,
+  NavbarBrand,
+  NavbarLink,
+  NavbarNav,
+  Pagination,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Progress,
+  RadioGroup,
   Select,
+  Separator,
+  Skeleton,
+  Slider,
   Switch,
+  SwirskiProvider,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Text,
   Textarea,
   Title,
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  Tooltip,
   swirskiCursors,
 } from "@swirski/ui";
 import type { CursorId } from "@swirski/ui";
@@ -114,6 +181,10 @@ const cardSurfaceClasses = {
   white: "bg-white",
   yellow: "bg-[#FFD400]",
 };
+
+const gridColumnOptions = ["1", "2", "3", "4", "6"] as const;
+const gridGapOptions = ["xs", "sm", "md", "lg", "xl"] as const;
+const toastToneOptions = ["yellow", "blue", "red", "white"] as const;
 
 // Add a new entry keyed by component slug to give that docs page editable controls.
 export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
@@ -1039,5 +1110,958 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     </Button>
   </div>
 </CursorProvider>`,
+  },
+
+  "swirski-provider": {
+    controls: [
+      {
+        name: "colorBlue",
+        label: "colorBlue",
+        type: "color",
+        defaultValue: "#0057FF",
+      },
+      {
+        name: "colorYellow",
+        label: "colorYellow",
+        type: "color",
+        defaultValue: "#FFD400",
+      },
+      {
+        name: "colorShadow",
+        label: "colorShadow",
+        type: "color",
+        defaultValue: "#0B0B0C",
+      },
+      {
+        name: "buttonLabel",
+        label: "buttonLabel",
+        type: "text",
+        defaultValue: "Theme button",
+      },
+    ],
+    render: (values) => (
+      <SwirskiProvider
+        theme={{
+          colorBlue: textValue(values, "colorBlue"),
+          colorYellow: textValue(values, "colorYellow"),
+          colorShadow: textValue(values, "colorShadow"),
+        }}
+      >
+        <Grid className="max-w-md gap-4 border-4 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-paper)] p-5 shadow-[var(--sw-shadow-md)]">
+          <Title order={3} size="h4">
+            Token tuned
+          </Title>
+          <Text tone="muted" weight="bold">
+            Components inside the provider read the same CSS variables.
+          </Text>
+          <Button>{textValue(values, "buttonLabel")}</Button>
+        </Grid>
+      </SwirskiProvider>
+    ),
+    getCode: (values) => `const theme = createSwirskiTheme({
+  colorBlue: ${jsxString(textValue(values, "colorBlue"))},
+  colorYellow: ${jsxString(textValue(values, "colorYellow"))},
+  colorShadow: ${jsxString(textValue(values, "colorShadow"))},
+});
+
+<SwirskiProvider theme={theme}>
+  <Button>${jsxText(textValue(values, "buttonLabel"))}</Button>
+</SwirskiProvider>`,
+  },
+
+  dialog: {
+    controls: [
+      {
+        name: "title",
+        label: "title",
+        type: "text",
+        defaultValue: "Publish changes",
+      },
+      {
+        name: "description",
+        label: "description",
+        type: "text",
+        defaultValue: "Review the release notes before this goes live.",
+      },
+      {
+        name: "defaultOpen",
+        label: "defaultOpen",
+        type: "boolean",
+        defaultValue: false,
+      },
+    ],
+    render: (values) => (
+      <Dialog
+        key={String(booleanValue(values, "defaultOpen"))}
+        defaultOpen={booleanValue(values, "defaultOpen")}
+      >
+        <DialogTrigger>Open dialog</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{textValue(values, "title")}</DialogTitle>
+            <DialogDescription>
+              {textValue(values, "description")}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose>Cancel</DialogClose>
+            <DialogClose className="bg-[#0057FF] text-white">
+              Publish
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    ),
+    getCode: (values) => `<Dialog${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
+  <DialogTrigger>Open dialog</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>${jsxText(textValue(values, "title"))}</DialogTitle>
+      <DialogDescription>
+        ${jsxText(textValue(values, "description"))}
+      </DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose>Cancel</DialogClose>
+      <DialogClose className="bg-[#0057FF] text-white">Publish</DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>`,
+  },
+
+  popover: {
+    controls: [
+      {
+        name: "trigger",
+        label: "trigger",
+        type: "text",
+        defaultValue: "Open note",
+      },
+      {
+        name: "align",
+        label: "align",
+        type: "select",
+        defaultValue: "start",
+        options: ["start", "end"],
+      },
+      {
+        name: "defaultOpen",
+        label: "defaultOpen",
+        type: "boolean",
+        defaultValue: true,
+      },
+    ],
+    render: (values) => (
+      <Popover
+        key={`${textValue(values, "align")}-${booleanValue(values, "defaultOpen")}`}
+        defaultOpen={booleanValue(values, "defaultOpen")}
+      >
+        <PopoverTrigger>{textValue(values, "trigger")}</PopoverTrigger>
+        <PopoverContent align={textValue(values, "align") as "start" | "end"}>
+          <Text size="sm" tone="muted" weight="bold">
+            Popovers are useful for compact context, filters and quick actions.
+          </Text>
+        </PopoverContent>
+      </Popover>
+    ),
+    getCode: (values) => `<Popover${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
+  <PopoverTrigger>${jsxText(textValue(values, "trigger"))}</PopoverTrigger>
+  <PopoverContent align=${jsxString(textValue(values, "align"))}>
+    Popover content
+  </PopoverContent>
+</Popover>`,
+  },
+
+  "dropdown-menu": {
+    controls: [
+      {
+        name: "trigger",
+        label: "trigger",
+        type: "text",
+        defaultValue: "Actions",
+      },
+      {
+        name: "align",
+        label: "align",
+        type: "select",
+        defaultValue: "start",
+        options: ["start", "end"],
+      },
+      {
+        name: "dangerItem",
+        label: "dangerItem",
+        type: "boolean",
+        defaultValue: true,
+      },
+    ],
+    render: (values) => (
+      <DropdownMenu>
+        <DropdownMenuTrigger>{textValue(values, "trigger")}</DropdownMenuTrigger>
+        <DropdownMenuContent align={textValue(values, "align") as "start" | "end"}>
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem>Duplicate</DropdownMenuItem>
+          {booleanValue(values, "dangerItem") && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-[#FF3131]">
+                Archive
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+    getCode: (values) => `<DropdownMenu>
+  <DropdownMenuTrigger>${jsxText(textValue(values, "trigger"))}</DropdownMenuTrigger>
+  <DropdownMenuContent align=${jsxString(textValue(values, "align"))}>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuItem>Duplicate</DropdownMenuItem>${
+      booleanValue(values, "dangerItem")
+        ? `\n    <DropdownMenuSeparator />\n    <DropdownMenuItem className="text-[#FF3131]">Archive</DropdownMenuItem>`
+        : ""
+    }
+  </DropdownMenuContent>
+</DropdownMenu>`,
+  },
+
+  tooltip: {
+    controls: [
+      {
+        name: "label",
+        label: "label",
+        type: "text",
+        defaultValue: "Hover me",
+      },
+      {
+        name: "content",
+        label: "content",
+        type: "text",
+        defaultValue: "Helpful context",
+      },
+      {
+        name: "variant",
+        label: "variant",
+        type: "select",
+        defaultValue: "blue",
+        options: ["blue", "yellow", "white"],
+      },
+    ],
+    render: (values) => (
+      <Tooltip content={textValue(values, "content")}>
+        <Button variant={textValue(values, "variant") as "blue" | "yellow" | "white"}>
+          {textValue(values, "label")}
+        </Button>
+      </Tooltip>
+    ),
+    getCode: (values) => `<Tooltip content=${jsxString(textValue(values, "content"))}>
+  <Button variant=${jsxString(textValue(values, "variant"))}>
+    ${jsxText(textValue(values, "label"))}
+  </Button>
+</Tooltip>`,
+  },
+
+  tabs: {
+    controls: [
+      {
+        name: "defaultValue",
+        label: "defaultValue",
+        type: "select",
+        defaultValue: "preview",
+        options: ["preview", "code", "notes"],
+      },
+      {
+        name: "showNotes",
+        label: "showNotes",
+        type: "boolean",
+        defaultValue: true,
+      },
+    ],
+    render: (values) => (
+      <Tabs
+        key={`${textValue(values, "defaultValue")}-${booleanValue(values, "showNotes")}`}
+        defaultValue={textValue(values, "defaultValue")}
+      >
+        <TabsList>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+          {booleanValue(values, "showNotes") && (
+            <TabsTrigger value="notes">Notes</TabsTrigger>
+          )}
+        </TabsList>
+        <TabsContent value="preview">Preview content</TabsContent>
+        <TabsContent value="code">Code content</TabsContent>
+        {booleanValue(values, "showNotes") && (
+          <TabsContent value="notes">Notes content</TabsContent>
+        )}
+      </Tabs>
+    ),
+    getCode: (values) => `<Tabs defaultValue=${jsxString(textValue(values, "defaultValue"))}>
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>${
+      booleanValue(values, "showNotes")
+        ? `\n    <TabsTrigger value="notes">Notes</TabsTrigger>`
+        : ""
+    }
+  </TabsList>
+  <TabsContent value="preview">Preview content</TabsContent>
+  <TabsContent value="code">Code content</TabsContent>${
+    booleanValue(values, "showNotes")
+      ? `\n  <TabsContent value="notes">Notes content</TabsContent>`
+      : ""
+  }
+</Tabs>`,
+  },
+
+  table: {
+    controls: [
+      {
+        name: "rows",
+        label: "rows",
+        type: "number",
+        defaultValue: 3,
+        min: 1,
+        max: 5,
+      },
+      {
+        name: "showValue",
+        label: "showValue",
+        type: "boolean",
+        defaultValue: true,
+      },
+    ],
+    render: (values) => {
+      const rows = Math.round(numberValue(values, "rows"));
+
+      return (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>Name</TableHeader>
+              <TableHeader>Status</TableHeader>
+              {booleanValue(values, "showValue") && (
+                <TableHeader>Value</TableHeader>
+              )}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Array.from({ length: rows }, (_, index) => (
+              <TableRow key={index}>
+                <TableCell>Project {index + 1}</TableCell>
+                <TableCell>{index % 2 === 0 ? "Live" : "Draft"}</TableCell>
+                {booleanValue(values, "showValue") && (
+                  <TableCell>{`${72 + index * 8}%`}</TableCell>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      );
+    },
+    getCode: (values) => `<Table>
+  <TableHead>
+    <TableRow>
+      <TableHeader>Name</TableHeader>
+      <TableHeader>Status</TableHeader>${
+        booleanValue(values, "showValue") ? "\n      <TableHeader>Value</TableHeader>" : ""
+      }
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {rows.map((row) => (
+      <TableRow key={row.name}>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.status}</TableCell>${
+          booleanValue(values, "showValue") ? "\n        <TableCell>{row.value}</TableCell>" : ""
+        }
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>`,
+  },
+
+  grid: {
+    controls: [
+      {
+        name: "columns",
+        label: "columns",
+        type: "select",
+        defaultValue: "3",
+        options: [...gridColumnOptions],
+      },
+      {
+        name: "gap",
+        label: "gap",
+        type: "select",
+        defaultValue: "md",
+        options: [...gridGapOptions],
+      },
+      {
+        name: "items",
+        label: "items",
+        type: "number",
+        defaultValue: 3,
+        min: 1,
+        max: 6,
+      },
+    ],
+    render: (values) => (
+      <Grid
+        columns={Number(textValue(values, "columns")) as 1 | 2 | 3 | 4 | 6}
+        gap={textValue(values, "gap") as "xs" | "sm" | "md" | "lg" | "xl"}
+        className="w-full"
+      >
+        {Array.from({ length: Math.round(numberValue(values, "items")) }, (_, index) => (
+          <Card interactive={false} key={index} withShadow={false}>
+            <CardContent>
+              <Text weight="black">Item {index + 1}</Text>
+            </CardContent>
+          </Card>
+        ))}
+      </Grid>
+    ),
+    getCode: (values) => `<Grid columns={${Number(textValue(values, "columns"))}} gap=${jsxString(textValue(values, "gap"))}>
+  {items.map((item) => (
+    <Card key={item.id}>
+      <CardContent>{item.label}</CardContent>
+    </Card>
+  ))}
+</Grid>`,
+  },
+
+  toast: {
+    controls: [
+      {
+        name: "title",
+        label: "title",
+        type: "text",
+        defaultValue: "Saved",
+      },
+      {
+        name: "description",
+        label: "description",
+        type: "text",
+        defaultValue: "Your changes are live.",
+      },
+      {
+        name: "tone",
+        label: "tone",
+        type: "select",
+        defaultValue: "yellow",
+        options: [...toastToneOptions],
+      },
+    ],
+    render: (values) => (
+      <Toast tone={textValue(values, "tone") as "blue" | "yellow" | "red" | "white"}>
+        <ToastTitle>{textValue(values, "title")}</ToastTitle>
+        <ToastDescription>{textValue(values, "description")}</ToastDescription>
+      </Toast>
+    ),
+    getCode: (values) => `<Toast tone=${jsxString(textValue(values, "tone"))}>
+  <ToastTitle>${jsxText(textValue(values, "title"))}</ToastTitle>
+  <ToastDescription>
+    ${jsxText(textValue(values, "description"))}
+  </ToastDescription>
+</Toast>`,
+  },
+
+  progress: {
+    controls: [
+      {
+        name: "value",
+        label: "value",
+        type: "number",
+        defaultValue: 64,
+        min: 0,
+        max: 100,
+      },
+      {
+        name: "height",
+        label: "height",
+        type: "select",
+        defaultValue: "default",
+        options: ["default", "short", "tall"],
+      },
+    ],
+    render: (values) => (
+      <Progress
+        value={numberValue(values, "value")}
+        className={
+          textValue(values, "height") === "short"
+            ? "h-3"
+            : textValue(values, "height") === "tall"
+              ? "h-10"
+              : undefined
+        }
+      />
+    ),
+    getCode: (values) => {
+      const height = textValue(values, "height");
+      const className =
+        height === "short" ? ' className="h-3"' : height === "tall" ? ' className="h-10"' : "";
+
+      return `<Progress value={${numberValue(values, "value")}}${className} />`;
+    },
+  },
+
+  loader: {
+    controls: [
+      {
+        name: "size",
+        label: "size",
+        type: "select",
+        defaultValue: "lg",
+        options: ["sm", "md", "lg"],
+      },
+    ],
+    render: (values) => (
+      <Loader size={textValue(values, "size") as "sm" | "md" | "lg"} />
+    ),
+    getCode: (values) => `<Loader size=${jsxString(textValue(values, "size"))} />`,
+  },
+
+  skeleton: {
+    controls: [
+      {
+        name: "lines",
+        label: "lines",
+        type: "number",
+        defaultValue: 2,
+        min: 1,
+        max: 5,
+      },
+      {
+        name: "blockHeight",
+        label: "blockHeight",
+        type: "select",
+        defaultValue: "medium",
+        options: ["small", "medium", "large"],
+      },
+    ],
+    render: (values) => {
+      const heightClass =
+        textValue(values, "blockHeight") === "small"
+          ? "h-8"
+          : textValue(values, "blockHeight") === "large"
+            ? "h-24"
+            : "h-14";
+
+      return (
+        <Grid gap="sm" className="w-full max-w-sm">
+          {Array.from({ length: Math.round(numberValue(values, "lines")) }, (_, index) => (
+            <Skeleton
+              className={`${index === 0 ? "w-3/4" : "w-full"} ${heightClass}`}
+              key={index}
+            />
+          ))}
+        </Grid>
+      );
+    },
+    getCode: (values) => {
+      const heightClass =
+        textValue(values, "blockHeight") === "small"
+          ? "h-8"
+          : textValue(values, "blockHeight") === "large"
+            ? "h-24"
+            : "h-14";
+
+      return `<Grid gap="sm" className="max-w-sm">
+  <Skeleton className="w-3/4 ${heightClass}" />
+  <Skeleton className="w-full ${heightClass}" />
+</Grid>`;
+    },
+  },
+
+  "radio-group": {
+    controls: [
+      {
+        name: "value",
+        label: "value",
+        type: "select",
+        defaultValue: "blue",
+        options: ["blue", "yellow", "red"],
+      },
+      {
+        name: "disabledOption",
+        label: "disabledOption",
+        type: "boolean",
+        defaultValue: false,
+      },
+    ],
+    render: (values) => (
+      <RadioGroup
+        key={`${textValue(values, "value")}-${booleanValue(values, "disabledOption")}`}
+        name="playground-tone"
+        defaultValue={textValue(values, "value")}
+        options={[
+          { value: "blue", label: "Blue", description: "Sharp product surfaces." },
+          { value: "yellow", label: "Yellow", description: "Loud editorial moments." },
+          {
+            value: "red",
+            label: "Red",
+            description: "Urgent launch signals.",
+            disabled: booleanValue(values, "disabledOption"),
+          },
+        ]}
+      />
+    ),
+    getCode: (values) => `<RadioGroup
+  name="tone"
+  defaultValue=${jsxString(textValue(values, "value"))}
+  options={[
+    { value: "blue", label: "Blue" },
+    { value: "yellow", label: "Yellow" },
+    { value: "red", label: "Red"${booleanValue(values, "disabledOption") ? ", disabled: true" : ""} },
+  ]}
+/>`,
+  },
+
+  slider: {
+    controls: [
+      {
+        name: "defaultValue",
+        label: "defaultValue",
+        type: "number",
+        defaultValue: 64,
+        min: 0,
+        max: 100,
+      },
+      {
+        name: "max",
+        label: "max",
+        type: "number",
+        defaultValue: 100,
+        min: 10,
+        max: 200,
+        step: 10,
+      },
+    ],
+    render: (values) => (
+      <div className="w-full max-w-sm">
+        <Slider
+          key={`${numberValue(values, "defaultValue")}-${numberValue(values, "max")}`}
+          defaultValue={numberValue(values, "defaultValue")}
+          min={0}
+          max={numberValue(values, "max")}
+        />
+      </div>
+    ),
+    getCode: (values) => `<Slider
+  defaultValue={${numberValue(values, "defaultValue")}}
+  min={0}
+  max={${numberValue(values, "max")}}
+/>`,
+  },
+
+  avatar: {
+    controls: [
+      {
+        name: "fallback",
+        label: "fallback",
+        type: "text",
+        defaultValue: "RS",
+      },
+      {
+        name: "size",
+        label: "size",
+        type: "select",
+        defaultValue: "md",
+        options: ["sm", "md", "lg"],
+      },
+      {
+        name: "tone",
+        label: "tone",
+        type: "select",
+        defaultValue: "yellow",
+        options: ["yellow", "blue", "red"],
+      },
+    ],
+    render: (values) => {
+      const sizeClass =
+        textValue(values, "size") === "sm"
+          ? "size-10"
+          : textValue(values, "size") === "lg"
+            ? "size-16 text-lg"
+            : "";
+      const toneClass =
+        textValue(values, "tone") === "blue"
+          ? "bg-[#0057FF] text-white"
+          : textValue(values, "tone") === "red"
+            ? "bg-[#FF3131] text-white"
+            : "bg-[#FFD400]";
+
+      return (
+        <Avatar className={`${sizeClass} ${toneClass}`}>
+          <AvatarFallback>{textValue(values, "fallback")}</AvatarFallback>
+        </Avatar>
+      );
+    },
+    getCode: (values) => `<Avatar>
+  <AvatarFallback>${jsxText(textValue(values, "fallback"))}</AvatarFallback>
+</Avatar>`,
+  },
+
+  navbar: {
+    controls: [
+      {
+        name: "brand",
+        label: "brand",
+        type: "text",
+        defaultValue: "Swirski UI",
+      },
+      {
+        name: "active",
+        label: "active",
+        type: "select",
+        defaultValue: "Components",
+        options: ["Components", "Hooks", "CLI"],
+      },
+      {
+        name: "mobileOpen",
+        label: "mobileOpen",
+        type: "boolean",
+        defaultValue: false,
+      },
+      {
+        name: "mobileSide",
+        label: "mobileSide",
+        type: "select",
+        defaultValue: "right",
+        options: ["left", "right"],
+      },
+    ],
+    render: (values) => (
+      <Navbar className="w-full border-[length:var(--sw-border-width)] bg-white">
+        <NavbarBrand href="#preview">{textValue(values, "brand")}</NavbarBrand>
+        <NavbarNav aria-label="Playground navigation">
+          {["Components", "Hooks", "CLI"].map((item) => (
+            <NavbarLink
+              active={textValue(values, "active") === item}
+              href="#preview"
+              key={item}
+            >
+              {item}
+            </NavbarLink>
+          ))}
+        </NavbarNav>
+        <NavbarActions>
+          <MobileMenu
+            key={`${booleanValue(values, "mobileOpen")}-${textValue(values, "mobileSide")}`}
+            defaultOpen={booleanValue(values, "mobileOpen")}
+          >
+            <MobileMenuTrigger />
+            <MobileMenuContent side={textValue(values, "mobileSide") as "left" | "right"}>
+              <MobileMenuHeader>
+                <MobileMenuTitle>Menu</MobileMenuTitle>
+                <MobileMenuClose aria-label="Close navigation menu">x</MobileMenuClose>
+              </MobileMenuHeader>
+              <MobileMenuNav aria-label="Mobile playground navigation">
+                {["Components", "Hooks", "CLI"].map((item) => (
+                  <MobileMenuLink
+                    active={textValue(values, "active") === item}
+                    href="#preview"
+                    key={item}
+                  >
+                    {item}
+                  </MobileMenuLink>
+                ))}
+              </MobileMenuNav>
+            </MobileMenuContent>
+          </MobileMenu>
+        </NavbarActions>
+      </Navbar>
+    ),
+    getCode: (values) => `<Navbar>
+  <NavbarBrand href="/">${jsxText(textValue(values, "brand"))}</NavbarBrand>
+  <NavbarNav aria-label="Main navigation">
+    <NavbarLink href="/components"${textValue(values, "active") === "Components" ? " active" : ""}>Components</NavbarLink>
+    <NavbarLink href="/hooks"${textValue(values, "active") === "Hooks" ? " active" : ""}>Hooks</NavbarLink>
+    <NavbarLink href="/cli"${textValue(values, "active") === "CLI" ? " active" : ""}>CLI</NavbarLink>
+  </NavbarNav>
+</Navbar>`,
+  },
+
+  breadcrumb: {
+    controls: [
+      {
+        name: "current",
+        label: "current",
+        type: "text",
+        defaultValue: "Components",
+      },
+      {
+        name: "separator",
+        label: "separator",
+        type: "select",
+        defaultValue: "/",
+        options: ["/", ">", "|"],
+      },
+      {
+        name: "includeMiddle",
+        label: "includeMiddle",
+        type: "boolean",
+        defaultValue: true,
+      },
+    ],
+    render: (values) => (
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="#preview">Docs</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator>{textValue(values, "separator")}</BreadcrumbSeparator>
+          {booleanValue(values, "includeMiddle") && (
+            <>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#preview">Library</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>{textValue(values, "separator")}</BreadcrumbSeparator>
+            </>
+          )}
+          <BreadcrumbItem>
+            <BreadcrumbPage>{textValue(values, "current")}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    ),
+    getCode: (values) => `<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Docs</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbSeparator>${jsxText(textValue(values, "separator"))}</BreadcrumbSeparator>${
+      booleanValue(values, "includeMiddle")
+        ? `\n    <BreadcrumbItem><BreadcrumbLink href="/components">Library</BreadcrumbLink></BreadcrumbItem>\n    <BreadcrumbSeparator>${jsxText(textValue(values, "separator"))}</BreadcrumbSeparator>`
+        : ""
+    }
+    <BreadcrumbItem><BreadcrumbPage>${jsxText(textValue(values, "current"))}</BreadcrumbPage></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>`,
+  },
+
+  pagination: {
+    controls: [
+      {
+        name: "page",
+        label: "page",
+        type: "number",
+        defaultValue: 2,
+        min: 1,
+        max: 8,
+      },
+      {
+        name: "total",
+        label: "total",
+        type: "number",
+        defaultValue: 5,
+        min: 2,
+        max: 8,
+      },
+    ],
+    render: (values) => {
+      const total = Math.round(numberValue(values, "total"));
+      const page = Math.min(Math.round(numberValue(values, "page")), total);
+
+      return <Pagination page={page} total={total} />;
+    },
+    getCode: (values) => {
+      const total = Math.round(numberValue(values, "total"));
+      const page = Math.min(Math.round(numberValue(values, "page")), total);
+
+      return `<Pagination page={${page}} total={${total}} />`;
+    },
+  },
+
+  separator: {
+    controls: [
+      {
+        name: "orientation",
+        label: "orientation",
+        type: "select",
+        defaultValue: "horizontal",
+        options: ["horizontal", "vertical"],
+      },
+      {
+        name: "tone",
+        label: "tone",
+        type: "select",
+        defaultValue: "black",
+        options: ["black", "blue", "red"],
+      },
+    ],
+    render: (values) => {
+      const toneClass =
+        textValue(values, "tone") === "blue"
+          ? "bg-[#0057FF]"
+          : textValue(values, "tone") === "red"
+            ? "bg-[#FF3131]"
+            : "bg-black";
+
+      return (
+        <div className={textValue(values, "orientation") === "vertical" ? "h-40" : "w-full"}>
+          <Separator
+            orientation={textValue(values, "orientation") as "horizontal" | "vertical"}
+            className={toneClass}
+          />
+        </div>
+      );
+    },
+    getCode: (values) => `<Separator
+  orientation=${jsxString(textValue(values, "orientation"))}
+  className=${jsxString(
+    textValue(values, "tone") === "blue"
+      ? "bg-[#0057FF]"
+      : textValue(values, "tone") === "red"
+        ? "bg-[#FF3131]"
+        : "bg-black",
+  )}
+/>`,
+  },
+
+  drawer: {
+    controls: [
+      {
+        name: "title",
+        label: "title",
+        type: "text",
+        defaultValue: "Settings",
+      },
+      {
+        name: "side",
+        label: "side",
+        type: "select",
+        defaultValue: "right",
+        options: ["left", "right", "top", "bottom"],
+      },
+      {
+        name: "defaultOpen",
+        label: "defaultOpen",
+        type: "boolean",
+        defaultValue: false,
+      },
+    ],
+    render: (values) => (
+      <Drawer
+        key={`${textValue(values, "side")}-${booleanValue(values, "defaultOpen")}`}
+        defaultOpen={booleanValue(values, "defaultOpen")}
+      >
+        <DrawerTrigger>Open drawer</DrawerTrigger>
+        <DrawerContent side={textValue(values, "side") as "left" | "right" | "top" | "bottom"}>
+          <DrawerHeader>
+            <DrawerTitle>{textValue(values, "title")}</DrawerTitle>
+            <DrawerDescription>Panel content lives here.</DrawerDescription>
+          </DrawerHeader>
+          <DrawerClose>Close</DrawerClose>
+        </DrawerContent>
+      </Drawer>
+    ),
+    getCode: (values) => `<Drawer${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
+  <DrawerTrigger>Open drawer</DrawerTrigger>
+  <DrawerContent side=${jsxString(textValue(values, "side"))}>
+    <DrawerHeader>
+      <DrawerTitle>${jsxText(textValue(values, "title"))}</DrawerTitle>
+      <DrawerDescription>Panel content lives here.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerClose>Close</DrawerClose>
+  </DrawerContent>
+</Drawer>`,
   },
 };

@@ -47,6 +47,7 @@ import {
   Field,
   FieldError,
   FieldHint,
+  Grid,
   Input,
   Label,
   LineGrid,
@@ -376,7 +377,7 @@ export const componentDocs: ComponentDoc[] = [
   <FieldHint>Use the address where clients can reach you.</FieldHint>
 </Field>`,
     preview: (
-      <div className="grid max-w-md gap-6">
+      <Grid className="max-w-md gap-6">
         <Field>
           <Label htmlFor="docs-email">Email</Label>
           <Input id="docs-email" placeholder="studio@swirski.dev" />
@@ -387,7 +388,7 @@ export const componentDocs: ComponentDoc[] = [
           <Textarea id="docs-message" placeholder="Tell us what you are building." />
           <FieldError>This is where validation feedback can sit.</FieldError>
         </Field>
-      </div>
+      </Grid>
     ),
     props: [
       {
@@ -753,14 +754,14 @@ export const componentDocs: ComponentDoc[] = [
     importCode: `import { Title } from "@swirski/ui";`,
     usageCode: `<Title order={1} size="display">Build expressive interfaces.</Title>`,
     preview: (
-      <div className="grid gap-4">
+      <Grid gap="md">
         <Title order={1} size="display">
           Build expressive interfaces.
         </Title>
         <Title order={2} size="h3" tone="muted">
           Without naming every heading after a page section.
         </Title>
-      </div>
+      </Grid>
     ),
     props: [
       {
@@ -809,14 +810,14 @@ export const componentDocs: ComponentDoc[] = [
   A small UI library for expressive, editorial web interfaces.
 </Text>`,
     preview: (
-      <div className="grid max-w-xl gap-3">
+      <Grid gap="sm" className="max-w-xl">
         <Text size="xl" tone="muted" weight="bold">
           A small UI library for expressive, editorial web interfaces.
         </Text>
         <Text size="sm" tone="subtle">
           Use it for lead copy, helper text, labels and dense interface notes.
         </Text>
-      </div>
+      </Grid>
     ),
     props: [
       {
@@ -885,7 +886,7 @@ export const componentDocs: ComponentDoc[] = [
           colorShadow: "#5E2BFF",
         }}
       >
-        <div className="grid max-w-md gap-4 border-4 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-paper)] p-5 shadow-[var(--sw-shadow-md)]">
+        <Grid className="max-w-md gap-4 border-4 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-paper)] p-5 shadow-[var(--sw-shadow-md)]">
           <Title order={3} size="h4">
             Token tuned
           </Title>
@@ -893,7 +894,7 @@ export const componentDocs: ComponentDoc[] = [
             Components inside the provider read the same CSS variables.
           </Text>
           <Button>Theme button</Button>
-        </div>
+        </Grid>
       </SwirskiProvider>
     ),
     props: [
@@ -1328,6 +1329,40 @@ useClickOutside(ref, () => setOpen(false), {
     ],
   },
   {
+    slug: "grid",
+    title: "Grid",
+    description:
+      "A reusable CSS grid primitive for page sections, card clusters and dense interface layouts.",
+    category: "Layout",
+    importCode: `import { Grid } from "@swirski/ui";`,
+    usageCode: `<Grid columns={3} gap="md" className="md:grid-cols-3">
+  <Card><CardContent>One</CardContent></Card>
+  <Card><CardContent>Two</CardContent></Card>
+  <Card><CardContent>Three</CardContent></Card>
+</Grid>`,
+    preview: (
+      <Grid className="md:grid-cols-3" gap="md">
+        {["One", "Two", "Three"].map((item) => (
+          <Card interactive={false} key={item} withShadow={false}>
+            <CardContent>
+              <Text weight="black">{item}</Text>
+            </CardContent>
+          </Card>
+        ))}
+      </Grid>
+    ),
+    props: [
+      { name: "children", type: "ReactNode", required: true, description: "Grid content." },
+      { name: "as", type: "ElementType", defaultValue: '"div"', description: "Custom root element or component." },
+      { name: "columns", type: "1 | 2 | 3 | 4 | 5 | 6 | 12", description: "Applies a static grid column count." },
+      { name: "gap", type: '"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"', description: "Applies a standard gap size." },
+      { name: "align", type: '"start" | "center" | "end" | "stretch"', description: "Applies item alignment." },
+      { name: "content", type: '"start" | "center" | "end" | "between"', description: "Applies grid content alignment." },
+      { name: "className", type: "string", description: "Adds classes to the root grid." },
+      { name: "...elementProps", type: "HTMLAttributes<HTMLElement>", description: "Forwarded to the root element." },
+    ],
+  },
+  {
     slug: "toast",
     title: "Toast",
     description: "Status messages for save states, confirmations and errors.",
@@ -1384,10 +1419,10 @@ useClickOutside(ref, () => setOpen(false), {
     importCode: `import { Skeleton } from "@swirski/ui";`,
     usageCode: `<Skeleton className="h-24 w-full" />`,
     preview: (
-      <div className="grid max-w-sm gap-3">
+      <Grid gap="sm" className="max-w-sm">
         <Skeleton className="h-8 w-3/4" />
         <Skeleton className="h-24 w-full" />
-      </div>
+      </Grid>
     ),
     props: [
       { name: "className", type: "string", description: "Controls the skeleton size and extra styling." },

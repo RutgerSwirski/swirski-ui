@@ -14,6 +14,7 @@ import {
   CardContent,
   Checkbox,
   Field,
+  Grid,
   Input,
   Label,
   Select,
@@ -103,7 +104,7 @@ function ControlField({
     return (
       <Field>
         <Label htmlFor={fieldId}>{control.label}</Label>
-        <div className="grid grid-cols-[3rem_1fr] gap-3">
+        <Grid gap="sm" className="grid-cols-[3rem_1fr]">
           <Input
             id={fieldId}
             className="p-1"
@@ -116,7 +117,7 @@ function ControlField({
             value={String(value)}
             onChange={(event) => onChange(event.target.value)}
           />
-        </div>
+        </Grid>
       </Field>
     );
   }
@@ -221,34 +222,36 @@ export default function ComponentPlayground({
 
         <Card
           interactive={false}
-          className="grid min-w-0 overflow-hidden bg-white shadow-[6px_6px_0_#0B0B0C] sm:shadow-[10px_10px_0_#0B0B0C] lg:grid-cols-[minmax(0,1fr)_18rem]"
+          className="min-w-0 overflow-hidden bg-white shadow-[6px_6px_0_#0B0B0C] sm:shadow-[10px_10px_0_#0B0B0C]"
         >
-          <div className="w-full min-w-0 max-w-full overflow-x-auto overflow-y-visible bg-[#F5F5F3] p-4 sm:min-h-80 sm:p-6 md:p-10">
-            <div className="w-max min-w-full max-w-none">
-              {definition.render(values)}
+          <Grid className="lg:grid-cols-[minmax(0,1fr)_18rem]">
+            <div className="w-full min-w-0 max-w-full overflow-x-auto overflow-y-visible bg-[#F5F5F3] p-4 sm:min-h-80 sm:p-6 md:p-10">
+              <div className="w-max min-w-full max-w-none">
+                {definition.render(values)}
+              </div>
             </div>
-          </div>
 
-          <div className="min-w-0 border-t-4 border-black bg-white p-4 sm:p-5 lg:border-l-4 lg:border-t-0">
-            <Text
-              className="mb-4 uppercase"
-              size="xs"
-              tone="muted"
-              weight="black"
-            >
-              Controls
-            </Text>
-            <div className="grid gap-4">
-              {definition.controls.map((control) => (
-                <ControlField
-                  key={control.name}
-                  control={control}
-                  value={values[control.name] ?? control.defaultValue}
-                  onChange={(value) => updateValue(control.name, value)}
-                />
-              ))}
+            <div className="min-w-0 border-t-4 border-black bg-white p-4 sm:p-5 lg:border-l-4 lg:border-t-0">
+              <Text
+                className="mb-4 uppercase"
+                size="xs"
+                tone="muted"
+                weight="black"
+              >
+                Controls
+              </Text>
+              <Grid gap="md">
+                {definition.controls.map((control) => (
+                  <ControlField
+                    key={control.name}
+                    control={control}
+                    value={values[control.name] ?? control.defaultValue}
+                    onChange={(value) => updateValue(control.name, value)}
+                  />
+                ))}
+              </Grid>
             </div>
-          </div>
+          </Grid>
         </Card>
       </section>
 

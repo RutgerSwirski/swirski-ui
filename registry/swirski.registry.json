@@ -19,6 +19,7 @@
     { "name": "drawer", "category": "interaction", "description": "Side sheet primitive.", "source": "packages/ui/src/components/drawer" },
     { "name": "dropdown-menu", "category": "interaction", "description": "Compact action menu.", "source": "packages/ui/src/components/dropdown-menu" },
     { "name": "field", "category": "forms", "description": "Field, label, input and textarea primitives.", "source": "packages/ui/src/components/field" },
+    { "name": "grid", "category": "layout", "description": "Reusable CSS grid layout primitive.", "source": "packages/ui/src/components/grid" },
     { "name": "image-frame", "category": "media", "description": "Framed image surface.", "source": "packages/ui/src/components/image-frame" },
     { "name": "line-grid", "category": "backgrounds", "description": "Line grid background primitive.", "source": "packages/ui/src/components/line-grid" },
     { "name": "loader", "category": "feedback", "description": "Loading spinner.", "source": "packages/ui/src/components/loader" },
