@@ -16,7 +16,7 @@ export type CardProps = {
 } & HTMLAttributes<HTMLElement>;
 
 const base =
-  "group relative border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-[var(--sw-color-ink)]";
+  "group relative min-w-0 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-[var(--sw-color-ink)]";
 
 const shadowStyles: Record<CardSize, string> = {
   sm: "shadow-[4px_4px_0_var(--sw-color-shadow)]",

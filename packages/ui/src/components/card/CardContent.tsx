@@ -34,7 +34,11 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
     return (
       <Component
         ref={ref}
-        className={cn(variant === "default" && sizeStyles[size], className)}
+        className={cn(
+          "min-w-0",
+          variant === "default" && sizeStyles[size],
+          className,
+        )}
         {...swirskiAttrs("card-content", { size, variant })}
         {...props}
       >

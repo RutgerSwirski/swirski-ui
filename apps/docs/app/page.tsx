@@ -111,9 +111,9 @@ export default function HomePage() {
             <Grid gap="md" className="max-w-xl">
               <Card
                 interactive={false}
-                className="shadow-(color:--sw-color-yellow)"
+                className="shadow-(color:--sw-color-yellow) "
               >
-                <CardContent className="p-4">
+                <CardContent className="p-4 ">
                   <Badge tone="yellow">Library</Badge>
 
                   <Title className="mt-3" order={3} size="h4">
