@@ -51,7 +51,7 @@ const legacyToneVariants: ButtonTone[] = ["blue", "yellow", "red", "white", "bla
 
 const toneStyles: Record<ButtonTone, string> = {
   blue: "bg-[var(--sw-color-blue)] text-white",
-  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-yellow)]",
   red: "bg-[var(--sw-color-red)] text-white",
   white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
@@ -59,7 +59,7 @@ const toneStyles: Record<ButtonTone, string> = {
 
 const outlineToneStyles: Record<ButtonTone, string> = {
   blue: "bg-[var(--sw-color-surface)] text-[var(--sw-color-blue)]",
-  yellow: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
+  yellow: "bg-[var(--sw-color-surface)] text-[var(--sw-color-yellow)]",
   red: "bg-[var(--sw-color-surface)] text-[var(--sw-color-red)]",
   white: "bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]",
   black: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
@@ -67,7 +67,7 @@ const outlineToneStyles: Record<ButtonTone, string> = {
 
 const ghostToneStyles: Record<ButtonTone, string> = {
   blue: "border-transparent bg-transparent text-[var(--sw-color-blue)] shadow-none",
-  yellow: "border-transparent bg-transparent text-[var(--sw-color-ink)] shadow-none",
+  yellow: "border-transparent bg-transparent text-[var(--sw-color-yellow)] shadow-none",
   red: "border-transparent bg-transparent text-[var(--sw-color-red)] shadow-none",
   white: "border-transparent bg-transparent text-[var(--sw-color-surface)] shadow-none",
   black: "border-transparent bg-transparent text-[var(--sw-color-ink)] shadow-none",

@@ -239,7 +239,7 @@ export const componentDocs: ComponentDoc[] = [
     category: "Buttons",
     importCode: `import { Button } from "@swirski/ui";`,
     usageCode: `<Button href="/pieces">View pieces</Button>`,
-    preview: <Button href="/pieces">View pieces</Button>,
+    preview: <Button variant='ghost' tone='yellow'>View pieces</Button>,
     props: [
       {
         name: "children",

@@ -329,6 +329,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
           }
           iconSide={textValue(values, "iconSide") as "left" | "right"}
           tone={textValue(values, "tone") as "blue" | "yellow" | "white"}
+          variant={
+            textValue(values, "variant") as "solid" | "outline" | "ghost"
+          }
         >
           {textValue(values, "children")}
         </Button>
