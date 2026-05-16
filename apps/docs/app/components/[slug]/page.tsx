@@ -315,7 +315,7 @@ export default async function ComponentPage({ params }: Props) {
                     <Button
                       key={item.title}
                       href={`#${item.title.toLowerCase()}`}
-                      variant="white"
+                      tone="white"
                       className="justify-start px-3 py-2 text-xs"
                     >
                       {item.title}
@@ -329,7 +329,7 @@ export default async function ComponentPage({ params }: Props) {
           <Grid className="gap-12">
             <CodePanel title="Import" code={component.importCode} />
 
-            <section id="preview" className="min-w-0 scroll-mt-8">
+            {/* <section id="preview" className="min-w-0 scroll-mt-8">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="h-5 w-5 border-4 border-black bg-[#FFD400]" />
@@ -357,7 +357,7 @@ export default async function ComponentPage({ params }: Props) {
                   </div>
                 </div>
               </div>
-            </section>
+            </section> */}
 
             <ComponentPlayground
               slug={component.slug}
@@ -377,7 +377,7 @@ export default async function ComponentPage({ params }: Props) {
               <Button
                 as={Link}
                 href={`/components/${previousComponent.slug}`}
-                variant="white"
+                tone="white"
                 className="w-full text-xs sm:text-sm"
               >
                 Previous: {previousComponent.title}

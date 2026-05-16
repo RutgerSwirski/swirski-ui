@@ -1,2 +1,7 @@
 export { DiagonalLines } from "./DiagonalLines";
-export type { DiagonalLinesProps } from "./DiagonalLines";
+export type {
+  DiagonalLinesProps,
+  DiagonalLinesSize,
+  DiagonalLinesTone,
+  DiagonalLinesVariant,
+} from "./DiagonalLines";

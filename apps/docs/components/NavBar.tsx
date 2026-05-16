@@ -19,10 +19,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
+  { href: "/get-started", label: "Get Started" },
+  { href: "/system", label: "System" },
   { href: "/components", label: "Components" },
-  { href: "/examples", label: "Examples" },
   { href: "/hooks", label: "Hooks" },
   { href: "/cli", label: "CLI" },
+  { href: "/examples", label: "Examples" },
 ];
 
 function isActivePath(pathname: string, href: string) {

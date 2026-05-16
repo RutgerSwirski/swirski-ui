@@ -7,4 +7,15 @@ export {
   ToastViewport,
   useToast,
 } from "./Toast";
-export type { ToastItem, ToastTone } from "./Toast";
+export type {
+  ToastCloseProps,
+  ToastDescriptionProps,
+  ToastItem,
+  ToastProps,
+  ToastProviderProps,
+  ToastSize,
+  ToastTitleProps,
+  ToastTone,
+  ToastVariant,
+  ToastViewportProps,
+} from "./Toast";

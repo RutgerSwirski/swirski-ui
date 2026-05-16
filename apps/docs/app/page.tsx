@@ -1,6 +1,6 @@
 // apps/docs/app/page.tsx
 
-import CopyToClipboard from "@/components/CopyToClipboard";
+import CodeBlock from "@/components/CodeBlock";
 import Hero from "@/components/Hero";
 import NavBar from "@/components/NavBar";
 import {
@@ -11,71 +11,80 @@ import {
   Container,
   DotGrid,
   Grid,
-  ImageFrame,
   SectionLabel,
   Text,
   Title,
-  MobileMenu,
-  MobileMenuContent,
-  MobileMenuLink,
-  MobileMenuNav,
-  MobileMenuTrigger,
-  NavbarActions,
 } from "@swirski/ui";
+import Link from "next/link";
 
 const foundations = [
   {
     label: "01",
-    title: "Editorial bones",
-    body: "Big condensed type, direct copy and layouts that feel composed before they feel decorated.",
+    title: "Full component library",
+    body: "Install @swirski/ui and import ready-made React components with consistent props, strong defaults and a bold graphic visual language.",
   },
   {
     label: "02",
-    title: "Studio contrast",
-    body: "Black structure, warm surfaces and primary-color accents carried through the component API.",
+    title: "Copy-source workflow",
+    body: "Use the CLI to pull selected components into your own project. The code becomes yours to edit, remix and reshape.",
   },
   {
     label: "03",
-    title: "Dev-ready parts",
-    body: "React primitives with predictable props, Tailwind-friendly class hooks and docs that stay close to usage.",
+    title: "Built for customization",
+    body: "Theme tokens, className escape hatches, data attributes, asChild support and readable source keep the system flexible.",
   },
 ];
 
-const packageLinks = [
-  "Button",
-  "Card",
-  "Container",
-  "DiagonalLines",
-  "DotGrid",
-  "LineGrid",
-  "SwirskiProvider",
-  "Title",
-  "Text",
-  "ImageFrame",
-  "Dialog",
-  "Select",
+const showcaseComponents = [
+  {
+    name: "Button",
+    description:
+      "Action primitive with bold borders, graphic tones, loading states and asChild support.",
+    href: "/components/button",
+  },
+  {
+    name: "Card",
+    description:
+      "Flexible surface for content blocks, docs panels, previews and hard-shadow layouts.",
+    href: "/components/card",
+  },
+  {
+    name: "Dialog",
+    description:
+      "Accessible overlay pattern for focused interactions, confirmations and modal content.",
+    href: "/components/dialog",
+  },
+  {
+    name: "Select",
+    description:
+      "Styled selection control with consistent sizing, tones and Swirski system props.",
+    href: "/components/select",
+  },
+  {
+    name: "Loader",
+    description:
+      "Pixel-art loading indicators with chunky outlines, pop-art tones and reduced-motion support.",
+    href: "/components/loader",
+  },
+  {
+    name: "DotGrid",
+    description:
+      "Graphic background texture for docs, hero sections, panels and Swirski-style surfaces.",
+    href: "/components/dot-grid",
+  },
+  {
+    name: "ImageFrame",
+    description:
+      "Framed media primitive for screenshots, product shots, visual examples and editorial layouts.",
+    href: "/components/image-frame",
+  },
+  {
+    name: "Title",
+    description:
+      "Heading primitive for condensed, expressive typography with reusable size scales.",
+    href: "/components/title",
+  },
 ];
-
-const workflow = [
-  {
-    title: "Install",
-    body: "Install the package, or use the CLI to copy components into your app.",
-  },
-  {
-    title: "Theme",
-    body: "Wrap your app in SwirskiProvider and override tokens when the brand needs it.",
-  },
-  {
-    title: "Compose",
-    body: "Use imports or registry-copied source with the same Swirski tokens.",
-  },
-];
-
-function getComponentHref(name: string) {
-  return `/components/${name
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .toLowerCase()}`;
-}
 
 export default function HomePage() {
   return (
@@ -99,74 +108,54 @@ export default function HomePage() {
           >
             <Hero />
 
-            <ImageFrame className="border-4 bg-[#0B0B0C] p-4 text-white shadow-[14px_14px_0_#0057FF]">
-              <div className="flex items-center justify-between border-b-4 border-black pb-4">
-                <Title order={2} size="h5">
-                  Docs
-                </Title>
-                <Badge>@swirski/ui</Badge>
-              </div>
+            <Grid gap="md" className="max-w-xl">
+              <Card
+                interactive={false}
+                className="shadow-(color:--sw-color-yellow)"
+              >
+                <CardContent className="p-4">
+                  <Badge tone="yellow">Library</Badge>
 
-              <Grid gap="md" className="mt-4">
-                <Card interactive={false} className="bg-white">
-                  <CardContent>
-                    <Grid
-                      gap="lg"
-                      className="md:grid-cols-[1fr_auto] md:items-end"
-                    >
-                      <div>
-                        <Text
-                          className="uppercase"
-                          size="xs"
-                          tone="muted"
-                          weight="black"
-                        >
-                          Install
-                        </Text>
-                        <code className="mt-2 block break-words text-lg font-black">
-                          pnpm add @swirski/ui @swirski/cli
-                        </code>
-                      </div>
+                  <Title className="mt-3" order={3} size="h4">
+                    Start Building!
+                  </Title>
 
-                      <CopyToClipboard
-                        value="pnpm add @swirski/ui @swirski/cli"
-                        label="Copy"
-                        copiedLabel="Copied"
-                      />
-                    </Grid>
-                  </CardContent>
-                </Card>
+                  <Text className="mt-2" size="xs" weight="bold">
+                    Install Swirski UI as a React component library and build
+                    with ready-made components, consistent props and bold
+                    defaults.
+                  </Text>
 
-                <Grid gap="md" className="sm:grid-cols-2">
-                  <Card interactive={false} className="bg-[#FFD400] ">
-                    <CardContent>
-                      <Title order={3} size="h5">
-                        Studio
-                      </Title>
-                      <Text className="mt-3" size="sm" weight="bold">
-                        Clean hierarchy with hard graphic accents and useful
-                        component states.
-                      </Text>
-                    </CardContent>
-                  </Card>
+                  <CodeBlock
+                    className="mt-4"
+                    code="pnpm add @swirski/ui @swirski/cli"
+                  />
+                </CardContent>
+              </Card>
 
-                  <Card
-                    interactive={false}
-                    className="bg-[#0057FF] text-white "
-                  >
-                    <CardContent>
-                      <Title order={3} size="h5">
-                        Dev
-                      </Title>
-                      <Text className="mt-3" size="sm" weight="bold">
-                        Built for docs, portfolio surfaces and production
-                        interfaces.
-                      </Text>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-            </ImageFrame>
+              <Card
+                interactive={false}
+                className="shadow-(color:--sw-color-red)"
+              >
+                <CardContent className="p-4">
+                  <Badge tone="red">CLI</Badge>
+
+                  <Title className="mt-3" order={3} size="h4">
+                    Or Own The Source!
+                  </Title>
+
+                  <Text className="mt-2" size="xs" weight="bold">
+                    Use the CLI to copy components into your app, then customize
+                    the markup, tokens, classes and behaviour as your own.
+                  </Text>
+
+                  <CodeBlock
+                    className="mt-4"
+                    code="npx @swirski/cli@latest add button card dialog"
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
         </Container>
       </div>
@@ -177,12 +166,13 @@ export default function HomePage() {
             <div>
               <SectionLabel>System</SectionLabel>
               <Title className="mt-6 max-w-3xl" order={2} size="h1">
-                The same language, calmer docs.
+                One system. Two ways to build.
               </Title>
             </div>
             <Text className="max-w-sm" tone="muted" weight="bold">
-              The docs should feel like a working studio surface: clear first,
-              expressive second, unmistakably Swirski throughout.
+              Use Swirski UI as a component library, or copy pieces into your
+              app with the CLI. Either way, the same props, tokens and styling
+              hooks keep everything consistent.
             </Text>
           </div>
 
@@ -209,94 +199,88 @@ export default function HomePage() {
           </Grid>
         </section>
 
-        <Grid
-          as="section"
-          gap="xl"
-          className="py-16 md:grid-cols-[0.8fr_1.2fr] md:py-20"
-        >
-          <div>
-            <SectionLabel>Library</SectionLabel>
-            <Text className="mt-6" size="lg" tone="muted" weight="bold">
-              A compact component surface for building Swirski pages without
-              rebuilding the style rules on every screen.
-            </Text>
+        <section id="components" className="pt-16 md:pt-20">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <SectionLabel>Components</SectionLabel>
+
+              <Title className="mt-6 max-w-3xl" order={2} size="h1">
+                Useful primitives with a graphic point of view.
+              </Title>
+            </div>
+
+            <Button href="/components" tone="white">
+              Browse components
+            </Button>
           </div>
 
-          <Grid gap="sm" className="sm:grid-cols-2 lg:grid-cols-3">
-            {packageLinks.map((item) => (
-              <Button variant="white" key={item} href={getComponentHref(item)}>
-                {item}
-              </Button>
+          <Grid gap="md" className="mt-10 sm:grid-cols-2 lg:grid-cols-4">
+            {showcaseComponents.map((component) => (
+              <Link
+                key={component.name}
+                href={component.href}
+                className="block"
+              >
+                <Card
+                  key={component.name}
+                  interactive
+                  className="h-full min-h-52 bg-white shadow-[5px_5px_0_#0B0B0C]"
+                >
+                  <CardContent className="p-4">
+                    <Badge tone="yellow">Component</Badge>
+
+                    <Title className="mt-4" order={3} size="h5">
+                      {component.name}
+                    </Title>
+
+                    <Text
+                      className="mt-2"
+                      size="sm"
+                      tone="muted"
+                      weight="medium"
+                    >
+                      {component.description}
+                    </Text>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </Grid>
-        </Grid>
+        </section>
 
-        <Grid
-          as="section"
-          id="start"
-          gap="xl"
-          className="border-y-4 border-black py-16 md:grid-cols-[1fr_1fr]"
-        >
-          <div>
-            <SectionLabel>Start</SectionLabel>
-            <Title className="mt-6" order={2} size="h1">
-              Compose the page, then tune the voice.
-            </Title>
-          </div>
-
+        <section className="pt-16 md:pt-20">
           <Card
             interactive={false}
-            className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
+            className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
           >
-            <CardContent className="p-6">
-              <Grid as="ol" gap="md">
-                {workflow.map(({ title, body }, index) => (
-                  <Grid
-                    as="li"
-                    key={title}
-                    gap="md"
-                    className="grid-cols-[3rem_1fr] border-b-4 border-white/20 pb-4 last:border-b-0 last:pb-0"
-                  >
-                    <Text
-                      className="font-anton text-3xl leading-none text-current"
-                      component="span"
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </Text>
-                    <Grid className="gap-1">
-                      <Text component="span" size="xl" weight="bold">
-                        {title}
-                      </Text>
-                      <Text className="text-white/75" size="sm">
-                        {body}
-                      </Text>
-                    </Grid>
-                  </Grid>
-                ))}
-              </Grid>
-              <div className="mt-6 border-4 border-black bg-[#FFD400] p-4 font-black text-black">
-                <div className="flex flex-wrap items-end justify-between gap-4">
-                  <div>
-                    <Text
-                      className="uppercase"
-                      size="xs"
-                      tone="muted"
-                      weight="black"
-                    >
-                      CLI
-                    </Text>
-                    <code className="mt-2 block break-words">
-                      swirski init && swirski add button card dialog
-                    </code>
-                  </div>
-                  <Button href="/cli" variant="white">
-                    CLI docs
+            <CardContent className="p-6 md:p-8">
+              <Grid gap="lg" className="md:grid-cols-[1fr_auto] md:items-end">
+                <div>
+                  <Badge tone="black">Start</Badge>
+
+                  <Title className="mt-5" order={2} size="h2">
+                    Build with the library, or own the source.
+                  </Title>
+
+                  <Text className="mt-4 max-w-2xl" weight="bold">
+                    Install Swirski UI for fast imports, or use the CLI to copy
+                    components into your project and customize everything.
+                  </Text>
+                </div>
+
+                <div className="flex flex-wrap gap-3 md:justify-end">
+                  <Button href="/get-started" tone="white">
+                    Get started
+                  </Button>
+
+                  <Button href="/components" tone="black">
+                    Components
                   </Button>
                 </div>
-              </div>
+              </Grid>
             </CardContent>
           </Card>
-        </Grid>
+        </section>
       </Container>
     </main>
   );

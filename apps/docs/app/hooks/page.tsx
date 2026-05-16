@@ -105,7 +105,7 @@ export default function HooksPage() {
             >
               <CardContent>
                 <Badge tone="black">Hook entries</Badge>
-                <Title className="mt-5 text-current" order={2} size="h2">
+                <Title className="mt-5" order={2} size="h2">
                   {hookDocs.length}
                 </Title>
                 <Text className="mt-2" size="sm" weight="bold">
@@ -162,7 +162,7 @@ export default function HooksPage() {
                         withShadow={false}
                         key={hook}
                         href={doc ? `/hooks/${doc.slug}` : "/hooks"}
-                        variant="white"
+                        tone="white"
                         className="justify-start text-sm"
                       >
                         {hook}

@@ -1,2 +1,7 @@
 export { DotGrid } from "./DotGrid";
-export type { DotGridProps } from "./DotGrid";
+export type {
+  DotGridProps,
+  DotGridSize,
+  DotGridTone,
+  DotGridVariant,
+} from "./DotGrid";

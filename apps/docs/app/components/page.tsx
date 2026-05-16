@@ -133,7 +133,7 @@ export default function ComponentsPage() {
                     className="mt-4 max-w-full"
                     target="_blank"
                     href="https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=rutgerswirski&labels=missing-component&template=component.md&title=Add+%60[component-name]%60+component"
-                    variant="white"
+                    tone="white"
                   >
                     Open an issue
                   </Button>
@@ -161,7 +161,7 @@ export default function ComponentsPage() {
                     <Button
                       key={category}
                       href={`#${slugify(category)}`}
-                      variant="white"
+                      tone="white"
                       withShadow={false}
                       className="justify-start text-xs"
                     >

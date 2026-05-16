@@ -1,28 +1,49 @@
-// CardMedia.tsx
-import { ReactNode } from "react";
-import clsx from "clsx";
+import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from "react";
+import { Slot, cn, swirskiAttrs } from "../../system";
 
-type CardMediaProps = {
-  children: ReactNode;
-  className?: string;
+export type CardMediaVariant = "default" | "flush";
+export type CardMediaSize = "sm" | "md" | "lg";
+
+export type CardMediaProps = {
+  asChild?: boolean;
+  children?: ReactNode;
+  variant?: CardMediaVariant;
+  size?: CardMediaSize;
   aspect?: string; // "4/3", "4/5"
-};
+} & Omit<HTMLAttributes<HTMLDivElement>, "color">;
 
-export function CardMedia({
-  children,
-  className,
-  aspect = "4/3",
-}: CardMediaProps) {
-  return (
-    <div className={clsx("border-b-4 border-black", className)}>
-      <div
-        className={clsx(
+export const CardMedia = forwardRef<HTMLDivElement, CardMediaProps>(
+  function CardMedia(
+    {
+      asChild = false,
+      children,
+      className,
+      aspect = "4/3",
+      variant = "default",
+      size = "md",
+      style,
+      ...props
+    },
+    ref,
+  ) {
+    const Component = asChild ? Slot : "div";
+
+    return (
+      <Component
+        ref={ref}
+        className={cn(
           "relative overflow-hidden bg-white",
-          `aspect-[${aspect}]`,
+          variant === "default" && "border-b-4 border-black",
+          className,
         )}
+        style={{ aspectRatio: aspect, ...(style as CSSProperties | undefined) }}
+        {...swirskiAttrs("card-media", { size, variant })}
+        {...props}
       >
         {children}
-      </div>
-    </div>
-  );
-}
+      </Component>
+    );
+  },
+);
+
+CardMedia.displayName = "CardMedia";

@@ -1,6 +1,7 @@
 /* apps/docs/app/globals.css */
 
 @import "tailwindcss";
+@import "@swirski/ui/styles.css";
 
 @source "../../../packages/ui/src";
 

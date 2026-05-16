@@ -1,13 +1,36 @@
-import { HTMLAttributes } from "react";
-import clsx from "clsx";
+import { HTMLAttributes, forwardRef } from "react";
+import { cn, swirskiAttrs } from "../../system";
 
-export type AlertTitleProps = HTMLAttributes<HTMLHeadingElement>;
+export type AlertTitleVariant = "default";
+export type AlertTitleSize = "sm" | "md" | "lg";
+export type AlertTitleTone = "default";
 
-export function AlertTitle({ className, ...props }: AlertTitleProps) {
-  return (
-    <h3
-      className={clsx("font-anton text-2xl uppercase leading-none", className)}
-      {...props}
-    />
-  );
-}
+export type AlertTitleProps = {
+  variant?: AlertTitleVariant;
+  size?: AlertTitleSize;
+  tone?: AlertTitleTone;
+} & HTMLAttributes<HTMLHeadingElement>;
+
+const sizeStyles: Record<AlertTitleSize, string> = {
+  sm: "text-xl",
+  md: "text-2xl",
+  lg: "text-3xl",
+};
+
+export const AlertTitle = forwardRef<HTMLHeadingElement, AlertTitleProps>(
+  function AlertTitle(
+    { className, variant = "default", size = "md", tone = "default", ...props },
+    ref,
+  ) {
+    return (
+      <h3
+        ref={ref}
+        className={cn("font-anton uppercase leading-none", sizeStyles[size], className)}
+        {...swirskiAttrs("alert-title", { size, tone, variant })}
+        {...props}
+      />
+    );
+  },
+);
+
+AlertTitle.displayName = "AlertTitle";

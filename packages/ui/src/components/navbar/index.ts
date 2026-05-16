@@ -27,4 +27,7 @@ export type {
   NavbarLinkProps,
   NavbarNavProps,
   NavbarProps,
+  NavbarSize,
+  NavbarTone,
+  NavbarVariant,
 } from "./Navbar";

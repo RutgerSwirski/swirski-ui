@@ -239,7 +239,11 @@ export const componentDocs: ComponentDoc[] = [
     category: "Buttons",
     importCode: `import { Button } from "@swirski/ui";`,
     usageCode: `<Button href="/pieces">View pieces</Button>`,
-    preview: <Button href="/pieces">View pieces</Button>,
+    preview: (
+      <Button variant="ghost" tone="yellow">
+        View pieces
+      </Button>
+    ),
     props: [
       {
         name: "children",
@@ -255,13 +259,32 @@ export const componentDocs: ComponentDoc[] = [
       {
         name: "as",
         type: "ElementType",
-        description: "Custom component used for the root element, such as Next.js Link.",
+        description:
+          "Custom component used for the root element, such as Next.js Link.",
+      },
+      {
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white" | "black"',
+        defaultValue: '"blue"',
+        description: "Applies the Swirski color treatment.",
       },
       {
         name: "variant",
-        type: '"blue" | "yellow" | "white"',
-        defaultValue: '"blue"',
-        description: "Applies the Swirski color treatment.",
+        type: '"solid" | "outline" | "ghost"',
+        defaultValue: '"solid"',
+        description: "Controls the visual treatment independently from tone.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        defaultValue: '"md"',
+        description: "Controls the button scale.",
+      },
+      {
+        name: "asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Passes button props to a single child element.",
       },
       {
         name: "icon",
@@ -306,8 +329,8 @@ export const componentDocs: ComponentDoc[] = [
       <CursorProvider className="relative min-h-64 space-y-6 overflow-hidden p-2">
         <CursorDock position="absolute" />
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="yellow">Hover me</Button>
-          <Button href="/components/cursor" variant="white">
+          <Button tone="yellow">Hover me</Button>
+          <Button href="/components/cursor" tone="white">
             Link cursor
           </Button>
         </div>
@@ -385,7 +408,10 @@ export const componentDocs: ComponentDoc[] = [
         </Field>
         <Field>
           <Label htmlFor="docs-message">Message</Label>
-          <Textarea id="docs-message" placeholder="Tell us what you are building." />
+          <Textarea
+            id="docs-message"
+            placeholder="Tell us what you are building."
+          />
           <FieldError>This is where validation feedback can sit.</FieldError>
         </Field>
       </Grid>
@@ -907,7 +933,8 @@ export const componentDocs: ComponentDoc[] = [
       {
         name: "theme",
         type: "SwirskiTheme",
-        description: "Overrides any Swirski token or adds custom CSS variables.",
+        description:
+          "Overrides any Swirski token or adds custom CSS variables.",
       },
       {
         name: "createSwirskiTheme",
@@ -934,7 +961,10 @@ export const componentDocs: ComponentDoc[] = [
   {opened ? "Close" : "Open"}
 </Button>`,
     preview: (
-      <Card interactive={false} className="max-w-md bg-white shadow-[7px_7px_0_#0B0B0C]">
+      <Card
+        interactive={false}
+        className="max-w-md bg-white shadow-[7px_7px_0_#0B0B0C]"
+      >
         <CardContent>
           <Badge tone="blue">Disclosure state</Badge>
           <Text className="mt-4" tone="muted" weight="bold">
@@ -944,16 +974,49 @@ export const componentDocs: ComponentDoc[] = [
       </Card>
     ),
     props: [
-      { name: "defaultOpened", type: "boolean", defaultValue: "false", description: "Initial uncontrolled disclosure state." },
-      { name: "options.value", type: "boolean", description: "Controlled disclosure state." },
-      { name: "options.onChange", type: "(opened: boolean) => void", description: "Called whenever state changes." },
+      {
+        name: "defaultOpened",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial uncontrolled disclosure state.",
+      },
+      {
+        name: "options.value",
+        type: "boolean",
+        description: "Controlled disclosure state.",
+      },
+      {
+        name: "options.onChange",
+        type: "(opened: boolean) => void",
+        description: "Called whenever state changes.",
+      },
     ],
     returns: [
-      { name: "opened", type: "boolean", description: "Current disclosure state." },
-      { name: "handlers.open", type: "() => void", description: "Sets the disclosure state to open." },
-      { name: "handlers.close", type: "() => void", description: "Sets the disclosure state to closed." },
-      { name: "handlers.toggle", type: "() => void", description: "Flips the current disclosure state." },
-      { name: "handlers.set", type: "(opened: boolean) => void", description: "Sets the disclosure state directly." },
+      {
+        name: "opened",
+        type: "boolean",
+        description: "Current disclosure state.",
+      },
+      {
+        name: "handlers.open",
+        type: "() => void",
+        description: "Sets the disclosure state to open.",
+      },
+      {
+        name: "handlers.close",
+        type: "() => void",
+        description: "Sets the disclosure state to closed.",
+      },
+      {
+        name: "handlers.toggle",
+        type: "() => void",
+        description: "Flips the current disclosure state.",
+      },
+      {
+        name: "handlers.set",
+        type: "(opened: boolean) => void",
+        description: "Sets the disclosure state directly.",
+      },
     ],
   },
   {
@@ -978,12 +1041,30 @@ export const componentDocs: ComponentDoc[] = [
     ),
     props: [
       { name: "value", type: "T", description: "Controlled value." },
-      { name: "defaultValue", type: "T", required: true, description: "Uncontrolled initial value." },
-      { name: "onChange", type: "(value: T) => void", description: "Called when the setter resolves a value." },
+      {
+        name: "defaultValue",
+        type: "T",
+        required: true,
+        description: "Uncontrolled initial value.",
+      },
+      {
+        name: "onChange",
+        type: "(value: T) => void",
+        description: "Called when the setter resolves a value.",
+      },
     ],
     returns: [
-      { name: "value", type: "T", description: "Current controlled or uncontrolled value." },
-      { name: "setValue", type: "Dispatch<SetStateAction<T>>", description: "Updates internal state or calls onChange with the resolved value." },
+      {
+        name: "value",
+        type: "T",
+        description: "Current controlled or uncontrolled value.",
+      },
+      {
+        name: "setValue",
+        type: "Dispatch<SetStateAction<T>>",
+        description:
+          "Updates internal state or calls onChange with the resolved value.",
+      },
     ],
   },
   {
@@ -1009,13 +1090,38 @@ useClickOutside(ref, () => setOpen(false), {
       </Popover>
     ),
     props: [
-      { name: "ref", type: "RefObject<HTMLElement | null>", required: true, description: "Element that owns the inside area." },
-      { name: "handler", type: "(event: Event) => void", required: true, description: "Runs when the event target is outside the ref." },
-      { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns listeners on or off." },
-      { name: "options.events", type: 'Array<"mousedown" | "pointerdown" | "touchstart">', defaultValue: '["pointerdown"]', description: "Events to listen for." },
+      {
+        name: "ref",
+        type: "RefObject<HTMLElement | null>",
+        required: true,
+        description: "Element that owns the inside area.",
+      },
+      {
+        name: "handler",
+        type: "(event: Event) => void",
+        required: true,
+        description: "Runs when the event target is outside the ref.",
+      },
+      {
+        name: "options.enabled",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Turns listeners on or off.",
+      },
+      {
+        name: "options.events",
+        type: 'Array<"mousedown" | "pointerdown" | "touchstart">',
+        defaultValue: '["pointerdown"]',
+        description: "Events to listen for.",
+      },
     ],
     returns: [
-      { name: "return", type: "void", description: "Registers document listeners in an effect and returns no value." },
+      {
+        name: "return",
+        type: "void",
+        description:
+          "Registers document listeners in an effect and returns no value.",
+      },
     ],
   },
   {
@@ -1027,16 +1133,33 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `useEscapeKey(() => setOpen(false), {
   enabled: open,
 });`,
-    preview: (
-      <Badge tone="black">Escape listener for overlays</Badge>
-    ),
+    preview: <Badge tone="black">Escape listener for overlays</Badge>,
     props: [
-      { name: "handler", type: "(event: KeyboardEvent) => void", required: true, description: "Runs when Escape is pressed." },
-      { name: "options.enabled", type: "boolean", defaultValue: "true", description: "Turns the key listener on or off." },
-      { name: "options.target", type: "Document | HTMLElement | Window | null", description: "Event target, defaults to document." },
+      {
+        name: "handler",
+        type: "(event: KeyboardEvent) => void",
+        required: true,
+        description: "Runs when Escape is pressed.",
+      },
+      {
+        name: "options.enabled",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Turns the key listener on or off.",
+      },
+      {
+        name: "options.target",
+        type: "Document | HTMLElement | Window | null",
+        description: "Event target, defaults to document.",
+      },
     ],
     returns: [
-      { name: "return", type: "void", description: "Registers a keydown listener in an effect and returns no value." },
+      {
+        name: "return",
+        type: "void",
+        description:
+          "Registers a keydown listener in an effect and returns no value.",
+      },
     ],
   },
   {
@@ -1060,15 +1183,47 @@ useClickOutside(ref, () => setOpen(false), {
       </Card>
     ),
     props: [
-      { name: "key", type: "string", required: true, description: "localStorage key." },
-      { name: "defaultValue", type: "T", required: true, description: "Fallback value." },
-      { name: "options.serialize", type: "(value: T) => string", description: "Custom serializer." },
-      { name: "options.deserialize", type: "(value: string) => T", description: "Custom parser." },
+      {
+        name: "key",
+        type: "string",
+        required: true,
+        description: "localStorage key.",
+      },
+      {
+        name: "defaultValue",
+        type: "T",
+        required: true,
+        description: "Fallback value.",
+      },
+      {
+        name: "options.serialize",
+        type: "(value: T) => string",
+        description: "Custom serializer.",
+      },
+      {
+        name: "options.deserialize",
+        type: "(value: string) => T",
+        description: "Custom parser.",
+      },
     ],
     returns: [
-      { name: "value", type: "T", description: "Current state, initialized from defaultValue and then hydrated from localStorage." },
-      { name: "setValue", type: "Dispatch<SetStateAction<T>>", description: "Updates React state and persists the serialized value." },
-      { name: "removeValue", type: "() => void", description: "Removes the stored item and resets state to defaultValue." },
+      {
+        name: "value",
+        type: "T",
+        description:
+          "Current state, initialized from defaultValue and then hydrated from localStorage.",
+      },
+      {
+        name: "setValue",
+        type: "Dispatch<SetStateAction<T>>",
+        description: "Updates React state and persists the serialized value.",
+      },
+      {
+        name: "removeValue",
+        type: "() => void",
+        description:
+          "Removes the stored item and resets state to defaultValue.",
+      },
     ],
   },
   {
@@ -1080,11 +1235,25 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `const isDesktop = useMediaQuery("(min-width: 1024px)");`,
     preview: <Badge tone="blue">Responsive state hook</Badge>,
     props: [
-      { name: "query", type: "string", required: true, description: "CSS media query to observe." },
-      { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the browser runs the query." },
+      {
+        name: "query",
+        type: "string",
+        required: true,
+        description: "CSS media query to observe.",
+      },
+      {
+        name: "initialValue",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial value before the browser runs the query.",
+      },
     ],
     returns: [
-      { name: "matches", type: "boolean", description: "Whether the media query currently matches." },
+      {
+        name: "matches",
+        type: "boolean",
+        description: "Whether the media query currently matches.",
+      },
     ],
   },
   {
@@ -1096,10 +1265,19 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `const reducedMotion = useReducedMotion();`,
     preview: <Badge tone="yellow">Motion preference</Badge>,
     props: [
-      { name: "initialValue", type: "boolean", defaultValue: "false", description: "Initial value before the media query runs." },
+      {
+        name: "initialValue",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial value before the media query runs.",
+      },
     ],
     returns: [
-      { name: "reducedMotion", type: "boolean", description: "True when prefers-reduced-motion is reduce." },
+      {
+        name: "reducedMotion",
+        type: "boolean",
+        description: "True when prefers-reduced-motion is reduce.",
+      },
     ],
   },
   {
@@ -1124,13 +1302,30 @@ useClickOutside(ref, () => setOpen(false), {
       </Card>
     ),
     props: [
-      { name: "options.timeout", type: "number", defaultValue: "1600", description: "Copied-state reset delay in milliseconds." },
+      {
+        name: "options.timeout",
+        type: "number",
+        defaultValue: "1600",
+        description: "Copied-state reset delay in milliseconds.",
+      },
     ],
     returns: [
-      { name: "copied", type: "boolean", description: "True immediately after a successful copy." },
-      { name: "copy", type: "(value: string) => Promise<void>", description: "Copies text to the clipboard." },
+      {
+        name: "copied",
+        type: "boolean",
+        description: "True immediately after a successful copy.",
+      },
+      {
+        name: "copy",
+        type: "(value: string) => Promise<void>",
+        description: "Copies text to the clipboard.",
+      },
       { name: "error", type: "Error | null", description: "Last copy error." },
-      { name: "reset", type: "() => void", description: "Clears copied and error state." },
+      {
+        name: "reset",
+        type: "() => void",
+        description: "Clears copied and error state.",
+      },
     ],
   },
   {
@@ -1158,7 +1353,9 @@ useClickOutside(ref, () => setOpen(false), {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete piece?</DialogTitle>
-            <DialogDescription>This action needs confirmation.</DialogDescription>
+            <DialogDescription>
+              This action needs confirmation.
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose>Cancel</DialogClose>
@@ -1168,9 +1365,22 @@ useClickOutside(ref, () => setOpen(false), {
     ),
     props: [
       { name: "open", type: "boolean", description: "Controlled open state." },
-      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
-      { name: "onOpenChange", type: "(open: boolean) => void", description: "Called when the dialog opens or closes." },
-      { name: "className", type: "string", description: "Available on trigger, content and layout slots." },
+      {
+        name: "defaultOpen",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial uncontrolled open state.",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Called when the dialog opens or closes.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Available on trigger, content and layout slots.",
+      },
     ],
   },
   {
@@ -1196,9 +1406,23 @@ useClickOutside(ref, () => setOpen(false), {
     ),
     props: [
       { name: "open", type: "boolean", description: "Controlled open state." },
-      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
-      { name: "align", type: '"start" | "end"', defaultValue: '"start"', description: "Aligns the content to the trigger." },
-      { name: "className", type: "string", description: "Adds classes to root, trigger or content slots." },
+      {
+        name: "defaultOpen",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial uncontrolled open state.",
+      },
+      {
+        name: "align",
+        type: '"start" | "end"',
+        defaultValue: '"start"',
+        description: "Aligns the content to the trigger.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to root, trigger or content slots.",
+      },
     ],
   },
   {
@@ -1232,9 +1456,22 @@ useClickOutside(ref, () => setOpen(false), {
       </DropdownMenu>
     ),
     props: [
-      { name: "DropdownMenuTrigger", type: "ButtonHTMLAttributes<HTMLButtonElement>", description: "Button props forwarded to the trigger." },
-      { name: "DropdownMenuContent.align", type: '"start" | "end"', defaultValue: '"start"', description: "Aligns the menu to the trigger." },
-      { name: "DropdownMenuItem", type: "ButtonHTMLAttributes<HTMLButtonElement>", description: "Button props forwarded to each item." },
+      {
+        name: "DropdownMenuTrigger",
+        type: "ButtonHTMLAttributes<HTMLButtonElement>",
+        description: "Button props forwarded to the trigger.",
+      },
+      {
+        name: "DropdownMenuContent.align",
+        type: '"start" | "end"',
+        defaultValue: '"start"',
+        description: "Aligns the menu to the trigger.",
+      },
+      {
+        name: "DropdownMenuItem",
+        type: "ButtonHTMLAttributes<HTMLButtonElement>",
+        description: "Button props forwarded to each item.",
+      },
     ],
   },
   {
@@ -1252,9 +1489,23 @@ useClickOutside(ref, () => setOpen(false), {
       </Tooltip>
     ),
     props: [
-      { name: "content", type: "ReactNode", required: true, description: "Tooltip label content." },
-      { name: "children", type: "ReactNode", required: true, description: "Element that owns the tooltip." },
-      { name: "className", type: "string", description: "Adds classes to the tooltip wrapper." },
+      {
+        name: "content",
+        type: "ReactNode",
+        required: true,
+        description: "Tooltip label content.",
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Element that owns the tooltip.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the tooltip wrapper.",
+      },
     ],
   },
   {
@@ -1282,16 +1533,35 @@ useClickOutside(ref, () => setOpen(false), {
       </Tabs>
     ),
     props: [
-      { name: "defaultValue", type: "string", required: true, description: "Initial active tab value." },
-      { name: "value", type: "string", description: "Controlled active tab value." },
-      { name: "onValueChange", type: "(value: string) => void", description: "Called when a tab is selected." },
-      { name: "TabsTrigger.value", type: "string", required: true, description: "Value this trigger activates." },
+      {
+        name: "defaultValue",
+        type: "string",
+        required: true,
+        description: "Initial active tab value.",
+      },
+      {
+        name: "value",
+        type: "string",
+        description: "Controlled active tab value.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Called when a tab is selected.",
+      },
+      {
+        name: "TabsTrigger.value",
+        type: "string",
+        required: true,
+        description: "Value this trigger activates.",
+      },
     ],
   },
   {
     slug: "table",
     title: "Table",
-    description: "A bold base table for data lists before adding DataTable behavior.",
+    description:
+      "A bold base table for data lists before adding DataTable behavior.",
     category: "Layout",
     importCode: `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@swirski/ui";`,
     usageCode: `<Table>
@@ -1323,9 +1593,21 @@ useClickOutside(ref, () => setOpen(false), {
       </Table>
     ),
     props: [
-      { name: "Table", type: "TableHTMLAttributes<HTMLTableElement>", description: "Props forwarded to the table element." },
-      { name: "TableHeader", type: "ThHTMLAttributes<HTMLTableCellElement>", description: "Props forwarded to header cells." },
-      { name: "TableCell", type: "TdHTMLAttributes<HTMLTableCellElement>", description: "Props forwarded to body cells." },
+      {
+        name: "Table",
+        type: "TableHTMLAttributes<HTMLTableElement>",
+        description: "Props forwarded to the table element.",
+      },
+      {
+        name: "TableHeader",
+        type: "ThHTMLAttributes<HTMLTableCellElement>",
+        description: "Props forwarded to header cells.",
+      },
+      {
+        name: "TableCell",
+        type: "TdHTMLAttributes<HTMLTableCellElement>",
+        description: "Props forwarded to body cells.",
+      },
     ],
   },
   {
@@ -1352,14 +1634,48 @@ useClickOutside(ref, () => setOpen(false), {
       </Grid>
     ),
     props: [
-      { name: "children", type: "ReactNode", required: true, description: "Grid content." },
-      { name: "as", type: "ElementType", defaultValue: '"div"', description: "Custom root element or component." },
-      { name: "columns", type: "1 | 2 | 3 | 4 | 5 | 6 | 12", description: "Applies a static grid column count." },
-      { name: "gap", type: '"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"', description: "Applies a standard gap size." },
-      { name: "align", type: '"start" | "center" | "end" | "stretch"', description: "Applies item alignment." },
-      { name: "content", type: '"start" | "center" | "end" | "between"', description: "Applies grid content alignment." },
-      { name: "className", type: "string", description: "Adds classes to the root grid." },
-      { name: "...elementProps", type: "HTMLAttributes<HTMLElement>", description: "Forwarded to the root element." },
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Grid content.",
+      },
+      {
+        name: "as",
+        type: "ElementType",
+        defaultValue: '"div"',
+        description: "Custom root element or component.",
+      },
+      {
+        name: "columns",
+        type: "1 | 2 | 3 | 4 | 5 | 6 | 12",
+        description: "Applies a static grid column count.",
+      },
+      {
+        name: "gap",
+        type: '"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"',
+        description: "Applies a standard gap size.",
+      },
+      {
+        name: "align",
+        type: '"start" | "center" | "end" | "stretch"',
+        description: "Applies item alignment.",
+      },
+      {
+        name: "content",
+        type: '"start" | "center" | "end" | "between"',
+        description: "Applies grid content alignment.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the root grid.",
+      },
+      {
+        name: "...elementProps",
+        type: "HTMLAttributes<HTMLElement>",
+        description: "Forwarded to the root element.",
+      },
     ],
   },
   {
@@ -1379,9 +1695,22 @@ useClickOutside(ref, () => setOpen(false), {
       </Toast>
     ),
     props: [
-      { name: "tone", type: '"blue" | "yellow" | "red" | "white"', defaultValue: '"yellow"', description: "Applies the toast color treatment." },
-      { name: "ToastProvider", type: "{ children: ReactNode }", description: "Provider for managed toasts and useToast." },
-      { name: "useToast", type: "() => ToastContextValue", description: "Adds and removes managed toasts." },
+      {
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white"',
+        defaultValue: '"yellow"',
+        description: "Applies the toast color treatment.",
+      },
+      {
+        name: "ToastProvider",
+        type: "{ children: ReactNode }",
+        description: "Provider for managed toasts and useToast.",
+      },
+      {
+        name: "useToast",
+        type: "() => ToastContextValue",
+        description: "Adds and removes managed toasts.",
+      },
     ],
   },
   {
@@ -1393,9 +1722,23 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `<Progress value={64} />`,
     preview: <Progress value={64} />,
     props: [
-      { name: "value", type: "number", defaultValue: "0", description: "Current progress value." },
-      { name: "max", type: "number", defaultValue: "100", description: "Maximum progress value." },
-      { name: "className", type: "string", description: "Adds classes to the progress track." },
+      {
+        name: "value",
+        type: "number",
+        defaultValue: "0",
+        description: "Current progress value.",
+      },
+      {
+        name: "max",
+        type: "number",
+        defaultValue: "100",
+        description: "Maximum progress value.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the progress track.",
+      },
     ],
   },
   {
@@ -1407,8 +1750,17 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `<Loader size="md" />`,
     preview: <Loader size="lg" />,
     props: [
-      { name: "size", type: '"sm" | "md" | "lg"', defaultValue: '"md"', description: "Controls the spinner size." },
-      { name: "className", type: "string", description: "Adds classes to the spinner." },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg" | "xl" | "2xl"',
+        defaultValue: '"md"',
+        description: "Controls the spinner size.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the spinner.",
+      },
     ],
   },
   {
@@ -1425,8 +1777,16 @@ useClickOutside(ref, () => setOpen(false), {
       </Grid>
     ),
     props: [
-      { name: "className", type: "string", description: "Controls the skeleton size and extra styling." },
-      { name: "...divProps", type: "HTMLAttributes<HTMLDivElement>", description: "Forwarded to the root div." },
+      {
+        name: "className",
+        type: "string",
+        description: "Controls the skeleton size and extra styling.",
+      },
+      {
+        name: "...divProps",
+        type: "HTMLAttributes<HTMLDivElement>",
+        description: "Forwarded to the root div.",
+      },
     ],
   },
   {
@@ -1448,17 +1808,47 @@ useClickOutside(ref, () => setOpen(false), {
         name="docs-tone"
         defaultValue="blue"
         options={[
-          { value: "blue", label: "Blue", description: "Sharp product surfaces." },
-          { value: "yellow", label: "Yellow", description: "Loud editorial moments." },
+          {
+            value: "blue",
+            label: "Blue",
+            description: "Sharp product surfaces.",
+          },
+          {
+            value: "yellow",
+            label: "Yellow",
+            description: "Loud editorial moments.",
+          },
         ]}
       />
     ),
     props: [
-      { name: "name", type: "string", required: true, description: "Native radio group name." },
-      { name: "options", type: "RadioGroupOption[]", required: true, description: "Options rendered as radio inputs." },
-      { name: "value", type: "string", description: "Controlled selected value." },
-      { name: "defaultValue", type: "string", description: "Initial selected value." },
-      { name: "onValueChange", type: "(value: string) => void", description: "Called when the selected value changes." },
+      {
+        name: "name",
+        type: "string",
+        required: true,
+        description: "Native radio group name.",
+      },
+      {
+        name: "options",
+        type: "RadioGroupOption[]",
+        required: true,
+        description: "Options rendered as radio inputs.",
+      },
+      {
+        name: "value",
+        type: "string",
+        description: "Controlled selected value.",
+      },
+      {
+        name: "defaultValue",
+        type: "string",
+        description: "Initial selected value.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string) => void",
+        description: "Called when the selected value changes.",
+      },
     ],
   },
   {
@@ -1470,14 +1860,23 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `<Slider defaultValue={64} min={0} max={100} />`,
     preview: <Slider defaultValue={64} min={0} max={100} />,
     props: [
-      { name: "...inputProps", type: "InputHTMLAttributes<HTMLInputElement>", description: "Forwarded to the native range input." },
-      { name: "className", type: "string", description: "Adds classes to the range input." },
+      {
+        name: "...inputProps",
+        type: "InputHTMLAttributes<HTMLInputElement>",
+        description: "Forwarded to the native range input.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the range input.",
+      },
     ],
   },
   {
     slug: "avatar",
     title: "Avatar",
-    description: "A framed user image or fallback for accounts, comments and navs.",
+    description:
+      "A framed user image or fallback for accounts, comments and navs.",
     category: "Layout",
     importCode: `import { Avatar, AvatarFallback, AvatarImage } from "@swirski/ui";`,
     usageCode: `<Avatar>
@@ -1489,9 +1888,21 @@ useClickOutside(ref, () => setOpen(false), {
       </Avatar>
     ),
     props: [
-      { name: "Avatar", type: "HTMLAttributes<HTMLDivElement>", description: "Props forwarded to the root avatar." },
-      { name: "AvatarImage", type: "ImgHTMLAttributes<HTMLImageElement>", description: "Props forwarded to the image." },
-      { name: "AvatarFallback", type: "HTMLAttributes<HTMLSpanElement>", description: "Props forwarded to the fallback." },
+      {
+        name: "Avatar",
+        type: "HTMLAttributes<HTMLDivElement>",
+        description: "Props forwarded to the root avatar.",
+      },
+      {
+        name: "AvatarImage",
+        type: "ImgHTMLAttributes<HTMLImageElement>",
+        description: "Props forwarded to the image.",
+      },
+      {
+        name: "AvatarFallback",
+        type: "HTMLAttributes<HTMLSpanElement>",
+        description: "Props forwarded to the fallback.",
+      },
     ],
   },
   {
@@ -1565,14 +1976,50 @@ useClickOutside(ref, () => setOpen(false), {
       </Navbar>
     ),
     props: [
-      { name: "Navbar", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the root header." },
-      { name: "NavbarBrand", type: "AnchorHTMLAttributes<HTMLAnchorElement>", description: "Props forwarded to the brand link." },
-      { name: "NavbarNav", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the desktop nav." },
-      { name: "NavbarLink.active", type: "boolean", defaultValue: "false", description: "Marks a link as the current page." },
-      { name: "MobileMenu.open", type: "boolean", description: "Controlled mobile menu open state." },
-      { name: "MobileMenu.defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
-      { name: "MobileMenuContent.side", type: '"left" | "right"', defaultValue: '"right"', description: "Side used for the menu panel." },
-      { name: "MobileMenuLink.closeOnSelect", type: "boolean", defaultValue: "true", description: "Closes the menu after a link is selected." },
+      {
+        name: "Navbar",
+        type: "HTMLAttributes<HTMLElement>",
+        description: "Props forwarded to the root header.",
+      },
+      {
+        name: "NavbarBrand",
+        type: "AnchorHTMLAttributes<HTMLAnchorElement>",
+        description: "Props forwarded to the brand link.",
+      },
+      {
+        name: "NavbarNav",
+        type: "HTMLAttributes<HTMLElement>",
+        description: "Props forwarded to the desktop nav.",
+      },
+      {
+        name: "NavbarLink.active",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Marks a link as the current page.",
+      },
+      {
+        name: "MobileMenu.open",
+        type: "boolean",
+        description: "Controlled mobile menu open state.",
+      },
+      {
+        name: "MobileMenu.defaultOpen",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial uncontrolled open state.",
+      },
+      {
+        name: "MobileMenuContent.side",
+        type: '"left" | "right"',
+        defaultValue: '"right"',
+        description: "Side used for the menu panel.",
+      },
+      {
+        name: "MobileMenuLink.closeOnSelect",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Closes the menu after a link is selected.",
+      },
     ],
   },
   {
@@ -1602,9 +2049,22 @@ useClickOutside(ref, () => setOpen(false), {
       </Breadcrumb>
     ),
     props: [
-      { name: "Breadcrumb", type: "HTMLAttributes<HTMLElement>", description: "Props forwarded to the nav." },
-      { name: "BreadcrumbLink", type: "AnchorHTMLAttributes<HTMLAnchorElement> & { as?: ElementType }", description: "Props forwarded to links. Use as to render framework links like Next.js Link." },
-      { name: "BreadcrumbPage", type: "HTMLAttributes<HTMLSpanElement>", description: "Current page item." },
+      {
+        name: "Breadcrumb",
+        type: "HTMLAttributes<HTMLElement>",
+        description: "Props forwarded to the nav.",
+      },
+      {
+        name: "BreadcrumbLink",
+        type: "AnchorHTMLAttributes<HTMLAnchorElement> & { as?: ElementType }",
+        description:
+          "Props forwarded to links. Use as to render framework links like Next.js Link.",
+      },
+      {
+        name: "BreadcrumbPage",
+        type: "HTMLAttributes<HTMLSpanElement>",
+        description: "Current page item.",
+      },
     ],
   },
   {
@@ -1616,28 +2076,53 @@ useClickOutside(ref, () => setOpen(false), {
     usageCode: `<Pagination page={2} total={5} />`,
     preview: <Pagination page={2} total={5} />,
     props: [
-      { name: "page", type: "number", required: true, description: "Current page." },
-      { name: "total", type: "number", required: true, description: "Total number of pages." },
-      { name: "onPageChange", type: "(page: number) => void", description: "Called when a page button is pressed." },
+      {
+        name: "page",
+        type: "number",
+        required: true,
+        description: "Current page.",
+      },
+      {
+        name: "total",
+        type: "number",
+        required: true,
+        description: "Total number of pages.",
+      },
+      {
+        name: "onPageChange",
+        type: "(page: number) => void",
+        description: "Called when a page button is pressed.",
+      },
     ],
   },
   {
     slug: "separator",
     title: "Separator",
-    description: "A small visual divider for sections, menus and dense layouts.",
+    description:
+      "A small visual divider for sections, menus and dense layouts.",
     category: "Layout",
     importCode: `import { Separator } from "@swirski/ui";`,
     usageCode: `<Separator />`,
     preview: <Separator />,
     props: [
-      { name: "orientation", type: '"horizontal" | "vertical"', defaultValue: '"horizontal"', description: "Divider direction." },
-      { name: "className", type: "string", description: "Adds classes to the divider." },
+      {
+        name: "orientation",
+        type: '"horizontal" | "vertical"',
+        defaultValue: '"horizontal"',
+        description: "Divider direction.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Adds classes to the divider.",
+      },
     ],
   },
   {
     slug: "drawer",
     title: "Drawer",
-    description: "A side sheet for mobile menus, settings panels and command surfaces.",
+    description:
+      "A side sheet for mobile menus, settings panels and command surfaces.",
     category: "Interaction",
     importCode: `import { Drawer, DrawerContent, DrawerTrigger } from "@swirski/ui";`,
     usageCode: `<Drawer>
@@ -1664,9 +2149,23 @@ useClickOutside(ref, () => setOpen(false), {
     ),
     props: [
       { name: "open", type: "boolean", description: "Controlled open state." },
-      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial uncontrolled open state." },
-      { name: "DrawerContent.side", type: '"left" | "right" | "top" | "bottom"', defaultValue: '"right"', description: "Where the drawer enters from." },
-      { name: "onOpenChange", type: "(open: boolean) => void", description: "Called when the drawer opens or closes." },
+      {
+        name: "defaultOpen",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Initial uncontrolled open state.",
+      },
+      {
+        name: "DrawerContent.side",
+        type: '"left" | "right" | "top" | "bottom"',
+        defaultValue: '"right"',
+        description: "Where the drawer enters from.",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Called when the drawer opens or closes.",
+      },
     ],
   },
   {
@@ -1734,7 +2233,8 @@ useClickOutside(ref, () => setOpen(false), {
       {
         name: "accentEvery",
         type: "number",
-        description: "Adds an accent dot every N grid cells when greater than 1.",
+        description:
+          "Adds an accent dot every N grid cells when greater than 1.",
       },
       {
         name: "accentDotSize",

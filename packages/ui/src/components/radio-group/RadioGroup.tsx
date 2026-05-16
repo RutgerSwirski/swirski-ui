@@ -1,7 +1,11 @@
 "use client";
 
-import { InputHTMLAttributes, ReactNode } from "react";
-import clsx from "clsx";
+import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
+import { cn, swirskiAttrs } from "../../system";
+
+export type RadioGroupVariant = "default" | "card";
+export type RadioGroupSize = "sm" | "md" | "lg";
+export type RadioGroupTone = "yellow" | "blue" | "red";
 
 export type RadioGroupOption = {
   value: string;
@@ -17,28 +21,64 @@ export type RadioGroupProps = {
   defaultValue?: string;
   onValueChange?: (value: string) => void;
   className?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "defaultValue" | "onChange">;
+  variant?: RadioGroupVariant;
+  size?: RadioGroupSize;
+  tone?: RadioGroupTone;
+} & Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type" | "value" | "defaultValue" | "onChange" | "size" | "color"
+> &
+  Record<never, never>;
 
-export function RadioGroup({
+const controlSizeStyles: Record<RadioGroupSize, string> = {
+  sm: "size-5",
+  md: "size-6",
+  lg: "size-7",
+};
+
+const dotSizeStyles: Record<RadioGroupSize, string> = {
+  sm: "size-1.5",
+  md: "size-2",
+  lg: "size-2.5",
+};
+
+const toneStyles: Record<RadioGroupTone, string> = {
+  yellow: "peer-checked:bg-[#FFD400]",
+  blue: "peer-checked:bg-[#0057FF]",
+  red: "peer-checked:bg-[#FF3131]",
+};
+
+export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
+  function RadioGroup({
   name,
   options,
   value,
   defaultValue,
   onValueChange,
   className,
+  variant = "default",
+  size = "md",
+  tone = "yellow",
   ...props
-}: RadioGroupProps) {
+}, ref) {
   return (
-    <div className={clsx("grid gap-3", className)} role="radiogroup">
+    <div
+      ref={ref}
+      className={cn("grid gap-3", className)}
+      role="radiogroup"
+      {...swirskiAttrs("radio-group", { size, tone, variant })}
+    >
       {options.map((option) => (
         <label
           key={option.value}
-          className={clsx(
+          className={cn(
             "group inline-flex w-fit items-start gap-3",
+            variant === "card" && "border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]",
             option.disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
           )}
+          data-swirski-radio-option={option.value}
         >
-          <span className="relative mt-0.5 grid size-6 shrink-0 place-items-center">
+          <span className={cn("relative mt-0.5 grid shrink-0 place-items-center", controlSizeStyles[size])}>
             <input
               className="peer sr-only"
               defaultChecked={defaultValue === option.value}
@@ -48,10 +88,11 @@ export function RadioGroup({
               onChange={() => onValueChange?.(option.value)}
               type="radio"
               value={option.value}
+              {...swirskiAttrs("radio-group-input", { size, tone, variant })}
               {...props}
             />
-            <span className="absolute inset-0 rounded-full border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C] peer-checked:bg-[#FFD400]" />
-            <span className="relative hidden size-2 rounded-full bg-black peer-checked:block" />
+            <span className={cn("absolute inset-0 rounded-full border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C]", toneStyles[tone])} />
+            <span className={cn("relative hidden rounded-full bg-black peer-checked:block", dotSizeStyles[size])} />
           </span>
           <span className="grid gap-1">
             <span className="font-black leading-5">{option.label}</span>
@@ -65,4 +106,7 @@ export function RadioGroup({
       ))}
     </div>
   );
-}
+  },
+);
+
+RadioGroup.displayName = "RadioGroup";

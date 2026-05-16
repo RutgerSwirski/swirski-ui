@@ -39,7 +39,7 @@ export const Default: Story = {
       </NavbarNav>
 
       <NavbarActions>
-        <Button className="hidden md:inline-flex" href="/docs" variant="yellow">
+        <Button className="hidden md:inline-flex" href="/docs" tone="yellow">
           Docs
         </Button>
 

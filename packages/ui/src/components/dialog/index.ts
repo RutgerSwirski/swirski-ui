@@ -8,4 +8,16 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./Dialog";
-export type { DialogProps } from "./Dialog";
+export type {
+  DialogCloseProps,
+  DialogContentProps,
+  DialogDescriptionProps,
+  DialogFooterProps,
+  DialogHeaderProps,
+  DialogProps,
+  DialogSize,
+  DialogTitleProps,
+  DialogTone,
+  DialogTriggerProps,
+  DialogVariant,
+} from "./Dialog";

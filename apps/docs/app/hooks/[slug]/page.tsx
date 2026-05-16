@@ -276,7 +276,7 @@ export default async function HookPage({ params }: Props) {
                     <Button
                       key={item.title}
                       href={`#${item.title.toLowerCase()}`}
-                      variant="white"
+                      tone="white"
                       className="justify-start px-3 py-2 text-xs"
                     >
                       {item.title}
@@ -339,7 +339,7 @@ export default async function HookPage({ params }: Props) {
               <Button
                 as={Link}
                 href={`/hooks/${previousHook.slug}`}
-                variant="white"
+                tone="white"
                 className="w-full text-xs sm:text-sm"
               >
                 Previous: {previousHook.title}

@@ -5,11 +5,16 @@ import {
   HTMLAttributes,
   ReactNode,
   createContext,
+  forwardRef,
   useContext,
   useEffect,
   useState,
 } from "react";
-import clsx from "clsx";
+import { Slot, cn, swirskiAttrs } from "../../system";
+
+export type DrawerVariant = "default" | "compact";
+export type DrawerSize = "sm" | "md" | "lg";
+export type DrawerTone = "default";
 
 type DrawerContextValue = {
   open: boolean;
@@ -23,6 +28,9 @@ export type DrawerProps = {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
 };
 
 function useDrawer() {
@@ -40,6 +48,9 @@ export function Drawer({
   open,
   defaultOpen = false,
   onOpenChange,
+  variant: _variant = "default",
+  size: _size = "md",
+  tone: _tone = "default",
 }: DrawerProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
@@ -60,31 +71,74 @@ export function Drawer({
   );
 }
 
-export function DrawerTrigger({
+export type DrawerTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
+};
+
+const buttonSizeStyles: Record<DrawerSize, string> = {
+  sm: "px-4 py-2 text-sm",
+  md: "px-5 py-3",
+  lg: "px-6 py-4 text-lg",
+};
+
+export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
+  function DrawerTrigger({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onClick,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { setOpen } = useDrawer();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "border-4 border-black bg-[#0057FF] px-5 py-3 font-black uppercase text-white shadow-[5px_5px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+    <Component
+      ref={ref}
+      className={cn(
+        "border-4 border-black bg-[#0057FF] font-black uppercase text-white shadow-[5px_5px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        buttonSizeStyles[size],
+        variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
         className,
       )}
-      onClick={() => setOpen(true)}
-      type="button"
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (!event.defaultPrevented) {
+          setOpen(true);
+        }
+      }}
+      type={asChild ? undefined : "button"}
+      {...swirskiAttrs("drawer-trigger", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function DrawerContent({
+DrawerTrigger.displayName = "DrawerTrigger";
+
+export type DrawerContentProps = HTMLAttributes<HTMLDivElement> & {
+  side?: "left" | "right" | "top" | "bottom";
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
+};
+
+export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
+  function DrawerContent({
   side = "right",
   className,
   children,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLDivElement> & { side?: "left" | "right" | "top" | "bottom" }) {
+}, ref) {
   const { open, setOpen } = useDrawer();
 
   useEffect(() => {
@@ -123,64 +177,161 @@ export function DrawerContent({
         type="button"
       />
       <div
-        className={clsx(
+        ref={ref}
+        className={cn(
           "absolute border-4 border-black bg-white p-6 shadow-[12px_12px_0_#0B0B0C]",
           sideStyles[side],
+          variant === "compact" && "p-5 shadow-[8px_8px_0_#0B0B0C]",
           className,
         )}
         role="dialog"
         aria-modal="true"
+        {...swirskiAttrs("drawer-content", { size, tone, variant })}
         {...props}
       >
         {children}
       </div>
     </div>
   );
-}
+});
 
-export function DrawerHeader({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return <div className={clsx("grid gap-2", className)} {...props} />;
-}
+DrawerContent.displayName = "DrawerContent";
 
-export function DrawerTitle({
+export type DrawerHeaderProps = {
+  asChild?: boolean;
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
+  function DrawerHeader({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLHeadingElement>) {
+}, ref) {
+  const Component = asChild ? Slot : "div";
+
   return (
-    <h2 className={clsx("font-anton text-4xl uppercase leading-none", className)} {...props} />
+    <Component
+      ref={ref}
+      className={cn("grid gap-2", className)}
+      {...swirskiAttrs("drawer-header", { size, tone, variant })}
+      {...props}
+    />
   );
-}
+});
 
-export function DrawerDescription({
+DrawerHeader.displayName = "DrawerHeader";
+
+export type DrawerTitleProps = {
+  asChild?: boolean;
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
+} & HTMLAttributes<HTMLHeadingElement>;
+
+export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(
+  function DrawerTitle({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLParagraphElement>) {
-  return (
-    <p className={clsx("text-sm font-bold leading-6 text-black/65", className)} {...props} />
-  );
-}
+}, ref) {
+  const Component = asChild ? Slot : "h2";
 
-export function DrawerClose({
+  return (
+    <Component
+      ref={ref}
+      className={cn("font-anton text-4xl uppercase leading-none", className)}
+      {...swirskiAttrs("drawer-title", { size, tone, variant })}
+      {...props}
+    />
+  );
+});
+
+DrawerTitle.displayName = "DrawerTitle";
+
+export type DrawerDescriptionProps = {
+  asChild?: boolean;
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
+} & HTMLAttributes<HTMLParagraphElement>;
+
+export const DrawerDescription = forwardRef<
+  HTMLParagraphElement,
+  DrawerDescriptionProps
+>(function DrawerDescription({
+  asChild = false,
+  className,
+  variant = "default",
+  size = "md",
+  tone = "default",
+  ...props
+}, ref) {
+  const Component = asChild ? Slot : "p";
+
+  return (
+    <Component
+      ref={ref}
+      className={cn("text-sm font-bold leading-6 text-black/65", className)}
+      {...swirskiAttrs("drawer-description", { size, tone, variant })}
+      {...props}
+    />
+  );
+});
+
+DrawerDescription.displayName = "DrawerDescription";
+
+export type DrawerCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  variant?: DrawerVariant;
+  size?: DrawerSize;
+  tone?: DrawerTone;
+};
+
+export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(
+  function DrawerClose({
+  asChild = false,
   className,
   children = "Close",
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onClick,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { setOpen } = useDrawer();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "mt-6 border-4 border-black bg-white px-4 py-2 font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+    <Component
+      ref={ref}
+      className={cn(
+        "mt-6 border-4 border-black bg-white font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        buttonSizeStyles[size],
         className,
       )}
-      onClick={() => setOpen(false)}
-      type="button"
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (!event.defaultPrevented) {
+          setOpen(false);
+        }
+      }}
+      type={asChild ? undefined : "button"}
+      {...swirskiAttrs("drawer-close", { size, tone, variant })}
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
-}
+});
+
+DrawerClose.displayName = "DrawerClose";

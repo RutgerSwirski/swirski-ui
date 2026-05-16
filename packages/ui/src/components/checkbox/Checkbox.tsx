@@ -1,37 +1,77 @@
-import { InputHTMLAttributes, ReactNode } from "react";
-import clsx from "clsx";
+import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
+import { cn, swirskiAttrs } from "../../system";
+
+export type CheckboxVariant = "default" | "card";
+export type CheckboxSize = "sm" | "md" | "lg";
+export type CheckboxTone = "yellow" | "blue" | "red";
 
 export type CheckboxProps = {
   label?: ReactNode;
   description?: ReactNode;
   containerClassName?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "type">;
+  inputClassName?: string;
+  variant?: CheckboxVariant;
+  size?: CheckboxSize;
+  tone?: CheckboxTone;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "size" | "color">;
 
-export function Checkbox({
+const boxSizeStyles: Record<CheckboxSize, string> = {
+  sm: "size-5",
+  md: "size-6",
+  lg: "size-7",
+};
+
+const checkSizeStyles: Record<CheckboxSize, string> = {
+  sm: "text-sm",
+  md: "text-base",
+  lg: "text-lg",
+};
+
+const toneStyles: Record<CheckboxTone, string> = {
+  yellow: "peer-checked:bg-[#FFD400]",
+  blue: "peer-checked:bg-[#0057FF]",
+  red: "peer-checked:bg-[#FF3131]",
+};
+
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
   label,
   description,
   className,
   containerClassName,
+  inputClassName,
   disabled,
+  variant = "default",
+  size = "md",
+  tone = "yellow",
   ...props
-}: CheckboxProps) {
+}, ref) {
   return (
     <label
-      className={clsx(
+      className={cn(
         "group inline-flex w-fit items-start gap-3",
         disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
+        variant === "card" && "border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]",
         containerClassName,
+        className,
       )}
+      {...swirskiAttrs("checkbox", { size, tone, variant })}
     >
-      <span className="relative mt-0.5 grid size-6 shrink-0 place-items-center">
+      <span className={cn("relative mt-0.5 grid shrink-0 place-items-center", boxSizeStyles[size])}>
         <input
           type="checkbox"
-          className={clsx("peer sr-only", className)}
+          ref={ref}
+          className={cn("peer sr-only", inputClassName)}
           disabled={disabled}
+          {...swirskiAttrs("checkbox-input", { size, tone, variant })}
           {...props}
         />
-        <span className="absolute inset-0 border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C] transition peer-checked:bg-[#FFD400] peer-focus-visible:shadow-[4px_4px_0_#0057FF]" />
-        <span className="relative hidden text-base font-black leading-none text-black peer-checked:block">
+        <span
+          className={cn(
+            "absolute inset-0 border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C] transition peer-focus-visible:shadow-[4px_4px_0_#0057FF]",
+            toneStyles[tone],
+          )}
+        />
+        <span className={cn("relative hidden font-black leading-none text-black peer-checked:block", checkSizeStyles[size])}>
           x
         </span>
       </span>
@@ -47,4 +87,6 @@ export function Checkbox({
       )}
     </label>
   );
-}
+});
+
+Checkbox.displayName = "Checkbox";

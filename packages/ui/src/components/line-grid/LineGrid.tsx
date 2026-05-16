@@ -1,6 +1,10 @@
-import type { CSSProperties, HTMLAttributes } from "react";
+import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
+import { cn, swirskiAttrs } from "../../system";
 
 type LineGridDirection = "both" | "horizontal" | "vertical";
+export type LineGridVariant = "default" | "accent";
+export type LineGridSize = "sm" | "md" | "lg";
+export type LineGridTone = "default";
 
 export type LineGridProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
   color?: string;
@@ -17,6 +21,9 @@ export type LineGridProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
   accentColor?: string;
   accentEvery?: number;
   accentThickness?: number | string;
+  variant?: LineGridVariant;
+  size?: LineGridSize;
+  tone?: LineGridTone;
 };
 
 function toCssLength(value: number | string) {
@@ -65,8 +72,8 @@ function getLineLayers({
   return layers;
 }
 
-export function LineGrid({
-  className = "",
+export const LineGrid = forwardRef<HTMLDivElement, LineGridProps>(function LineGrid({
+  className,
   color = "#0B0B0C",
   opacity = 0.2,
   spacing = 18,
@@ -81,9 +88,12 @@ export function LineGrid({
   accentColor,
   accentEvery,
   accentThickness = 3,
+  variant = "default",
+  size = "md",
+  tone = "default",
   style,
   ...props
-}: LineGridProps) {
+}, ref) {
   const lineSettings = {
     direction,
     horizontalColor: horizontalColor ?? color,
@@ -117,15 +127,19 @@ export function LineGrid({
 
   return (
     <div
+      ref={ref}
       aria-hidden="true"
-      className={`pointer-events-none absolute ${className}`}
+      className={cn("pointer-events-none absolute", className)}
       style={{
         opacity,
         backgroundImage: layers.map(({ image }) => image).join(", "),
         backgroundSize: layers.map(({ size }) => size).join(", "),
         ...style,
       }}
+      {...swirskiAttrs("line-grid", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
+
+LineGrid.displayName = "LineGrid";

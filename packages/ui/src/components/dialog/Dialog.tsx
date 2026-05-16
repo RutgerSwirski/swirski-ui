@@ -5,11 +5,16 @@ import {
   HTMLAttributes,
   ReactNode,
   createContext,
+  forwardRef,
   useContext,
   useEffect,
   useState,
 } from "react";
-import clsx from "clsx";
+import { Slot, cn, swirskiAttrs } from "../../system";
+
+export type DialogVariant = "default" | "compact";
+export type DialogSize = "sm" | "md" | "lg";
+export type DialogTone = "default";
 
 type DialogContextValue = {
   open: boolean;
@@ -23,6 +28,9 @@ export type DialogProps = {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
 };
 
 function useDialog() {
@@ -40,6 +48,9 @@ export function Dialog({
   open,
   defaultOpen = false,
   onOpenChange,
+  variant: _variant = "default",
+  size: _size = "md",
+  tone: _tone = "default",
 }: DialogProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
@@ -60,33 +71,81 @@ export function Dialog({
   );
 }
 
-export function DialogTrigger({
+export type DialogTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+};
+
+const buttonSizeStyles: Record<DialogSize, string> = {
+  sm: "px-4 py-2 text-sm",
+  md: "px-5 py-3",
+  lg: "px-6 py-4 text-lg",
+};
+
+export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
+  function DialogTrigger({
+  asChild = false,
   className,
   children,
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onClick,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { setOpen } = useDialog();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "inline-flex border-4 border-black bg-[#0057FF] px-5 py-3 font-black uppercase text-white shadow-[5px_5px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+    <Component
+      ref={ref}
+      className={cn(
+        "inline-flex border-4 border-black bg-[#0057FF] font-black uppercase text-white shadow-[5px_5px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        buttonSizeStyles[size],
+        variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
         className,
       )}
-      onClick={() => setOpen(true)}
-      type="button"
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (!event.defaultPrevented) {
+          setOpen(true);
+        }
+      }}
+      type={asChild ? undefined : "button"}
+      {...swirskiAttrs("dialog-trigger", { size, tone, variant })}
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
-}
+});
 
-export function DialogContent({
+DialogTrigger.displayName = "DialogTrigger";
+
+export type DialogContentProps = {
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+const contentSizeStyles: Record<DialogSize, string> = {
+  sm: "max-w-md p-5",
+  md: "max-w-lg p-6",
+  lg: "max-w-2xl p-7",
+};
+
+export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
+  function DialogContent({
   className,
   children,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLDivElement>) {
+}, ref) {
   const { open, setOpen } = useDialog();
 
   useEffect(() => {
@@ -118,81 +177,191 @@ export function DialogContent({
         type="button"
       />
       <div
-        className={clsx(
-          "relative z-10 w-full max-w-lg border-4 border-black bg-white p-6 shadow-[12px_12px_0_#0B0B0C]",
+        ref={ref}
+        className={cn(
+          "relative z-10 w-full border-4 border-black bg-white shadow-[12px_12px_0_#0B0B0C]",
+          contentSizeStyles[size],
+          variant === "compact" && "shadow-[8px_8px_0_#0B0B0C]",
           className,
         )}
         role="dialog"
         aria-modal="true"
+        {...swirskiAttrs("dialog-content", { size, tone, variant })}
         {...props}
       >
         {children}
       </div>
     </div>
   );
-}
+});
 
-export function DialogHeader({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return <div className={clsx("grid gap-2", className)} {...props} />;
-}
+DialogContent.displayName = "DialogContent";
 
-export function DialogTitle({
+export type DialogHeaderProps = {
+  asChild?: boolean;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
+  function DialogHeader({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLHeadingElement>) {
+}, ref) {
+  const Component = asChild ? Slot : "div";
+
   return (
-    <h2
-      className={clsx("font-anton text-4xl uppercase leading-none", className)}
+    <Component
+      ref={ref}
+      className={cn("grid gap-2", className)}
+      {...swirskiAttrs("dialog-header", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function DialogDescription({
+DialogHeader.displayName = "DialogHeader";
+
+export type DialogTitleProps = {
+  asChild?: boolean;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+} & HTMLAttributes<HTMLHeadingElement>;
+
+export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
+  function DialogTitle({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLParagraphElement>) {
+}, ref) {
+  const Component = asChild ? Slot : "h2";
+
   return (
-    <p
-      className={clsx("text-sm font-bold leading-6 text-black/65", className)}
+    <Component
+      ref={ref}
+      className={cn("font-anton text-4xl uppercase leading-none", className)}
+      {...swirskiAttrs("dialog-title", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function DialogFooter({
+DialogTitle.displayName = "DialogTitle";
+
+export type DialogDescriptionProps = {
+  asChild?: boolean;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+} & HTMLAttributes<HTMLParagraphElement>;
+
+export const DialogDescription = forwardRef<
+  HTMLParagraphElement,
+  DialogDescriptionProps
+>(function DialogDescription({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLDivElement>) {
+}, ref) {
+  const Component = asChild ? Slot : "p";
+
   return (
-    <div
-      className={clsx("mt-6 flex flex-wrap justify-end gap-3", className)}
+    <Component
+      ref={ref}
+      className={cn("text-sm font-bold leading-6 text-black/65", className)}
+      {...swirskiAttrs("dialog-description", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function DialogClose({
+DialogDescription.displayName = "DialogDescription";
+
+export type DialogFooterProps = {
+  asChild?: boolean;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
+  function DialogFooter({
+  asChild = false,
+  className,
+  variant = "default",
+  size = "md",
+  tone = "default",
+  ...props
+}, ref) {
+  const Component = asChild ? Slot : "div";
+
+  return (
+    <Component
+      ref={ref}
+      className={cn("mt-6 flex flex-wrap justify-end gap-3", className)}
+      {...swirskiAttrs("dialog-footer", { size, tone, variant })}
+      {...props}
+    />
+  );
+});
+
+DialogFooter.displayName = "DialogFooter";
+
+export type DialogCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  variant?: DialogVariant;
+  size?: DialogSize;
+  tone?: DialogTone;
+};
+
+export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
+  function DialogClose({
+  asChild = false,
   className,
   children = "Close",
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onClick,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { setOpen } = useDialog();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "border-4 border-black bg-white px-4 py-2 font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+    <Component
+      ref={ref}
+      className={cn(
+        "border-4 border-black bg-white font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        buttonSizeStyles[size],
         className,
       )}
-      onClick={() => setOpen(false)}
-      type="button"
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (!event.defaultPrevented) {
+          setOpen(false);
+        }
+      }}
+      type={asChild ? undefined : "button"}
+      {...swirskiAttrs("dialog-close", { size, tone, variant })}
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
-}
+});
+
+DialogClose.displayName = "DialogClose";

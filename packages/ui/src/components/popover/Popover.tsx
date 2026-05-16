@@ -5,12 +5,17 @@ import {
   HTMLAttributes,
   ReactNode,
   createContext,
+  forwardRef,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import clsx from "clsx";
+import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+
+export type PopoverVariant = "default" | "compact";
+export type PopoverSize = "sm" | "md" | "lg";
+export type PopoverTone = "default";
 
 type PopoverContextValue = {
   open: boolean;
@@ -25,6 +30,9 @@ export type PopoverProps = {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  variant?: PopoverVariant;
+  size?: PopoverSize;
+  tone?: PopoverTone;
 } & HTMLAttributes<HTMLDivElement>;
 
 function usePopover() {
@@ -37,14 +45,17 @@ function usePopover() {
   return context;
 }
 
-export function Popover({
+export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover({
   children,
   open,
   defaultOpen = false,
   onOpenChange,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: PopoverProps) {
+}, ref) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isControlled = open !== undefined;
@@ -78,37 +89,88 @@ export function Popover({
     <PopoverContext.Provider
       value={{ open: currentOpen, setOpen, rootRef }}
     >
-      <div ref={rootRef} className={clsx("relative w-fit", className)} {...props}>
+      <div
+        ref={composeRefs(rootRef, ref)}
+        className={cn("relative w-fit", className)}
+        {...swirskiAttrs("popover", { size, tone, variant })}
+        {...props}
+      >
         {children}
       </div>
     </PopoverContext.Provider>
   );
-}
+});
 
-export function PopoverTrigger({
+Popover.displayName = "Popover";
+
+export type PopoverTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  variant?: PopoverVariant;
+  size?: PopoverSize;
+  tone?: PopoverTone;
+};
+
+const triggerSizeStyles: Record<PopoverSize, string> = {
+  sm: "px-3 py-1.5 text-xs",
+  md: "px-4 py-2",
+  lg: "px-5 py-3 text-base",
+};
+
+export const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>(
+  function PopoverTrigger({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onClick,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { open, setOpen } = usePopover();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "border-4 border-black bg-white px-4 py-2 font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+    <Component
+      ref={ref}
+      className={cn(
+        "border-4 border-black bg-white font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        triggerSizeStyles[size],
+        variant === "compact" && "shadow-none",
         className,
       )}
-      onClick={() => setOpen(!open)}
-      type="button"
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (!event.defaultPrevented) {
+          setOpen(!open);
+        }
+      }}
+      type={asChild ? undefined : "button"}
+      aria-expanded={open}
+      {...swirskiAttrs("popover-trigger", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function PopoverContent({
+PopoverTrigger.displayName = "PopoverTrigger";
+
+export type PopoverContentProps = HTMLAttributes<HTMLDivElement> & {
+  align?: "start" | "end";
+  variant?: PopoverVariant;
+  size?: PopoverSize;
+  tone?: PopoverTone;
+};
+
+export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
+  function PopoverContent({
   className,
   align = "start",
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: HTMLAttributes<HTMLDivElement> & { align?: "start" | "end" }) {
+}, ref) {
   const { open } = usePopover();
 
   if (!open) {
@@ -117,12 +179,17 @@ export function PopoverContent({
 
   return (
     <div
-      className={clsx(
+      ref={ref}
+      className={cn(
         "absolute top-[calc(100%+0.5rem)] z-40 w-72 border-4 border-black bg-white p-4 shadow-[8px_8px_0_#0B0B0C]",
         align === "end" ? "right-0" : "left-0",
+        variant === "compact" && "p-3 shadow-[4px_4px_0_#0B0B0C]",
         className,
       )}
+      {...swirskiAttrs("popover-content", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
+
+PopoverContent.displayName = "PopoverContent";

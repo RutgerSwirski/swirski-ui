@@ -1,14 +1,21 @@
-import { ElementType, HTMLAttributes, ReactNode, createElement } from "react";
-import clsx from "clsx";
+import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type GridColumns = 1 | 2 | 3 | 4 | 5 | 6 | 12;
 export type GridGap = "none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type GridAlign = "start" | "center" | "end" | "stretch";
 export type GridContent = "start" | "center" | "end" | "between";
+export type GridVariant = "default" | "stack";
+export type GridSize = "sm" | "md" | "lg";
+export type GridTone = "default";
 
 export type GridProps = {
   as?: ElementType;
-  children: ReactNode;
+  asChild?: boolean;
+  children?: ReactNode;
+  variant?: GridVariant;
+  size?: GridSize;
+  tone?: GridTone;
   columns?: GridColumns;
   gap?: GridGap;
   align?: GridAlign;
@@ -53,29 +60,40 @@ const contentStyles: Record<GridContent, string> = {
   between: "content-between",
 };
 
-export function Grid({
+export const Grid = forwardRef<HTMLElement, GridProps>(function Grid({
   as = "div",
+  asChild = false,
   children,
+  variant = "default",
+  size = "md",
+  tone = "default",
   columns,
   gap,
   align,
   content,
   className,
   ...props
-}: GridProps) {
-  return createElement(
-    as,
-    {
-      className: clsx(
+}: GridProps, ref) {
+  const Component = (asChild ? Slot : as) as ElementType;
+
+  return (
+    <Component
+      ref={ref}
+      className={cn(
         "grid min-w-0",
+        variant === "stack" && "grid-cols-1",
         columns && columnStyles[columns],
         gap && gapStyles[gap],
         align && alignStyles[align],
         content && contentStyles[content],
         className,
-      ),
-      ...props,
-    },
-    children,
+      )}
+      {...swirskiAttrs("grid", { size, tone, variant })}
+      {...props}
+    >
+      {children}
+    </Component>
   );
-}
+});
+
+Grid.displayName = "Grid";

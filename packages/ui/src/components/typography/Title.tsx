@@ -1,13 +1,17 @@
-import { HTMLAttributes, ReactNode, createElement } from "react";
-import clsx from "clsx";
+import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
 export type TitleSize = "display" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 export type TitleTone = "default" | "muted" | "inverted";
+export type TitleVariant = "default" | "plain";
 
 export type TitleProps = {
-  children: ReactNode;
+  as?: ElementType;
+  asChild?: boolean;
+  children?: ReactNode;
   order?: TitleOrder;
+  variant?: TitleVariant;
   size?: TitleSize;
   tone?: TitleTone;
 } & HTMLAttributes<HTMLHeadingElement>;
@@ -32,25 +36,35 @@ function sizeForOrder(order: TitleOrder): TitleSize {
   return `h${order}` as TitleSize;
 }
 
-export function Title({
+export const Title = forwardRef<HTMLHeadingElement, TitleProps>(function Title({
+  as,
+  asChild = false,
   children,
   className,
   order = 1,
+  variant = "default",
   size,
   tone = "default",
   ...props
-}: TitleProps) {
-  return createElement(
-    `h${order}`,
-    {
-      className: clsx(
-        "font-anton uppercase tracking-normal",
+}: TitleProps, ref) {
+  const resolvedSize = size ?? sizeForOrder(order);
+  const Component = (asChild ? Slot : as ?? `h${order}`) as ElementType;
+
+  return (
+    <Component
+      ref={ref}
+      className={cn(
+        variant === "default" && "font-anton uppercase tracking-normal",
         sizeStyles[size ?? sizeForOrder(order)],
         toneStyles[tone],
         className,
-      ),
-      ...props,
-    },
-    children,
+      )}
+      {...swirskiAttrs("title", { size: resolvedSize, tone, variant })}
+      {...props}
+    >
+      {children}
+    </Component>
   );
-}
+});
+
+Title.displayName = "Title";
