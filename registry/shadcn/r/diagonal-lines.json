@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "diagonal-lines",
+  "type": "registry:ui",
+  "title": "Diagonal Lines",
+  "description": "Diagonal stripe background primitive.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/diagonal-lines/DiagonalLines.tsx",
+      "content": "import { forwardRef, type CSSProperties, type HTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type DiagonalLinesVariant = \"default\" | \"accent\";\nexport type DiagonalLinesSize = \"sm\" | \"md\" | \"lg\";\nexport type DiagonalLinesTone = \"default\";\n\nexport type DiagonalLinesProps = Omit<\n  HTMLAttributes<HTMLDivElement>,\n  \"color\"\n> & {\n  angle?: number | string;\n  color?: string;\n  opacity?: CSSProperties[\"opacity\"];\n  spacing?: number | string;\n  thickness?: number | string;\n  accentColor?: string;\n  accentEvery?: number;\n  accentThickness?: number | string;\n  variant?: DiagonalLinesVariant;\n  size?: DiagonalLinesSize;\n  tone?: DiagonalLinesTone;\n};\n\nfunction toCssLength(value: number | string) {\n  return typeof value === \"number\" ? `${value}px` : value;\n}\n\nfunction toCssAngle(value: number | string) {\n  return typeof value === \"number\" ? `${value}deg` : value;\n}\n\nexport const DiagonalLines = forwardRef<HTMLDivElement, DiagonalLinesProps>(\n  function DiagonalLines({\n  angle = -45,\n  className,\n  color = \"#0B0B0C\",\n  opacity = 0.2,\n  spacing = 18,\n  thickness = 2,\n  accentColor,\n  accentEvery,\n  accentThickness = 5,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  style,\n  ...props\n}, ref) {\n  const lineAngle = toCssAngle(angle);\n  const lineSpacing = toCssLength(spacing);\n  const lineThickness = toCssLength(thickness);\n  const layers = [\n    `repeating-linear-gradient(${lineAngle}, ${color} 0 ${lineThickness}, transparent ${lineThickness} ${lineSpacing})`,\n  ];\n\n  if (accentEvery && accentEvery > 1) {\n    const accentSpacing =\n      typeof spacing === \"number\"\n        ? `${spacing * accentEvery}px`\n        : `calc(${spacing} * ${accentEvery})`;\n\n    const accentLineThickness = toCssLength(accentThickness);\n\n    layers.unshift(\n      `repeating-linear-gradient(${lineAngle}, ${\n        accentColor ?? color\n      } 0 ${accentLineThickness}, transparent ${accentLineThickness} ${accentSpacing})`\n    );\n  }\n\n  return (\n    <div\n      ref={ref}\n      aria-hidden=\"true\"\n      className={cn(\"pointer-events-none absolute\", className)}\n      style={{\n        opacity,\n        backgroundImage: layers.join(\", \"),\n        ...style,\n      }}\n      {...swirskiAttrs(\"diagonal-lines\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nDiagonalLines.displayName = \"DiagonalLines\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/diagonal-lines/DiagonalLines.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/diagonal-lines/index.ts",
+      "content": "export { DiagonalLines } from \"./DiagonalLines\";\nexport type {\n  DiagonalLinesProps,\n  DiagonalLinesSize,\n  DiagonalLinesTone,\n  DiagonalLinesVariant,\n} from \"./DiagonalLines\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/diagonal-lines/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "backgrounds"
+  ],
+  "meta": {
+    "swirskiCategory": "backgrounds",
+    "swirskiSource": "packages/ui/src/components/diagonal-lines"
+  }
+}

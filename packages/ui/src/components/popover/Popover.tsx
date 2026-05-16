@@ -8,6 +8,7 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -24,6 +25,7 @@ type PopoverContextValue = {
   setOpen: (open: boolean) => void;
   rootRef: React.RefObject<HTMLDivElement | null>;
   contentRef: React.RefObject<HTMLDivElement | null>;
+  contentId: string;
 };
 
 const PopoverContext = createContext<PopoverContextValue | null>(null);
@@ -59,6 +61,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
   tone = "default",
   ...props
 }, ref) {
+  const contentId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
@@ -89,14 +92,24 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover
       }
     };
 
-    window.addEventListener("pointerdown", handlePointerDown);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
 
-    return () => window.removeEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [currentOpen]);
 
   return (
     <PopoverContext.Provider
-      value={{ open: currentOpen, setOpen, rootRef, contentRef }}
+      value={{ open: currentOpen, setOpen, rootRef, contentRef, contentId }}
     >
       <div
         ref={composeRefs(rootRef, ref)}
@@ -135,7 +148,7 @@ export const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>
   onClick,
   ...props
 }, ref) {
-  const { open, setOpen } = usePopover();
+  const { contentId, open, setOpen } = usePopover();
   const Component = asChild ? Slot : "button";
 
   return (
@@ -155,7 +168,9 @@ export const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>
         }
       }}
       type={asChild ? undefined : "button"}
+      aria-controls={open ? contentId : undefined}
       aria-expanded={open}
+      aria-haspopup="dialog"
       {...swirskiAttrs("popover-trigger", { size, tone, variant })}
       {...props}
     />
@@ -181,7 +196,7 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   style,
   ...props
 }, ref) {
-  const { contentRef, open, rootRef } = usePopover();
+  const { contentId, contentRef, open, rootRef } = usePopover();
   const portalRoot = usePortalRoot();
   const [position, setPosition] = useState<{
     left: number;
@@ -229,6 +244,8 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         variant === "compact" && "p-3 shadow-[4px_4px_0_#0B0B0C]",
         className,
       )}
+      id={contentId}
+      role="dialog"
       {...swirskiAttrs("popover-content", { size, tone, variant })}
       style={{
         left: position.left,

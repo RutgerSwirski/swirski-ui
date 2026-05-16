@@ -1,0 +1,65 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "Framed content block.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/card/Card.tsx",
+      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type CardVariant = \"elevated\" | \"flat\" | \"outline\";\nexport type CardSize = \"sm\" | \"md\" | \"lg\";\nexport type CardTone = \"default\" | \"white\" | \"yellow\" | \"blue\" | \"black\";\n\nexport type CardProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  interactive?: boolean;\n  withShadow?: boolean;\n  variant?: CardVariant;\n  size?: CardSize;\n  tone?: CardTone;\n} & HTMLAttributes<HTMLElement>;\n\nconst base =\n  \"group relative min-w-0 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-[var(--sw-color-ink)]\";\n\nconst shadowStyles: Record<CardSize, string> = {\n  sm: \"shadow-[4px_4px_0_var(--sw-color-shadow)]\",\n  md: \"shadow-[8px_8px_0_var(--sw-color-shadow)]\",\n  lg: \"shadow-[12px_12px_0_var(--sw-color-shadow)]\",\n};\n\nconst toneStyles: Record<CardTone, string> = {\n  default: \"bg-[var(--sw-color-paper)]\",\n  white: \"bg-[var(--sw-color-surface)]\",\n  yellow: \"bg-[var(--sw-color-yellow)]\",\n  blue: \"bg-[var(--sw-color-blue)] text-white\",\n  black: \"bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]\",\n};\n\nconst variantStyles: Record<CardVariant, string> = {\n  elevated: \"\",\n  flat: \"shadow-none\",\n  outline: \"bg-transparent shadow-none\",\n};\n\nconst interactiveStyles =\n  \"transition-all duration-150 hover:-translate-y-2 active:translate-y-2\";\n\nconst interactiveShadowStyles =\n  \"hover:shadow-[12px_12px_0_var(--sw-color-shadow)] active:shadow-[4px_4px_0_var(--sw-color-shadow)]\";\n\nexport const Card = forwardRef<HTMLElement, CardProps>(function Card({\n  asChild = false,\n  children,\n  className,\n  interactive = true,\n  variant = \"elevated\",\n  size = \"md\",\n  tone = \"default\",\n  withShadow,\n  ...props\n}, ref) {\n  const Component = asChild ? Slot : \"article\";\n  const resolvedWithShadow = withShadow ?? variant === \"elevated\";\n\n  return (\n    <Component\n      ref={ref}\n      className={cn(\n        base,\n        toneStyles[tone],\n        variantStyles[variant],\n        resolvedWithShadow && shadowStyles[size],\n        interactive && interactiveStyles,\n        interactive && resolvedWithShadow && interactiveShadowStyles,\n        className,\n      )}\n      {...swirskiAttrs(\"card\", { size, tone, variant })}\n      {...props}\n    >\n      {children}\n    </Component>\n  );\n});\n\nCard.displayName = \"Card\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/Card.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/card/CardBadge.tsx",
+      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type CardBadgeTone = \"white\" | \"yellow\" | \"blue\" | \"red\" | \"black\";\nexport type CardBadgeVariant = \"solid\" | \"outline\";\nexport type CardBadgeSize = \"sm\" | \"md\";\n\nexport type CardBadgeProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  variant?: CardBadgeVariant;\n  size?: CardBadgeSize;\n  tone?: CardBadgeTone;\n} & Omit<HTMLAttributes<HTMLSpanElement>, \"color\">;\n\nconst toneStyles: Record<CardBadgeTone, string> = {\n  white: \"bg-white text-black\",\n  yellow: \"bg-[#FFD400] text-black\",\n  blue: \"bg-[#0057FF] text-white\",\n  red: \"bg-[#FF3131] text-white\",\n  black: \"bg-[#0B0B0C] text-white\",\n};\n\nconst sizeStyles: Record<CardBadgeSize, string> = {\n  sm: \"px-2 py-1 text-sm\",\n  md: \"px-3 py-1.5 text-base\",\n};\n\nexport const CardBadge = forwardRef<HTMLSpanElement, CardBadgeProps>(\n  function CardBadge(\n    {\n      asChild = false,\n      children,\n      className,\n      variant = \"solid\",\n      size = \"sm\",\n      tone = \"white\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"span\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"absolute left-3 top-3 z-20 -rotate-3 border-2 border-black font-anton uppercase tracking-normal shadow-[2px_2px_0_#0B0B0C]\",\n          variant === \"solid\" ? toneStyles[tone] : \"bg-transparent text-current\",\n          sizeStyles[size],\n          className,\n        )}\n        {...swirskiAttrs(\"card-badge\", { size, tone, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nCardBadge.displayName = \"CardBadge\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/CardBadge.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/card/CardContent.tsx",
+      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type CardContentSize = \"sm\" | \"md\" | \"lg\";\nexport type CardContentVariant = \"default\" | \"flush\";\n\nexport type CardContentProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  size?: CardContentSize;\n  variant?: CardContentVariant;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<CardContentSize, string> = {\n  sm: \"p-4\",\n  md: \"p-5\",\n  lg: \"p-6\",\n};\n\nexport const CardContent = forwardRef<HTMLDivElement, CardContentProps>(\n  function CardContent(\n    {\n      asChild = false,\n      children,\n      className,\n      size = \"md\",\n      variant = \"default\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"min-w-0\",\n          variant === \"default\" && sizeStyles[size],\n          className,\n        )}\n        {...swirskiAttrs(\"card-content\", { size, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nCardContent.displayName = \"CardContent\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/CardContent.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/card/CardMedia.tsx",
+      "content": "import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type CardMediaVariant = \"default\" | \"flush\";\nexport type CardMediaSize = \"sm\" | \"md\" | \"lg\";\n\nexport type CardMediaProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  variant?: CardMediaVariant;\n  size?: CardMediaSize;\n  aspect?: string; // \"4/3\", \"4/5\"\n} & Omit<HTMLAttributes<HTMLDivElement>, \"color\">;\n\nexport const CardMedia = forwardRef<HTMLDivElement, CardMediaProps>(\n  function CardMedia(\n    {\n      asChild = false,\n      children,\n      className,\n      aspect = \"4/3\",\n      variant = \"default\",\n      size = \"md\",\n      style,\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"relative overflow-hidden bg-white\",\n          variant === \"default\" && \"border-b-4 border-black\",\n          className,\n        )}\n        style={{ aspectRatio: aspect, ...(style as CSSProperties | undefined) }}\n        {...swirskiAttrs(\"card-media\", { size, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nCardMedia.displayName = \"CardMedia\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/CardMedia.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/card/CardMeta.tsx",
+      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type CardMetaSize = \"sm\" | \"md\";\nexport type CardMetaTone = \"default\" | \"muted\" | \"inverted\";\nexport type CardMetaVariant = \"default\" | \"plain\";\n\nexport type CardMetaProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  variant?: CardMetaVariant;\n  size?: CardMetaSize;\n  tone?: CardMetaTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<CardMetaSize, string> = {\n  sm: \"text-xs\",\n  md: \"text-sm\",\n};\n\nconst toneStyles: Record<CardMetaTone, string> = {\n  default: \"text-current\",\n  muted: \"text-[var(--sw-color-muted)]\",\n  inverted: \"text-white\",\n};\n\nexport const CardMeta = forwardRef<HTMLDivElement, CardMetaProps>(\n  function CardMeta(\n    {\n      asChild = false,\n      children,\n      className,\n      variant = \"default\",\n      size = \"sm\",\n      tone = \"default\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"mt-6 flex flex-wrap gap-x-4 gap-y-2 font-black uppercase\",\n          sizeStyles[size],\n          toneStyles[tone],\n          className,\n        )}\n        {...swirskiAttrs(\"card-meta\", { size, tone, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nCardMeta.displayName = \"CardMeta\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/CardMeta.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/card/CardTitle.tsx",
+      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type CardTitleSize = \"sm\" | \"md\" | \"lg\";\nexport type CardTitleTone = \"default\" | \"muted\" | \"inverted\";\nexport type CardTitleVariant = \"default\" | \"plain\";\n\nexport type CardTitleProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  variant?: CardTitleVariant;\n  size?: CardTitleSize;\n  tone?: CardTitleTone;\n} & HTMLAttributes<HTMLHeadingElement>;\n\nconst sizeStyles: Record<CardTitleSize, string> = {\n  sm: \"text-2xl\",\n  md: \"text-4xl\",\n  lg: \"text-5xl\",\n};\n\nconst toneStyles: Record<CardTitleTone, string> = {\n  default: \"text-current\",\n  muted: \"text-[var(--sw-color-muted)]\",\n  inverted: \"text-white\",\n};\n\nexport const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(\n  function CardTitle(\n    {\n      asChild = false,\n      children,\n      className,\n      variant = \"default\",\n      size = \"md\",\n      tone = \"default\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"h3\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"mt-3 font-anton uppercase tracking-normal\",\n          sizeStyles[size],\n          toneStyles[tone],\n          variant === \"default\" && \"group-hover:underline\",\n          className,\n        )}\n        {...swirskiAttrs(\"card-title\", { size, tone, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nCardTitle.displayName = \"CardTitle\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/CardTitle.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/card/index.ts",
+      "content": "export { Card } from \"./Card\";\nexport { CardMedia } from \"./CardMedia\";\nexport { CardContent } from \"./CardContent\";\nexport { CardTitle } from \"./CardTitle\";\nexport { CardMeta } from \"./CardMeta\";\nexport { CardBadge } from \"./CardBadge\";\nexport type { CardProps, CardSize, CardTone, CardVariant } from \"./Card\";\nexport type {\n  CardBadgeProps,\n  CardBadgeSize,\n  CardBadgeTone,\n  CardBadgeVariant,\n} from \"./CardBadge\";\nexport type {\n  CardContentProps,\n  CardContentSize,\n  CardContentVariant,\n} from \"./CardContent\";\nexport type { CardMediaProps, CardMediaSize, CardMediaVariant } from \"./CardMedia\";\nexport type {\n  CardMetaProps,\n  CardMetaSize,\n  CardMetaTone,\n  CardMetaVariant,\n} from \"./CardMeta\";\nexport type {\n  CardTitleProps,\n  CardTitleSize,\n  CardTitleTone,\n  CardTitleVariant,\n} from \"./CardTitle\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/card/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "cards"
+  ],
+  "meta": {
+    "swirskiCategory": "cards",
+    "swirskiSource": "packages/ui/src/components/card"
+  }
+}

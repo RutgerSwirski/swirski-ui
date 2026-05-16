@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dot-grid",
+  "type": "registry:ui",
+  "title": "Dot Grid",
+  "description": "Dot grid background primitive.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/dot-grid/DotGrid.tsx",
+      "content": "import { forwardRef, type CSSProperties, type HTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type DotGridVariant = \"default\" | \"accent\";\nexport type DotGridSize = \"sm\" | \"md\" | \"lg\";\nexport type DotGridTone = \"default\";\n\nexport type DotGridProps = Omit<HTMLAttributes<HTMLDivElement>, \"color\"> & {\n  color?: string;\n  opacity?: CSSProperties[\"opacity\"];\n  spacing?: number | string;\n  dotSize?: number | string;\n  accentColor?: string;\n  accentEvery?: number;\n  accentDotSize?: number | string;\n  variant?: DotGridVariant;\n  size?: DotGridSize;\n  tone?: DotGridTone;\n};\n\nfunction toCssLength(value: number | string) {\n  return typeof value === \"number\" ? `${value}px` : value;\n}\n\nexport const DotGrid = forwardRef<HTMLDivElement, DotGridProps>(function DotGrid({\n  className,\n  color = \"currentColor\",\n  opacity,\n  spacing = 13,\n  dotSize = 1.2,\n  accentColor,\n  accentEvery,\n  accentDotSize = 3,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  style,\n  ...props\n}, ref) {\n  const gridSpacing = toCssLength(spacing);\n  const primaryDotSize = toCssLength(dotSize);\n  const layers = [\n    `radial-gradient(${color} ${primaryDotSize}, transparent ${primaryDotSize})`,\n  ];\n  const backgroundSizes = [`${gridSpacing} ${gridSpacing}`];\n\n  if (accentEvery && accentEvery > 1) {\n    const accentSpacing =\n      typeof spacing === \"number\"\n        ? `${spacing * accentEvery}px`\n        : `calc(${spacing} * ${accentEvery})`;\n    const largeDotSize = toCssLength(accentDotSize);\n\n    layers.unshift(\n      `radial-gradient(${accentColor ?? color} ${largeDotSize}, transparent ${largeDotSize})`\n    );\n    backgroundSizes.unshift(`${accentSpacing} ${accentSpacing}`);\n  }\n\n  const dotGridStyle = {\n    backgroundImage: layers.join(\", \"),\n    backgroundSize: backgroundSizes.join(\", \"),\n    ...(opacity === undefined ? {} : { opacity }),\n    ...style,\n  };\n\n  return (\n    <div\n      ref={ref}\n      aria-hidden=\"true\"\n      className={cn(\"pointer-events-none absolute text-[#0B0B0C] opacity-20\", className)}\n      style={dotGridStyle}\n      {...swirskiAttrs(\"dot-grid\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nDotGrid.displayName = \"DotGrid\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/dot-grid/DotGrid.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/dot-grid/index.ts",
+      "content": "export { DotGrid } from \"./DotGrid\";\nexport type {\n  DotGridProps,\n  DotGridSize,\n  DotGridTone,\n  DotGridVariant,\n} from \"./DotGrid\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/dot-grid/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "backgrounds"
+  ],
+  "meta": {
+    "swirskiCategory": "backgrounds",
+    "swirskiSource": "packages/ui/src/components/dot-grid"
+  }
+}

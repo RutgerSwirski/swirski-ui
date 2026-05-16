@@ -8,10 +8,13 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useId,
+  useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+import { focusInitialElement, trapFocus } from "../../system/focus";
 import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type DrawerVariant = "default" | "compact";
@@ -21,6 +24,12 @@ export type DrawerTone = "default";
 type DrawerContextValue = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  titleId: string;
+  descriptionId: string;
+  hasTitle: boolean;
+  hasDescription: boolean;
+  setHasTitle: (value: boolean) => void;
+  setHasDescription: (value: boolean) => void;
 };
 
 const DrawerContext = createContext<DrawerContextValue | null>(null);
@@ -54,7 +63,11 @@ export function Drawer({
   size: _size = "md",
   tone: _tone = "default",
 }: DrawerProps) {
+  const titleId = useId();
+  const descriptionId = useId();
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [hasTitle, setHasTitle] = useState(false);
+  const [hasDescription, setHasDescription] = useState(false);
   const isControlled = open !== undefined;
   const currentOpen = open ?? internalOpen;
 
@@ -67,7 +80,18 @@ export function Drawer({
   }
 
   return (
-    <DrawerContext.Provider value={{ open: currentOpen, setOpen }}>
+    <DrawerContext.Provider
+      value={{
+        open: currentOpen,
+        setOpen,
+        titleId,
+        descriptionId,
+        hasTitle,
+        hasDescription,
+        setHasTitle,
+        setHasDescription,
+      }}
+    >
       {children}
     </DrawerContext.Provider>
   );
@@ -141,23 +165,50 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
   tone = "default",
   ...props
 }, ref) {
-  const { open, setOpen } = useDrawer();
+  const { descriptionId, hasDescription, hasTitle, open, setOpen, titleId } =
+    useDrawer();
   const portalRoot = usePortalRoot();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) {
       return;
     }
 
+    const previouslyFocusedElement = document.activeElement as HTMLElement | null;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const animationFrame = window.requestAnimationFrame(() => {
+      if (contentRef.current) {
+        focusInitialElement(contentRef.current);
+      }
+    });
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
+        return;
+      }
+
+      if (contentRef.current) {
+        trapFocus(contentRef.current, event);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+
+      if (
+        previouslyFocusedElement &&
+        document.contains(previouslyFocusedElement)
+      ) {
+        previouslyFocusedElement.focus();
+      }
+    };
   }, [open, setOpen]);
 
   if (!open || !portalRoot) {
@@ -180,7 +231,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
         type="button"
       />
       <div
-        ref={ref}
+        ref={composeRefs(contentRef, ref)}
         className={cn(
           "absolute border-4 border-black bg-white p-6 shadow-[12px_12px_0_#0B0B0C]",
           sideStyles[side],
@@ -189,6 +240,11 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
         )}
         role="dialog"
         aria-modal="true"
+        aria-labelledby={hasTitle ? titleId : props["aria-labelledby"]}
+        aria-describedby={
+          hasDescription ? descriptionId : props["aria-describedby"]
+        }
+        tabIndex={-1}
         {...swirskiAttrs("drawer-content", { size, tone, variant })}
         {...props}
       >
@@ -247,12 +303,19 @@ export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(
   tone = "default",
   ...props
 }, ref) {
+  const { setHasTitle, titleId } = useDrawer();
   const Component = asChild ? Slot : "h2";
+
+  useEffect(() => {
+    setHasTitle(true);
+    return () => setHasTitle(false);
+  }, [setHasTitle]);
 
   return (
     <Component
       ref={ref}
       className={cn("font-anton text-4xl uppercase leading-none", className)}
+      id={props.id ?? titleId}
       {...swirskiAttrs("drawer-title", { size, tone, variant })}
       {...props}
     />
@@ -279,12 +342,19 @@ export const DrawerDescription = forwardRef<
   tone = "default",
   ...props
 }, ref) {
+  const { descriptionId, setHasDescription } = useDrawer();
   const Component = asChild ? Slot : "p";
+
+  useEffect(() => {
+    setHasDescription(true);
+    return () => setHasDescription(false);
+  }, [setHasDescription]);
 
   return (
     <Component
       ref={ref}
       className={cn("text-sm font-bold leading-6 text-black/65", className)}
+      id={props.id ?? descriptionId}
       {...swirskiAttrs("drawer-description", { size, tone, variant })}
       {...props}
     />

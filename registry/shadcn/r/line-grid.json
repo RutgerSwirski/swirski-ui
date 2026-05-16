@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "line-grid",
+  "type": "registry:ui",
+  "title": "Line Grid",
+  "description": "Line grid background primitive.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/line-grid/LineGrid.tsx",
+      "content": "import { forwardRef, type CSSProperties, type HTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\ntype LineGridDirection = \"both\" | \"horizontal\" | \"vertical\";\nexport type LineGridVariant = \"default\" | \"accent\";\nexport type LineGridSize = \"sm\" | \"md\" | \"lg\";\nexport type LineGridTone = \"default\";\n\nexport type LineGridProps = Omit<HTMLAttributes<HTMLDivElement>, \"color\"> & {\n  color?: string;\n  opacity?: CSSProperties[\"opacity\"];\n  spacing?: number | string;\n  thickness?: number | string;\n  direction?: LineGridDirection;\n  horizontalColor?: string;\n  horizontalSpacing?: number | string;\n  horizontalThickness?: number | string;\n  verticalColor?: string;\n  verticalSpacing?: number | string;\n  verticalThickness?: number | string;\n  accentColor?: string;\n  accentEvery?: number;\n  accentThickness?: number | string;\n  variant?: LineGridVariant;\n  size?: LineGridSize;\n  tone?: LineGridTone;\n};\n\nfunction toCssLength(value: number | string) {\n  return typeof value === \"number\" ? `${value}px` : value;\n}\n\nfunction multiplyCssLength(value: number | string, multiplier: number) {\n  return typeof value === \"number\"\n    ? `${value * multiplier}px`\n    : `calc(${value} * ${multiplier})`;\n}\n\nfunction getLineLayers({\n  direction,\n  horizontalColor,\n  horizontalSpacing,\n  horizontalThickness,\n  verticalColor,\n  verticalSpacing,\n  verticalThickness,\n}: {\n  direction: LineGridDirection;\n  horizontalColor: string;\n  horizontalSpacing: string;\n  horizontalThickness: string;\n  verticalColor: string;\n  verticalSpacing: string;\n  verticalThickness: string;\n}) {\n  const layers: Array<{ image: string; size: string }> = [];\n\n  if (direction === \"both\" || direction === \"vertical\") {\n    layers.push({\n      image: `linear-gradient(to right, ${verticalColor} ${verticalThickness}, transparent ${verticalThickness})`,\n      size: `${verticalSpacing} ${horizontalSpacing}`,\n    });\n  }\n\n  if (direction === \"both\" || direction === \"horizontal\") {\n    layers.push({\n      image: `linear-gradient(to bottom, ${horizontalColor} ${horizontalThickness}, transparent ${horizontalThickness})`,\n      size: `${verticalSpacing} ${horizontalSpacing}`,\n    });\n  }\n\n  return layers;\n}\n\nexport const LineGrid = forwardRef<HTMLDivElement, LineGridProps>(function LineGrid({\n  className,\n  color = \"#0B0B0C\",\n  opacity = 0.2,\n  spacing = 18,\n  thickness = 1,\n  direction = \"both\",\n  horizontalColor,\n  horizontalSpacing,\n  horizontalThickness,\n  verticalColor,\n  verticalSpacing,\n  verticalThickness,\n  accentColor,\n  accentEvery,\n  accentThickness = 3,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  style,\n  ...props\n}, ref) {\n  const lineSettings = {\n    direction,\n    horizontalColor: horizontalColor ?? color,\n    horizontalSpacing: toCssLength(horizontalSpacing ?? spacing),\n    horizontalThickness: toCssLength(horizontalThickness ?? thickness),\n    verticalColor: verticalColor ?? color,\n    verticalSpacing: toCssLength(verticalSpacing ?? spacing),\n    verticalThickness: toCssLength(verticalThickness ?? thickness),\n  };\n  const layers = getLineLayers(lineSettings);\n\n  if (accentEvery && accentEvery > 1) {\n    const accentLayers = getLineLayers({\n      direction,\n      horizontalColor: accentColor ?? lineSettings.horizontalColor,\n      horizontalSpacing: multiplyCssLength(\n        horizontalSpacing ?? spacing,\n        accentEvery\n      ),\n      horizontalThickness: toCssLength(accentThickness),\n      verticalColor: accentColor ?? lineSettings.verticalColor,\n      verticalSpacing: multiplyCssLength(\n        verticalSpacing ?? spacing,\n        accentEvery\n      ),\n      verticalThickness: toCssLength(accentThickness),\n    });\n\n    layers.unshift(...accentLayers);\n  }\n\n  return (\n    <div\n      ref={ref}\n      aria-hidden=\"true\"\n      className={cn(\"pointer-events-none absolute\", className)}\n      style={{\n        opacity,\n        backgroundImage: layers.map(({ image }) => image).join(\", \"),\n        backgroundSize: layers.map(({ size }) => size).join(\", \"),\n        ...style,\n      }}\n      {...swirskiAttrs(\"line-grid\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nLineGrid.displayName = \"LineGrid\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/line-grid/LineGrid.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/line-grid/index.ts",
+      "content": "export { LineGrid } from \"./LineGrid\";\nexport type {\n  LineGridProps,\n  LineGridSize,\n  LineGridTone,\n  LineGridVariant,\n} from \"./LineGrid\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/line-grid/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "backgrounds"
+  ],
+  "meta": {
+    "swirskiCategory": "backgrounds",
+    "swirskiSource": "packages/ui/src/components/line-grid"
+  }
+}

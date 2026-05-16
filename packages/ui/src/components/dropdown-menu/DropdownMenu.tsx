@@ -8,6 +8,7 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -24,6 +25,7 @@ type DropdownMenuContextValue = {
   setOpen: (open: boolean) => void;
   rootRef: React.RefObject<HTMLDivElement | null>;
   contentRef: React.RefObject<HTMLDivElement | null>;
+  contentId: string;
 };
 
 const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null);
@@ -56,6 +58,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     },
     ref,
   ) {
+  const contentId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -76,13 +79,25 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       }
     };
 
-    window.addEventListener("pointerdown", handlePointerDown);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
 
-    return () => window.removeEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [open]);
 
   return (
-    <DropdownMenuContext.Provider value={{ open, setOpen, rootRef, contentRef }}>
+    <DropdownMenuContext.Provider
+      value={{ open, setOpen, rootRef, contentRef, contentId }}
+    >
       <div
         ref={composeRefs(rootRef, ref)}
         className={cn("relative w-fit", className)}
@@ -124,7 +139,7 @@ export const DropdownMenuTrigger = forwardRef<
   onClick,
   ...props
 }, ref) {
-  const { open, setOpen } = useDropdownMenu();
+  const { contentId, open, setOpen } = useDropdownMenu();
   const Component = asChild ? Slot : "button";
 
   return (
@@ -144,7 +159,9 @@ export const DropdownMenuTrigger = forwardRef<
         }
       }}
       type={asChild ? undefined : "button"}
+      aria-controls={open ? contentId : undefined}
       aria-expanded={open}
+      aria-haspopup="menu"
       {...swirskiAttrs("dropdown-menu-trigger", { size, tone, variant })}
       {...props}
     />
@@ -172,7 +189,7 @@ export const DropdownMenuContent = forwardRef<
   style,
   ...props
 }, ref) {
-  const { contentRef, open, rootRef } = useDropdownMenu();
+  const { contentId, contentRef, open, rootRef } = useDropdownMenu();
   const portalRoot = usePortalRoot();
   const [position, setPosition] = useState<{
     left: number;
@@ -220,6 +237,7 @@ export const DropdownMenuContent = forwardRef<
         variant === "compact" && "shadow-[4px_4px_0_#0B0B0C]",
         className,
       )}
+      id={contentId}
       role="menu"
       {...swirskiAttrs("dropdown-menu-content", { size, tone, variant })}
       style={{

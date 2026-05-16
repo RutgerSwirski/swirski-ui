@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert",
+  "type": "registry:ui",
+  "title": "Alert",
+  "description": "Composable callout block.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/alert/Alert.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type AlertTone = \"blue\" | \"yellow\" | \"red\" | \"white\";\nexport type AlertVariant = \"solid\" | \"outline\" | \"soft\";\nexport type AlertSize = \"sm\" | \"md\" | \"lg\";\n\nexport type AlertProps = {\n  asChild?: boolean;\n  variant?: AlertVariant;\n  size?: AlertSize;\n  tone?: AlertTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst toneStyles: Record<AlertTone, string> = {\n  blue: \"bg-[var(--sw-color-blue)] text-white\",\n  yellow: \"bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]\",\n  red: \"bg-[var(--sw-color-red)] text-white\",\n  white: \"bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]\",\n};\n\nconst outlineToneStyles: Record<AlertTone, string> = {\n  blue: \"bg-[var(--sw-color-surface)] text-[var(--sw-color-blue)]\",\n  yellow: \"bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]\",\n  red: \"bg-[var(--sw-color-surface)] text-[var(--sw-color-red)]\",\n  white: \"bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]\",\n};\n\nconst softToneStyles: Record<AlertTone, string> = {\n  blue: \"bg-[var(--sw-color-blue)]/10 text-[var(--sw-color-ink)]\",\n  yellow: \"bg-[var(--sw-color-yellow)]/30 text-[var(--sw-color-ink)]\",\n  red: \"bg-[var(--sw-color-red)]/10 text-[var(--sw-color-ink)]\",\n  white: \"bg-[var(--sw-color-surface)]/20 text-[var(--sw-color-surface)]\",\n};\n\nconst sizeStyles: Record<AlertSize, string> = {\n  sm: \"p-4\",\n  md: \"p-5\",\n  lg: \"p-6\",\n};\n\nexport const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert({\n  asChild = false,\n  variant = \"solid\",\n  size = \"md\",\n  tone = \"yellow\",\n  className,\n  children,\n  role = \"status\",\n  ...props\n}, ref) {\n  const Component = asChild ? Slot : \"div\";\n\n  return (\n    <Component\n      ref={ref}\n      role={role}\n      className={cn(\n        \"border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] shadow-[var(--sw-shadow-md)]\",\n        sizeStyles[size],\n        variant === \"solid\" && toneStyles[tone],\n        variant === \"outline\" && outlineToneStyles[tone],\n        variant === \"soft\" && softToneStyles[tone],\n        className,\n      )}\n      {...swirskiAttrs(\"alert\", { size, tone, variant })}\n      {...props}\n    >\n      {children}\n    </Component>\n  );\n});\n\nAlert.displayName = \"Alert\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/alert/Alert.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/alert/AlertDescription.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type AlertDescriptionVariant = \"default\";\nexport type AlertDescriptionSize = \"sm\" | \"md\" | \"lg\";\nexport type AlertDescriptionTone = \"default\";\n\nexport type AlertDescriptionProps = {\n  variant?: AlertDescriptionVariant;\n  size?: AlertDescriptionSize;\n  tone?: AlertDescriptionTone;\n} & HTMLAttributes<HTMLParagraphElement>;\n\nconst sizeStyles: Record<AlertDescriptionSize, string> = {\n  sm: \"text-xs leading-5\",\n  md: \"text-sm leading-6\",\n  lg: \"text-base leading-7\",\n};\n\nexport const AlertDescription = forwardRef<\n  HTMLParagraphElement,\n  AlertDescriptionProps\n>(function AlertDescription(\n  { className, variant = \"default\", size = \"md\", tone = \"default\", ...props },\n  ref,\n) {\n  return (\n    <p\n      ref={ref}\n      className={cn(\"mt-3 font-bold\", sizeStyles[size], className)}\n      {...swirskiAttrs(\"alert-description\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nAlertDescription.displayName = \"AlertDescription\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/alert/AlertDescription.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/alert/AlertTitle.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type AlertTitleVariant = \"default\";\nexport type AlertTitleSize = \"sm\" | \"md\" | \"lg\";\nexport type AlertTitleTone = \"default\";\n\nexport type AlertTitleProps = {\n  variant?: AlertTitleVariant;\n  size?: AlertTitleSize;\n  tone?: AlertTitleTone;\n} & HTMLAttributes<HTMLHeadingElement>;\n\nconst sizeStyles: Record<AlertTitleSize, string> = {\n  sm: \"text-xl\",\n  md: \"text-2xl\",\n  lg: \"text-3xl\",\n};\n\nexport const AlertTitle = forwardRef<HTMLHeadingElement, AlertTitleProps>(\n  function AlertTitle(\n    { className, variant = \"default\", size = \"md\", tone = \"default\", ...props },\n    ref,\n  ) {\n    return (\n      <h3\n        ref={ref}\n        className={cn(\"font-anton uppercase leading-none\", sizeStyles[size], className)}\n        {...swirskiAttrs(\"alert-title\", { size, tone, variant })}\n        {...props}\n      />\n    );\n  },\n);\n\nAlertTitle.displayName = \"AlertTitle\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/alert/AlertTitle.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/alert/index.ts",
+      "content": "export { Alert } from \"./Alert\";\nexport { AlertTitle } from \"./AlertTitle\";\nexport { AlertDescription } from \"./AlertDescription\";\nexport type { AlertProps, AlertSize, AlertTone, AlertVariant } from \"./Alert\";\nexport type {\n  AlertDescriptionProps,\n  AlertDescriptionSize,\n  AlertDescriptionTone,\n  AlertDescriptionVariant,\n} from \"./AlertDescription\";\nexport type {\n  AlertTitleProps,\n  AlertTitleSize,\n  AlertTitleTone,\n  AlertTitleVariant,\n} from \"./AlertTitle\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/alert/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "feedback"
+  ],
+  "meta": {
+    "swirskiCategory": "feedback",
+    "swirskiSource": "packages/ui/src/components/alert"
+  }
+}

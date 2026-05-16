@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-click-outside",
+  "type": "registry:hook",
+  "title": "Use Click Outside",
+  "description": "Run a callback when pointer events happen outside an element.",
+  "registryDependencies": [],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "packages/ui/src/hooks/use-click-outside/index.ts",
+      "content": "export { useClickOutside } from \"./useClickOutside\";\nexport type { UseClickOutsideOptions } from \"./useClickOutside\";\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-click-outside/index.ts"
+    },
+    {
+      "path": "packages/ui/src/hooks/use-click-outside/useClickOutside.ts",
+      "content": "\"use client\";\n\nimport { RefObject, useEffect } from \"react\";\n\nexport type UseClickOutsideOptions = {\n  enabled?: boolean;\n  events?: Array<\"mousedown\" | \"pointerdown\" | \"touchstart\">;\n};\n\nexport function useClickOutside<T extends HTMLElement>(\n  ref: RefObject<T | null>,\n  handler: (event: Event) => void,\n  options: UseClickOutsideOptions = {},\n) {\n  const { enabled = true, events = [\"pointerdown\"] } = options;\n\n  useEffect(() => {\n    if (!enabled) {\n      return;\n    }\n\n    const listener = (event: Event) => {\n      const element = ref.current;\n\n      if (!element || element.contains(event.target as Node)) {\n        return;\n      }\n\n      handler(event);\n    };\n\n    events.forEach((eventName) => {\n      document.addEventListener(eventName, listener);\n    });\n\n    return () => {\n      events.forEach((eventName) => {\n        document.removeEventListener(eventName, listener);\n      });\n    };\n  }, [enabled, events, handler, ref]);\n}\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-click-outside/useClickOutside.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "hooks"
+  ],
+  "meta": {
+    "swirskiCategory": "hooks",
+    "swirskiSource": "packages/ui/src/hooks/use-click-outside"
+  }
+}
