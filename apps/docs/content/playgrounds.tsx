@@ -1669,12 +1669,40 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         defaultValue: "lg",
         options: ["sm", "md", "lg"],
       },
+      {
+        name: "tone",
+        label: "tone",
+        type: "select",
+        defaultValue: "blue",
+        options: ["blue", "yellow", "red", "black"],
+      },
+      {
+        name: "variant",
+        label: "variant",
+        type: "select",
+        defaultValue: "spinner",
+        options: ["spinner", "pixel-dots", "pixel-bars", "pixel-blocks"],
+      },
     ],
     render: (values) => (
-      <Loader size={textValue(values, "size") as "sm" | "md" | "lg"} />
+      <Loader
+        tone={textValue(values, "tone") as "blue" | "yellow" | "red" | "black"}
+        size={textValue(values, "size") as "sm" | "md" | "lg"}
+        variant={
+          textValue(values, "variant") as
+            | "spinner"
+            | "pixel-dots"
+            | "pixel-bars"
+            | "pixel-blocks"
+        }
+      />
     ),
     getCode: (values) =>
-      `<Loader size=${jsxString(textValue(values, "size"))} />`,
+      `<Loader 
+    tone=${jsxString(textValue(values, "tone"))}
+    size=${jsxString(textValue(values, "size"))} 
+    variant=${jsxString(textValue(values, "variant"))}
+    />`,
   },
 
   skeleton: {
