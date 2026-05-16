@@ -315,7 +315,7 @@ export default async function ComponentPage({ params }: Props) {
                     <Button
                       key={item.title}
                       href={`#${item.title.toLowerCase()}`}
-                      variant="white"
+                      tone="white"
                       className="justify-start px-3 py-2 text-xs"
                     >
                       {item.title}
@@ -377,7 +377,7 @@ export default async function ComponentPage({ params }: Props) {
               <Button
                 as={Link}
                 href={`/components/${previousComponent.slug}`}
-                variant="white"
+                tone="white"
                 className="w-full text-xs sm:text-sm"
               >
                 Previous: {previousComponent.title}

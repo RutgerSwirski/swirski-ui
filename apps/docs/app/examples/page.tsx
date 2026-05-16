@@ -284,10 +284,10 @@ export default function ExamplesPage() {
                 <Button href="#saas" icon="arrow-up-right" iconSide="right">
                   SaaS dashboard
                 </Button>
-                <Button href="#portfolio" variant="white">
+                <Button href="#portfolio" tone="white">
                   Portfolio
                 </Button>
-                <Button href="#commerce" variant="yellow">
+                <Button href="#commerce" tone="yellow">
                   E-commerce
                 </Button>
               </div>
@@ -624,12 +624,12 @@ export default function ExamplesPage() {
                     ))}
                   </Grid>
                   <div className="flex flex-wrap gap-3">
-                    <Button href="#commerce" variant="yellow" withShadow={false}>
+                    <Button href="#commerce" tone="yellow" withShadow={false}>
                       View work
                     </Button>
                     <Button
                       href="/components"
-                      variant="white"
+                      tone="white"
                       withShadow={false}
                     >
                       Components
@@ -740,10 +740,10 @@ export default function ExamplesPage() {
                     </Title>
                   </div>
                   <div className="flex flex-wrap gap-3">
-                    <Button href="/components/button" variant="white" withShadow={false}>
+                    <Button href="/components/button" tone="white" withShadow={false}>
                       Components
                     </Button>
-                    <Button variant="yellow" withShadow={false}>
+                    <Button tone="yellow" withShadow={false}>
                       Checkout $298
                     </Button>
                   </div>
@@ -923,7 +923,7 @@ export default function ExamplesPage() {
                     <Progress className="mt-2" value={100} />
                   </div>
 
-                  <Button className="mt-5 w-full" variant="blue">
+                  <Button className="mt-5 w-full" tone="blue">
                     Pay now
                   </Button>
                 </aside>

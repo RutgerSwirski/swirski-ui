@@ -21,12 +21,12 @@ export default function Hero() {
         <Button href="/components" icon="arrow-up-right" iconSide="right">
           Browse components
         </Button>
-        <Button href="/examples" variant="yellow">
+        <Button href="/examples" tone="yellow">
           See examples
         </Button>
         <Button
           href="https://github.com/rutgerswirski/swirski-ui"
-          variant="white"
+          tone="white"
           icon="github"
         >
           GitHub

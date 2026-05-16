@@ -276,8 +276,8 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         defaultValue: "View pieces",
       },
       {
-        name: "variant",
-        label: "variant",
+        name: "tone",
+        label: "tone",
         type: "select",
         defaultValue: "blue",
         options: ["blue", "yellow", "white"],
@@ -316,7 +316,7 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
             icon === "none" ? undefined : (icon as "arrow-up-right" | "github")
           }
           iconSide={textValue(values, "iconSide") as "left" | "right"}
-          variant={textValue(values, "variant") as "blue" | "yellow" | "white"}
+          tone={textValue(values, "tone") as "blue" | "yellow" | "white"}
         >
           {textValue(values, "children")}
         </Button>
@@ -327,7 +327,7 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
       const icon = textValue(values, "icon");
       const props = [
         asLink ? 'href="#preview"' : null,
-        `variant=${jsxString(textValue(values, "variant"))}`,
+        `tone=${jsxString(textValue(values, "tone"))}`,
         icon !== "none" ? `icon=${jsxString(icon)}` : null,
         icon !== "none"
           ? `iconSide=${jsxString(textValue(values, "iconSide"))}`
@@ -1090,8 +1090,8 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
           side={textValue(values, "side") as "left" | "right"}
         />
         <div className="flex min-h-48 flex-col justify-center gap-5">
-          <Button variant="yellow">Hover me</Button>
-          <Button className="w-fit" href="#preview" variant="white">
+          <Button tone="yellow">Hover me</Button>
+          <Button className="w-fit" href="#preview" tone="white">
             Link cursor
           </Button>
         </div>
@@ -1104,8 +1104,8 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
 >
   <CursorDock position="absolute" side=${jsxString(textValue(values, "side"))} />
   <div className="flex min-h-48 flex-col justify-center gap-5">
-    <Button variant="yellow">Hover me</Button>
-    <Button className="w-fit" href="#preview" variant="white">
+    <Button tone="yellow">Hover me</Button>
+    <Button className="w-fit" href="#preview" tone="white">
       Link cursor
     </Button>
   </div>
@@ -1339,8 +1339,8 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         defaultValue: "Helpful context",
       },
       {
-        name: "variant",
-        label: "variant",
+        name: "tone",
+        label: "tone",
         type: "select",
         defaultValue: "blue",
         options: ["blue", "yellow", "white"],
@@ -1348,13 +1348,13 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     ],
     render: (values) => (
       <Tooltip content={textValue(values, "content")}>
-        <Button variant={textValue(values, "variant") as "blue" | "yellow" | "white"}>
+        <Button tone={textValue(values, "tone") as "blue" | "yellow" | "white"}>
           {textValue(values, "label")}
         </Button>
       </Tooltip>
     ),
     getCode: (values) => `<Tooltip content=${jsxString(textValue(values, "content"))}>
-  <Button variant=${jsxString(textValue(values, "variant"))}>
+  <Button tone=${jsxString(textValue(values, "tone"))}>
     ${jsxText(textValue(values, "label"))}
   </Button>
 </Tooltip>`,

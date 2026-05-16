@@ -13,20 +13,20 @@ type Story = StoryObj<typeof Button>;
 export const Blue: Story = {
   args: {
     children: "View Work →",
-    variant: "blue",
+    tone: "blue",
   },
 };
 
 export const Yellow: Story = {
   args: {
     children: "Let’s build!",
-    variant: "yellow",
+    tone: "yellow",
   },
 };
 
 export const White: Story = {
   args: {
     children: "Read more",
-    variant: "white",
+    tone: "white",
   },
 };

@@ -1,46 +1,71 @@
 "use client";
 
-import clsx from "clsx";
-import { useState } from "react";
+import { HTMLAttributes, forwardRef, useState } from "react";
+import { cn, swirskiAttrs } from "../../system";
 import { CursorPicker } from "./CursorPicker";
 import { useSwirskiCursor } from "./CursorProvider";
 
 export type CursorDockProps = {
-  className?: string;
   label?: string;
   position?: "fixed" | "absolute";
   side?: "left" | "right";
-};
+  variant?: "default";
+  size?: "md";
+  tone?: "default";
+} & HTMLAttributes<HTMLDivElement>;
 
-export function CursorDock({
+export const CursorDock = forwardRef<HTMLDivElement, CursorDockProps>(
+  function CursorDock({
   className,
   label = "Choose cursor",
   position = "fixed",
   side = "right",
-}: CursorDockProps) {
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onBlur,
+  onFocus,
+  onMouseEnter,
+  onMouseLeave,
+  ...props
+}, ref) {
   const { cursor } = useSwirskiCursor();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
-      className={clsx(
+      ref={ref}
+      className={cn(
         "group top-1/2 z-50 hidden -translate-y-1/2 items-center gap-0 lg:flex",
         position === "fixed" ? "fixed" : "absolute",
         side === "right" ? "right-0 flex-row" : "left-0 flex-row-reverse",
         className,
       )}
       onBlur={(event) => {
+        onBlur?.(event);
+
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setIsOpen(false);
         }
       }}
-      onFocus={() => setIsOpen(true)}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onFocus={(event) => {
+        onFocus?.(event);
+        setIsOpen(true);
+      }}
+      onMouseEnter={(event) => {
+        onMouseEnter?.(event);
+        setIsOpen(true);
+      }}
+      onMouseLeave={(event) => {
+        onMouseLeave?.(event);
+        setIsOpen(false);
+      }}
+      {...swirskiAttrs("cursor-dock", { size, tone, variant })}
+      {...props}
     >
       <div
         aria-hidden={!isOpen}
-        className={clsx(
+        className={cn(
           "overflow-hidden transition-[max-width,opacity,transform] duration-200 ease-out",
           isOpen
             ? "max-w-[calc(100vw-5rem)] opacity-100"
@@ -55,7 +80,7 @@ export function CursorDock({
         )}
       >
         <CursorPicker
-          className={clsx(
+          className={cn(
             "mx-3 w-max max-w-[calc(100vw-6rem)]",
             !isOpen && "pointer-events-none",
           )}
@@ -68,7 +93,7 @@ export function CursorDock({
       <button
         aria-expanded={isOpen}
         aria-label={label}
-        className={clsx(
+        className={cn(
           "grid size-14 place-items-center border-4 border-black bg-[#FFD400] shadow-[5px_5px_0_#0B0B0C] transition-all duration-150",
           "hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
           "focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#0057FF]",
@@ -76,6 +101,7 @@ export function CursorDock({
         )}
         onClick={() => setIsOpen((open) => !open)}
         type="button"
+        {...swirskiAttrs("cursor-dock-trigger", { size, tone, variant })}
       >
         <span
           aria-hidden="true"
@@ -85,4 +111,6 @@ export function CursorDock({
       </button>
     </div>
   );
-}
+});
+
+CursorDock.displayName = "CursorDock";

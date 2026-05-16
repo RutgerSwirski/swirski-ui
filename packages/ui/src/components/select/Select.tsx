@@ -4,6 +4,7 @@ import {
   HTMLAttributes,
   KeyboardEvent,
   ReactNode,
+  forwardRef,
   useEffect,
   useId,
   useMemo,
@@ -11,7 +12,11 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import clsx from "clsx";
+import { cn, composeRefs, swirskiAttrs } from "../../system";
+
+export type SelectVariant = "default" | "filled";
+export type SelectSize = "sm" | "md" | "lg";
+export type SelectTone = "default";
 
 export type SelectOption = {
   value: string;
@@ -30,7 +35,22 @@ export type SelectProps = {
   triggerClassName?: string;
   contentClassName?: string;
   optionClassName?: string;
+  variant?: SelectVariant;
+  size?: SelectSize;
+  tone?: SelectTone;
 } & Omit<HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange">;
+
+const triggerSizeStyles: Record<SelectSize, string> = {
+  sm: "min-h-10 px-3 py-1.5 text-xs",
+  md: "min-h-12 px-3 py-2 text-sm",
+  lg: "min-h-14 px-4 py-3 text-base",
+};
+
+const optionSizeStyles: Record<SelectSize, string> = {
+  sm: "min-h-9 px-2 py-1.5 text-xs",
+  md: "min-h-10 px-3 py-2 text-xs",
+  lg: "min-h-12 px-4 py-3 text-sm",
+};
 
 function optionText(option: SelectOption) {
   return option.label ?? option.value;
@@ -70,7 +90,7 @@ function moveHighlight(
   return currentIndex;
 }
 
-export function Select({
+export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
   options,
   value,
   defaultValue,
@@ -82,8 +102,11 @@ export function Select({
   triggerClassName,
   contentClassName,
   optionClassName,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: SelectProps) {
+}, ref) {
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const generatedId = useId();
@@ -219,8 +242,9 @@ export function Select({
 
   return (
     <div
-      ref={rootRef}
-      className={clsx("relative min-w-0", className)}
+      ref={composeRefs(rootRef, ref)}
+      className={cn("relative min-w-0", className)}
+      {...swirskiAttrs("select", { size, tone, variant })}
       {...props}
     >
       {name && <input type="hidden" name={name} value={selectedValue} />}
@@ -234,21 +258,24 @@ export function Select({
         aria-controls={isOpen ? listboxId : undefined}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        className={clsx(
-          "flex min-h-12 w-full items-center justify-between gap-3 border-4 border-black bg-white px-3 py-2 text-left text-sm font-black uppercase text-[#0B0B0C] shadow-[4px_4px_0_#0B0B0C] outline-none transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#0B0B0C] focus-visible:shadow-[6px_6px_0_#0057FF] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500",
+        className={cn(
+          "flex w-full items-center justify-between gap-3 border-4 border-black text-left font-black uppercase text-[#0B0B0C] shadow-[4px_4px_0_#0B0B0C] outline-none transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#0B0B0C] focus-visible:shadow-[6px_6px_0_#0057FF] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500",
+          variant === "default" ? "bg-white" : "bg-[#F5F5F3]",
+          triggerSizeStyles[size],
           triggerClassName,
         )}
         disabled={disabled}
         onClick={() => setIsOpen((currentValue) => !currentValue)}
         onKeyDown={handleKeyDown}
         type="button"
+        {...swirskiAttrs("select-trigger", { size, tone, variant })}
       >
-        <span className={clsx(!selectedOption && "text-black/50")}>
+        <span className={cn(!selectedOption && "text-black/50")}>
           {selectedOption ? optionText(selectedOption) : placeholder}
         </span>
         <span
           aria-hidden="true"
-          className={clsx(
+          className={cn(
             "grid size-6 shrink-0 place-items-center border-2 border-black bg-[#FFD400] leading-none transition",
             isOpen && "rotate-180",
           )}
@@ -263,12 +290,13 @@ export function Select({
         createPortal(
         <div
           ref={contentRef}
-          className={clsx(
+          className={cn(
             "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C]",
             contentClassName,
           )}
           id={listboxId}
           role="listbox"
+          {...swirskiAttrs("select-content", { size, tone, variant })}
           style={{
             left: contentPosition.left,
             top: contentPosition.top,
@@ -283,8 +311,9 @@ export function Select({
               <button
                 aria-disabled={option.disabled}
                 aria-selected={isSelected}
-                className={clsx(
-                  "flex min-h-10 w-full items-center justify-between gap-3 px-3 py-2 text-left text-xs font-black uppercase transition",
+                className={cn(
+                  "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
+                  optionSizeStyles[size],
                   isHighlighted && !option.disabled && "bg-[#FFD400]",
                   isSelected && "bg-[#0057FF] text-white",
                   option.disabled
@@ -303,6 +332,7 @@ export function Select({
                 }}
                 role="option"
                 type="button"
+                {...swirskiAttrs("select-option", { size, tone, variant })}
               >
                 <span>{optionText(option)}</span>
                 {isSelected && <span aria-hidden="true">x</span>}
@@ -314,4 +344,6 @@ export function Select({
       )}
     </div>
   );
-}
+});
+
+Select.displayName = "Select";

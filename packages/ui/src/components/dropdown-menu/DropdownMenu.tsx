@@ -5,13 +5,18 @@ import {
   HTMLAttributes,
   ReactNode,
   createContext,
+  forwardRef,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import clsx from "clsx";
+import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+
+export type DropdownMenuVariant = "default" | "compact";
+export type DropdownMenuSize = "sm" | "md" | "lg";
+export type DropdownMenuTone = "default";
 
 type DropdownMenuContextValue = {
   open: boolean;
@@ -32,11 +37,24 @@ function useDropdownMenu() {
   return context;
 }
 
-export function DropdownMenu({
-  children,
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+export type DropdownMenuProps = {
+  variant?: DropdownMenuVariant;
+  size?: DropdownMenuSize;
+  tone?: DropdownMenuTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
+  function DropdownMenu(
+    {
+      children,
+      className,
+      variant = "default",
+      size = "md",
+      tone = "default",
+      ...props
+    },
+    ref,
+  ) {
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -64,38 +82,95 @@ export function DropdownMenu({
 
   return (
     <DropdownMenuContext.Provider value={{ open, setOpen, rootRef, contentRef }}>
-      <div ref={rootRef} className={clsx("relative w-fit", className)} {...props}>
+      <div
+        ref={composeRefs(rootRef, ref)}
+        className={cn("relative w-fit", className)}
+        {...swirskiAttrs("dropdown-menu", { size, tone, variant })}
+        {...props}
+      >
         {children}
       </div>
     </DropdownMenuContext.Provider>
   );
-}
+  },
+);
 
-export function DropdownMenuTrigger({
+DropdownMenu.displayName = "DropdownMenu";
+
+export type DropdownMenuTriggerProps =
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    asChild?: boolean;
+    variant?: DropdownMenuVariant;
+    size?: DropdownMenuSize;
+    tone?: DropdownMenuTone;
+  };
+
+const triggerSizeStyles: Record<DropdownMenuSize, string> = {
+  sm: "px-3 py-1.5 text-xs",
+  md: "px-4 py-2",
+  lg: "px-5 py-3 text-base",
+};
+
+export const DropdownMenuTrigger = forwardRef<
+  HTMLButtonElement,
+  DropdownMenuTriggerProps
+>(function DropdownMenuTrigger({
+  asChild = false,
   className,
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onClick,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { open, setOpen } = useDropdownMenu();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "border-4 border-black bg-white px-4 py-2 font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+    <Component
+      ref={ref}
+      className={cn(
+        "border-4 border-black bg-white font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        triggerSizeStyles[size],
+        variant === "compact" && "shadow-none",
         className,
       )}
-      onClick={() => setOpen(!open)}
-      type="button"
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (!event.defaultPrevented) {
+          setOpen(!open);
+        }
+      }}
+      type={asChild ? undefined : "button"}
+      aria-expanded={open}
+      {...swirskiAttrs("dropdown-menu-trigger", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function DropdownMenuContent({
+DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
+
+export type DropdownMenuContentProps = HTMLAttributes<HTMLDivElement> & {
+  align?: "start" | "end";
+  variant?: DropdownMenuVariant;
+  size?: DropdownMenuSize;
+  tone?: DropdownMenuTone;
+};
+
+export const DropdownMenuContent = forwardRef<
+  HTMLDivElement,
+  DropdownMenuContentProps
+>(function DropdownMenuContent({
   className,
   align = "start",
+  variant = "default",
+  size = "md",
+  tone = "default",
   style,
   ...props
-}: HTMLAttributes<HTMLDivElement> & { align?: "start" | "end" }) {
+}, ref) {
   const { contentRef, open, rootRef } = useDropdownMenu();
   const [position, setPosition] = useState<{
     left: number;
@@ -137,12 +212,14 @@ export function DropdownMenuContent({
 
   return createPortal(
     <div
-      ref={contentRef}
-      className={clsx(
+      ref={composeRefs(contentRef, ref)}
+      className={cn(
         "fixed z-[1000] min-w-48 border-4 border-black bg-white p-1 shadow-[8px_8px_0_#0B0B0C]",
+        variant === "compact" && "shadow-[4px_4px_0_#0B0B0C]",
         className,
       )}
       role="menu"
+      {...swirskiAttrs("dropdown-menu-content", { size, tone, variant })}
       style={{
         left: position.left,
         top: position.top,
@@ -153,19 +230,44 @@ export function DropdownMenuContent({
     />,
     document.body,
   );
-}
+});
 
-export function DropdownMenuItem({
+DropdownMenuContent.displayName = "DropdownMenuContent";
+
+export type DropdownMenuItemProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  variant?: DropdownMenuVariant;
+  size?: DropdownMenuSize;
+  tone?: DropdownMenuTone;
+};
+
+const itemSizeStyles: Record<DropdownMenuSize, string> = {
+  sm: "min-h-9 px-2 py-1.5 text-xs",
+  md: "min-h-10 px-3 py-2 text-xs",
+  lg: "min-h-12 px-4 py-3 text-sm",
+};
+
+export const DropdownMenuItem = forwardRef<
+  HTMLButtonElement,
+  DropdownMenuItemProps
+>(function DropdownMenuItem({
+  asChild = false,
   className,
   onClick,
+  variant = "default",
+  size = "md",
+  tone = "default",
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}, ref) {
   const { setOpen } = useDropdownMenu();
+  const Component = asChild ? Slot : "button";
 
   return (
-    <button
-      className={clsx(
-        "block min-h-10 w-full px-3 py-2 text-left text-xs font-black uppercase transition hover:bg-[#FFD400]",
+    <Component
+      ref={ref}
+      className={cn(
+        "block w-full text-left font-black uppercase transition hover:bg-[#FFD400]",
+        itemSizeStyles[size],
         className,
       )}
       onClick={(event) => {
@@ -173,12 +275,36 @@ export function DropdownMenuItem({
         setOpen(false);
       }}
       role="menuitem"
-      type="button"
+      type={asChild ? undefined : "button"}
+      {...swirskiAttrs("dropdown-menu-item", { size, tone, variant })}
       {...props}
     />
   );
-}
+});
 
-export function DropdownMenuSeparator({ className }: { className?: string }) {
-  return <div className={clsx("my-1 border-t-4 border-black", className)} />;
-}
+DropdownMenuItem.displayName = "DropdownMenuItem";
+
+export type DropdownMenuSeparatorProps = {
+  variant?: DropdownMenuVariant;
+  size?: DropdownMenuSize;
+  tone?: DropdownMenuTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+export const DropdownMenuSeparator = forwardRef<
+  HTMLDivElement,
+  DropdownMenuSeparatorProps
+>(function DropdownMenuSeparator(
+  { className, variant = "default", size = "md", tone = "default", ...props },
+  ref,
+) {
+  return (
+    <div
+      ref={ref}
+      className={cn("my-1 border-t-4 border-black", className)}
+      {...swirskiAttrs("dropdown-menu-separator", { size, tone, variant })}
+      {...props}
+    />
+  );
+});
+
+DropdownMenuSeparator.displayName = "DropdownMenuSeparator";

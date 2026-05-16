@@ -1,14 +1,18 @@
-import { HTMLAttributes, ReactNode, createElement } from "react";
-import clsx from "clsx";
+import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type TextSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type TextTone = "default" | "muted" | "subtle" | "inverted";
 export type TextWeight = "regular" | "medium" | "bold" | "black";
 export type TextElement = "p" | "span" | "div";
+export type TextVariant = "default" | "lead" | "caption";
 
 export type TextProps = {
-  children: ReactNode;
+  as?: ElementType;
+  asChild?: boolean;
+  children?: ReactNode;
   component?: TextElement;
+  variant?: TextVariant;
   size?: TextSize;
   tone?: TextTone;
   weight?: TextWeight;
@@ -38,26 +42,42 @@ const weightStyles: Record<TextWeight, string> = {
   black: "font-black",
 };
 
-export function Text({
+const variantStyles: Record<TextVariant, string> = {
+  default: "",
+  lead: "max-w-prose",
+  caption: "uppercase tracking-normal",
+};
+
+export const Text = forwardRef<HTMLElement, TextProps>(function Text({
+  as,
+  asChild = false,
   children,
   className,
   component = "p",
+  variant = "default",
   size = "md",
   tone = "default",
   weight = "regular",
   ...props
-}: TextProps) {
-  return createElement(
-    component,
-    {
-      className: clsx(
+}: TextProps, ref) {
+  const Component = (asChild ? Slot : as ?? component) as ElementType;
+
+  return (
+    <Component
+      ref={ref}
+      className={cn(
         sizeStyles[size],
         toneStyles[tone],
         weightStyles[weight],
+        variantStyles[variant],
         className,
-      ),
-      ...props,
-    },
-    children,
+      )}
+      {...swirskiAttrs("text", { size, tone, variant })}
+      {...props}
+    >
+      {children}
+    </Component>
   );
-}
+});
+
+Text.displayName = "Text";

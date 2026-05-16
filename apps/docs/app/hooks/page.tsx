@@ -162,7 +162,7 @@ export default function HooksPage() {
                         withShadow={false}
                         key={hook}
                         href={doc ? `/hooks/${doc.slug}` : "/hooks"}
-                        variant="white"
+                        tone="white"
                         className="justify-start text-sm"
                       >
                         {hook}

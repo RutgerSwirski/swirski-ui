@@ -224,7 +224,7 @@ export default function HomePage() {
 
           <Grid gap="sm" className="sm:grid-cols-2 lg:grid-cols-3">
             {packageLinks.map((item) => (
-              <Button variant="white" key={item} href={getComponentHref(item)}>
+              <Button tone="white" key={item} href={getComponentHref(item)}>
                 {item}
               </Button>
             ))}
@@ -289,7 +289,7 @@ export default function HomePage() {
                       swirski init && swirski add button card dialog
                     </code>
                   </div>
-                  <Button href="/cli" variant="white">
+                  <Button href="/cli" tone="white">
                     CLI docs
                   </Button>
                 </div>

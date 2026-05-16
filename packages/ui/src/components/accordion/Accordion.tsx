@@ -1,44 +1,117 @@
-import { DetailsHTMLAttributes, HTMLAttributes, ReactNode } from "react";
-import clsx from "clsx";
+import {
+  DetailsHTMLAttributes,
+  HTMLAttributes,
+  ReactNode,
+  forwardRef,
+} from "react";
+import { Slot, cn, swirskiAttrs } from "../../system";
 
-export type AccordionProps = HTMLAttributes<HTMLDivElement>;
+export type AccordionVariant = "default" | "compact";
+export type AccordionSize = "sm" | "md" | "lg";
+export type AccordionTone = "default";
 
-export function Accordion({ className, ...props }: AccordionProps) {
-  return <div className={clsx("grid gap-3", className)} {...props} />;
-}
+export type AccordionProps = {
+  asChild?: boolean;
+  variant?: AccordionVariant;
+  size?: AccordionSize;
+  tone?: AccordionTone;
+} & HTMLAttributes<HTMLDivElement>;
 
-export type AccordionItemProps = DetailsHTMLAttributes<HTMLDetailsElement>;
+const gapStyles: Record<AccordionSize, string> = {
+  sm: "gap-2",
+  md: "gap-3",
+  lg: "gap-4",
+};
 
-export function AccordionItem({
-  className,
-  ...props
-}: AccordionItemProps) {
+export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
+  function Accordion(
+    {
+      asChild = false,
+      className,
+      variant = "default",
+      size = "md",
+      tone = "default",
+      ...props
+    },
+    ref,
+  ) {
+    const Component = asChild ? Slot : "div";
+
+    return (
+      <Component
+        ref={ref}
+        className={cn("grid", gapStyles[size], className)}
+        {...swirskiAttrs("accordion", { size, tone, variant })}
+        {...props}
+      />
+    );
+  },
+);
+
+Accordion.displayName = "Accordion";
+
+export type AccordionItemProps = {
+  variant?: AccordionVariant;
+  size?: AccordionSize;
+  tone?: AccordionTone;
+} & DetailsHTMLAttributes<HTMLDetailsElement>;
+
+export const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(
+  function AccordionItem(
+    { className, variant = "default", size = "md", tone = "default", ...props },
+    ref,
+  ) {
   return (
     <details
-      className={clsx(
+      ref={ref}
+      className={cn(
         "group border-4 border-black bg-white shadow-[5px_5px_0_#0B0B0C] transition open:bg-[#F5F5F3]",
+        variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
         className,
       )}
+      {...swirskiAttrs("accordion-item", { size, tone, variant })}
       {...props}
     />
   );
-}
+  },
+);
+
+AccordionItem.displayName = "AccordionItem";
 
 export type AccordionTriggerProps = {
-  children: ReactNode;
+  children?: ReactNode;
+  variant?: AccordionVariant;
+  size?: AccordionSize;
+  tone?: AccordionTone;
 } & HTMLAttributes<HTMLElement>;
 
-export function AccordionTrigger({
-  children,
-  className,
-  ...props
-}: AccordionTriggerProps) {
+const triggerSizeStyles: Record<AccordionSize, string> = {
+  sm: "px-4 py-3 text-sm",
+  md: "px-5 py-4",
+  lg: "px-6 py-5 text-lg",
+};
+
+export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(
+  function AccordionTrigger(
+    {
+      children,
+      className,
+      variant = "default",
+      size = "md",
+      tone = "default",
+      ...props
+    },
+    ref,
+  ) {
   return (
     <summary
-      className={clsx(
-        "flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-black uppercase marker:hidden [&::-webkit-details-marker]:hidden",
+      ref={ref}
+      className={cn(
+        "flex cursor-pointer list-none items-center justify-between gap-4 font-black uppercase marker:hidden [&::-webkit-details-marker]:hidden",
+        triggerSizeStyles[size],
         className,
       )}
+      {...swirskiAttrs("accordion-trigger", { size, tone, variant })}
       {...props}
     >
       <span>{children}</span>
@@ -47,21 +120,41 @@ export function AccordionTrigger({
       </span>
     </summary>
   );
-}
+  },
+);
 
-export type AccordionContentProps = HTMLAttributes<HTMLDivElement>;
+AccordionTrigger.displayName = "AccordionTrigger";
 
-export function AccordionContent({
-  className,
-  ...props
-}: AccordionContentProps) {
+export type AccordionContentProps = {
+  variant?: AccordionVariant;
+  size?: AccordionSize;
+  tone?: AccordionTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+const contentSizeStyles: Record<AccordionSize, string> = {
+  sm: "px-4 py-3 text-xs leading-5",
+  md: "px-5 py-4 text-sm leading-6",
+  lg: "px-6 py-5 text-base leading-7",
+};
+
+export const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
+  function AccordionContent(
+    { className, variant = "default", size = "md", tone = "default", ...props },
+    ref,
+  ) {
   return (
     <div
-      className={clsx(
-        "border-t-4 border-black px-5 py-4 text-sm font-bold leading-6 text-neutral-700",
+      ref={ref}
+      className={cn(
+        "border-t-4 border-black font-bold text-neutral-700",
+        contentSizeStyles[size],
         className,
       )}
+      {...swirskiAttrs("accordion-content", { size, tone, variant })}
       {...props}
     />
   );
-}
+  },
+);
+
+AccordionContent.displayName = "AccordionContent";

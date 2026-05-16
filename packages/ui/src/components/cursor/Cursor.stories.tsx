@@ -19,7 +19,7 @@ export const Picker: Story = {
       <CursorPicker />
 
       <div className="flex flex-wrap items-center gap-4">
-        <Button variant="yellow">Hover me</Button>
+        <Button tone="yellow">Hover me</Button>
         <a className="font-black underline" href="#cursor-story">
           Tiny link test
         </a>
@@ -36,7 +36,7 @@ export const SideDock: Story = {
       <div className="max-w-xl space-y-4">
         <p className="font-black uppercase">Hover the side tab.</p>
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="yellow">Hover me</Button>
+          <Button tone="yellow">Hover me</Button>
           <a className="font-black underline" href="#cursor-dock-story">
             Tiny link test
           </a>

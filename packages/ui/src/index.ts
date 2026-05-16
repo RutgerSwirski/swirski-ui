@@ -72,12 +72,29 @@ export * from "./components/typography/index";
 
 export * from "./hooks/index";
 
+// import system index file - a file that adds a swirski system to any component
+export * from "./system/index";
+
 export * from "./theme/index";
 
 export { HeroActions } from "./components/hero-actions/HeroActions";
+export type {
+  HeroActionsProps,
+  HeroActionsSize,
+  HeroActionsTone,
+  HeroActionsVariant,
+} from "./components/hero-actions/HeroActions";
 
 export { HeroKicker } from "./components/hero-kicker/HeroKicker";
+export type {
+  HeroKickerProps,
+  HeroKickerSize,
+  HeroKickerTone,
+  HeroKickerVariant,
+} from "./components/hero-kicker/HeroKicker";
 
 export { HeroLead } from "./components/hero-lead/HeroLead";
+export type { HeroLeadProps } from "./components/hero-lead/HeroLead";
 
 export { HeroTitle } from "./components/hero-title/HeroTitle";
+export type { HeroTitleProps } from "./components/hero-title/HeroTitle";

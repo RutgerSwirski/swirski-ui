@@ -258,10 +258,28 @@ export const componentDocs: ComponentDoc[] = [
         description: "Custom component used for the root element, such as Next.js Link.",
       },
       {
-        name: "variant",
-        type: '"blue" | "yellow" | "white"',
+        name: "tone",
+        type: '"blue" | "yellow" | "red" | "white" | "black"',
         defaultValue: '"blue"',
         description: "Applies the Swirski color treatment.",
+      },
+      {
+        name: "variant",
+        type: '"solid" | "outline" | "ghost"',
+        defaultValue: '"solid"',
+        description: "Controls the visual treatment independently from tone.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        defaultValue: '"md"',
+        description: "Controls the button scale.",
+      },
+      {
+        name: "asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Passes button props to a single child element.",
       },
       {
         name: "icon",
@@ -306,8 +324,8 @@ export const componentDocs: ComponentDoc[] = [
       <CursorProvider className="relative min-h-64 space-y-6 overflow-hidden p-2">
         <CursorDock position="absolute" />
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="yellow">Hover me</Button>
-          <Button href="/components/cursor" variant="white">
+          <Button tone="yellow">Hover me</Button>
+          <Button href="/components/cursor" tone="white">
             Link cursor
           </Button>
         </div>

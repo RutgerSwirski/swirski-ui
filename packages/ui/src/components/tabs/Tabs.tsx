@@ -5,10 +5,15 @@ import {
   HTMLAttributes,
   ReactNode,
   createContext,
+  forwardRef,
   useContext,
   useState,
 } from "react";
-import clsx from "clsx";
+import { Slot, cn, swirskiAttrs } from "../../system";
+
+export type TabsVariant = "default" | "compact";
+export type TabsSize = "sm" | "md" | "lg";
+export type TabsTone = "blue" | "yellow" | "black";
 
 type TabsContextValue = {
   value: string;
@@ -21,6 +26,9 @@ export type TabsProps = {
   value?: string;
   defaultValue: string;
   onValueChange?: (value: string) => void;
+  variant?: TabsVariant;
+  size?: TabsSize;
+  tone?: TabsTone;
 } & HTMLAttributes<HTMLDivElement>;
 
 function useTabs() {
@@ -33,13 +41,16 @@ function useTabs() {
   return context;
 }
 
-export function Tabs({
+export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({
   value,
   defaultValue,
   onValueChange,
+  variant = "default",
+  size = "md",
+  tone = "blue",
   className,
   ...props
-}: TabsProps) {
+}, ref) {
   const [internalValue, setInternalValue] = useState(defaultValue);
   const isControlled = value !== undefined;
   const currentValue = value ?? internalValue;
@@ -54,67 +65,163 @@ export function Tabs({
 
   return (
     <TabsContext.Provider value={{ value: currentValue, setValue }}>
-      <div className={clsx("grid gap-4", className)} {...props} />
+      <div
+        ref={ref}
+        className={cn("grid gap-4", className)}
+        {...swirskiAttrs("tabs", { size, tone, variant })}
+        {...props}
+      />
     </TabsContext.Provider>
   );
-}
+  },
+);
 
-export function TabsList({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={clsx(
-        "flex w-fit flex-wrap gap-2 border-4 border-black bg-white p-2 shadow-[6px_6px_0_#0B0B0C]",
-        className,
-      )}
-      role="tablist"
-      {...props}
-    />
-  );
-}
+Tabs.displayName = "Tabs";
 
-export function TabsTrigger({
-  value,
-  className,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { value: string }) {
-  const tabs = useTabs();
-  const isSelected = tabs.value === value;
+export type TabsListProps = {
+  asChild?: boolean;
+  variant?: TabsVariant;
+  size?: TabsSize;
+  tone?: TabsTone;
+} & HTMLAttributes<HTMLDivElement>;
 
-  return (
-    <button
-      aria-selected={isSelected}
-      className={clsx(
-        "border-4 border-black px-4 py-2 text-sm font-black uppercase transition",
-        isSelected ? "bg-[#0057FF] text-white" : "bg-white hover:bg-[#FFD400]",
-        className,
-      )}
-      onClick={() => tabs.setValue(value)}
-      role="tab"
-      type="button"
-      {...props}
-    />
-  );
-}
+export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
+  function TabsList(
+    {
+      asChild = false,
+      className,
+      variant = "default",
+      size = "md",
+      tone = "blue",
+      ...props
+    },
+    ref,
+  ) {
+    const Component = asChild ? Slot : "div";
 
-export function TabsContent({
-  value,
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement> & { value: string }) {
-  const tabs = useTabs();
+    return (
+      <Component
+        ref={ref}
+        className={cn(
+          "flex w-fit flex-wrap gap-2 border-4 border-black bg-white p-2 shadow-[6px_6px_0_#0B0B0C]",
+          variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
+          className,
+        )}
+        role="tablist"
+        {...swirskiAttrs("tabs-list", { size, tone, variant })}
+        {...props}
+      />
+    );
+  },
+);
 
-  if (tabs.value !== value) {
-    return null;
-  }
+TabsList.displayName = "TabsList";
 
-  return (
-    <div
-      className={clsx(
-        "border-4 border-black bg-white p-5 shadow-[6px_6px_0_#0B0B0C]",
-        className,
-      )}
-      role="tabpanel"
-      {...props}
-    />
-  );
-}
+export type TabsTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+  value: string;
+  variant?: TabsVariant;
+  size?: TabsSize;
+  tone?: TabsTone;
+};
+
+const triggerSizeStyles: Record<TabsSize, string> = {
+  sm: "px-3 py-1.5 text-xs",
+  md: "px-4 py-2 text-sm",
+  lg: "px-5 py-3 text-base",
+};
+
+const selectedToneStyles: Record<TabsTone, string> = {
+  blue: "bg-[#0057FF] text-white",
+  yellow: "bg-[#FFD400] text-black",
+  black: "bg-[#0B0B0C] text-white",
+};
+
+export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
+  function TabsTrigger({
+    asChild = false,
+    value,
+    className,
+    variant = "default",
+    size = "md",
+    tone = "blue",
+    onClick,
+    ...props
+  }, ref) {
+    const tabs = useTabs();
+    const isSelected = tabs.value === value;
+    const Component = asChild ? Slot : "button";
+
+    return (
+      <Component
+        ref={ref}
+        aria-selected={isSelected}
+        className={cn(
+          "border-4 border-black font-black uppercase transition",
+          triggerSizeStyles[size],
+          isSelected ? selectedToneStyles[tone] : "bg-white hover:bg-[#FFD400]",
+          variant === "compact" && "border-2",
+          className,
+        )}
+        onClick={(event) => {
+          onClick?.(event);
+
+          if (!event.defaultPrevented) {
+            tabs.setValue(value);
+          }
+        }}
+        role="tab"
+        type={asChild ? undefined : "button"}
+        {...swirskiAttrs("tabs-trigger", { size, tone, variant })}
+        data-active={isSelected ? "" : undefined}
+        {...props}
+      />
+    );
+  },
+);
+
+TabsTrigger.displayName = "TabsTrigger";
+
+export type TabsContentProps = HTMLAttributes<HTMLDivElement> & {
+  asChild?: boolean;
+  value: string;
+  variant?: TabsVariant;
+  size?: TabsSize;
+  tone?: TabsTone;
+};
+
+export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
+  function TabsContent({
+    asChild = false,
+    value,
+    className,
+    variant = "default",
+    size = "md",
+    tone = "blue",
+    ...props
+  }, ref) {
+    const tabs = useTabs();
+
+    if (tabs.value !== value) {
+      return null;
+    }
+
+    const Component = asChild ? Slot : "div";
+
+    return (
+      <Component
+        ref={ref}
+        className={cn(
+          "border-4 border-black bg-white p-5 shadow-[6px_6px_0_#0B0B0C]",
+          variant === "compact" && "p-4 shadow-[3px_3px_0_#0B0B0C]",
+          className,
+        )}
+        role="tabpanel"
+        {...swirskiAttrs("tabs-content", { size, tone, variant })}
+        {...props}
+      />
+    );
+  },
+);
+
+TabsContent.displayName = "TabsContent";

@@ -5,4 +5,7 @@ export type {
   GridContent,
   GridGap,
   GridProps,
+  GridSize,
+  GridTone,
+  GridVariant,
 } from "./Grid";

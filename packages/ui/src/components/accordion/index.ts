@@ -6,6 +6,9 @@ export {
 } from "./Accordion";
 export type {
   AccordionContentProps,
+  AccordionSize,
+  AccordionTone,
+  AccordionVariant,
   AccordionItemProps,
   AccordionProps,
   AccordionTriggerProps,

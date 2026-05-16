@@ -3,14 +3,16 @@
 import {
   createContext,
   CSSProperties,
+  HTMLAttributes,
   ReactNode,
+  forwardRef,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import clsx from "clsx";
+import { cn, swirskiAttrs } from "../../system";
 import {
   getSwirskiCursor,
   swirskiCursors,
@@ -29,13 +31,15 @@ const CursorContext = createContext<CursorContextValue | null>(null);
 
 export type CursorProviderProps = {
   children: ReactNode;
-  className?: string;
   cursors?: SwirskiCursor[];
   cursor?: CursorId;
   defaultCursor?: CursorId;
   onCursorChange?: (cursorId: CursorId) => void;
   storageKey?: string | false;
-};
+  variant?: "default";
+  size?: "md";
+  tone?: "default";
+} & HTMLAttributes<HTMLDivElement>;
 
 const cursorSelectorStyles = `
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
@@ -137,7 +141,8 @@ function findCursor(cursors: SwirskiCursor[], cursorId: CursorId) {
   );
 }
 
-export function CursorProvider({
+export const CursorProvider = forwardRef<HTMLDivElement, CursorProviderProps>(
+  function CursorProvider({
   children,
   className,
   cursors = swirskiCursors,
@@ -145,7 +150,13 @@ export function CursorProvider({
   defaultCursor = "bolt",
   onCursorChange,
   storageKey = "swirski-cursor",
-}: CursorProviderProps) {
+  variant = "default",
+  size = "md",
+  tone = "default",
+  onPointerDownCapture,
+  style,
+  ...props
+}, ref) {
   const isControlled = cursor !== undefined;
 
   const [selectedCursor, setSelectedCursor] = useState<CursorId>(() => {
@@ -222,7 +233,7 @@ export function CursorProvider({
     [activeCursor, cursors, setCursor],
   );
 
-  const style = {
+  const cursorStyle = {
     "--swirski-cursor": activeCursor.cursor,
     "--swirski-cursor-pointer": activeCursor.pointer,
     "--swirski-cursor-active": activeCursor.active,
@@ -233,21 +244,28 @@ export function CursorProvider({
       <style>{cursorSelectorStyles}</style>
 
       <div
-        className={clsx("min-h-full", className)}
+        ref={ref}
+        className={cn("min-h-full", className)}
         data-swirski-cursor={activeCursor.id}
         data-swirski-cursor-pressed={isPressed ? "true" : undefined}
-        style={style}
+        {...swirskiAttrs("cursor-provider", { size, tone, variant })}
+        style={{ ...cursorStyle, ...style }}
         onPointerDownCapture={(event) => {
+          onPointerDownCapture?.(event);
+
           if (event.pointerType === "mouse") {
             setIsPressed(true);
           }
         }}
+        {...props}
       >
         {children}
       </div>
     </CursorContext.Provider>
   );
-}
+});
+
+CursorProvider.displayName = "CursorProvider";
 
 export function useSwirskiCursor() {
   const context = useContext(CursorContext);

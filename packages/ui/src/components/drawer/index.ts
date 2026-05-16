@@ -7,4 +7,15 @@ export {
   DrawerTitle,
   DrawerTrigger,
 } from "./Drawer";
-export type { DrawerProps } from "./Drawer";
+export type {
+  DrawerCloseProps,
+  DrawerContentProps,
+  DrawerDescriptionProps,
+  DrawerHeaderProps,
+  DrawerProps,
+  DrawerSize,
+  DrawerTitleProps,
+  DrawerTone,
+  DrawerTriggerProps,
+  DrawerVariant,
+} from "./Drawer";
