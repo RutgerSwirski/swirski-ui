@@ -79,10 +79,10 @@ const showcaseComponents = [
     href: "/components/image-frame",
   },
   {
-    name: "Title",
+    name: "Typography",
     description:
-      "Heading primitive for condensed, expressive typography with reusable size scales.",
-    href: "/components/title",
+      "Heading and body text primitives with reusable size scales.",
+    href: "/components/typography",
   },
 ];
 

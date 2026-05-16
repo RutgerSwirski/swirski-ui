@@ -20,6 +20,7 @@ import {
   CardContent,
   CardTitle,
   Checkbox,
+  Container,
   CursorDock,
   CursorProvider,
   DiagonalLines,
@@ -48,6 +49,7 @@ import {
   FieldError,
   FieldHint,
   Grid,
+  ImageFrame,
   Input,
   Label,
   LineGrid,
@@ -73,6 +75,7 @@ import {
   RadioGroup,
   Select,
   Separator,
+  SectionLabel,
   Skeleton,
   Slider,
   Switch,
@@ -772,71 +775,83 @@ export const componentDocs: ComponentDoc[] = [
     ],
   },
   {
-    slug: "title",
-    title: "Title",
+    slug: "section-label",
+    title: "SectionLabel",
     description:
-      "A responsive heading primitive with Mantine-style order and size controls.",
+      "A chunky rotated heading label for editorial section markers, callouts and page breaks.",
     category: "Typography",
-    importCode: `import { Title } from "@swirski/ui";`,
-    usageCode: `<Title order={1} size="display">Build expressive interfaces.</Title>`,
+    importCode: `import { SectionLabel } from "@swirski/ui";`,
+    usageCode: `<SectionLabel tone="yellow">Featured</SectionLabel>`,
     preview: (
-      <Grid gap="md">
-        <Title order={1} size="display">
-          Build expressive interfaces.
-        </Title>
-        <Title order={2} size="h3" tone="muted">
-          Without naming every heading after a page section.
-        </Title>
-      </Grid>
+      <div className="flex flex-wrap items-center gap-5">
+        <SectionLabel size="sm" tone="yellow">
+          Featured
+        </SectionLabel>
+        <SectionLabel size="sm" tone="blue">
+          New
+        </SectionLabel>
+        <SectionLabel size="sm" tone="red">
+          Live
+        </SectionLabel>
+      </div>
     ),
     props: [
       {
         name: "children",
         type: "ReactNode",
         required: true,
-        description: "Heading content.",
-      },
-      {
-        name: "order",
-        type: "1 | 2 | 3 | 4 | 5 | 6",
-        defaultValue: "1",
-        description: "Chooses the semantic heading element.",
+        description: "Label text.",
       },
       {
         name: "size",
-        type: '"display" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"',
-        description: "Overrides the visual heading scale.",
+        type: '"sm" | "md" | "lg"',
+        defaultValue: '"md"',
+        description: "Applies the label padding and heading scale.",
       },
       {
         name: "tone",
-        type: '"default" | "muted" | "inverted"',
-        defaultValue: '"default"',
-        description: "Applies the standard title color treatment.",
+        type: '"yellow" | "white" | "blue" | "red"',
+        defaultValue: '"yellow"',
+        description: "Applies the label color treatment.",
       },
       {
-        name: "className",
-        type: "string",
-        description: "Adds classes to the heading.",
+        name: "variant",
+        type: '"default" | "flat"',
+        defaultValue: '"default"',
+        description: "Toggles the offset shadow treatment.",
+      },
+      {
+        name: "asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Renders the child as the root element.",
       },
       {
         name: "...headingProps",
         type: "HTMLAttributes<HTMLHeadingElement>",
-        description: "Forwarded to the rendered heading element.",
+        description: "Forwarded to the rendered heading.",
       },
     ],
   },
   {
-    slug: "text",
-    title: "Text",
+    slug: "typography",
+    title: "Typography",
     description:
-      "A general text primitive for body copy, supporting text and compact labels.",
+      "Heading and body text primitives with semantic controls, reusable scales and Swirski tone presets.",
     category: "Typography",
-    importCode: `import { Text } from "@swirski/ui";`,
-    usageCode: `<Text size="xl" tone="muted" weight="bold">
+    importCode: `import { Text, Title } from "@swirski/ui";`,
+    usageCode: `<Title order={1} size="display">Build expressive interfaces.</Title>
+<Text size="xl" tone="muted" weight="bold">
   A small UI library for expressive, editorial web interfaces.
 </Text>`,
     preview: (
       <Grid gap="sm" className="max-w-xl">
+        <Title order={1} size="display">
+          Build expressive interfaces.
+        </Title>
+        <Title order={2} size="h3" tone="muted">
+          Without naming every heading after a page section.
+        </Title>
         <Text size="xl" tone="muted" weight="bold">
           A small UI library for expressive, editorial web interfaces.
         </Text>
@@ -847,44 +862,85 @@ export const componentDocs: ComponentDoc[] = [
     ),
     props: [
       {
-        name: "children",
+        name: "Title.children",
+        type: "ReactNode",
+        required: true,
+        description: "Heading content.",
+      },
+      {
+        name: "Title.order",
+        type: "1 | 2 | 3 | 4 | 5 | 6",
+        defaultValue: "1",
+        description: "Chooses the semantic heading element.",
+      },
+      {
+        name: "Title.size",
+        type: '"display" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"',
+        description: "Overrides the visual heading scale.",
+      },
+      {
+        name: "Title.tone",
+        type: '"default" | "muted" | "inverted"',
+        defaultValue: '"default"',
+        description: "Applies the standard title color treatment.",
+      },
+      {
+        name: "Title.as",
+        type: "ElementType",
+        description: "Custom heading element or component.",
+      },
+      {
+        name: "Title.asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Renders the child as the root element.",
+      },
+      {
+        name: "Text.children",
         type: "ReactNode",
         required: true,
         description: "Text content.",
       },
       {
-        name: "component",
+        name: "Text.component",
         type: '"p" | "span" | "div"',
         defaultValue: '"p"',
         description: "Chooses the rendered text element.",
       },
       {
-        name: "size",
-        type: '"xs" | "sm" | "md" | "lg" | "xl"',
+        name: "Text.size",
+        type: '"xs" | "sm" | "md" | "lg" | "xl" | "2xl"',
         defaultValue: '"md"',
         description: "Applies the standard text scale.",
       },
       {
-        name: "tone",
+        name: "Text.variant",
+        type: '"default" | "lead" | "caption"',
+        defaultValue: '"default"',
+        description: "Applies the standard text role treatment.",
+      },
+      {
+        name: "Text.tone",
         type: '"default" | "muted" | "subtle" | "inverted"',
         defaultValue: '"default"',
         description: "Applies the standard text color treatment.",
       },
       {
-        name: "weight",
+        name: "Text.weight",
         type: '"regular" | "medium" | "bold" | "black"',
         defaultValue: '"regular"',
         description: "Applies the text weight.",
       },
       {
-        name: "className",
-        type: "string",
-        description: "Adds classes to the rendered element.",
+        name: "Text.as",
+        type: "ElementType",
+        description: "Custom text element or component.",
       },
       {
-        name: "...elementProps",
-        type: "HTMLAttributes<HTMLElement>",
-        description: "Forwarded to the rendered text element.",
+        name: "Text.asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Renders the child as the root element.",
       },
     ],
   },
@@ -1611,6 +1667,72 @@ useClickOutside(ref, () => setOpen(false), {
     ],
   },
   {
+    slug: "container",
+    title: "Container",
+    description:
+      "A responsive page-width wrapper for sections, shells and documentation layouts.",
+    category: "Layout",
+    importCode: `import { Container } from "@swirski/ui";`,
+    usageCode: `<Container size="md">
+  <Card>
+    <CardContent>
+      <Title order={2} size="h4">Contained section</Title>
+      <Text tone="muted" weight="bold">
+        Keep page content aligned without rewriting max-width classes.
+      </Text>
+    </CardContent>
+  </Card>
+</Container>`,
+    preview: (
+      <Container
+        size="sm"
+        className="border-2 border-dashed border-black bg-white py-4"
+      >
+        <Text weight="black">Responsive content rail</Text>
+        <Text size="sm" tone="muted">
+          Centered, padded and ready for page sections.
+        </Text>
+      </Container>
+    ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Container content.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg" | "xl"',
+        defaultValue: '"lg"',
+        description: "Applies the standard max-width.",
+      },
+      {
+        name: "variant",
+        type: '"default" | "fluid"',
+        defaultValue: '"default"',
+        description: "Uses a constrained or full-width layout.",
+      },
+      {
+        name: "tone",
+        type: '"default"',
+        defaultValue: '"default"',
+        description: "Reserved tone hook for Swirski data attributes.",
+      },
+      {
+        name: "asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Renders the child as the root element.",
+      },
+      {
+        name: "...divProps",
+        type: "HTMLAttributes<HTMLDivElement>",
+        description: "Forwarded to the rendered container.",
+      },
+    ],
+  },
+  {
     slug: "grid",
     title: "Grid",
     description:
@@ -1869,6 +1991,72 @@ useClickOutside(ref, () => setOpen(false), {
         name: "className",
         type: "string",
         description: "Adds classes to the range input.",
+      },
+    ],
+  },
+  {
+    slug: "image-frame",
+    title: "ImageFrame",
+    description:
+      "A framed media primitive for screenshots, product shots, visual examples and editorial layouts.",
+    category: "Media",
+    importCode: `import { ImageFrame } from "@swirski/ui";`,
+    usageCode: `<ImageFrame caption="Studio proof" tone="paper">
+  <img src="/preview.jpg" alt="Preview" />
+</ImageFrame>`,
+    preview: (
+      <ImageFrame
+        caption="Studio proof"
+        className="aspect-[4/3] w-full max-w-sm"
+        tone="paper"
+      >
+        <div className="flex h-full items-center justify-center bg-[#0057FF] p-8 text-white">
+          <Title order={3} size="h4" tone="inverted">
+            SWIRSKI
+          </Title>
+        </div>
+      </ImageFrame>
+    ),
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "Media or visual content rendered inside the frame.",
+      },
+      {
+        name: "caption",
+        type: "ReactNode",
+        description: "Optional caption pinned inside the frame.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        defaultValue: '"md"',
+        description: "Sets the Swirski size data attribute.",
+      },
+      {
+        name: "tone",
+        type: '"paper" | "white" | "black"',
+        defaultValue: '"paper"',
+        description: "Applies the frame background and text treatment.",
+      },
+      {
+        name: "variant",
+        type: '"default" | "plain"',
+        defaultValue: '"default"',
+        description: "Toggles the border and offset shadow treatment.",
+      },
+      {
+        name: "asChild",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Renders the child as the root element.",
+      },
+      {
+        name: "...divProps",
+        type: "HTMLAttributes<HTMLDivElement>",
+        description: "Forwarded to the rendered frame.",
       },
     ],
   },
