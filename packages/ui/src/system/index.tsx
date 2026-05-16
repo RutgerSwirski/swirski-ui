@@ -11,7 +11,6 @@ import {
 } from "react";
 import clsx, { type ClassValue } from "clsx";
 
-
 // create the swirski tone system
 export type SwirskiTone =
   | "default"
@@ -26,7 +25,6 @@ export type SwirskiTone =
 
 // create the swirski size system
 export type SwirskiSize = "xs" | "sm" | "md" | "lg" | "xl" | "display";
-
 
 // create the swirski variant system
 export type SwirskiVariant =
@@ -105,7 +103,9 @@ function mergeSlotProps(
     const childValue = childProps[key as keyof HTMLAttributes<HTMLElement>];
 
     if (isEventHandler(key, slotValue) && isEventHandler(key, childValue)) {
-      mergedProps[key as keyof HTMLAttributes<HTMLElement>] = ((event: unknown) => {
+      mergedProps[key as keyof HTMLAttributes<HTMLElement>] = ((
+        event: unknown,
+      ) => {
         (childValue as (event: unknown) => void)(event);
         (slotValue as (event: unknown) => void)(event);
       }) as never;

@@ -30,3 +30,17 @@ export const White: Story = {
     tone: "white",
   },
 };
+
+export const Ghost: Story = {
+  args: {
+    children: "Ghost button",
+    variant: "ghost",
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    children: "Outline button",
+    variant: "outline",
+  },
+};

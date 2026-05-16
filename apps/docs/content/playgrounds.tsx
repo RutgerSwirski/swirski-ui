@@ -214,7 +214,12 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     render: (values) => (
       <Badge
         tone={
-          textValue(values, "tone") as "blue" | "yellow" | "red" | "white" | "black"
+          textValue(values, "tone") as
+            | "blue"
+            | "yellow"
+            | "red"
+            | "white"
+            | "black"
         }
         size={textValue(values, "size") as "sm" | "md"}
       >
@@ -288,6 +293,13 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         type: "select",
         defaultValue: "none",
         options: ["none", "arrow-up-right", "github"],
+      },
+      {
+        name: "variant",
+        label: "variant",
+        type: "select",
+        defaultValue: "solid",
+        options: ["solid", "outline", "ghost"],
       },
       {
         name: "iconSide",
@@ -456,8 +468,14 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
       return (
         <Field className="max-w-md">
           <Label htmlFor={id}>{textValue(values, "label")}</Label>
-          {multiline ? <Textarea {...controlProps} /> : <Input {...controlProps} />}
-          {state === "hint" && <FieldHint>{textValue(values, "helper")}</FieldHint>}
+          {multiline ? (
+            <Textarea {...controlProps} />
+          ) : (
+            <Input {...controlProps} />
+          )}
+          {state === "hint" && (
+            <FieldHint>{textValue(values, "helper")}</FieldHint>
+          )}
           {state === "error" && (
             <FieldError>{textValue(values, "helper")}</FieldError>
           )}
@@ -679,7 +697,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem open={booleanValue(values, "secondOpen")}>
-          <AccordionTrigger>{textValue(values, "secondTitle")}</AccordionTrigger>
+          <AccordionTrigger>
+            {textValue(values, "secondTitle")}
+          </AccordionTrigger>
           <AccordionContent>
             Every piece accepts className and native element props.
           </AccordionContent>
@@ -803,14 +823,14 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         component={textValue(values, "component") as "p" | "span" | "div"}
         size={textValue(values, "size") as "xs" | "sm" | "md" | "lg" | "xl"}
         tone={
-          textValue(values, "tone") as "default" | "muted" | "subtle" | "inverted"
+          textValue(values, "tone") as
+            | "default"
+            | "muted"
+            | "subtle"
+            | "inverted"
         }
         weight={
-          textValue(values, "weight") as
-            | "regular"
-            | "medium"
-            | "bold"
-            | "black"
+          textValue(values, "weight") as "regular" | "medium" | "bold" | "black"
         }
         className="max-w-xl"
       >
@@ -885,7 +905,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         />
       </div>
     ),
-    getCode: (values) => `<div className="relative h-72 overflow-hidden border-4 border-black bg-[#FFD400]">
+    getCode: (
+      values,
+    ) => `<div className="relative h-72 overflow-hidden border-4 border-black bg-[#FFD400]">
   <DotGrid
     className="inset-0"
     color=${jsxString(textValue(values, "color"))}
@@ -966,7 +988,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         />
       </div>
     ),
-    getCode: (values) => `<div className="relative h-72 overflow-hidden border-4 border-black bg-[#FFD400]">
+    getCode: (
+      values,
+    ) => `<div className="relative h-72 overflow-hidden border-4 border-black bg-[#FFD400]">
   <LineGrid
     className="inset-0"
     color=${jsxString(textValue(values, "color"))}
@@ -1047,7 +1071,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         />
       </div>
     ),
-    getCode: (values) => `<div className="relative h-72 overflow-hidden border-4 border-black bg-[#FFD400]">
+    getCode: (
+      values,
+    ) => `<div className="relative h-72 overflow-hidden border-4 border-black bg-[#FFD400]">
   <DiagonalLines
     className="inset-0"
     angle={${numberValue(values, "angle")}}
@@ -1212,7 +1238,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         </DialogContent>
       </Dialog>
     ),
-    getCode: (values) => `<Dialog${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
+    getCode: (
+      values,
+    ) => `<Dialog${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
   <DialogTrigger>Open dialog</DialogTrigger>
   <DialogContent>
     <DialogHeader>
@@ -1264,7 +1292,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         </PopoverContent>
       </Popover>
     ),
-    getCode: (values) => `<Popover${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
+    getCode: (
+      values,
+    ) => `<Popover${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
   <PopoverTrigger>${jsxText(textValue(values, "trigger"))}</PopoverTrigger>
   <PopoverContent align=${jsxString(textValue(values, "align"))}>
     Popover content
@@ -1296,8 +1326,12 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     ],
     render: (values) => (
       <DropdownMenu>
-        <DropdownMenuTrigger>{textValue(values, "trigger")}</DropdownMenuTrigger>
-        <DropdownMenuContent align={textValue(values, "align") as "start" | "end"}>
+        <DropdownMenuTrigger>
+          {textValue(values, "trigger")}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align={textValue(values, "align") as "start" | "end"}
+        >
           <DropdownMenuItem>Edit</DropdownMenuItem>
           <DropdownMenuItem>Duplicate</DropdownMenuItem>
           {booleanValue(values, "dangerItem") && (
@@ -1353,7 +1387,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         </Button>
       </Tooltip>
     ),
-    getCode: (values) => `<Tooltip content=${jsxString(textValue(values, "content"))}>
+    getCode: (
+      values,
+    ) => `<Tooltip content=${jsxString(textValue(values, "content"))}>
   <Button tone=${jsxString(textValue(values, "tone"))}>
     ${jsxText(textValue(values, "label"))}
   </Button>
@@ -1395,7 +1431,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         )}
       </Tabs>
     ),
-    getCode: (values) => `<Tabs defaultValue=${jsxString(textValue(values, "defaultValue"))}>
+    getCode: (
+      values,
+    ) => `<Tabs defaultValue=${jsxString(textValue(values, "defaultValue"))}>
   <TabsList>
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>${
@@ -1463,7 +1501,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     <TableRow>
       <TableHeader>Name</TableHeader>
       <TableHeader>Status</TableHeader>${
-        booleanValue(values, "showValue") ? "\n      <TableHeader>Value</TableHeader>" : ""
+        booleanValue(values, "showValue")
+          ? "\n      <TableHeader>Value</TableHeader>"
+          : ""
       }
     </TableRow>
   </TableHead>
@@ -1472,7 +1512,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
       <TableRow key={row.name}>
         <TableCell>{row.name}</TableCell>
         <TableCell>{row.status}</TableCell>${
-          booleanValue(values, "showValue") ? "\n        <TableCell>{row.value}</TableCell>" : ""
+          booleanValue(values, "showValue")
+            ? "\n        <TableCell>{row.value}</TableCell>"
+            : ""
         }
       </TableRow>
     ))}
@@ -1511,16 +1553,21 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         gap={textValue(values, "gap") as "xs" | "sm" | "md" | "lg" | "xl"}
         className="w-full"
       >
-        {Array.from({ length: Math.round(numberValue(values, "items")) }, (_, index) => (
-          <Card interactive={false} key={index} withShadow={false}>
-            <CardContent>
-              <Text weight="black">Item {index + 1}</Text>
-            </CardContent>
-          </Card>
-        ))}
+        {Array.from(
+          { length: Math.round(numberValue(values, "items")) },
+          (_, index) => (
+            <Card interactive={false} key={index} withShadow={false}>
+              <CardContent>
+                <Text weight="black">Item {index + 1}</Text>
+              </CardContent>
+            </Card>
+          ),
+        )}
       </Grid>
     ),
-    getCode: (values) => `<Grid columns={${Number(textValue(values, "columns"))}} gap=${jsxString(textValue(values, "gap"))}>
+    getCode: (
+      values,
+    ) => `<Grid columns={${Number(textValue(values, "columns"))}} gap=${jsxString(textValue(values, "gap"))}>
   {items.map((item) => (
     <Card key={item.id}>
       <CardContent>{item.label}</CardContent>
@@ -1552,7 +1599,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
       },
     ],
     render: (values) => (
-      <Toast tone={textValue(values, "tone") as "blue" | "yellow" | "red" | "white"}>
+      <Toast
+        tone={textValue(values, "tone") as "blue" | "yellow" | "red" | "white"}
+      >
         <ToastTitle>{textValue(values, "title")}</ToastTitle>
         <ToastDescription>{textValue(values, "description")}</ToastDescription>
       </Toast>
@@ -1598,7 +1647,11 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     getCode: (values) => {
       const height = textValue(values, "height");
       const className =
-        height === "short" ? ' className="h-3"' : height === "tall" ? ' className="h-10"' : "";
+        height === "short"
+          ? ' className="h-3"'
+          : height === "tall"
+            ? ' className="h-10"'
+            : "";
 
       return `<Progress value={${numberValue(values, "value")}}${className} />`;
     },
@@ -1617,7 +1670,8 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     render: (values) => (
       <Loader size={textValue(values, "size") as "sm" | "md" | "lg"} />
     ),
-    getCode: (values) => `<Loader size=${jsxString(textValue(values, "size"))} />`,
+    getCode: (values) =>
+      `<Loader size=${jsxString(textValue(values, "size"))} />`,
   },
 
   skeleton: {
@@ -1648,12 +1702,15 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
 
       return (
         <Grid gap="sm" className="w-full max-w-sm">
-          {Array.from({ length: Math.round(numberValue(values, "lines")) }, (_, index) => (
-            <Skeleton
-              className={`${index === 0 ? "w-3/4" : "w-full"} ${heightClass}`}
-              key={index}
-            />
-          ))}
+          {Array.from(
+            { length: Math.round(numberValue(values, "lines")) },
+            (_, index) => (
+              <Skeleton
+                className={`${index === 0 ? "w-3/4" : "w-full"} ${heightClass}`}
+                key={index}
+              />
+            ),
+          )}
         </Grid>
       );
     },
@@ -1694,8 +1751,16 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         name="playground-tone"
         defaultValue={textValue(values, "value")}
         options={[
-          { value: "blue", label: "Blue", description: "Sharp product surfaces." },
-          { value: "yellow", label: "Yellow", description: "Loud editorial moments." },
+          {
+            value: "blue",
+            label: "Blue",
+            description: "Sharp product surfaces.",
+          },
+          {
+            value: "yellow",
+            label: "Yellow",
+            description: "Loud editorial moments.",
+          },
           {
             value: "red",
             label: "Red",
@@ -1850,10 +1915,14 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
             defaultOpen={booleanValue(values, "mobileOpen")}
           >
             <MobileMenuTrigger />
-            <MobileMenuContent side={textValue(values, "mobileSide") as "left" | "right"}>
+            <MobileMenuContent
+              side={textValue(values, "mobileSide") as "left" | "right"}
+            >
               <MobileMenuHeader>
                 <MobileMenuTitle>Menu</MobileMenuTitle>
-                <MobileMenuClose aria-label="Close navigation menu">x</MobileMenuClose>
+                <MobileMenuClose aria-label="Close navigation menu">
+                  x
+                </MobileMenuClose>
               </MobileMenuHeader>
               <MobileMenuNav aria-label="Mobile playground navigation">
                 {["Components", "Hooks", "CLI"].map((item) => (
@@ -1909,13 +1978,17 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
           <BreadcrumbItem>
             <BreadcrumbLink href="#preview">Docs</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator>{textValue(values, "separator")}</BreadcrumbSeparator>
+          <BreadcrumbSeparator>
+            {textValue(values, "separator")}
+          </BreadcrumbSeparator>
           {booleanValue(values, "includeMiddle") && (
             <>
               <BreadcrumbItem>
                 <BreadcrumbLink href="#preview">Library</BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator>{textValue(values, "separator")}</BreadcrumbSeparator>
+              <BreadcrumbSeparator>
+                {textValue(values, "separator")}
+              </BreadcrumbSeparator>
             </>
           )}
           <BreadcrumbItem>
@@ -1996,9 +2069,15 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
             : "bg-black";
 
       return (
-        <div className={textValue(values, "orientation") === "vertical" ? "h-40" : "w-full"}>
+        <div
+          className={
+            textValue(values, "orientation") === "vertical" ? "h-40" : "w-full"
+          }
+        >
           <Separator
-            orientation={textValue(values, "orientation") as "horizontal" | "vertical"}
+            orientation={
+              textValue(values, "orientation") as "horizontal" | "vertical"
+            }
             className={toneClass}
           />
         </div>
@@ -2044,7 +2123,11 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         defaultOpen={booleanValue(values, "defaultOpen")}
       >
         <DrawerTrigger>Open drawer</DrawerTrigger>
-        <DrawerContent side={textValue(values, "side") as "left" | "right" | "top" | "bottom"}>
+        <DrawerContent
+          side={
+            textValue(values, "side") as "left" | "right" | "top" | "bottom"
+          }
+        >
           <DrawerHeader>
             <DrawerTitle>{textValue(values, "title")}</DrawerTitle>
             <DrawerDescription>Panel content lives here.</DrawerDescription>
@@ -2053,7 +2136,9 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
         </DrawerContent>
       </Drawer>
     ),
-    getCode: (values) => `<Drawer${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
+    getCode: (
+      values,
+    ) => `<Drawer${booleanValue(values, "defaultOpen") ? " defaultOpen" : ""}>
   <DrawerTrigger>Open drawer</DrawerTrigger>
   <DrawerContent side=${jsxString(textValue(values, "side"))}>
     <DrawerHeader>
