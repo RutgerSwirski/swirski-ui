@@ -1,4 +1,5 @@
 import { Badge, Button, HeroActions, Text, Title } from "@swirski/ui";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -18,13 +19,19 @@ export default function Hero() {
       </Text>
 
       <HeroActions className="mt-9">
-        <Button href="/components" icon="arrow-up-right" iconSide="right">
+        <Button
+          as={Link}
+          href="/components"
+          icon="arrow-up-right"
+          iconSide="right"
+        >
           Browse components
         </Button>
-        <Button href="/examples" tone="yellow">
+        <Button as={Link} href="/examples" tone="yellow">
           See examples
         </Button>
         <Button
+          target="_blank"
           href="https://github.com/rutgerswirski/swirski-ui"
           tone="white"
           icon="github"
