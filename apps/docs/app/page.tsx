@@ -30,6 +30,11 @@ const foundations = [
   },
   {
     label: "03",
+    title: "shadcn registry access",
+    body: "Install hosted Swirski registry items with the shadcn CLI when your project already uses that workflow.",
+  },
+  {
+    label: "04",
     title: "Built for customization",
     body: "Theme tokens, className escape hatches, data attributes, asChild support and readable source keep the system flexible.",
   },
@@ -128,7 +133,7 @@ export default function HomePage() {
 
                   <CodeBlock
                     className="mt-4"
-                    code="pnpm add @swirski/ui @swirski/cli"
+                    code="pnpm add @swirski/ui"
                   />
                 </CardContent>
               </Card>
@@ -151,7 +156,30 @@ export default function HomePage() {
 
                   <CodeBlock
                     className="mt-4"
-                    code="npx @swirski/cli@latest add button card dialog"
+                    code="pnpm exec swirski add button card dialog"
+                  />
+                </CardContent>
+              </Card>
+
+              <Card
+                interactive={false}
+                className="shadow-(color:--sw-color-blue)"
+              >
+                <CardContent className="p-4">
+                  <Badge tone="blue">shadcn</Badge>
+
+                  <Title className="mt-3" order={3} size="h4">
+                    Or Use The Registry!
+                  </Title>
+
+                  <Text className="mt-2" size="xs" weight="bold">
+                    Add Swirski items with the shadcn CLI when your app already
+                    uses remote registries and copied component source.
+                  </Text>
+
+                  <CodeBlock
+                    className="mt-4"
+                    code="pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json"
                   />
                 </CardContent>
               </Card>
@@ -166,17 +194,17 @@ export default function HomePage() {
             <div>
               <SectionLabel>System</SectionLabel>
               <Title className="mt-6 max-w-3xl" order={2} size="h1">
-                One system. Two ways to build.
+                One system. Three ways to build.
               </Title>
             </div>
             <Text className="max-w-sm" tone="muted" weight="bold">
-              Use Swirski UI as a component library, or copy pieces into your
-              app with the CLI. Either way, the same props, tokens and styling
-              hooks keep everything consistent.
+              Use Swirski UI as a component library, copy pieces with the
+              Swirski CLI, or install hosted registry items with shadcn. The
+              same props, tokens and styling hooks keep everything consistent.
             </Text>
           </div>
 
-          <Grid gap="lg" className="mt-10 lg:grid-cols-3">
+          <Grid gap="lg" className="mt-10 md:grid-cols-2 lg:grid-cols-4">
             {foundations.map((item) => (
               <Card
                 key={item.title}
