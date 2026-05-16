@@ -5,7 +5,7 @@
   "title": "Line Grid",
   "description": "Line grid background primitive.",
   "registryDependencies": [
-    "swirski-base"
+    "https://ui.swirski.dev/r/swirski-base.json"
   ],
   "dependencies": [
     "clsx"

@@ -5,7 +5,7 @@
   "title": "Dropdown Menu",
   "description": "Compact action menu.",
   "registryDependencies": [
-    "swirski-base"
+    "https://ui.swirski.dev/r/swirski-base.json"
   ],
   "dependencies": [
     "clsx"
