@@ -192,9 +192,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
       return;
     }
 
-    setHighlightedIndex(
-      getEnabledIndex(options, selectedIndex >= 0 ? selectedIndex : 0),
-    );
+    setHighlightedIndex((currentIndex) => {
+      if (currentIndex >= 0 && !options[currentIndex]?.disabled) {
+        return currentIndex;
+      }
+
+      return getEnabledIndex(options, selectedIndex >= 0 ? selectedIndex : 0);
+    });
   }, [isOpen, options, selectedIndex]);
 
   function selectValue(nextValue: string) {

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "type": "registry:ui",
+  "title": "Radio Group",
+  "description": "Native radio group.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/radio-group/RadioGroup.tsx",
+      "content": "\"use client\";\n\nimport { InputHTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type RadioGroupVariant = \"default\" | \"card\";\nexport type RadioGroupSize = \"sm\" | \"md\" | \"lg\";\nexport type RadioGroupTone = \"yellow\" | \"blue\" | \"red\";\n\nexport type RadioGroupOption = {\n  value: string;\n  label: ReactNode;\n  description?: ReactNode;\n  disabled?: boolean;\n};\n\nexport type RadioGroupProps = {\n  name: string;\n  options: RadioGroupOption[];\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n  className?: string;\n  variant?: RadioGroupVariant;\n  size?: RadioGroupSize;\n  tone?: RadioGroupTone;\n} & Omit<\n  InputHTMLAttributes<HTMLInputElement>,\n  \"type\" | \"value\" | \"defaultValue\" | \"onChange\" | \"size\" | \"color\"\n> &\n  Record<never, never>;\n\nconst controlSizeStyles: Record<RadioGroupSize, string> = {\n  sm: \"size-5\",\n  md: \"size-6\",\n  lg: \"size-7\",\n};\n\nconst dotSizeStyles: Record<RadioGroupSize, string> = {\n  sm: \"size-1.5\",\n  md: \"size-2\",\n  lg: \"size-2.5\",\n};\n\nconst toneStyles: Record<RadioGroupTone, string> = {\n  yellow: \"peer-checked:bg-[#FFD400]\",\n  blue: \"peer-checked:bg-[#0057FF]\",\n  red: \"peer-checked:bg-[#FF3131]\",\n};\n\nexport const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(\n  function RadioGroup({\n  name,\n  options,\n  value,\n  defaultValue,\n  onValueChange,\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"yellow\",\n  ...props\n}, ref) {\n  return (\n    <div\n      ref={ref}\n      className={cn(\"grid gap-3\", className)}\n      role=\"radiogroup\"\n      {...swirskiAttrs(\"radio-group\", { size, tone, variant })}\n    >\n      {options.map((option) => (\n        <label\n          key={option.value}\n          className={cn(\n            \"group inline-flex w-fit items-start gap-3\",\n            variant === \"card\" && \"border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]\",\n            option.disabled ? \"cursor-not-allowed opacity-60\" : \"cursor-pointer\",\n          )}\n          data-swirski-radio-option={option.value}\n        >\n          <span className={cn(\"relative mt-0.5 grid shrink-0 place-items-center\", controlSizeStyles[size])}>\n            <input\n              className=\"peer sr-only\"\n              defaultChecked={defaultValue === option.value}\n              checked={value === undefined ? undefined : value === option.value}\n              disabled={option.disabled}\n              name={name}\n              onChange={() => onValueChange?.(option.value)}\n              type=\"radio\"\n              value={option.value}\n              {...swirskiAttrs(\"radio-group-input\", { size, tone, variant })}\n              {...props}\n            />\n            <span className={cn(\"absolute inset-0 rounded-full border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C]\", toneStyles[tone])} />\n            <span className={cn(\"relative hidden rounded-full bg-black peer-checked:block\", dotSizeStyles[size])} />\n          </span>\n          <span className=\"grid gap-1\">\n            <span className=\"font-black leading-5\">{option.label}</span>\n            {option.description && (\n              <span className=\"text-sm font-bold leading-5 text-neutral-600\">\n                {option.description}\n              </span>\n            )}\n          </span>\n        </label>\n      ))}\n    </div>\n  );\n  },\n);\n\nRadioGroup.displayName = \"RadioGroup\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/radio-group/RadioGroup.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/radio-group/index.ts",
+      "content": "export { RadioGroup } from \"./RadioGroup\";\nexport type {\n  RadioGroupOption,\n  RadioGroupProps,\n  RadioGroupSize,\n  RadioGroupTone,\n  RadioGroupVariant,\n} from \"./RadioGroup\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/radio-group/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "forms"
+  ],
+  "meta": {
+    "swirskiCategory": "forms",
+    "swirskiSource": "packages/ui/src/components/radio-group"
+  }
+}

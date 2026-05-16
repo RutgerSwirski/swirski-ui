@@ -114,55 +114,59 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
     }
   }, [ref]);
 
-  return (
-    <Component
-      ref={setTriggerRef}
-      className={cn("group relative inline-flex", className)}
-      {...swirskiAttrs("tooltip", { size, tone, variant })}
-      {...props}
-      aria-describedby={describedBy}
-      onBlur={(event) => {
-        onBlur?.(event);
-        setFocused(false);
-      }}
-      onFocus={(event) => {
-        onFocus?.(event);
-        setFocused(true);
-      }}
-      onPointerEnter={(event) => {
-        onPointerEnter?.(event);
-        setHovered(true);
-      }}
-      onPointerLeave={(event) => {
-        onPointerLeave?.(event);
-        setHovered(false);
-      }}
-    >
-      {children}
-
-      {open &&
-        position &&
-        portalRoot &&
-        createPortal(
-          <span
-            className={cn(
-              "pointer-events-none fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-full border-4 border-black font-black uppercase",
-              sizeStyles[size],
-              toneStyles[tone],
-            )}
-            id={tooltipId}
-            role="tooltip"
-            style={{
-              left: position.left,
-              top: position.top,
-            }}
-            {...swirskiAttrs("tooltip-content", { size, tone, variant })}
-          >
-            {content}
-          </span>,
-          portalRoot,
+  const tooltipContent =
+    open &&
+    position &&
+    portalRoot &&
+    createPortal(
+      <span
+        className={cn(
+          "pointer-events-none fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-full border-4 border-black font-black uppercase",
+          sizeStyles[size],
+          toneStyles[tone],
         )}
-    </Component>
+        id={tooltipId}
+        role="tooltip"
+        style={{
+          left: position.left,
+          top: position.top,
+        }}
+        {...swirskiAttrs("tooltip-content", { size, tone, variant })}
+      >
+        {content}
+      </span>,
+      portalRoot,
+    );
+
+  return (
+    <>
+      <Component
+        ref={setTriggerRef}
+        className={cn("group relative inline-flex", className)}
+        {...swirskiAttrs("tooltip", { size, tone, variant })}
+        {...props}
+        aria-describedby={describedBy}
+        onBlur={(event) => {
+          onBlur?.(event);
+          setFocused(false);
+        }}
+        onFocus={(event) => {
+          onFocus?.(event);
+          setFocused(true);
+        }}
+        onPointerEnter={(event) => {
+          onPointerEnter?.(event);
+          setHovered(true);
+        }}
+        onPointerLeave={(event) => {
+          onPointerLeave?.(event);
+          setHovered(false);
+        }}
+      >
+        {children}
+      </Component>
+      {tooltipContent}
+    </>
   );
 });
 

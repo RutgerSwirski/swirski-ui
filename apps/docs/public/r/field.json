@@ -1,0 +1,65 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field",
+  "type": "registry:ui",
+  "title": "Field",
+  "description": "Field, label, input and textarea primitives.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/field/Field.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type FieldVariant = \"default\" | \"inline\";\nexport type FieldSize = \"sm\" | \"md\" | \"lg\";\nexport type FieldTone = \"default\";\n\nexport type FieldProps = {\n  asChild?: boolean;\n  variant?: FieldVariant;\n  size?: FieldSize;\n  tone?: FieldTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<FieldSize, string> = {\n  sm: \"gap-1\",\n  md: \"gap-2\",\n  lg: \"gap-3\",\n};\n\nexport const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(\n  {\n    asChild = false,\n    className,\n    variant = \"default\",\n    size = \"md\",\n    tone = \"default\",\n    ...props\n  },\n  ref,\n) {\n  const Component = asChild ? Slot : \"div\";\n\n  return (\n    <Component\n      ref={ref}\n      className={cn(\n        variant === \"inline\" ? \"flex items-center gap-3\" : \"grid\",\n        sizeStyles[size],\n        className,\n      )}\n      {...swirskiAttrs(\"field\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nField.displayName = \"Field\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/Field.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/field/FieldError.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type FieldErrorVariant = \"default\" | \"plain\";\nexport type FieldErrorSize = \"sm\" | \"md\";\nexport type FieldErrorTone = \"danger\" | \"default\";\n\nexport type FieldErrorProps = {\n  variant?: FieldErrorVariant;\n  size?: FieldErrorSize;\n  tone?: FieldErrorTone;\n} & HTMLAttributes<HTMLParagraphElement>;\n\nconst sizeStyles: Record<FieldErrorSize, string> = {\n  sm: \"text-xs leading-5\",\n  md: \"text-sm leading-5\",\n};\n\nconst toneStyles: Record<FieldErrorTone, string> = {\n  danger: \"text-[var(--sw-color-red)]\",\n  default: \"text-[var(--sw-color-ink)]\",\n};\n\nexport const FieldError = forwardRef<HTMLParagraphElement, FieldErrorProps>(\n  function FieldError(\n    { className, variant = \"default\", size = \"md\", tone = \"danger\", ...props },\n    ref,\n  ) {\n  return (\n    <p\n      ref={ref}\n      className={cn(\n        variant === \"default\" && \"font-black\",\n        sizeStyles[size],\n        toneStyles[tone],\n        className,\n      )}\n      {...swirskiAttrs(\"field-error\", { size, tone, variant })}\n      {...props}\n    />\n  );\n  },\n);\n\nFieldError.displayName = \"FieldError\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/FieldError.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/field/FieldHint.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type FieldHintVariant = \"default\" | \"plain\";\nexport type FieldHintSize = \"sm\" | \"md\";\nexport type FieldHintTone = \"muted\" | \"default\";\n\nexport type FieldHintProps = {\n  variant?: FieldHintVariant;\n  size?: FieldHintSize;\n  tone?: FieldHintTone;\n} & HTMLAttributes<HTMLParagraphElement>;\n\nconst sizeStyles: Record<FieldHintSize, string> = {\n  sm: \"text-xs leading-5\",\n  md: \"text-sm leading-5\",\n};\n\nconst toneStyles: Record<FieldHintTone, string> = {\n  muted: \"text-[var(--sw-color-muted)]\",\n  default: \"text-[var(--sw-color-ink)]\",\n};\n\nexport const FieldHint = forwardRef<HTMLParagraphElement, FieldHintProps>(\n  function FieldHint(\n    { className, variant = \"default\", size = \"md\", tone = \"muted\", ...props },\n    ref,\n  ) {\n  return (\n    <p\n      ref={ref}\n      className={cn(\n        variant === \"default\" && \"font-bold\",\n        sizeStyles[size],\n        toneStyles[tone],\n        className,\n      )}\n      {...swirskiAttrs(\"field-hint\", { size, tone, variant })}\n      {...props}\n    />\n  );\n  },\n);\n\nFieldHint.displayName = \"FieldHint\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/FieldHint.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/field/Input.tsx",
+      "content": "import { forwardRef, InputHTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type InputVariant = \"default\" | \"filled\";\nexport type InputSize = \"sm\" | \"md\" | \"lg\";\nexport type InputTone = \"default\" | \"danger\";\n\nexport type InputProps = {\n  variant?: InputVariant;\n  size?: InputSize;\n  tone?: InputTone;\n} & Omit<InputHTMLAttributes<HTMLInputElement>, \"size\" | \"color\">;\n\nconst sizeStyles: Record<InputSize, string> = {\n  sm: \"h-10 px-3 text-sm\",\n  md: \"h-12 px-4 text-base\",\n  lg: \"h-14 px-5 text-lg\",\n};\n\nconst toneStyles: Record<InputTone, string> = {\n  default: \"border-[color:var(--sw-color-ink)]\",\n  danger: \"border-[color:var(--sw-color-red)]\",\n};\n\nexport const Input = forwardRef<HTMLInputElement, InputProps>(\n  ({ className, variant = \"default\", size = \"md\", tone = \"default\", ...props }, ref) => {\n    return (\n      <input\n        ref={ref}\n        className={cn(\n          \"w-full border-[length:var(--sw-border-width)] font-bold text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition placeholder:text-neutral-500 focus:-translate-y-0.5 focus:shadow-[6px_6px_0_var(--sw-color-focus)] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500\",\n          variant === \"default\" ? \"bg-[var(--sw-color-surface)]\" : \"bg-[var(--sw-color-paper)]\",\n          sizeStyles[size],\n          toneStyles[tone],\n          className,\n        )}\n        {...swirskiAttrs(\"input\", { size, tone, variant })}\n        {...props}\n      />\n    );\n  },\n);\n\nInput.displayName = \"Input\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/Input.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/field/Label.tsx",
+      "content": "import { LabelHTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type LabelVariant = \"default\" | \"plain\";\nexport type LabelSize = \"sm\" | \"md\" | \"lg\";\nexport type LabelTone = \"default\" | \"muted\" | \"danger\";\n\nexport type LabelProps = {\n  variant?: LabelVariant;\n  size?: LabelSize;\n  tone?: LabelTone;\n} & LabelHTMLAttributes<HTMLLabelElement>;\n\nconst sizeStyles: Record<LabelSize, string> = {\n  sm: \"text-xs\",\n  md: \"text-sm\",\n  lg: \"text-base\",\n};\n\nconst toneStyles: Record<LabelTone, string> = {\n  default: \"text-[var(--sw-color-ink)]\",\n  muted: \"text-[var(--sw-color-muted)]\",\n  danger: \"text-[var(--sw-color-red)]\",\n};\n\nexport const Label = forwardRef<HTMLLabelElement, LabelProps>(function Label({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <label\n      ref={ref}\n      className={cn(\n        variant === \"default\" && \"font-black uppercase tracking-wide\",\n        sizeStyles[size],\n        toneStyles[tone],\n        className,\n      )}\n      {...swirskiAttrs(\"label\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nLabel.displayName = \"Label\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/Label.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/field/Textarea.tsx",
+      "content": "import { forwardRef, TextareaHTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type TextareaVariant = \"default\" | \"filled\";\nexport type TextareaSize = \"sm\" | \"md\" | \"lg\";\nexport type TextareaTone = \"default\" | \"danger\";\n\nexport type TextareaProps = {\n  variant?: TextareaVariant;\n  size?: TextareaSize;\n  tone?: TextareaTone;\n} & TextareaHTMLAttributes<HTMLTextAreaElement>;\n\nconst sizeStyles: Record<TextareaSize, string> = {\n  sm: \"min-h-24 px-3 py-2 text-sm\",\n  md: \"min-h-28 px-4 py-3 text-base\",\n  lg: \"min-h-36 px-5 py-4 text-lg\",\n};\n\nconst toneStyles: Record<TextareaTone, string> = {\n  default: \"border-[color:var(--sw-color-ink)]\",\n  danger: \"border-[color:var(--sw-color-red)]\",\n};\n\nexport const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(\n  ({ className, variant = \"default\", size = \"md\", tone = \"default\", ...props }, ref) => {\n    return (\n      <textarea\n        ref={ref}\n        className={cn(\n          \"w-full resize-y border-[length:var(--sw-border-width)] font-bold text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition placeholder:text-neutral-500 focus:-translate-y-0.5 focus:shadow-[6px_6px_0_var(--sw-color-focus)] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500\",\n          variant === \"default\" ? \"bg-[var(--sw-color-surface)]\" : \"bg-[var(--sw-color-paper)]\",\n          sizeStyles[size],\n          toneStyles[tone],\n          className,\n        )}\n        {...swirskiAttrs(\"textarea\", { size, tone, variant })}\n        {...props}\n      />\n    );\n  },\n);\n\nTextarea.displayName = \"Textarea\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/Textarea.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/field/index.ts",
+      "content": "export { Field } from \"./Field\";\nexport { FieldError } from \"./FieldError\";\nexport { FieldHint } from \"./FieldHint\";\nexport { Input } from \"./Input\";\nexport { Label } from \"./Label\";\nexport { Textarea } from \"./Textarea\";\nexport type { FieldProps, FieldSize, FieldTone, FieldVariant } from \"./Field\";\nexport type {\n  FieldErrorProps,\n  FieldErrorSize,\n  FieldErrorTone,\n  FieldErrorVariant,\n} from \"./FieldError\";\nexport type {\n  FieldHintProps,\n  FieldHintSize,\n  FieldHintTone,\n  FieldHintVariant,\n} from \"./FieldHint\";\nexport type { InputProps, InputSize, InputTone, InputVariant } from \"./Input\";\nexport type { LabelProps, LabelSize, LabelTone, LabelVariant } from \"./Label\";\nexport type {\n  TextareaProps,\n  TextareaSize,\n  TextareaTone,\n  TextareaVariant,\n} from \"./Textarea\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/field/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "forms"
+  ],
+  "meta": {
+    "swirskiCategory": "forms",
+    "swirskiSource": "packages/ui/src/components/field"
+  }
+}

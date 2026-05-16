@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Tabbed section primitive.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/tabs/Tabs.tsx",
+      "content": "\"use client\";\n\nimport {\n  ButtonHTMLAttributes,\n  HTMLAttributes,\n  ReactNode,\n  createContext,\n  forwardRef,\n  useContext,\n  useState,\n} from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type TabsVariant = \"default\" | \"compact\";\nexport type TabsSize = \"sm\" | \"md\" | \"lg\";\nexport type TabsTone = \"blue\" | \"yellow\" | \"black\";\n\ntype TabsContextValue = {\n  value: string;\n  setValue: (value: string) => void;\n};\n\nconst TabsContext = createContext<TabsContextValue | null>(null);\n\nexport type TabsProps = {\n  value?: string;\n  defaultValue: string;\n  onValueChange?: (value: string) => void;\n  variant?: TabsVariant;\n  size?: TabsSize;\n  tone?: TabsTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nfunction useTabs() {\n  const context = useContext(TabsContext);\n\n  if (!context) {\n    throw new Error(\"Tabs components must be used inside Tabs.\");\n  }\n\n  return context;\n}\n\nexport const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({\n  value,\n  defaultValue,\n  onValueChange,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"blue\",\n  className,\n  ...props\n}, ref) {\n  const [internalValue, setInternalValue] = useState(defaultValue);\n  const isControlled = value !== undefined;\n  const currentValue = value ?? internalValue;\n\n  function setValue(nextValue: string) {\n    if (!isControlled) {\n      setInternalValue(nextValue);\n    }\n\n    onValueChange?.(nextValue);\n  }\n\n  return (\n    <TabsContext.Provider value={{ value: currentValue, setValue }}>\n      <div\n        ref={ref}\n        className={cn(\"grid gap-4\", className)}\n        {...swirskiAttrs(\"tabs\", { size, tone, variant })}\n        {...props}\n      />\n    </TabsContext.Provider>\n  );\n  },\n);\n\nTabs.displayName = \"Tabs\";\n\nexport type TabsListProps = {\n  asChild?: boolean;\n  variant?: TabsVariant;\n  size?: TabsSize;\n  tone?: TabsTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nexport const TabsList = forwardRef<HTMLDivElement, TabsListProps>(\n  function TabsList(\n    {\n      asChild = false,\n      className,\n      variant = \"default\",\n      size = \"md\",\n      tone = \"blue\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"flex w-fit flex-wrap gap-2 border-4 border-black bg-white p-2 shadow-[6px_6px_0_#0B0B0C]\",\n          variant === \"compact\" && \"shadow-[3px_3px_0_#0B0B0C]\",\n          className,\n        )}\n        role=\"tablist\"\n        {...swirskiAttrs(\"tabs-list\", { size, tone, variant })}\n        {...props}\n      />\n    );\n  },\n);\n\nTabsList.displayName = \"TabsList\";\n\nexport type TabsTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {\n  asChild?: boolean;\n  value: string;\n  variant?: TabsVariant;\n  size?: TabsSize;\n  tone?: TabsTone;\n};\n\nconst triggerSizeStyles: Record<TabsSize, string> = {\n  sm: \"px-3 py-1.5 text-xs\",\n  md: \"px-4 py-2 text-sm\",\n  lg: \"px-5 py-3 text-base\",\n};\n\nconst selectedToneStyles: Record<TabsTone, string> = {\n  blue: \"bg-[#0057FF] text-white\",\n  yellow: \"bg-[#FFD400] text-black\",\n  black: \"bg-[#0B0B0C] text-white\",\n};\n\nexport const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(\n  function TabsTrigger({\n    asChild = false,\n    value,\n    className,\n    variant = \"default\",\n    size = \"md\",\n    tone = \"blue\",\n    onClick,\n    ...props\n  }, ref) {\n    const tabs = useTabs();\n    const isSelected = tabs.value === value;\n    const Component = asChild ? Slot : \"button\";\n\n    return (\n      <Component\n        ref={ref}\n        aria-selected={isSelected}\n        className={cn(\n          \"border-4 border-black font-black uppercase transition\",\n          triggerSizeStyles[size],\n          isSelected ? selectedToneStyles[tone] : \"bg-white hover:bg-[#FFD400]\",\n          variant === \"compact\" && \"border-2\",\n          className,\n        )}\n        onClick={(event) => {\n          onClick?.(event);\n\n          if (!event.defaultPrevented) {\n            tabs.setValue(value);\n          }\n        }}\n        role=\"tab\"\n        type={asChild ? undefined : \"button\"}\n        {...swirskiAttrs(\"tabs-trigger\", { size, tone, variant })}\n        data-active={isSelected ? \"\" : undefined}\n        {...props}\n      />\n    );\n  },\n);\n\nTabsTrigger.displayName = \"TabsTrigger\";\n\nexport type TabsContentProps = HTMLAttributes<HTMLDivElement> & {\n  asChild?: boolean;\n  value: string;\n  variant?: TabsVariant;\n  size?: TabsSize;\n  tone?: TabsTone;\n};\n\nexport const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(\n  function TabsContent({\n    asChild = false,\n    value,\n    className,\n    variant = \"default\",\n    size = \"md\",\n    tone = \"blue\",\n    ...props\n  }, ref) {\n    const tabs = useTabs();\n\n    if (tabs.value !== value) {\n      return null;\n    }\n\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"border-4 border-black bg-white p-5 shadow-[6px_6px_0_#0B0B0C]\",\n          variant === \"compact\" && \"p-4 shadow-[3px_3px_0_#0B0B0C]\",\n          className,\n        )}\n        role=\"tabpanel\"\n        {...swirskiAttrs(\"tabs-content\", { size, tone, variant })}\n        {...props}\n      />\n    );\n  },\n);\n\nTabsContent.displayName = \"TabsContent\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/tabs/Tabs.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/tabs/index.ts",
+      "content": "export { Tabs, TabsContent, TabsList, TabsTrigger } from \"./Tabs\";\nexport type {\n  TabsContentProps,\n  TabsListProps,\n  TabsProps,\n  TabsSize,\n  TabsTone,\n  TabsTriggerProps,\n  TabsVariant,\n} from \"./Tabs\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/tabs/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "interaction"
+  ],
+  "meta": {
+    "swirskiCategory": "interaction",
+    "swirskiSource": "packages/ui/src/components/tabs"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-reduced-motion",
+  "type": "registry:hook",
+  "title": "Use Reduced Motion",
+  "description": "Read prefers-reduced-motion.",
+  "registryDependencies": [
+    "use-media-query"
+  ],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "packages/ui/src/hooks/use-reduced-motion/index.ts",
+      "content": "export { useReducedMotion } from \"./useReducedMotion\";\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-reduced-motion/index.ts"
+    },
+    {
+      "path": "packages/ui/src/hooks/use-reduced-motion/useReducedMotion.ts",
+      "content": "\"use client\";\n\nimport { useMediaQuery } from \"../use-media-query\";\n\nexport function useReducedMotion(initialValue = false) {\n  return useMediaQuery(\"(prefers-reduced-motion: reduce)\", initialValue);\n}\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-reduced-motion/useReducedMotion.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "hooks"
+  ],
+  "meta": {
+    "swirskiCategory": "hooks",
+    "swirskiSource": "packages/ui/src/hooks/use-reduced-motion"
+  }
+}

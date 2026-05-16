@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table",
+  "type": "registry:ui",
+  "title": "Table",
+  "description": "Base data table.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/table/Table.tsx",
+      "content": "import {\n  HTMLAttributes,\n  TableHTMLAttributes,\n  TdHTMLAttributes,\n  ThHTMLAttributes,\n  forwardRef,\n} from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type TableVariant = \"default\" | \"compact\";\nexport type TableSize = \"sm\" | \"md\" | \"lg\";\nexport type TableTone = \"default\" | \"inverted\";\n\nexport type TableProps = {\n  variant?: TableVariant;\n  size?: TableSize;\n  tone?: TableTone;\n  wrapperClassName?: string;\n} & TableHTMLAttributes<HTMLTableElement>;\n\nexport const Table = forwardRef<HTMLTableElement, TableProps>(function Table({\n  className,\n  wrapperClassName,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <div\n      className={cn(\n        \"w-full min-w-0 max-w-full overflow-x-auto border-4 border-black bg-white shadow-[5px_5px_0_#0B0B0C] sm:shadow-[8px_8px_0_#0B0B0C]\",\n        wrapperClassName,\n      )}\n      {...swirskiAttrs(\"table-wrapper\", { size, tone, variant })}\n    >\n      <table\n        ref={ref}\n        className={cn(\"w-full min-w-96 border-collapse text-left\", className)}\n        {...swirskiAttrs(\"table\", { size, tone, variant })}\n        {...props}\n      />\n    </div>\n  );\n});\n\nTable.displayName = \"Table\";\n\nexport type TableHeadProps = {\n  variant?: TableVariant;\n  size?: TableSize;\n  tone?: TableTone;\n} & HTMLAttributes<HTMLTableSectionElement>;\n\nexport type TableBodyProps = TableHeadProps;\n\nexport const TableHead = forwardRef<HTMLTableSectionElement, TableHeadProps>(\n  function TableHead({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <thead\n      ref={ref}\n      className={cn(\"bg-[#0B0B0C] text-white\", className)}\n      {...swirskiAttrs(\"table-head\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nTableHead.displayName = \"TableHead\";\n\nexport const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(\n  function TableBody({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <tbody\n      ref={ref}\n      className={className}\n      {...swirskiAttrs(\"table-body\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nTableBody.displayName = \"TableBody\";\n\nexport type TableRowProps = {\n  variant?: TableVariant;\n  size?: TableSize;\n  tone?: TableTone;\n} & HTMLAttributes<HTMLTableRowElement>;\n\nexport const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(\n  function TableRow({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <tr\n      ref={ref}\n      className={cn(\"border-b-4 border-black last:border-b-0\", className)}\n      {...swirskiAttrs(\"table-row\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nTableRow.displayName = \"TableRow\";\n\nexport type TableHeaderProps = {\n  variant?: TableVariant;\n  size?: TableSize;\n  tone?: TableTone;\n} & ThHTMLAttributes<HTMLTableCellElement>;\n\nconst cellSizeStyles: Record<TableSize, string> = {\n  sm: \"px-3 py-2 text-xs\",\n  md: \"px-4 py-3 text-sm\",\n  lg: \"px-5 py-4 text-base\",\n};\n\nexport const TableHeader = forwardRef<HTMLTableCellElement, TableHeaderProps>(\n  function TableHeader({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <th\n      ref={ref}\n      className={cn(\"font-black uppercase\", cellSizeStyles[size], className)}\n      {...swirskiAttrs(\"table-header\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nTableHeader.displayName = \"TableHeader\";\n\nexport type TableCellProps = {\n  variant?: TableVariant;\n  size?: TableSize;\n  tone?: TableTone;\n} & TdHTMLAttributes<HTMLTableCellElement>;\n\nexport const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(\n  function TableCell({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"default\",\n  ...props\n}, ref) {\n  return (\n    <td\n      ref={ref}\n      className={cn(\"font-bold text-black/70\", cellSizeStyles[size], className)}\n      {...swirskiAttrs(\"table-cell\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nTableCell.displayName = \"TableCell\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/table/Table.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/table/index.ts",
+      "content": "export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"./Table\";\nexport type {\n  TableCellProps,\n  TableBodyProps,\n  TableHeadProps,\n  TableHeaderProps,\n  TableProps,\n  TableRowProps,\n  TableSize,\n  TableTone,\n  TableVariant,\n} from \"./Table\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/table/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "layout"
+  ],
+  "meta": {
+    "swirskiCategory": "layout",
+    "swirskiSource": "packages/ui/src/components/table"
+  }
+}

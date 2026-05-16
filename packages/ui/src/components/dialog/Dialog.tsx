@@ -8,10 +8,13 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useId,
+  useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+import { focusInitialElement, trapFocus } from "../../system/focus";
 import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type DialogVariant = "default" | "compact";
@@ -21,6 +24,12 @@ export type DialogTone = "default";
 type DialogContextValue = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  titleId: string;
+  descriptionId: string;
+  hasTitle: boolean;
+  hasDescription: boolean;
+  setHasTitle: (value: boolean) => void;
+  setHasDescription: (value: boolean) => void;
 };
 
 const DialogContext = createContext<DialogContextValue | null>(null);
@@ -54,7 +63,11 @@ export function Dialog({
   size: _size = "md",
   tone: _tone = "default",
 }: DialogProps) {
+  const titleId = useId();
+  const descriptionId = useId();
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [hasTitle, setHasTitle] = useState(false);
+  const [hasDescription, setHasDescription] = useState(false);
   const isControlled = open !== undefined;
   const currentOpen = open ?? internalOpen;
 
@@ -67,7 +80,18 @@ export function Dialog({
   }
 
   return (
-    <DialogContext.Provider value={{ open: currentOpen, setOpen }}>
+    <DialogContext.Provider
+      value={{
+        open: currentOpen,
+        setOpen,
+        titleId,
+        descriptionId,
+        hasTitle,
+        hasDescription,
+        setHasTitle,
+        setHasDescription,
+      }}
+    >
       {children}
     </DialogContext.Provider>
   );
@@ -148,23 +172,50 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   tone = "default",
   ...props
 }, ref) {
-  const { open, setOpen } = useDialog();
+  const { descriptionId, hasDescription, hasTitle, open, setOpen, titleId } =
+    useDialog();
   const portalRoot = usePortalRoot();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) {
       return;
     }
 
+    const previouslyFocusedElement = document.activeElement as HTMLElement | null;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const animationFrame = window.requestAnimationFrame(() => {
+      if (contentRef.current) {
+        focusInitialElement(contentRef.current);
+      }
+    });
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
+        return;
+      }
+
+      if (contentRef.current) {
+        trapFocus(contentRef.current, event);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+
+      if (
+        previouslyFocusedElement &&
+        document.contains(previouslyFocusedElement)
+      ) {
+        previouslyFocusedElement.focus();
+      }
+    };
   }, [open, setOpen]);
 
   if (!open || !portalRoot) {
@@ -180,7 +231,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         type="button"
       />
       <div
-        ref={ref}
+        ref={composeRefs(contentRef, ref)}
         className={cn(
           "relative z-10 w-full border-4 border-black bg-white shadow-[12px_12px_0_#0B0B0C]",
           contentSizeStyles[size],
@@ -189,6 +240,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         )}
         role="dialog"
         aria-modal="true"
+        aria-labelledby={hasTitle ? titleId : props["aria-labelledby"]}
+        aria-describedby={
+          hasDescription ? descriptionId : props["aria-describedby"]
+        }
+        tabIndex={-1}
         {...swirskiAttrs("dialog-content", { size, tone, variant })}
         {...props}
       >
@@ -247,12 +303,19 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
   tone = "default",
   ...props
 }, ref) {
+  const { setHasTitle, titleId } = useDialog();
   const Component = asChild ? Slot : "h2";
+
+  useEffect(() => {
+    setHasTitle(true);
+    return () => setHasTitle(false);
+  }, [setHasTitle]);
 
   return (
     <Component
       ref={ref}
       className={cn("font-anton text-4xl uppercase leading-none", className)}
+      id={props.id ?? titleId}
       {...swirskiAttrs("dialog-title", { size, tone, variant })}
       {...props}
     />
@@ -279,12 +342,19 @@ export const DialogDescription = forwardRef<
   tone = "default",
   ...props
 }, ref) {
+  const { descriptionId, setHasDescription } = useDialog();
   const Component = asChild ? Slot : "p";
+
+  useEffect(() => {
+    setHasDescription(true);
+    return () => setHasDescription(false);
+  }, [setHasDescription]);
 
   return (
     <Component
       ref={ref}
       className={cn("text-sm font-bold leading-6 text-black/65", className)}
+      id={props.id ?? descriptionId}
       {...swirskiAttrs("dialog-description", { size, tone, variant })}
       {...props}
     />

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Loading placeholder.",
+  "registryDependencies": [
+    "swirski-base"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/skeleton/Skeleton.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type SkeletonVariant = \"default\" | \"text\";\nexport type SkeletonSize = \"sm\" | \"md\" | \"lg\";\nexport type SkeletonTone = \"default\" | \"muted\";\n\nexport type SkeletonProps = {\n  variant?: SkeletonVariant;\n  size?: SkeletonSize;\n  tone?: SkeletonTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<SkeletonSize, string> = {\n  sm: \"min-h-4\",\n  md: \"min-h-6\",\n  lg: \"min-h-10\",\n};\n\nexport const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(\n  function Skeleton(\n    { className, variant = \"default\", size = \"md\", tone = \"default\", ...props },\n    ref,\n  ) {\n  return (\n    <div\n      ref={ref}\n      className={cn(\n        \"animate-pulse border-4 border-black bg-neutral-200 shadow-[4px_4px_0_#0B0B0C]\",\n        variant === \"text\" && \"h-4\",\n        sizeStyles[size],\n        className,\n      )}\n      {...swirskiAttrs(\"skeleton\", { size, tone, variant })}\n      {...props}\n    />\n  );\n  },\n);\n\nSkeleton.displayName = \"Skeleton\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/skeleton/Skeleton.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/skeleton/index.ts",
+      "content": "export { Skeleton } from \"./Skeleton\";\nexport type {\n  SkeletonProps,\n  SkeletonSize,\n  SkeletonTone,\n  SkeletonVariant,\n} from \"./Skeleton\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/skeleton/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "feedback"
+  ],
+  "meta": {
+    "swirskiCategory": "feedback",
+    "swirskiSource": "packages/ui/src/components/skeleton"
+  }
+}

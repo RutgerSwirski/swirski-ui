@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-disclosure",
+  "type": "registry:hook",
+  "title": "Use Disclosure",
+  "description": "Open, close and toggle boolean disclosure state.",
+  "registryDependencies": [
+    "use-controllable-state"
+  ],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "packages/ui/src/hooks/use-disclosure/index.ts",
+      "content": "export { useDisclosure } from \"./useDisclosure\";\nexport type { UseDisclosureHandlers, UseDisclosureOptions } from \"./useDisclosure\";\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-disclosure/index.ts"
+    },
+    {
+      "path": "packages/ui/src/hooks/use-disclosure/useDisclosure.ts",
+      "content": "\"use client\";\n\nimport { useCallback } from \"react\";\nimport { useControllableState } from \"../use-controllable-state\";\n\nexport type UseDisclosureHandlers = {\n  open: () => void;\n  close: () => void;\n  toggle: () => void;\n  set: (opened: boolean) => void;\n};\n\nexport type UseDisclosureOptions = {\n  value?: boolean;\n  onChange?: (opened: boolean) => void;\n};\n\nexport function useDisclosure(\n  defaultOpened = false,\n  options: UseDisclosureOptions = {},\n): [boolean, UseDisclosureHandlers] {\n  const [opened, setOpened] = useControllableState({\n    value: options.value,\n    defaultValue: defaultOpened,\n    onChange: options.onChange,\n  });\n\n  const open = useCallback(() => setOpened(true), [setOpened]);\n  const close = useCallback(() => setOpened(false), [setOpened]);\n  const toggle = useCallback(\n    () => setOpened((currentOpened) => !currentOpened),\n    [setOpened],\n  );\n\n  return [opened, { open, close, toggle, set: setOpened }];\n}\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-disclosure/useDisclosure.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "hooks"
+  ],
+  "meta": {
+    "swirskiCategory": "hooks",
+    "swirskiSource": "packages/ui/src/hooks/use-disclosure"
+  }
+}
