@@ -308,7 +308,6 @@ export default async function HookPage({ params }: Props) {
                     className="min-w-0 break-words"
                     order={3}
                     size="h5"
-                    tone="inverted"
                   >
                     {hook.title}
                   </Title>

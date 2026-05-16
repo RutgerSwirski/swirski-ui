@@ -219,8 +219,7 @@ export default async function ComponentPage({ params }: Props) {
 
   const previousComponent =
     componentOnlyDocs[
-      (componentIndex - 1 + componentOnlyDocs.length) %
-        componentOnlyDocs.length
+      (componentIndex - 1 + componentOnlyDocs.length) % componentOnlyDocs.length
     ];
   const nextComponent =
     componentOnlyDocs[(componentIndex + 1) % componentOnlyDocs.length];
@@ -268,7 +267,10 @@ export default async function ComponentPage({ params }: Props) {
               </Text>
             </div>
 
-            <Grid gap="sm" className="w-full max-w-sm sm:max-w-sm lg:max-w-none">
+            <Grid
+              gap="sm"
+              className="w-full max-w-sm sm:max-w-sm lg:max-w-none"
+            >
               <div
                 className={`border-4 border-black p-4 shadow-[6px_6px_0_#0B0B0C] ${categoryStyles[component.category]}`}
               >
@@ -292,9 +294,7 @@ export default async function ComponentPage({ params }: Props) {
       </div>
 
       <Container className="py-16 md:py-20">
-        <Grid
-          className="gap-10 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]"
-        >
+        <Grid className="gap-10 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]">
           <aside className="min-w-0 lg:sticky lg:top-8 lg:self-start">
             <Card
               interactive={false}
@@ -343,12 +343,7 @@ export default async function ComponentPage({ params }: Props) {
 
               <div className="w-full min-w-0 max-w-full overflow-hidden border-4 border-black bg-white shadow-[6px_6px_0_#0B0B0C] sm:shadow-[10px_10px_0_#0B0B0C]">
                 <div className="flex min-w-0 items-center justify-between gap-3 border-b-4 border-black bg-[#0B0B0C] px-4 py-3 text-white">
-                  <Title
-                    className="min-w-0 break-words"
-                    order={3}
-                    size="h5"
-                    tone="inverted"
-                  >
+                  <Title className="min-w-0 break-words" order={3} size="h5">
                     {component.title}
                   </Title>
                   <Badge className="shrink-0" size="sm">
@@ -380,7 +375,7 @@ export default async function ComponentPage({ params }: Props) {
               className="border-t-4 border-black pt-8 sm:grid-cols-2 md:items-center"
             >
               <Button
-              as={Link}
+                as={Link}
                 href={`/components/${previousComponent.slug}`}
                 variant="white"
                 className="w-full text-xs sm:text-sm"
@@ -388,7 +383,7 @@ export default async function ComponentPage({ params }: Props) {
                 Previous: {previousComponent.title}
               </Button>
               <Button
-              as={Link}
+                as={Link}
                 href={`/components/${nextComponent.slug}`}
                 className="w-full items-center gap-2 text-xs sm:text-sm"
               >

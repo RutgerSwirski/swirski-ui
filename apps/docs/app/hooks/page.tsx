@@ -108,7 +108,7 @@ export default function HooksPage() {
                 <Title className="mt-5 text-current" order={2} size="h2">
                   {hookDocs.length}
                 </Title>
-                <Text className="mt-2" size="sm" weight="bold" tone="inverted">
+                <Text className="mt-2" size="sm" weight="bold">
                   documented hooks, exported from @swirski/ui and installable
                   through the registry CLI.
                 </Text>
@@ -119,11 +119,7 @@ export default function HooksPage() {
       </div>
 
       <Grid as={Container} className="gap-14 py-16 md:py-20">
-        <Grid
-          as="section"
-          gap="xl"
-          className="lg:grid-cols-[0.8fr_1.2fr]"
-        >
+        <Grid as="section" gap="xl" className="lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <SectionLabel>Install</SectionLabel>
             <Title className="mt-6" order={2} size="h2">
@@ -179,11 +175,7 @@ export default function HooksPage() {
           ))}
         </Grid>
 
-        <Grid
-          as="section"
-          gap="xl"
-          className="lg:grid-cols-[0.9fr_1.1fr]"
-        >
+        <Grid as="section" gap="xl" className="lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <SectionLabel>Recipes</SectionLabel>
             <Title className="mt-6" order={2} size="h2">

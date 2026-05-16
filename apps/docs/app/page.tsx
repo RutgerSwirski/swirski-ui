@@ -100,8 +100,8 @@ export default function HomePage() {
             <Hero />
 
             <ImageFrame className="border-4 bg-[#0B0B0C] p-4 text-white shadow-[14px_14px_0_#0057FF]">
-              <div className="flex items-center justify-between border-b-4 border-white pb-4">
-                <Title order={2} size="h5" tone="inverted">
+              <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                <Title order={2} size="h5">
                   Docs
                 </Title>
                 <Badge>@swirski/ui</Badge>
@@ -155,15 +155,10 @@ export default function HomePage() {
                     className="bg-[#0057FF] text-white "
                   >
                     <CardContent>
-                      <Title order={3} size="h5" tone="inverted">
+                      <Title order={3} size="h5">
                         Dev
                       </Title>
-                      <Text
-                        className="mt-3"
-                        size="sm"
-                        tone="inverted"
-                        weight="bold"
-                      >
+                      <Text className="mt-3" size="sm" weight="bold">
                         Built for docs, portfolio surfaces and production
                         interfaces.
                       </Text>
@@ -269,12 +264,7 @@ export default function HomePage() {
                       {String(index + 1).padStart(2, "0")}
                     </Text>
                     <Grid className="gap-1">
-                      <Text
-                        component="span"
-                        size="xl"
-                        tone="inverted"
-                        weight="bold"
-                      >
+                      <Text component="span" size="xl" weight="bold">
                         {title}
                       </Text>
                       <Text className="text-white/75" size="sm">

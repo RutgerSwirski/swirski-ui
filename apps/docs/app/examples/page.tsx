@@ -314,14 +314,14 @@ export default function ExamplesPage() {
                       >
                         <CardContent className="min-h-28">
                           <Text
-                            className="uppercase text-current"
+                            className="uppercase"
                             size="xs"
                             weight="black"
                           >
                             0{index + 1}
                           </Text>
                           <Title
-                            className="mt-3 text-current"
+                            className="mt-3"
                             order={3}
                             size="h5"
                           >
