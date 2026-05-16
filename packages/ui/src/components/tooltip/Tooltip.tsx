@@ -1,5 +1,18 @@
-import { HTMLAttributes, ReactNode, forwardRef } from "react";
+"use client";
+
+import {
+  HTMLAttributes,
+  ReactNode,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 import { Slot, cn, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type TooltipVariant = "default";
 export type TooltipSize = "sm" | "md";
@@ -29,32 +42,126 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
   children,
   content,
   className,
+  onBlur,
+  onFocus,
+  onPointerEnter,
+  onPointerLeave,
   variant = "default",
   size = "md",
   tone = "black",
   ...props
 }, ref) {
   const Component = asChild ? Slot : "span";
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const tooltipId = `${useId()}-tooltip`;
+  const portalRoot = usePortalRoot();
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [position, setPosition] = useState<{
+    left: number;
+    top: number;
+  } | null>(null);
+  const open = hovered || focused;
+  const describedBy = [props["aria-describedby"], open ? tooltipId : undefined]
+    .filter(Boolean)
+    .join(" ") || undefined;
+
+  useEffect(() => {
+    if (!open) {
+      setPosition(null);
+      return;
+    }
+
+    function updatePosition() {
+      const rect = triggerRef.current?.getBoundingClientRect();
+
+      if (!rect) {
+        return;
+      }
+
+      const viewportPadding = 12;
+      const centeredLeft = rect.left + rect.width / 2;
+
+      setPosition({
+        left: Math.min(
+          Math.max(centeredLeft, viewportPadding),
+          window.innerWidth - viewportPadding,
+        ),
+        top: Math.max(rect.top - 8, viewportPadding),
+      });
+    }
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [open]);
+
+  const setTriggerRef = useCallback((node: HTMLElement | null) => {
+    triggerRef.current = node;
+
+    if (typeof ref === "function") {
+      ref(node as HTMLSpanElement | null);
+      return;
+    }
+
+    if (ref) {
+      ref.current = node as HTMLSpanElement | null;
+    }
+  }, [ref]);
 
   return (
     <Component
-      ref={ref}
+      ref={setTriggerRef}
       className={cn("group relative inline-flex", className)}
       {...swirskiAttrs("tooltip", { size, tone, variant })}
       {...props}
+      aria-describedby={describedBy}
+      onBlur={(event) => {
+        onBlur?.(event);
+        setFocused(false);
+      }}
+      onFocus={(event) => {
+        onFocus?.(event);
+        setFocused(true);
+      }}
+      onPointerEnter={(event) => {
+        onPointerEnter?.(event);
+        setHovered(true);
+      }}
+      onPointerLeave={(event) => {
+        onPointerLeave?.(event);
+        setHovered(false);
+      }}
     >
       {children}
 
-      <span
-        className={cn(
-          "pointer-events-none absolute bottom-[calc(100%+0.5rem)] left-1/2 z-50 hidden w-max max-w-56 -translate-x-1/2 border-4 border-black font-black uppercase group-hover:block group-focus-within:block",
-          sizeStyles[size],
-          toneStyles[tone],
+      {open &&
+        position &&
+        portalRoot &&
+        createPortal(
+          <span
+            className={cn(
+              "pointer-events-none fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-full border-4 border-black font-black uppercase",
+              sizeStyles[size],
+              toneStyles[tone],
+            )}
+            id={tooltipId}
+            role="tooltip"
+            style={{
+              left: position.left,
+              top: position.top,
+            }}
+            {...swirskiAttrs("tooltip-content", { size, tone, variant })}
+          >
+            {content}
+          </span>,
+          portalRoot,
         )}
-        {...swirskiAttrs("tooltip-content", { size, tone, variant })}
-      >
-        {content}
-      </span>
     </Component>
   );
 });

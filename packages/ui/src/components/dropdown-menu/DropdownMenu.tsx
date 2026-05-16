@@ -13,6 +13,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type DropdownMenuVariant = "default" | "compact";
 export type DropdownMenuSize = "sm" | "md" | "lg";
@@ -172,6 +173,7 @@ export const DropdownMenuContent = forwardRef<
   ...props
 }, ref) {
   const { contentRef, open, rootRef } = useDropdownMenu();
+  const portalRoot = usePortalRoot();
   const [position, setPosition] = useState<{
     left: number;
     top: number;
@@ -206,7 +208,7 @@ export const DropdownMenuContent = forwardRef<
     };
   }, [align, open, rootRef]);
 
-  if (!open || !position || typeof document === "undefined") {
+  if (!open || !position || !portalRoot) {
     return null;
   }
 
@@ -228,7 +230,7 @@ export const DropdownMenuContent = forwardRef<
       }}
       {...props}
     />,
-    document.body,
+    portalRoot,
   );
 });
 

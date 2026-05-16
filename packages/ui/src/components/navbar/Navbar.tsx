@@ -14,7 +14,9 @@ import {
   useId,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { Slot, cn, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type NavbarVariant = "default" | "compact";
 export type NavbarSize = "sm" | "md" | "lg";
@@ -330,6 +332,7 @@ export const MobileMenuContent = forwardRef<HTMLDivElement, MobileMenuContentPro
   ...props
 }, ref) {
   const { contentId, open, setOpen } = useMobileMenu();
+  const portalRoot = usePortalRoot();
 
   useEffect(() => {
     if (!open) {
@@ -353,11 +356,11 @@ export const MobileMenuContent = forwardRef<HTMLDivElement, MobileMenuContentPro
     };
   }, [open, setOpen]);
 
-  if (!open) {
+  if (!open || !portalRoot) {
     return null;
   }
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 bg-black/45">
       <button
         aria-label="Close navigation menu"
@@ -381,7 +384,8 @@ export const MobileMenuContent = forwardRef<HTMLDivElement, MobileMenuContentPro
       >
         {children}
       </div>
-    </div>
+    </div>,
+    portalRoot,
   );
 });
 

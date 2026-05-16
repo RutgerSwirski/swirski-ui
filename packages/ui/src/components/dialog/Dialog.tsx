@@ -10,7 +10,9 @@ import {
   useEffect,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { Slot, cn, swirskiAttrs } from "../../system";
+import { usePortalRoot } from "../../system/usePortalRoot";
 
 export type DialogVariant = "default" | "compact";
 export type DialogSize = "sm" | "md" | "lg";
@@ -147,6 +149,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   ...props
 }, ref) {
   const { open, setOpen } = useDialog();
+  const portalRoot = usePortalRoot();
 
   useEffect(() => {
     if (!open) {
@@ -164,11 +167,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, setOpen]);
 
-  if (!open) {
+  if (!open || !portalRoot) {
     return null;
   }
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/45 p-4">
       <button
         aria-label="Close dialog"
@@ -191,7 +194,8 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       >
         {children}
       </div>
-    </div>
+    </div>,
+    portalRoot,
   );
 });
 
