@@ -6,8 +6,22 @@ The goal is to sit somewhere between shadcn/ui and Mantine:
 
 - installable package primitives from `@swirski/ui`
 - copy-into-your-app registry workflow through `@swirski/cli`
+- shadcn-compatible hosted registry items from `ui.swirski.dev`
 - theme tokens through `SwirskiProvider`
 - docs, playgrounds, props tables, and examples for every component
+
+## Choose your workflow
+
+Swirski UI has three main ways in:
+
+| Workflow | Best for | First command |
+| --- | --- | --- |
+| Component library | You want the easiest React package install. | `pnpm add @swirski/ui` |
+| Swirski CLI | You want source copied into your app. | `pnpm add -D @swirski/cli` |
+| shadcn registry | You already use shadcn and want remote registry items. | `pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json` |
+
+Start with the package if you are unsure. Use copy workflows when you want to
+own and edit the component source inside your app.
 
 ## Packages
 
@@ -20,16 +34,12 @@ packages/cli     Local registry CLI
 registry         Component registry manifest
 ```
 
-## Install
+## Install as a component library
+
+Use Swirski UI like a normal React component package.
 
 ```bash
 pnpm add @swirski/ui
-```
-
-For the registry workflow:
-
-```bash
-pnpm add -D @swirski/cli
 ```
 
 Import the package styles once in your app:
@@ -38,15 +48,7 @@ Import the package styles once in your app:
 import "@swirski/ui/styles.css";
 ```
 
-If your app uses Tailwind CSS v4 and imports components from the package, make sure Tailwind scans the package output:
-
-```css
-@source "../node_modules/@swirski/ui/dist";
-```
-
-If you use the CLI to copy component source into your app, Tailwind will scan those copied files naturally.
-
-## Basic Usage
+Then import components:
 
 ```tsx
 import { Button, Card, CardContent, Title, Text } from "@swirski/ui";
@@ -59,7 +61,7 @@ export function Example() {
           Design loud.
         </Title>
         <Text tone="muted" weight="bold">
-          Compose Swirski components with strong type, borders, shadows and
+          Compose Swirski components with strong types, borders, shadows and
           practical interaction states.
         </Text>
         <Button className="mt-5">Ship sharp</Button>
@@ -67,6 +69,67 @@ export function Example() {
     </Card>
   );
 }
+```
+
+If your app uses Tailwind CSS v4 and imports components from the package, make
+sure Tailwind scans the package output:
+
+```css
+@source "../node_modules/@swirski/ui/dist";
+```
+
+If you use the CLI to copy component source into your app, Tailwind will scan
+those copied files naturally.
+
+## Copy source with the Swirski CLI
+
+Use the Swirski CLI when you want local component source that your app owns.
+
+```bash
+pnpm add -D @swirski/cli
+```
+
+Create a config and copy one or more items:
+
+```bash
+pnpm exec swirski init
+pnpm exec swirski add button
+pnpm exec swirski add button card dialog
+pnpm exec swirski add --all
+```
+
+The CLI copies source folders from `registry/swirski.registry.json` into the
+configured `componentsPath`.
+
+## Install with shadcn
+
+Use the hosted shadcn-compatible registry when your app already uses shadcn.
+
+```bash
+pnpm dlx shadcn@latest view https://ui.swirski.dev/r/button.json
+pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json
+```
+
+You can also add a namespace to `components.json`:
+
+```json
+{
+  "registries": {
+    "@swirski": "https://ui.swirski.dev/r/{name}.json"
+  }
+}
+```
+
+Then install registry items by name:
+
+```bash
+pnpm dlx shadcn@latest add @swirski/button @swirski/dialog
+```
+
+For a full source copy of every Swirski entry, use the Swirski CLI:
+
+```bash
+pnpm exec swirski add --all
 ```
 
 ## Theme Provider

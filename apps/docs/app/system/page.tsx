@@ -76,6 +76,24 @@ const principles = [
   "Readable source that users can understand and adapt.",
 ];
 
+const workflowItems = [
+  {
+    title: "Package workflow",
+    body: "Install @swirski/ui when you want a normal component library. You import components from the package and receive updates through npm.",
+    code: "pnpm add @swirski/ui",
+  },
+  {
+    title: "Swirski CLI workflow",
+    body: "Use @swirski/cli when you want components copied into your app. The copied files use the same system helpers, but the source is now yours.",
+    code: "pnpm exec swirski add button",
+  },
+  {
+    title: "shadcn registry workflow",
+    body: "Use the hosted registry when your app already uses shadcn. shadcn installs Swirski registry items from ui.swirski.dev.",
+    code: "pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json",
+  },
+];
+
 export default function SystemPage() {
   return (
     <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
@@ -135,6 +153,50 @@ export default function SystemPage() {
           </Grid>
         </Container>
       </div>
+
+      <Container className="py-12 md:py-16">
+        <Grid gap="xl" className="lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <SectionLabel>How it ships</SectionLabel>
+
+            <Title className="mt-5" order={2} size="h1">
+              One system, three install paths.
+            </Title>
+
+            <Text className="mt-5 max-w-xl" tone="muted" weight="bold">
+              The package, Swirski CLI and shadcn registry all expose the same
+              visual language: bold defaults, shared props, CSS variables,
+              className escape hatches and predictable data attributes.
+            </Text>
+          </div>
+
+          <div className="grid gap-4">
+            {workflowItems.map((item, index) => (
+              <Card
+                key={item.title}
+                interactive={false}
+                className="bg-white shadow-[5px_5px_0_#0B0B0C]"
+              >
+                <CardContent>
+                  <Badge
+                    tone={
+                      index === 2 ? "blue" : index === 1 ? "red" : "yellow"
+                    }
+                  >
+                    {item.title}
+                  </Badge>
+                  <Text className="mt-4" tone="muted" weight="bold">
+                    {item.body}
+                  </Text>
+                  <pre className="mt-4 overflow-x-auto border-4 border-black bg-[#0B0B0C] p-4 text-sm font-bold text-[#F5F5F3]">
+                    <code>{item.code}</code>
+                  </pre>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </Grid>
+      </Container>
 
       <Container className="py-12 md:py-16">
         <Grid gap="xl" className="lg:grid-cols-[0.8fr_1.2fr]">
