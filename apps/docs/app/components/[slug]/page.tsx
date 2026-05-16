@@ -3,6 +3,7 @@ import CodeBlock from "@/components/CodeBlock";
 import ComponentPlayground from "@/components/ComponentPlayground";
 import NavBar from "@/components/NavBar";
 import { componentDocs, type ComponentDoc } from "@/content/components";
+import generatedPropsMetadata from "@/content/generated-props.json";
 import {
   Badge,
   Button,
@@ -28,6 +29,30 @@ type Props = {
     slug: string;
   }>;
 };
+
+type GeneratedPropDoc = {
+  name: string;
+  prop: string;
+  component: string;
+  sourceType: string;
+  type: string;
+  required: boolean;
+  defaultValue?: string;
+  description: string;
+};
+
+type PropRow = {
+  name: string;
+  type: string;
+  defaultValue?: string;
+  required?: boolean;
+  description: string;
+};
+
+const generatedPropsByComponent = generatedPropsMetadata.components as Record<
+  string,
+  { props: GeneratedPropDoc[] }
+>;
 
 const categoryStyles: Record<ComponentDoc["category"], string> = {
   Typography: "bg-[#FFD400] text-black",
@@ -98,7 +123,62 @@ function CodePanel({
   );
 }
 
+function getHumanNote(
+  prop: GeneratedPropDoc,
+  manualProps: ComponentDoc["props"],
+) {
+  return manualProps.find(
+    (manualProp) =>
+      manualProp.name === prop.name ||
+      manualProp.name === prop.prop ||
+      manualProp.name === `${prop.component}.${prop.prop}`,
+  );
+}
+
+function getPropRows(component: ComponentDoc) {
+  const generatedProps =
+    generatedPropsByComponent[component.slug]?.props.filter(
+      (prop) => prop.type !== "never",
+    ) ?? [];
+
+  if (!generatedProps.length) {
+    return {
+      generatedCount: 0,
+      rows: component.props,
+    };
+  }
+
+  const generatedNames = new Set(
+    generatedProps.flatMap((prop) => [
+      prop.name,
+      prop.prop,
+      `${prop.component}.${prop.prop}`,
+    ]),
+  );
+  const generatedRows = generatedProps.map<PropRow>((prop) => {
+    const humanNote = getHumanNote(prop, component.props);
+
+    return {
+      name: prop.name,
+      type: prop.type,
+      required: prop.required,
+      defaultValue: prop.defaultValue ?? humanNote?.defaultValue,
+      description: humanNote?.description ?? prop.description,
+    };
+  });
+  const manualRows = component.props.filter(
+    (prop) => !generatedNames.has(prop.name),
+  );
+
+  return {
+    generatedCount: generatedRows.length,
+    rows: [...generatedRows, ...manualRows],
+  };
+}
+
 function PropTable({ component }: { component: ComponentDoc }) {
+  const { generatedCount, rows } = getPropRows(component);
+
   return (
     <section id="props" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -109,7 +189,9 @@ function PropTable({ component }: { component: ComponentDoc }) {
           </Title>
         </div>
 
-        <Badge tone="white">{component.props.length} documented</Badge>
+        <Badge tone="white">
+          {generatedCount ? `${generatedCount} generated` : `${rows.length} documented`}
+        </Badge>
       </div>
 
       <div className="w-full min-w-0 max-w-full overflow-hidden pb-3 pr-3">
@@ -123,7 +205,7 @@ function PropTable({ component }: { component: ComponentDoc }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {component.props.map((prop) => (
+            {rows.map((prop) => (
               <TableRow key={prop.name}>
                 <TableCell className="align-top text-[#0B0B0C]">
                   <code className="font-black">{prop.name}</code>
