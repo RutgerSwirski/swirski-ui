@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "swirski-ui",
-  "homepage": "https://swirski.dev",
+  "homepage": "https://ui.swirski.dev",
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
@@ -69,7 +69,7 @@
       "title": "Accordion",
       "description": "Native disclosure stack.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -104,7 +104,7 @@
       "title": "Alert",
       "description": "Composable callout block.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -151,7 +151,7 @@
       "title": "Avatar",
       "description": "Framed user image or fallback.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -186,7 +186,7 @@
       "title": "Badge",
       "description": "Compact status label.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -221,7 +221,7 @@
       "title": "Breadcrumb",
       "description": "Navigation trail primitives.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -256,7 +256,7 @@
       "title": "Button",
       "description": "Bold action primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -291,7 +291,7 @@
       "title": "Card",
       "description": "Framed content block.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -356,7 +356,7 @@
       "title": "Checkbox",
       "description": "Native checkbox with Swirski mark.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -391,7 +391,7 @@
       "title": "Container",
       "description": "Centered page width helper.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -426,7 +426,7 @@
       "title": "Cursor",
       "description": "Custom cursor provider and picker.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -479,7 +479,7 @@
       "title": "Diagonal Lines",
       "description": "Diagonal stripe background primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -514,7 +514,7 @@
       "title": "Dialog",
       "description": "Modal overlay primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -555,7 +555,7 @@
       "title": "Dot Grid",
       "description": "Dot grid background primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -590,7 +590,7 @@
       "title": "Drawer",
       "description": "Side sheet primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -631,7 +631,7 @@
       "title": "Dropdown Menu",
       "description": "Compact action menu.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -672,7 +672,7 @@
       "title": "Field",
       "description": "Field, label, input and textarea primitives.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -737,7 +737,7 @@
       "title": "Grid",
       "description": "Reusable CSS grid layout primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -772,7 +772,7 @@
       "title": "Image Frame",
       "description": "Framed image surface.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -807,7 +807,7 @@
       "title": "Line Grid",
       "description": "Line grid background primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -842,7 +842,7 @@
       "title": "Loader",
       "description": "Loading spinner.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -877,7 +877,7 @@
       "title": "Navbar",
       "description": "Header and mobile navigation primitives.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -912,7 +912,7 @@
       "title": "Pagination",
       "description": "Page controls.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -947,7 +947,7 @@
       "title": "Popover",
       "description": "Floating content panel.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -988,7 +988,7 @@
       "title": "Progress",
       "description": "Progress meter.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1023,7 +1023,7 @@
       "title": "Radio Group",
       "description": "Native radio group.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1058,7 +1058,7 @@
       "title": "Select",
       "description": "Custom dropdown picker.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1099,7 +1099,7 @@
       "title": "Section Label",
       "description": "Tilted section label.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1134,7 +1134,7 @@
       "title": "Separator",
       "description": "Visual divider.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1169,7 +1169,7 @@
       "title": "Skeleton",
       "description": "Loading placeholder.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1204,7 +1204,7 @@
       "title": "Slider",
       "description": "Native range input.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1239,7 +1239,7 @@
       "title": "Switch",
       "description": "Native switch control.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1274,7 +1274,7 @@
       "title": "Table",
       "description": "Base data table.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1309,7 +1309,7 @@
       "title": "Tabs",
       "description": "Tabbed section primitive.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1344,7 +1344,7 @@
       "title": "Toast",
       "description": "Toast provider and status messages.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1379,7 +1379,7 @@
       "title": "Tooltip",
       "description": "Hover/focus label.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1420,7 +1420,7 @@
       "title": "Typography",
       "description": "Title and Text primitives.",
       "registryDependencies": [
-        "swirski-base"
+        "https://ui.swirski.dev/r/swirski-base.json"
       ],
       "dependencies": [
         "clsx"
@@ -1587,7 +1587,7 @@
       "title": "Use Disclosure",
       "description": "Open, close and toggle boolean disclosure state.",
       "registryDependencies": [
-        "use-controllable-state"
+        "https://ui.swirski.dev/r/use-controllable-state.json"
       ],
       "dependencies": [],
       "files": [
@@ -1713,7 +1713,7 @@
       "title": "Use Reduced Motion",
       "description": "Read prefers-reduced-motion.",
       "registryDependencies": [
-        "use-media-query"
+        "https://ui.swirski.dev/r/use-media-query.json"
       ],
       "dependencies": [],
       "files": [

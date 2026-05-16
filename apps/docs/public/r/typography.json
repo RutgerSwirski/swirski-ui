@@ -5,7 +5,7 @@
   "title": "Typography",
   "description": "Title and Text primitives.",
   "registryDependencies": [
-    "swirski-base"
+    "https://ui.swirski.dev/r/swirski-base.json"
   ],
   "dependencies": [
     "clsx"

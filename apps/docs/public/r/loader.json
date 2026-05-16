@@ -5,7 +5,7 @@
   "title": "Loader",
   "description": "Loading spinner.",
   "registryDependencies": [
-    "swirski-base"
+    "https://ui.swirski.dev/r/swirski-base.json"
   ],
   "dependencies": [
     "clsx"

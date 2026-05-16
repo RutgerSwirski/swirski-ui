@@ -5,7 +5,7 @@
   "title": "Use Reduced Motion",
   "description": "Read prefers-reduced-motion.",
   "registryDependencies": [
-    "use-media-query"
+    "https://ui.swirski.dev/r/use-media-query.json"
   ],
   "dependencies": [],
   "files": [

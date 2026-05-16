@@ -5,7 +5,7 @@
   "title": "Use Disclosure",
   "description": "Open, close and toggle boolean disclosure state.",
   "registryDependencies": [
-    "use-controllable-state"
+    "https://ui.swirski.dev/r/use-controllable-state.json"
   ],
   "dependencies": [],
   "files": [

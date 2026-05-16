@@ -51,8 +51,12 @@ const workflow = [
     body: "Install @swirski/ui and import components from the package. This is the fastest path for apps that want updates from the library.",
   },
   {
-    title: "Registry mode",
-    body: "Use the CLI to copy component source into your app. This is closer to shadcn: you own the code and can edit it locally.",
+    title: "Swirski CLI",
+    body: "Use @swirski/cli to copy source from the local manifest into your app when you want source ownership.",
+  },
+  {
+    title: "shadcn remote",
+    body: "Use the hosted registry URLs with the shadcn CLI when you want a standard remote registry workflow.",
   },
   {
     title: "Shared tokens",
@@ -140,7 +144,7 @@ export default function CliPage() {
           </Grid>
         </Grid>
 
-        <Grid as="section" gap="lg" className="md:grid-cols-3">
+        <Grid as="section" gap="lg" className="md:grid-cols-2 lg:grid-cols-4">
           {workflow.map((item, index) => (
             <Card
               key={item.title}
@@ -160,6 +164,34 @@ export default function CliPage() {
               </CardContent>
             </Card>
           ))}
+        </Grid>
+
+        <Grid
+          as="section"
+          gap="xl"
+          className="border-y-4 border-black py-14 lg:grid-cols-[0.9fr_1.1fr]"
+        >
+          <div>
+            <SectionLabel>Hosted registry</SectionLabel>
+            <Title className="mt-6" order={2} size="h2">
+              Use Swirski with shadcn.
+            </Title>
+            <Text className="mt-5" tone="muted" weight="bold">
+              The hosted shadcn-compatible registry lives at
+              `https://ui.swirski.dev/registry.json`. Install individual items
+              by passing their `/r/*.json` URL to the shadcn CLI.
+            </Text>
+            <Text className="mt-4" tone="muted" weight="bold">
+              In a monorepo, add `-c path/to/app` so shadcn runs inside the app
+              workspace that owns `components.json`.
+            </Text>
+          </div>
+
+          <Grid gap="md">
+            <CodeBlock code="pnpm dlx shadcn@latest view https://ui.swirski.dev/r/button.json" />
+            <CodeBlock code="pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json" />
+            <CodeBlock code="pnpm dlx shadcn@latest add https://ui.swirski.dev/r/dialog.json -c apps/web" />
+          </Grid>
         </Grid>
 
         <Grid
@@ -204,7 +236,7 @@ export default function CliPage() {
         <Grid
           as="section"
           gap="xl"
-          className="border-y-4 border-black py-14 lg:grid-cols-[0.8fr_1.2fr]"
+          className="border-b-4 border-black pb-14 lg:grid-cols-[0.8fr_1.2fr]"
         >
           <div>
             <SectionLabel>Config</SectionLabel>
@@ -254,9 +286,9 @@ node packages/cli/src/index.js add select --dry-run`}
               Where this goes.
             </Title>
             <Text className="mt-5" tone="muted" weight="bold">
-              The next registry step is remote, shadcn-compatible JSON output
-              per component and hook, plus richer dependency metadata and
-              automatic style/token setup.
+              The remote shadcn-compatible registry is live at
+              ui.swirski.dev. Next up is richer examples, props metadata and
+              composed app patterns.
             </Text>
             <Button className="mt-6" href="/components/swirski-provider">
               Theme docs

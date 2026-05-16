@@ -17,8 +17,13 @@ const outputRoot = path.join(repoRoot, "apps/docs/public");
 const itemsOutputRoot = path.join(outputRoot, "r");
 const registryItemSchema = "https://ui.shadcn.com/schema/registry-item.json";
 const registrySchema = "https://ui.shadcn.com/schema/registry.json";
+const publicRegistryUrl = "https://ui.swirski.dev";
 
 const ignoredFilePatterns = [/\.stories\.tsx$/];
+
+function registryItemUrl(name) {
+  return `${publicRegistryUrl}/r/${name}.json`;
+}
 
 function readJson(filePath) {
   return JSON.parse(readFileSync(filePath, "utf8"));
@@ -127,7 +132,7 @@ function createRegistryItem(component) {
   const registryDependencies = [
     ...(isHook || isTheme ? [] : ["swirski-base"]),
     ...(component.dependencies ?? []),
-  ];
+  ].map(registryItemUrl);
 
   return {
     "$schema": registryItemSchema,
@@ -158,8 +163,8 @@ function main() {
   ];
   const registry = {
     "$schema": registrySchema,
-    name: "swirski-ui",
-    homepage: "https://swirski.dev",
+    name: sourceRegistry.name,
+    homepage: publicRegistryUrl,
     items,
   };
 
