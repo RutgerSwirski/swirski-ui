@@ -19,6 +19,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
+  { href: "/get-started", label: "Get Started" },
   { href: "/system", label: "System" },
   { href: "/components", label: "Components" },
   { href: "/hooks", label: "Hooks" },
