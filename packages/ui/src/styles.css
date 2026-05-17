@@ -1,9 +1,10 @@
-@source "./**/*.{js,mjs,cjs}";
-
 @import "tailwindcss";
 
 @import "@fontsource/anton";
 @import "@fontsource/bangers";
+
+@source "./src/**/*.{ts,tsx}";
+@source "./dist/**/*.{js,mjs,cjs}";
 
 :root,
 [data-swirski-color-scheme="light"] {

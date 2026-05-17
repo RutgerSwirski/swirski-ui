@@ -13,6 +13,7 @@
     "registry:list": "pnpm --filter @swirski/cli start list",
     "registry:shadcn": "node scripts/build-shadcn-registry.mjs",
     "release:ui": "node scripts/release-ui.mjs",
-    "test:ui": "pnpm --filter @swirski/ui test"
+    "test:ui": "pnpm --filter @swirski/ui test",
+    "install:docs": "pnpm --filter docs install"
   }
 }
