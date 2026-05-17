@@ -162,9 +162,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const typeaheadSearchRef = useRef("");
-  const typeaheadTimeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(
-    null,
-  );
+  const typeaheadTimeoutRef = useRef<number | null>(null);
   const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
