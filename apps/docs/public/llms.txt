@@ -18,6 +18,7 @@ Primary install paths:
 - [Get Started](https://ui.swirski.dev/get-started): Package, Swirski CLI, and shadcn registry setup.
 - [CLI and Registry](https://ui.swirski.dev/cli): Details for `@swirski/cli`, hosted registry URLs, and namespace setup.
 - [System](https://ui.swirski.dev/system): Theme tokens, `SwirskiProvider`, component anatomy, and `asChild` conventions.
+- [Build a Component](https://ui.swirski.dev/build-component): Guide for creating a new Swirski component, including API shape, files, docs, registry metadata, and verification.
 - [Components](https://ui.swirski.dev/components): Component index with examples, imports, props, and playgrounds.
 - [Hooks](https://ui.swirski.dev/hooks): Hook index and recipes.
 - [Examples](https://ui.swirski.dev/examples): Composed UI examples built from Swirski primitives.

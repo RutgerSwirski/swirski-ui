@@ -1,6 +1,7 @@
 import NavBar from "@/components/NavBar";
 import {
   Badge,
+  Button,
   Card,
   CardContent,
   Container,
@@ -292,8 +293,9 @@ export default function SystemPage() {
                 </Text>
               </div>
 
-              <pre className="overflow-x-auto border-4 border-black bg-white p-5 text-sm font-bold leading-relaxed shadow-[5px_5px_0_#0B0B0C]">
-                <code>{`const Comp = asChild ? Slot : "button";
+              <div>
+                <pre className="overflow-x-auto border-4 border-black bg-white p-5 text-sm font-bold leading-relaxed shadow-[5px_5px_0_#0B0B0C]">
+                  <code>{`const Comp = asChild ? Slot : "button";
 
 return (
   <Comp
@@ -303,7 +305,12 @@ return (
     {...props}
   />
 );`}</code>
-              </pre>
+                </pre>
+
+                <Button className="mt-6" href="/build-component" tone="white">
+                  Build a component
+                </Button>
+              </div>
             </Grid>
           </CardContent>
         </Card>
