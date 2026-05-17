@@ -39,6 +39,10 @@ const templateFiles = [
     target: (name) => `${name}.tsx`,
   },
   {
+    source: "ComponentName.stories.tsx.template",
+    target: (name) => `${name}.stories.tsx`,
+  },
+  {
     source: "index.ts.template",
     target: () => "index.ts",
   },
@@ -252,7 +256,7 @@ function updateRegistry(values, options) {
 function printNextSteps(values) {
   console.log(`
 Next steps:
-  1. Replace placeholder copy and adjust the component source.
+  1. Replace placeholder copy and adjust the component source and stories.
   2. Add a docs entry in apps/docs/content/components.tsx.
   3. Add a playground entry in apps/docs/content/playgrounds.tsx if useful.
   4. Run:

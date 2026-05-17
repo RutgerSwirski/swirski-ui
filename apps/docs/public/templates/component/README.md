@@ -22,6 +22,7 @@ hand.
 
 - `ComponentName.tsx.template` is the component source.
 - `index.ts.template` is the component-folder export.
+- `ComponentName.stories.tsx.template` is the baseline Storybook coverage.
 - `ComponentName.test.tsx.template` is the baseline accessibility/render test.
 - `docs-entry.tsx.template` is a starter entry for `apps/docs/content/components.tsx`.
 - `playground-entry.tsx.template` is a starter entry for `apps/docs/content/playgrounds.tsx`.
@@ -31,7 +32,7 @@ hand.
 
 1. Copy the folder into `packages/ui/src/components/<component-name>`, or run
    `pnpm create:component <component-name>`.
-2. Rename the source and test files if you copied by hand.
+2. Rename the source, story, and test files if you copied by hand.
 3. Replace all placeholders.
 4. Export the component from `packages/ui/src/index.ts` if you copied by hand.
 5. Add the docs and playground entries.
