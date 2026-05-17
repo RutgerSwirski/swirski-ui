@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "storybook": "pnpm --filter @swirski/ui storybook",
-    "build": "pnpm --filter @swirski/ui build && pnpm docs:metadata && pnpm --filter docs build",
+    "build": "pnpm docs:metadata && pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
     "create:component": "node scripts/create-component.mjs",
     "docs:metadata": "node scripts/build-docs-metadata.mjs",
