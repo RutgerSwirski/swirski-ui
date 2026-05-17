@@ -114,12 +114,23 @@ function mergeSlotProps(
 
   return {
     ...mergedProps,
+    "aria-describedby": mergeAriaIds(
+      childProps["aria-describedby"],
+      slotProps["aria-describedby"],
+    ),
     className: cn(slotProps.className, childProps.className),
     style: {
       ...(slotProps.style as CSSProperties | undefined),
       ...(childProps.style as CSSProperties | undefined),
     },
   };
+}
+
+function mergeAriaIds(...values: Array<string | undefined>) {
+  const ids = values.flatMap((value) => value?.split(/\s+/) ?? []);
+  const uniqueIds = Array.from(new Set(ids.filter(Boolean)));
+
+  return uniqueIds.length ? uniqueIds.join(" ") : undefined;
 }
 
 export type SlotProps = HTMLAttributes<HTMLElement> & {
