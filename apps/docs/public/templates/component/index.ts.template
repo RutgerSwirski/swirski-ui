@@ -1,0 +1,7 @@
+export { ComponentName } from "./ComponentName";
+export type {
+  ComponentNameProps,
+  ComponentNameSize,
+  ComponentNameTone,
+  ComponentNameVariant,
+} from "./ComponentName";

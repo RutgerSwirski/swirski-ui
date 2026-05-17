@@ -9,219 +9,122 @@ import {
   DotGrid,
   Grid,
   SectionLabel,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
   Text,
   Title,
 } from "@swirski/ui";
 
-const workflow = [
+const starterFiles = [
+  {
+    label: "Source",
+    href: "/templates/component/ComponentName.tsx.template",
+    file: "ComponentName.tsx.template",
+  },
+  {
+    label: "Export",
+    href: "/templates/component/index.ts.template",
+    file: "index.ts.template",
+  },
+  {
+    label: "Test",
+    href: "/templates/component/ComponentName.test.tsx.template",
+    file: "ComponentName.test.tsx.template",
+  },
+  {
+    label: "Docs",
+    href: "/templates/component/docs-entry.tsx.template",
+    file: "docs-entry.tsx.template",
+  },
+  {
+    label: "Playground",
+    href: "/templates/component/playground-entry.tsx.template",
+    file: "playground-entry.tsx.template",
+  },
+  {
+    label: "Registry",
+    href: "/templates/component/registry-entry.json",
+    file: "registry-entry.json",
+  },
+];
+
+const steps = [
   {
     label: "01",
-    title: "Name the component",
-    body: "Pick a lowercase registry slug, a PascalCase export, and the category where the component belongs.",
-    detail: "`empty-state` becomes `EmptyState`, lives in `components/empty-state`, and appears at `/components/empty-state`.",
+    title: "Copy the template",
+    body: "Start with the boring files already made for you. This gives you source, export, test, docs, playground, and registry starters.",
   },
   {
     label: "02",
-    title: "Design the API",
-    body: "Start with `variant`, `size`, `tone`, `className`, forwarded refs, and native element props. Add custom props only when the component truly needs them.",
-    detail: "A Swirski component should feel familiar next to Button, Card, Badge, Select, and Dialog.",
+    title: "Rename the placeholders",
+    body: "Replace the example names with your component name. Do this before changing the design.",
   },
   {
     label: "03",
-    title: "Build the source",
-    body: "Use `forwardRef`, `cn`, `swirskiAttrs`, and `Slot` when polymorphic composition is useful.",
-    detail: "Keep the component readable enough that CLI and shadcn users can own the copied source.",
+    title: "Make the component yours",
+    body: "Change the markup, styles, props, and preview until the component does the one job it is supposed to do.",
   },
   {
     label: "04",
-    title: "Document and register it",
-    body: "Add the docs entry, playground entry, registry manifest entry, and package exports before calling the component done.",
-    detail: "The package, Swirski CLI, shadcn registry, docs, and LLM context should all tell the same story.",
+    title: "Add it everywhere",
+    body: "Export it from the package, add it to the docs, and add it to the registry so all install paths can find it.",
+  },
+  {
+    label: "05",
+    title: "Run the checks",
+    body: "Build the docs, run tests, and regenerate registry output before opening the PR.",
   },
 ];
 
-const fileChecklist = [
-  {
-    file: "packages/ui/src/components/<slug>/<Name>.tsx",
-    purpose: "Component source and exported prop types.",
-  },
-  {
-    file: "packages/ui/src/components/<slug>/index.ts",
-    purpose: "Local component exports.",
-  },
-  {
-    file: "packages/ui/src/components/<slug>/<Name>.test.tsx",
-    purpose: "Behavior, accessibility, and keyboard tests for interactive components.",
-  },
-  {
-    file: "packages/ui/src/components/<slug>/<Name>.stories.tsx",
-    purpose: "Storybook coverage when the component benefits from visual states.",
-  },
-  {
-    file: "packages/ui/src/index.ts",
-    purpose: "Package-level export.",
-  },
-  {
-    file: "apps/docs/content/components.tsx",
-    purpose: "Component docs entry: title, description, imports, usage, preview, props, category.",
-  },
-  {
-    file: "apps/docs/content/playgrounds.tsx",
-    purpose: "Live playground controls and generated usage snippet.",
-  },
-  {
-    file: "registry/swirski.registry.json",
-    purpose: "Swirski CLI and shadcn registry source manifest.",
-  },
+const tinyContract = [
+  "It has a clear name.",
+  "It forwards a ref to the useful element.",
+  "It accepts `className`.",
+  "It uses `variant`, `size`, or `tone` only when those choices help.",
+  "It adds `swirskiAttrs` so the DOM is easy to inspect and style.",
+  "It has docs and a registry entry.",
 ];
 
-const qualityChecks = [
-  "Use semantic HTML before custom roles.",
-  "Forward refs to the interactive or root element users need.",
-  "Expose `className` and preserve native props.",
-  "Add `swirskiAttrs` with component, size, tone, and variant.",
-  "Support `asChild` only when polymorphic rendering solves a real composition problem.",
-  "Cover keyboard behavior for menus, overlays, custom inputs, tabs, and disclosure components.",
-  "Avoid hidden package dependencies in registry items.",
-  "Run metadata, tests, build, and registry generation before release.",
+const filesToTouch = [
+  "packages/ui/src/components/<slug>/<Name>.tsx",
+  "packages/ui/src/components/<slug>/index.ts",
+  "packages/ui/src/index.ts",
+  "apps/docs/content/components.tsx",
+  "apps/docs/content/playgrounds.tsx",
+  "registry/swirski.registry.json",
 ];
 
-const componentScaffold = `import {
-  HTMLAttributes,
-  forwardRef,
-} from "react";
-import { cn, swirskiAttrs } from "../../system";
+const copyCommands = `mkdir -p packages/ui/src/components/empty-state
+cp apps/docs/public/templates/component/ComponentName.tsx.template packages/ui/src/components/empty-state/EmptyState.tsx
+cp apps/docs/public/templates/component/index.ts.template packages/ui/src/components/empty-state/index.ts
+cp apps/docs/public/templates/component/ComponentName.test.tsx.template packages/ui/src/components/empty-state/EmptyState.test.tsx`;
 
-export type EmptyStateVariant = "default" | "compact";
-export type EmptyStateSize = "sm" | "md" | "lg";
-export type EmptyStateTone = "default" | "yellow" | "blue";
+const renameChecklist = `ComponentName -> EmptyState
+component-name -> empty-state
+Component name -> Empty state
+feedback -> feedback, forms, layout, interaction, etc.`;
 
-export type EmptyStateProps = {
-  title: string;
-  description?: string;
-  action?: React.ReactNode;
-  variant?: EmptyStateVariant;
-  size?: EmptyStateSize;
-  tone?: EmptyStateTone;
-} & HTMLAttributes<HTMLDivElement>;
+const exportSnippet = `// packages/ui/src/index.ts
+export * from "./components/empty-state/index";`;
 
-const sizeStyles: Record<EmptyStateSize, string> = {
-  sm: "p-4",
-  md: "p-6",
-  lg: "p-8",
-};
+const registrySnippet = `{ "name": "empty-state", "category": "feedback", "description": "Framed empty-state panel.", "source": "packages/ui/src/components/empty-state" }`;
 
-const toneStyles: Record<EmptyStateTone, string> = {
-  default: "bg-white",
-  yellow: "bg-[#FFD400]",
-  blue: "bg-[#0057FF] text-white",
-};
-
-export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
-  function EmptyState({
-    action,
-    className,
-    description,
-    title,
-    variant = "default",
-    size = "md",
-    tone = "default",
-    ...props
-  }, ref) {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "border-4 border-black shadow-[6px_6px_0_#0B0B0C]",
-          sizeStyles[size],
-          toneStyles[tone],
-          variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
-          className,
-        )}
-        {...swirskiAttrs("empty-state", { size, tone, variant })}
-        {...props}
-      >
-        <h2 className="font-anton text-4xl uppercase leading-none">
-          {title}
-        </h2>
-        {description && (
-          <p className="mt-3 text-sm font-bold opacity-75">
-            {description}
-          </p>
-        )}
-        {action && <div className="mt-5">{action}</div>}
-      </div>
-    );
-  },
-);
-
-EmptyState.displayName = "EmptyState";`;
-
-const indexScaffold = `export { EmptyState } from "./EmptyState";
-export type {
-  EmptyStateProps,
-  EmptyStateSize,
-  EmptyStateTone,
-  EmptyStateVariant,
-} from "./EmptyState";`;
-
-const docsScaffold = `{
-  slug: "empty-state",
-  title: "EmptyState",
-  category: "Feedback",
-  description: "A framed empty-state panel for zero-data screens.",
-  importCode: 'import { EmptyState } from "@swirski/ui";',
-  usageCode: \`<EmptyState
-  title="No projects yet"
-  description="Create your first project to start organizing work."
-  action={<Button>New project</Button>}
-/>\`,
-  preview: (
-    <EmptyState
-      title="No projects yet"
-      description="Create your first project to start organizing work."
-      action={<Button>New project</Button>}
-    />
-  ),
-  props: [
-    {
-      name: "title",
-      type: "string",
-      required: true,
-      description: "Main empty-state heading.",
-    },
-  ],
-}`;
-
-const registryScaffold = `{ "name": "empty-state", "category": "feedback", "description": "Framed empty-state panel.", "source": "packages/ui/src/components/empty-state" }`;
-
-const verificationCommands = `pnpm docs:metadata
+const verifyCommands = `pnpm docs:metadata
 pnpm test:ui
-pnpm build:ui
 pnpm registry:shadcn
 pnpm build`;
 
-function NumberedCard({
+function StepCard({
   label,
   title,
   body,
-  detail,
 }: {
   label: string;
   title: string;
   body: string;
-  detail: string;
 }) {
   return (
     <Card interactive={false} className="h-full bg-white">
-      <CardContent className="flex h-full flex-col">
-        <Badge tone={label === "03" ? "red" : label === "04" ? "blue" : "yellow"}>
+      <CardContent>
+        <Badge tone={label === "03" ? "red" : label === "05" ? "blue" : "yellow"}>
           {label}
         </Badge>
         <Title className="mt-5" order={2} size="h4">
@@ -229,9 +132,6 @@ function NumberedCard({
         </Title>
         <Text className="mt-3" tone="muted" weight="bold">
           {body}
-        </Text>
-        <Text className="mt-5 border-t-4 border-black/15 pt-4" size="sm" weight="black">
-          {detail}
         </Text>
       </CardContent>
     </Card>
@@ -266,18 +166,18 @@ export default function BuildComponentPage() {
               </Title>
 
               <Text className="mt-6 max-w-2xl" size="lg" tone="muted" weight="bold">
-                A Swirski component is more than a React file. It needs a
-                consistent API, source ownership, docs, playground metadata,
-                registry metadata, and enough tests to make copied source safe.
+                Copy the starter kit, rename the placeholders, make the
+                component useful, then add it to docs and registry metadata.
+                That is the whole workflow.
               </Text>
             </div>
 
             <Card interactive={false} className="bg-[#FFD400]">
               <CardContent>
-                <Badge tone="black">Rule of thumb</Badge>
+                <Badge tone="black">Short version</Badge>
                 <Text className="mt-5" weight="black">
-                  If a user installs it through the package, Swirski CLI, or
-                  shadcn registry, the component should feel equally complete.
+                  Start from the template. Keep the API small. Make sure users
+                  can install it from every Swirski workflow.
                 </Text>
               </CardContent>
             </Card>
@@ -286,115 +186,54 @@ export default function BuildComponentPage() {
       </div>
 
       <Container className="py-14 md:py-20">
-        <Grid gap="lg" className="md:grid-cols-2 lg:grid-cols-4">
-          {workflow.map((item) => (
-            <NumberedCard key={item.title} {...item} />
+        <Grid gap="lg" className="md:grid-cols-2 lg:grid-cols-5">
+          {steps.map((step) => (
+            <StepCard key={step.title} {...step} />
           ))}
         </Grid>
       </Container>
 
-      <Grid as={Container} gap="xl" className="pb-14 md:pb-20 lg:grid-cols-[0.8fr_1.2fr]">
+      <Grid
+        as={Container}
+        gap="xl"
+        className="pb-14 md:pb-20 lg:grid-cols-[0.8fr_1.2fr]"
+      >
         <div>
-          <SectionLabel>Shape</SectionLabel>
+          <SectionLabel>Template</SectionLabel>
           <Title className="mt-6" order={2} size="h1">
-            Start with the component contract.
+            Use the starter kit.
           </Title>
           <Text className="mt-5 max-w-xl" tone="muted" weight="bold">
-            Most Swirski components narrow the shared system ideas into local
-            `Variant`, `Size`, and `Tone` unions. The source should stay plain
-            enough to understand after it has been copied into an app.
+            The template is intentionally plain. It gives you a working shape
+            without asking you to remember every Swirski convention.
           </Text>
         </div>
 
-        <CodeBlock code={componentScaffold} />
-      </Grid>
-
-      <Container className="pb-14 md:pb-20">
-        <Grid gap="xl" className="lg:grid-cols-[0.75fr_1.25fr]">
-          <div>
-            <SectionLabel>Files</SectionLabel>
-            <Title className="mt-6" order={2} size="h1">
-              Add every surface the component touches.
-            </Title>
-            <Text className="mt-5 max-w-xl" tone="muted" weight="bold">
-              The package export, docs, playground, CLI registry, and hosted
-              registry all depend on small metadata files. Missing one creates
-              a component that exists in code but disappears somewhere else.
-            </Text>
-          </div>
-
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeader>File</TableHeader>
-                <TableHeader>Purpose</TableHeader>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {fileChecklist.map((item) => (
-                <TableRow key={item.file}>
-                  <TableCell>
-                    <code className="font-black text-[#0B0B0C]">{item.file}</code>
-                  </TableCell>
-                  <TableCell>{item.purpose}</TableCell>
-                </TableRow>
+        <Card interactive={false} className="bg-white">
+          <CardContent>
+            <Badge tone="yellow">Copy these files</Badge>
+            <Grid gap="sm" className="mt-5 sm:grid-cols-2">
+              {starterFiles.map((item) => (
+                <Button
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  tone="white"
+                  className="justify-start text-xs"
+                >
+                  {item.label}: {item.file}
+                </Button>
               ))}
-            </TableBody>
-          </Table>
-        </Grid>
-      </Container>
-
-      <Container className="pb-14 md:pb-20">
-        <Grid gap="lg" className="lg:grid-cols-3">
-          <Card interactive={false} className="bg-white">
-            <CardContent>
-              <Badge tone="yellow">Export</Badge>
-              <Title className="mt-5" order={2} size="h3">
-                Local index
-              </Title>
-              <Text className="mt-3" tone="muted" weight="bold">
-                Keep component folders self-contained, then re-export them from
-                the package root.
-              </Text>
-              <div className="mt-5">
-                <CodeBlock code={indexScaffold} />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card interactive={false} className="bg-white">
-            <CardContent>
-              <Badge tone="red">Docs</Badge>
-              <Title className="mt-5" order={2} size="h3">
-                Component entry
-              </Title>
-              <Text className="mt-3" tone="muted" weight="bold">
-                Give the docs page enough data to render imports, usage,
-                preview, props, generated metadata, and playground fallback.
-              </Text>
-              <div className="mt-5">
-                <CodeBlock code={docsScaffold} />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card interactive={false} className="bg-white">
-            <CardContent>
-              <Badge tone="blue">Registry</Badge>
-              <Title className="mt-5" order={2} size="h3">
-                Manifest entry
-              </Title>
-              <Text className="mt-3" tone="muted" weight="bold">
-                The registry manifest drives the Swirski CLI and generated
-                shadcn-compatible JSON.
-              </Text>
-              <div className="mt-5">
-                <CodeBlock code={registryScaffold} />
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Container>
+            </Grid>
+            <div className="mt-6">
+              <CodeBlock code={copyCommands} />
+            </div>
+            <div className="mt-5">
+              <CodeBlock code={renameChecklist} />
+            </div>
+          </CardContent>
+        </Card>
+      </Grid>
 
       <Grid
         as={Container}
@@ -402,51 +241,97 @@ export default function BuildComponentPage() {
         className="border-y-4 border-black py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]"
       >
         <div>
-          <SectionLabel>Quality</SectionLabel>
+          <SectionLabel>Contract</SectionLabel>
           <Title className="mt-6" order={2} size="h1">
-            Ship the behavior, not just the look.
+            The tiny component contract.
           </Title>
           <Text className="mt-5 max-w-xl" tone="muted" weight="bold">
-            Components copied into apps need to be understandable and reliable.
-            Interactive pieces should include role, focus, keyboard, disabled,
-            controlled/uncontrolled, and close-state tests where relevant.
+            This is the part to remember. A component does not need a big API.
+            It needs to be predictable, inspectable, and easy to copy.
           </Text>
         </div>
 
         <Grid gap="sm" className="sm:grid-cols-2">
-          {qualityChecks.map((check, index) => (
+          {tinyContract.map((item, index) => (
             <div
-              key={check}
+              key={item}
               className="border-4 border-black bg-white p-4 shadow-[4px_4px_0_#0B0B0C]"
             >
               <Badge tone={index % 3 === 0 ? "yellow" : index % 3 === 1 ? "red" : "blue"}>
                 {String(index + 1).padStart(2, "0")}
               </Badge>
               <Text className="mt-4" weight="black">
-                {check}
+                {item}
               </Text>
             </div>
           ))}
         </Grid>
       </Grid>
 
-      <Grid as={Container} gap="xl" className="py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]">
+      <Grid as={Container} gap="xl" className="py-14 md:py-20 lg:grid-cols-2">
+        <Card interactive={false} className="bg-white">
+          <CardContent>
+            <Badge tone="red">Add it</Badge>
+            <Title className="mt-5" order={2} size="h3">
+              Files you usually touch
+            </Title>
+            <Grid gap="sm" className="mt-5">
+              {filesToTouch.map((file) => (
+                <Text key={file} className="break-words" size="sm" weight="black">
+                  <code>{file}</code>
+                </Text>
+              ))}
+            </Grid>
+          </CardContent>
+        </Card>
+
+        <Grid gap="lg">
+          <Card interactive={false} className="bg-white">
+            <CardContent>
+              <Badge tone="blue">Export</Badge>
+              <Title className="mt-5" order={2} size="h3">
+                Package export
+              </Title>
+              <div className="mt-5">
+                <CodeBlock code={exportSnippet} />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card interactive={false} className="bg-white">
+            <CardContent>
+              <Badge tone="yellow">Registry</Badge>
+              <Title className="mt-5" order={2} size="h3">
+                Registry entry
+              </Title>
+              <div className="mt-5">
+                <CodeBlock code={registrySnippet} />
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Grid
+        as={Container}
+        gap="xl"
+        className="border-t-4 border-black py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]"
+      >
         <div>
-          <SectionLabel>Verify</SectionLabel>
+          <SectionLabel>Done</SectionLabel>
           <Title className="mt-6" order={2} size="h1">
-            Regenerate and test the whole path.
+            Run the checks.
           </Title>
           <Text className="mt-5 max-w-xl" tone="muted" weight="bold">
-            The docs metadata and registry JSON are generated. Rebuild them
-            before merging so docs, package exports, and registry installs do
-            not drift apart.
+            These commands catch most missing exports, docs metadata mistakes,
+            registry drift, and production build issues.
           </Text>
-          <Button className="mt-6" href="/system" tone="white">
-            Review the system
+          <Button className="mt-6" href="/templates/component/README.md" tone="white">
+            Open template README
           </Button>
         </div>
 
-        <CodeBlock code={verificationCommands} />
+        <CodeBlock code={verifyCommands} />
       </Grid>
     </main>
   );

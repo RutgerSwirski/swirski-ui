@@ -1,0 +1,24 @@
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { ComponentName } from "./ComponentName";
+
+describe("ComponentName", () => {
+  it("renders accessible content and Swirski data attributes", () => {
+    render(
+      <ComponentName
+        title="Component name"
+        description="A short supporting description."
+        tone="yellow"
+      />,
+    );
+
+    const title = screen.getByRole("heading", { name: "Component name" });
+    const root = title.closest("[data-swirski-component='component-name']");
+
+    expect(title).toBeInTheDocument();
+    expect(screen.getByText("A short supporting description.")).toBeInTheDocument();
+    expect(root).toHaveAttribute("data-swirski-size", "md");
+    expect(root).toHaveAttribute("data-swirski-tone", "yellow");
+    expect(root).toHaveAttribute("data-swirski-variant", "default");
+  });
+});

@@ -1,0 +1,71 @@
+import {
+  HTMLAttributes,
+  ReactNode,
+  forwardRef,
+} from "react";
+import { cn, swirskiAttrs } from "../../system";
+
+export type ComponentNameVariant = "default" | "compact";
+export type ComponentNameSize = "sm" | "md" | "lg";
+export type ComponentNameTone = "default" | "yellow" | "blue";
+
+export type ComponentNameProps = {
+  title: string;
+  description?: string;
+  action?: ReactNode;
+  variant?: ComponentNameVariant;
+  size?: ComponentNameSize;
+  tone?: ComponentNameTone;
+} & HTMLAttributes<HTMLDivElement>;
+
+const sizeStyles: Record<ComponentNameSize, string> = {
+  sm: "p-4",
+  md: "p-6",
+  lg: "p-8",
+};
+
+const toneStyles: Record<ComponentNameTone, string> = {
+  default: "bg-white text-[#0B0B0C]",
+  yellow: "bg-[#FFD400] text-[#0B0B0C]",
+  blue: "bg-[#0057FF] text-white",
+};
+
+export const ComponentName = forwardRef<HTMLDivElement, ComponentNameProps>(
+  function ComponentName({
+    action,
+    className,
+    description,
+    title,
+    variant = "default",
+    size = "md",
+    tone = "default",
+    ...props
+  }, ref) {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "border-4 border-black shadow-[6px_6px_0_#0B0B0C]",
+          sizeStyles[size],
+          toneStyles[tone],
+          variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
+          className,
+        )}
+        {...swirskiAttrs("component-name", { size, tone, variant })}
+        {...props}
+      >
+        <h2 className="font-anton text-4xl uppercase leading-none">
+          {title}
+        </h2>
+        {description && (
+          <p className="mt-3 text-sm font-bold opacity-75">
+            {description}
+          </p>
+        )}
+        {action && <div className="mt-5">{action}</div>}
+      </div>
+    );
+  },
+);
+
+ComponentName.displayName = "ComponentName";
