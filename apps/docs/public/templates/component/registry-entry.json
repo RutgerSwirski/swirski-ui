@@ -1,0 +1,6 @@
+{
+  "name": "component-name",
+  "category": "feedback",
+  "description": "A short description of what this component is for.",
+  "source": "packages/ui/src/components/component-name"
+}

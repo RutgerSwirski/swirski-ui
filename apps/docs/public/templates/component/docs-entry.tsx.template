@@ -1,0 +1,48 @@
+{
+  slug: "component-name",
+  title: "ComponentName",
+  category: "Feedback",
+  description: "A short description of what this component is for.",
+  importCode: 'import { ComponentName } from "@swirski/ui";',
+  usageCode: `<ComponentName
+  title="Component name"
+  description="A short supporting description."
+/>`,
+  preview: (
+    <ComponentName
+      title="Component name"
+      description="A short supporting description."
+    />
+  ),
+  props: [
+    {
+      name: "title",
+      type: "string",
+      required: true,
+      description: "Main heading rendered inside the component.",
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Optional supporting copy.",
+    },
+    {
+      name: "variant",
+      type: '"default" | "compact"',
+      defaultValue: '"default"',
+      description: "Controls the component treatment.",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "Controls padding and scale.",
+    },
+    {
+      name: "tone",
+      type: '"default" | "yellow" | "blue"',
+      defaultValue: '"default"',
+      description: "Controls the color treatment.",
+    },
+  ],
+}

@@ -21,6 +21,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { href: "/get-started", label: "Get Started" },
   { href: "/system", label: "System" },
+  { href: "/build-component", label: "Build" },
   { href: "/components", label: "Components" },
   { href: "/hooks", label: "Hooks" },
   { href: "/cli", label: "CLI" },

@@ -1,0 +1,35 @@
+"component-name": {
+  controls: [
+    {
+      name: "title",
+      label: "title",
+      type: "text",
+      defaultValue: "Component name",
+    },
+    {
+      name: "description",
+      label: "description",
+      type: "text",
+      defaultValue: "A short supporting description.",
+    },
+    {
+      name: "tone",
+      label: "tone",
+      type: "select",
+      defaultValue: "default",
+      options: ["default", "yellow", "blue"],
+    },
+  ],
+  render: (values) => (
+    <ComponentName
+      title={textValue(values, "title")}
+      description={textValue(values, "description")}
+      tone={textValue(values, "tone") as "default" | "yellow" | "blue"}
+    />
+  ),
+  getCode: (values) => `<ComponentName
+  title=${jsxString(textValue(values, "title"))}
+  description=${jsxString(textValue(values, "description"))}
+  tone=${jsxString(textValue(values, "tone"))}
+/>`,
+},
