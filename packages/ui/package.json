@@ -12,14 +12,14 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./styles.css"
+    "./styles.css": "./src/styles.css"
   },
   "sideEffects": [
-    "./styles.css"
+    "./src/styles.css"
   ],
   "files": [
     "dist",
-    "styles.css"
+    "./src/styles.css"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
