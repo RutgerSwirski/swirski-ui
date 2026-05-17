@@ -105,7 +105,8 @@ export default function ComponentsPage() {
               <Card
                 interactive={false}
                 withShadow={false}
-                className="!bg-[#0057FF] !text-white"
+                tone="blue"
+                className="text-white"
               >
                 <CardContent>
                   <Text
