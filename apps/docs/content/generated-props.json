@@ -280,6 +280,403 @@
         }
       ]
     },
+    "app-shell": {
+      "files": [
+        "packages/ui/src/components/app-shell/AppShell.tsx"
+      ],
+      "props": [
+        {
+          "name": "AppShell.asChild",
+          "prop": "asChild",
+          "component": "AppShell",
+          "sourceType": "AppShellProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Renders the child as the root element.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShell.children",
+          "prop": "children",
+          "component": "AppShell",
+          "sourceType": "AppShellProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Shell content or composed AppShell regions.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShell.size",
+          "prop": "size",
+          "component": "AppShell",
+          "sourceType": "AppShellProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Controls shell spacing and region height.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShell.tone",
+          "prop": "tone",
+          "component": "AppShell",
+          "sourceType": "AppShellProps",
+          "type": "'default' | 'white' | 'black'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Applies the shell surface treatment.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShell.variant",
+          "prop": "variant",
+          "component": "AppShell",
+          "sourceType": "AppShellProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Controls the density of shell chrome.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.asChild",
+          "prop": "asChild",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Renders the child as the root element.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.children",
+          "prop": "children",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Shell content or composed AppShell regions.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.collapseBelow",
+          "prop": "collapseBelow",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "'md' | 'lg' | 'never'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Viewport where the sidebar becomes visible.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.side",
+          "prop": "side",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "'left' | 'right'",
+          "required": false,
+          "defaultValue": "\"left\"",
+          "description": "Moves the sidebar to either edge of the shell.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.size",
+          "prop": "size",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Controls shell spacing and region height.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.sticky",
+          "prop": "sticky",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "true",
+          "description": "Keeps the sidebar pinned while the page scrolls.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.tone",
+          "prop": "tone",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "'default' | 'white' | 'black'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Applies the shell surface treatment.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.variant",
+          "prop": "variant",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Controls the density of shell chrome.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellSidebar.width",
+          "prop": "width",
+          "component": "AppShellSidebar",
+          "sourceType": "AppShellSidebarProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Responsive sidebar width.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellBody.asChild",
+          "prop": "asChild",
+          "component": "AppShellBody",
+          "sourceType": "AppShellBodyProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Renders the child as the root element.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellBody.children",
+          "prop": "children",
+          "component": "AppShellBody",
+          "sourceType": "AppShellBodyProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Shell content or composed AppShell regions.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellBody.size",
+          "prop": "size",
+          "component": "AppShellBody",
+          "sourceType": "AppShellBodyProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Controls shell spacing and region height.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellBody.tone",
+          "prop": "tone",
+          "component": "AppShellBody",
+          "sourceType": "AppShellBodyProps",
+          "type": "'default' | 'white' | 'black'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Applies the shell surface treatment.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellBody.variant",
+          "prop": "variant",
+          "component": "AppShellBody",
+          "sourceType": "AppShellBodyProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Controls the density of shell chrome.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellNavbar.asChild",
+          "prop": "asChild",
+          "component": "AppShellNavbar",
+          "sourceType": "AppShellNavbarProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Renders the child as the root element.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellNavbar.children",
+          "prop": "children",
+          "component": "AppShellNavbar",
+          "sourceType": "AppShellNavbarProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Shell content or composed AppShell regions.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellNavbar.size",
+          "prop": "size",
+          "component": "AppShellNavbar",
+          "sourceType": "AppShellNavbarProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Controls shell spacing and region height.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellNavbar.sticky",
+          "prop": "sticky",
+          "component": "AppShellNavbar",
+          "sourceType": "AppShellNavbarProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "true",
+          "description": "Keeps the navbar pinned to the top edge while scrolling.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellNavbar.tone",
+          "prop": "tone",
+          "component": "AppShellNavbar",
+          "sourceType": "AppShellNavbarProps",
+          "type": "'default' | 'white' | 'black'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Applies the shell surface treatment.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellNavbar.variant",
+          "prop": "variant",
+          "component": "AppShellNavbar",
+          "sourceType": "AppShellNavbarProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Controls the density of shell chrome.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellMain.asChild",
+          "prop": "asChild",
+          "component": "AppShellMain",
+          "sourceType": "AppShellMainProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Renders the child as the root element.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellMain.children",
+          "prop": "children",
+          "component": "AppShellMain",
+          "sourceType": "AppShellMainProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Shell content or composed AppShell regions.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellMain.size",
+          "prop": "size",
+          "component": "AppShellMain",
+          "sourceType": "AppShellMainProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Controls shell spacing and region height.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellMain.tone",
+          "prop": "tone",
+          "component": "AppShellMain",
+          "sourceType": "AppShellMainProps",
+          "type": "'default' | 'white' | 'black'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Applies the shell surface treatment.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellMain.variant",
+          "prop": "variant",
+          "component": "AppShellMain",
+          "sourceType": "AppShellMainProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Controls the density of shell chrome.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellContent.asChild",
+          "prop": "asChild",
+          "component": "AppShellContent",
+          "sourceType": "AppShellContentProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Renders the child as the root element.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellContent.children",
+          "prop": "children",
+          "component": "AppShellContent",
+          "sourceType": "AppShellContentProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Shell content or composed AppShell regions.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellContent.size",
+          "prop": "size",
+          "component": "AppShellContent",
+          "sourceType": "AppShellContentProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Controls shell spacing and region height.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellContent.tone",
+          "prop": "tone",
+          "component": "AppShellContent",
+          "sourceType": "AppShellContentProps",
+          "type": "'default' | 'white' | 'black'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Applies the shell surface treatment.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellContent.variant",
+          "prop": "variant",
+          "component": "AppShellContent",
+          "sourceType": "AppShellContentProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Controls the density of shell chrome.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        },
+        {
+          "name": "AppShellContent.width",
+          "prop": "width",
+          "component": "AppShellContent",
+          "sourceType": "AppShellContentProps",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'full'",
+          "required": false,
+          "defaultValue": "\"lg\"",
+          "description": "Maximum width for readable application content.",
+          "sourceFile": "packages/ui/src/components/app-shell/AppShell.tsx"
+        }
+      ]
+    },
     "avatar": {
       "files": [
         "packages/ui/src/components/avatar/Avatar.tsx"
@@ -3103,7 +3500,7 @@
           "prop": "gap",
           "component": "Grid",
           "sourceType": "GridProps",
-          "type": "'sm' | 'md' | 'lg' | 'none' | 'xl' | 'xs' | '2xl'",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'none' | 'xs' | '2xl'",
           "required": false,
           "description": "Generated from GridProps.",
           "sourceFile": "packages/ui/src/components/grid/Grid.tsx"
@@ -4576,6 +4973,67 @@
         }
       ]
     },
+    "section-label": {
+      "files": [
+        "packages/ui/src/components/section-label/SectionLabel.tsx"
+      ],
+      "props": [
+        {
+          "name": "asChild",
+          "prop": "asChild",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "children",
+          "prop": "children",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "size",
+          "prop": "size",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "tone",
+          "prop": "tone",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "'blue' | 'yellow' | 'red' | 'white'",
+          "required": false,
+          "defaultValue": "\"yellow\"",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "variant",
+          "prop": "variant",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "'default' | 'flat'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        }
+      ]
+    },
     "select": {
       "files": [
         "packages/ui/src/components/select/Select.tsx"
@@ -4718,67 +5176,6 @@
         }
       ]
     },
-    "section-label": {
-      "files": [
-        "packages/ui/src/components/section-label/SectionLabel.tsx"
-      ],
-      "props": [
-        {
-          "name": "asChild",
-          "prop": "asChild",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "children",
-          "prop": "children",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "size",
-          "prop": "size",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "tone",
-          "prop": "tone",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "'blue' | 'yellow' | 'red' | 'white'",
-          "required": false,
-          "defaultValue": "\"yellow\"",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "variant",
-          "prop": "variant",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "'default' | 'flat'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        }
-      ]
-    },
     "separator": {
       "files": [
         "packages/ui/src/components/separator/Separator.tsx"
@@ -4907,6 +5304,44 @@
           "defaultValue": "\"default\"",
           "description": "Generated from SliderProps.",
           "sourceFile": "packages/ui/src/components/slider/Slider.tsx"
+        }
+      ]
+    },
+    "swirski-provider": {
+      "files": [
+        "packages/ui/src/theme/SwirskiProvider.tsx"
+      ],
+      "props": [
+        {
+          "name": "children",
+          "prop": "children",
+          "component": "SwirskiProvider",
+          "sourceType": "SwirskiProviderProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from SwirskiProviderProps.",
+          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
+        },
+        {
+          "name": "colorScheme",
+          "prop": "colorScheme",
+          "component": "SwirskiProvider",
+          "sourceType": "SwirskiProviderProps",
+          "type": "'light' | 'dark'",
+          "required": false,
+          "defaultValue": "\"light\"",
+          "description": "Generated from SwirskiProviderProps.",
+          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
+        },
+        {
+          "name": "theme",
+          "prop": "theme",
+          "component": "SwirskiProvider",
+          "sourceType": "SwirskiProviderProps",
+          "type": "SwirskiTheme",
+          "required": false,
+          "description": "Generated from SwirskiProviderProps.",
+          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
         }
       ]
     },
@@ -5875,44 +6310,6 @@
           "defaultValue": "\"default\"",
           "description": "Generated from TitleProps.",
           "sourceFile": "packages/ui/src/components/typography/Title.tsx"
-        }
-      ]
-    },
-    "swirski-provider": {
-      "files": [
-        "packages/ui/src/theme/SwirskiProvider.tsx"
-      ],
-      "props": [
-        {
-          "name": "children",
-          "prop": "children",
-          "component": "SwirskiProvider",
-          "sourceType": "SwirskiProviderProps",
-          "type": "ReactNode",
-          "required": true,
-          "description": "Generated from SwirskiProviderProps.",
-          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
-        },
-        {
-          "name": "colorScheme",
-          "prop": "colorScheme",
-          "component": "SwirskiProvider",
-          "sourceType": "SwirskiProviderProps",
-          "type": "'light' | 'dark'",
-          "required": false,
-          "defaultValue": "\"light\"",
-          "description": "Generated from SwirskiProviderProps.",
-          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
-        },
-        {
-          "name": "theme",
-          "prop": "theme",
-          "component": "SwirskiProvider",
-          "sourceType": "SwirskiProviderProps",
-          "type": "SwirskiTheme",
-          "required": false,
-          "description": "Generated from SwirskiProviderProps.",
-          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
         }
       ]
     },

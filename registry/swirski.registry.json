@@ -5,6 +5,7 @@
   "components": [
     { "name": "accordion", "category": "disclosure", "description": "Native disclosure stack.", "source": "packages/ui/src/components/accordion" },
     { "name": "alert", "category": "feedback", "description": "Composable callout block.", "source": "packages/ui/src/components/alert" },
+    { "name": "app-shell", "category": "layout", "description": "Composable application layout shell.", "source": "packages/ui/src/components/app-shell" },
     { "name": "avatar", "category": "layout", "description": "Framed user image or fallback.", "source": "packages/ui/src/components/avatar" },
     { "name": "badge", "category": "feedback", "description": "Compact status label.", "source": "packages/ui/src/components/badge" },
     { "name": "breadcrumb", "category": "layout", "description": "Navigation trail primitives.", "source": "packages/ui/src/components/breadcrumb" },

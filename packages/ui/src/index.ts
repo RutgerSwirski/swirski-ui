@@ -2,6 +2,8 @@ export * from "./components/accordion/index";
 
 export * from "./components/alert/index";
 
+export * from "./components/app-shell/index";
+
 export * from "./components/avatar/index";
 
 export * from "./components/badge/index";
