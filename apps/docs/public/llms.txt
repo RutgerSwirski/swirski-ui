@@ -1,0 +1,76 @@
+# Swirski UI
+
+> Swirski UI is a React component package for bold, graphic, studio-flavored interfaces. It supports package imports from `@swirski/ui`, a source-copy workflow through `@swirski/cli`, and shadcn-compatible hosted registry items.
+
+Swirski UI sits between shadcn/ui and Mantine: package primitives for speed, copyable source for ownership, and strong visual defaults built from thick borders, hard shadows, expressive typography, practical app components, and theme tokens.
+
+Current package version: `@swirski/ui@1.2.5`.
+
+Primary install paths:
+
+- Package: `pnpm add @swirski/ui`
+- Swirski CLI: `pnpm add -D @swirski/cli`
+- shadcn registry: `pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json`
+
+## Start Here
+
+- [Home](https://ui.swirski.dev): Product overview and primary workflow choices.
+- [Get Started](https://ui.swirski.dev/get-started): Package, Swirski CLI, and shadcn registry setup.
+- [CLI and Registry](https://ui.swirski.dev/cli): Details for `@swirski/cli`, hosted registry URLs, and namespace setup.
+- [System](https://ui.swirski.dev/system): Theme tokens, `SwirskiProvider`, component anatomy, and `asChild` conventions.
+- [Components](https://ui.swirski.dev/components): Component index with examples, imports, props, and playgrounds.
+- [Hooks](https://ui.swirski.dev/hooks): Hook index and recipes.
+- [Examples](https://ui.swirski.dev/examples): Composed UI examples built from Swirski primitives.
+- [Full LLM Context](https://ui.swirski.dev/llms-full.txt): Expanded reference with install workflows, component catalogue, hooks, registry notes, and code guidance.
+
+## Registry
+
+- [shadcn registry root](https://ui.swirski.dev/registry.json): Full hosted registry index.
+- [swirski-base item](https://ui.swirski.dev/r/swirski-base.json): Shared system helpers, theme files, CSS variables, and base styles.
+- [Button registry item](https://ui.swirski.dev/r/button.json): Minimal action primitive install example.
+- [Dialog registry item](https://ui.swirski.dev/r/dialog.json): Modal overlay install example.
+- [Select registry item](https://ui.swirski.dev/r/select.json): Custom dropdown picker install example.
+
+## Component Docs
+
+- [Accordion](https://ui.swirski.dev/components/accordion): Native disclosure stack.
+- [Alert](https://ui.swirski.dev/components/alert): Composable callout block.
+- [Avatar](https://ui.swirski.dev/components/avatar): Framed user image or fallback.
+- [Badge](https://ui.swirski.dev/components/badge): Compact status label.
+- [Breadcrumb](https://ui.swirski.dev/components/breadcrumb): Navigation trail primitives.
+- [Button](https://ui.swirski.dev/components/button): Bold action primitive.
+- [Card](https://ui.swirski.dev/components/card): Framed content block.
+- [Checkbox](https://ui.swirski.dev/components/checkbox): Native checkbox with Swirski mark.
+- [Container](https://ui.swirski.dev/components/container): Centered page width helper.
+- [Cursor](https://ui.swirski.dev/components/cursor): Custom cursor provider and picker.
+- [Dialog](https://ui.swirski.dev/components/dialog): Modal overlay primitive.
+- [Drawer](https://ui.swirski.dev/components/drawer): Side sheet primitive.
+- [DropdownMenu](https://ui.swirski.dev/components/dropdown-menu): Compact action menu.
+- [Field](https://ui.swirski.dev/components/field): Field, label, input, and textarea primitives.
+- [Grid](https://ui.swirski.dev/components/grid): Reusable CSS grid layout primitive.
+- [ImageFrame](https://ui.swirski.dev/components/image-frame): Framed image surface.
+- [Navbar](https://ui.swirski.dev/components/navbar): Header and mobile navigation primitives.
+- [Popover](https://ui.swirski.dev/components/popover): Floating content panel.
+- [Select](https://ui.swirski.dev/components/select): Custom dropdown picker.
+- [SwirskiProvider](https://ui.swirski.dev/components/swirski-provider): Theme provider and token helpers.
+- [Tabs](https://ui.swirski.dev/components/tabs): Tabbed section primitive.
+- [Toast](https://ui.swirski.dev/components/toast): Status messages and toast provider.
+- [Tooltip](https://ui.swirski.dev/components/tooltip): Hover and focus label.
+- [Typography](https://ui.swirski.dev/components/typography): Title and Text primitives.
+
+## Hook Docs
+
+- [useClipboard](https://ui.swirski.dev/hooks/use-clipboard): Copy text and track copied/error state.
+- [useClickOutside](https://ui.swirski.dev/hooks/use-click-outside): Run a callback when pointer events happen outside an element.
+- [useControllableState](https://ui.swirski.dev/hooks/use-controllable-state): Build controlled or uncontrolled component state.
+- [useDisclosure](https://ui.swirski.dev/hooks/use-disclosure): Open, close, and toggle boolean disclosure state.
+- [useEscapeKey](https://ui.swirski.dev/hooks/use-escape-key): Run a callback when Escape is pressed.
+- [useLocalStorage](https://ui.swirski.dev/hooks/use-local-storage): Persist React state in localStorage.
+- [useMediaQuery](https://ui.swirski.dev/hooks/use-media-query): Track a CSS media query.
+- [useReducedMotion](https://ui.swirski.dev/hooks/use-reduced-motion): Read `prefers-reduced-motion`.
+
+## Optional
+
+- [Repository README](https://github.com/rutgerswirski/swirski-ui): Project overview, development commands, release flow, and design principles.
+- [npm package](https://www.npmjs.com/package/@swirski/ui): Published `@swirski/ui` package.
+- [CLI package](https://www.npmjs.com/package/@swirski/cli): Published `@swirski/cli` package.

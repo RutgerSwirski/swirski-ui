@@ -1,0 +1,324 @@
+# Swirski UI Full LLM Context
+
+Swirski UI is a React component package for bold, graphic, studio-flavored interfaces. It combines thick borders, hard shadows, expressive typography, custom cursors, practical app primitives, theme tokens, docs, playgrounds, generated props tables, examples, and registry workflows.
+
+Current package version: `@swirski/ui@1.2.5`.
+
+Docs site: https://ui.swirski.dev
+
+## What Swirski UI Is
+
+Swirski UI is intended to sit somewhere between shadcn/ui and Mantine:
+
+- Use `@swirski/ui` when an app wants a normal package install and package updates.
+- Use `@swirski/cli` when an app wants Swirski source copied into its own component folders.
+- Use the hosted shadcn-compatible registry when an app already uses shadcn workflows and wants direct registry item URLs.
+- Use `SwirskiProvider` when the app wants Swirski CSS tokens for color, fonts, borders, shadows, and color scheme.
+
+The visual language is loud but practical: strong borders, hard offset shadows, graphic color, uppercase labels, expressive display fonts, dense app primitives, and `className` escape hatches.
+
+## Install Workflows
+
+### Package
+
+Install:
+
+```bash
+pnpm add @swirski/ui
+```
+
+Import styles once in the app entry:
+
+```tsx
+import "@swirski/ui/styles.css";
+```
+
+Import components:
+
+```tsx
+import { Button, Card, CardContent, Text, Title } from "@swirski/ui";
+```
+
+Tailwind CSS v4 package consumers should make Tailwind scan the package output:
+
+```css
+@source "../node_modules/@swirski/ui/dist";
+```
+
+Use package imports when the app wants updates through npm.
+
+### Swirski CLI
+
+Install:
+
+```bash
+pnpm add -D @swirski/cli
+```
+
+Initialize and add items:
+
+```bash
+pnpm exec swirski init
+pnpm exec swirski list
+pnpm exec swirski add button
+pnpm exec swirski add button card dialog
+pnpm exec swirski add use-disclosure use-clipboard
+pnpm exec swirski add --all
+```
+
+The CLI reads `registry/swirski.registry.json` and copies source from `packages/ui/src/components/*` or `packages/ui/src/hooks/*` into the configured app path. Storybook files are intentionally skipped by the local CLI.
+
+Default generated config:
+
+```json
+{
+  "componentsPath": "src/components/ui",
+  "stylePath": "src/styles.css"
+}
+```
+
+Use the CLI when the app wants source ownership.
+
+### shadcn Registry
+
+View or add hosted registry items:
+
+```bash
+pnpm dlx shadcn@latest view https://ui.swirski.dev/r/button.json
+pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json
+```
+
+Configure a namespace in `components.json`:
+
+```json
+{
+  "registries": {
+    "@swirski": "https://ui.swirski.dev/r/{name}.json"
+  }
+}
+```
+
+Then install by namespace:
+
+```bash
+pnpm dlx shadcn@latest add @swirski/button @swirski/dialog
+```
+
+Registry root:
+
+```txt
+https://ui.swirski.dev/registry.json
+```
+
+Registry item URL pattern:
+
+```txt
+https://ui.swirski.dev/r/{name}.json
+```
+
+Shared base item:
+
+```txt
+https://ui.swirski.dev/r/swirski-base.json
+```
+
+The hosted shadcn output preserves the package source tree under `@ui/swirski/...` so relative imports such as `../../system` continue to resolve after install.
+
+## Theme Provider
+
+Wrap the app in `SwirskiProvider` to set CSS tokens:
+
+```tsx
+import { SwirskiProvider, createSwirskiTheme } from "@swirski/ui";
+
+const theme = createSwirskiTheme({
+  colorBlue: "#0047FF",
+  colorYellow: "#FFE45C",
+  shadowMd: "8px 8px 0 var(--sw-color-shadow)",
+});
+
+export function App() {
+  return (
+    <SwirskiProvider theme={theme}>
+      <YourRoutes />
+    </SwirskiProvider>
+  );
+}
+```
+
+Dark mode:
+
+```tsx
+<SwirskiProvider colorScheme="dark">
+  <App />
+</SwirskiProvider>
+```
+
+Core tokens:
+
+```txt
+--sw-color-ink
+--sw-color-paper
+--sw-color-surface
+--sw-color-muted
+--sw-color-blue
+--sw-color-yellow
+--sw-color-red
+--sw-color-shadow
+--sw-color-focus
+--sw-border-width
+--sw-shadow-sm
+--sw-shadow-md
+--sw-shadow-lg
+--sw-font-body
+--sw-font-heading
+--sw-font-display
+```
+
+## Component Catalogue
+
+### Foundations
+
+- `SwirskiProvider`: Theme provider and token helpers. Docs: https://ui.swirski.dev/components/swirski-provider
+- `Title`: Heading primitive exported through Typography. Docs: https://ui.swirski.dev/components/typography
+- `Text`: Text primitive exported through Typography. Docs: https://ui.swirski.dev/components/typography
+- `Container`: Centered page width helper. Docs: https://ui.swirski.dev/components/container
+- `Grid`: Reusable CSS grid layout primitive. Docs: https://ui.swirski.dev/components/grid
+- `Separator`: Visual divider. Docs: https://ui.swirski.dev/components/separator
+- `SectionLabel`: Tilted section label. Docs: https://ui.swirski.dev/components/section-label
+
+### Actions and Feedback
+
+- `Button`: Bold action primitive. Docs: https://ui.swirski.dev/components/button. Registry: https://ui.swirski.dev/r/button.json
+- `Badge`: Compact status label. Docs: https://ui.swirski.dev/components/badge
+- `Alert`, `AlertTitle`, `AlertDescription`: Composable callout block. Docs: https://ui.swirski.dev/components/alert
+- `Toast`, `ToastProvider`, `useToast`: Status messages for save states, confirmations, and errors. Docs: https://ui.swirski.dev/components/toast
+- `Progress`: Simple progress meter. Docs: https://ui.swirski.dev/components/progress
+- `Loader`: Compact loading spinner. Docs: https://ui.swirski.dev/components/loader
+- `Skeleton`: Placeholder block for loading layouts. Docs: https://ui.swirski.dev/components/skeleton
+
+### Forms
+
+- `Field`, `Label`, `Input`, `Textarea`, `FieldHint`, `FieldError`: Field, label, input, and textarea primitives. Docs: https://ui.swirski.dev/components/field
+- `Select`: Custom dropdown picker. Docs: https://ui.swirski.dev/components/select. Registry: https://ui.swirski.dev/r/select.json
+- `Checkbox`: Native checkbox with Swirski mark. Docs: https://ui.swirski.dev/components/checkbox
+- `Switch`: Native switch control. Docs: https://ui.swirski.dev/components/switch
+- `RadioGroup`: Native radio group for choosing one option from a set. Docs: https://ui.swirski.dev/components/radio-group
+- `Slider`: Native range input for numeric controls. Docs: https://ui.swirski.dev/components/slider
+
+### Overlays and Interaction
+
+- `Dialog`, `DialogTrigger`, `DialogContent`, `DialogTitle`, `DialogDescription`, `DialogClose`: Modal overlay primitive. Docs: https://ui.swirski.dev/components/dialog. Registry: https://ui.swirski.dev/r/dialog.json
+- `Drawer`: Side sheet primitive. Docs: https://ui.swirski.dev/components/drawer
+- `Popover`, `PopoverTrigger`, `PopoverContent`: Floating content panel. Docs: https://ui.swirski.dev/components/popover
+- `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuItem`: Compact action menu. Docs: https://ui.swirski.dev/components/dropdown-menu
+- `Tooltip`: Hover and focus label. Docs: https://ui.swirski.dev/components/tooltip
+- `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`: Tabbed section primitive. Docs: https://ui.swirski.dev/components/tabs
+- `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`: Native disclosure stack. Docs: https://ui.swirski.dev/components/accordion
+- `CursorProvider`, `CursorDock`, `CursorPicker`: Custom cursor provider and picker. Docs: https://ui.swirski.dev/components/cursor
+
+### Layout, Navigation, and Data
+
+- `Card`, `CardContent`, `CardMedia`, `CardTitle`, `CardMeta`, `CardBadge`: Framed content block. Docs: https://ui.swirski.dev/components/card
+- `Avatar`: Framed user image or fallback. Docs: https://ui.swirski.dev/components/avatar
+- `Navbar`: Header and mobile navigation primitives. Docs: https://ui.swirski.dev/components/navbar
+- `Breadcrumb`: Navigation trail primitives. Docs: https://ui.swirski.dev/components/breadcrumb
+- `Pagination`: Page controls for tables, lists, and archives. Docs: https://ui.swirski.dev/components/pagination
+- `Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeader`, `TableCell`: Base data table. Docs: https://ui.swirski.dev/components/table
+
+### Visual Texture and Media
+
+- `DotGrid`: Dot grid background primitive. Docs: https://ui.swirski.dev/components/dot-grid
+- `LineGrid`: Line grid background primitive. Docs: https://ui.swirski.dev/components/line-grid
+- `DiagonalLines`: Diagonal stripe background primitive. Docs: https://ui.swirski.dev/components/diagonal-lines
+- `ImageFrame`: Framed image surface. Docs: https://ui.swirski.dev/components/image-frame
+
+## Hooks
+
+- `useDisclosure`: Open, close, and toggle boolean disclosure state. It depends on `useControllableState` in copy workflows. Docs: https://ui.swirski.dev/hooks/use-disclosure
+- `useControllableState`: Build controlled or uncontrolled component state. Docs: https://ui.swirski.dev/hooks/use-controllable-state
+- `useClickOutside`: Run a callback when pointer events happen outside an element. Docs: https://ui.swirski.dev/hooks/use-click-outside
+- `useEscapeKey`: Run a callback when Escape is pressed. Docs: https://ui.swirski.dev/hooks/use-escape-key
+- `useLocalStorage`: Persist React state in localStorage with serializer hooks. Docs: https://ui.swirski.dev/hooks/use-local-storage
+- `useMediaQuery`: Track a CSS media query in React state. Docs: https://ui.swirski.dev/hooks/use-media-query
+- `useReducedMotion`: Read the user preference for reduced motion. It depends on `useMediaQuery` in copy workflows. Docs: https://ui.swirski.dev/hooks/use-reduced-motion
+- `useClipboard`: Copy text to the clipboard and track copied/error state. Docs: https://ui.swirski.dev/hooks/use-clipboard
+
+## Import Guidance for Code Generation
+
+When generating package-based examples, import from `@swirski/ui`:
+
+```tsx
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Text,
+  Title,
+} from "@swirski/ui";
+```
+
+When generating copied-source examples for users of the Swirski CLI or shadcn registry, assume files are copied into the app and imports may need to use the user's configured aliases.
+
+Use `className` for local layout and minor styling overrides. Use `SwirskiProvider` and CSS variables for broad theme changes.
+
+Prefer native primitives where Swirski already uses them, such as native checkbox, switch, radio, slider, details-based accordion, and semantic table elements.
+
+## Workspace Development
+
+The repository is a pnpm workspace:
+
+```txt
+apps/docs        Documentation site
+packages/ui      React component package
+packages/cli     Local registry CLI
+registry         Component registry manifest
+```
+
+Common commands:
+
+```bash
+pnpm install
+pnpm dev
+pnpm storybook
+pnpm build:ui
+pnpm build
+pnpm registry:list
+pnpm registry:shadcn
+pnpm test:ui
+```
+
+Release command for `@swirski/ui`:
+
+```bash
+pnpm release:ui patch
+pnpm release:ui minor
+pnpm release:ui major
+```
+
+Dry-run package release:
+
+```bash
+pnpm release:ui patch --dry-run
+```
+
+## Current Quality Notes
+
+Swirski UI has a broad component surface, docs pages, playgrounds, generated props metadata, examples, component tests for several interactive primitives, and hosted shadcn-compatible registry output.
+
+Important near-term quality work:
+
+- Validate hosted shadcn registry items in CI.
+- Smoke test remote shadcn installs for key components.
+- Add per-component install tabs for package, Swirski CLI, and shadcn workflows.
+- Strengthen accessibility tests for Dialog, DropdownMenu, Popover, Tooltip, and Select.
+- Add richer keyboard navigation for DropdownMenu.
+- Consider a shared Floating UI positioning layer for floating components.
+
+## License
+
+Swirski UI is released under the MIT License.
+
+License file: https://github.com/rutgerswirski/swirski-ui/blob/main/LICENSE

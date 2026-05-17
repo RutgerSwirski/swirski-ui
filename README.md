@@ -360,6 +360,13 @@ pnpm registry:list
 - Copyable source workflow for teams that want ownership.
 - Package imports for teams that want speed.
 
+## LLM Context
+
+The docs site publishes LLM-friendly project context at:
+
+- `https://ui.swirski.dev/llms.txt`
+- `https://ui.swirski.dev/llms-full.txt`
+
 ## Current Status
 
 Swirski UI is actively growing. The component surface is broad, but some complex interaction primitives are still early versions. The next quality pass should focus on:
