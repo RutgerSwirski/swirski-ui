@@ -1,21 +1,20 @@
-{
-  slug: "component-name",
+"component-name": {
   controls: [
     {
       name: "title",
-      label: "Title",
+      label: "title",
       type: "text",
       defaultValue: "Component name",
     },
     {
       name: "description",
-      label: "Description",
+      label: "description",
       type: "text",
       defaultValue: "A short supporting description.",
     },
     {
       name: "tone",
-      label: "Tone",
+      label: "tone",
       type: "select",
       defaultValue: "default",
       options: ["default", "yellow", "blue"],
@@ -25,12 +24,12 @@
     <ComponentName
       title={textValue(values, "title")}
       description={textValue(values, "description")}
-      tone={selectValue(values, "tone") as ComponentNameTone}
+      tone={textValue(values, "tone") as "default" | "yellow" | "blue"}
     />
   ),
-  code: (values) => `<ComponentName
+  getCode: (values) => `<ComponentName
   title=${jsxString(textValue(values, "title"))}
   description=${jsxString(textValue(values, "description"))}
-  tone=${jsxString(selectValue(values, "tone"))}
+  tone=${jsxString(textValue(values, "tone"))}
 />`,
-}
+},

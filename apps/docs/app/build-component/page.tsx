@@ -21,30 +21,6 @@ const createdFiles = [
   "registry/swirski.registry.json",
 ];
 
-const followUps = [
-  {
-    title: "Fill in the component",
-    body: "Open the generated source file and replace the starter markup, props, and styles with the real component.",
-  },
-  {
-    title: "Add the docs entry",
-    body: "Use the docs template to add title, description, import code, usage code, preview, and props.",
-  },
-  {
-    title: "Add a playground when useful",
-    body: "If the component has meaningful variants or props, add a small playground entry so people can try it.",
-  },
-];
-
-const contract = [
-  "Clear name",
-  "Small props",
-  "Forwards ref",
-  "Accepts className",
-  "Uses swirskiAttrs",
-  "Has docs",
-];
-
 const createCommand = `pnpm create:component empty-state`;
 
 const optionsCommand = `pnpm create:component pricing-card \\
@@ -53,17 +29,75 @@ const optionsCommand = `pnpm create:component pricing-card \\
 
 const dryRunCommand = `pnpm create:component empty-state --dry-run`;
 
-const docsSnippet = `// apps/docs/content/components.tsx
-{
-  slug: "empty-state",
-  title: "EmptyState",
-  category: "Feedback",
-  description: "A framed empty-state panel.",
-  importCode: 'import { EmptyState } from "@swirski/ui";',
-  usageCode: '<EmptyState title="No projects yet" />',
-  preview: <EmptyState title="No projects yet" />,
-  props: []
-}`;
+const docsSnippet = [
+  `// apps/docs/content/components.tsx`,
+  `import { EmptyState } from "@swirski/ui";`,
+  ``,
+  `// Inside componentDocs:`,
+  `{`,
+  `  slug: "empty-state",`,
+  `  title: "EmptyState",`,
+  `  category: "Feedback",`,
+  `  description: "A framed empty-state panel for blank or completed states.",`,
+  `  importCode: \`import { EmptyState } from "@swirski/ui";\`,`,
+  `  usageCode: \`<EmptyState`,
+  `  title="No projects yet"`,
+  `  description="Create your first project to get started."`,
+  `/>\`,`,
+  `  preview: (`,
+  `    <EmptyState`,
+  `      title="No projects yet"`,
+  `      description="Create your first project to get started."`,
+  `    />`,
+  `  ),`,
+  `  props: [`,
+  `    {`,
+  `      name: "title",`,
+  `      type: "string",`,
+  `      required: true,`,
+  `      description: "Main heading rendered inside the component.",`,
+  `    },`,
+  `    {`,
+  `      name: "description",`,
+  `      type: "string",`,
+  `      description: "Optional supporting copy.",`,
+  `    },`,
+  `  ],`,
+  `},`,
+].join("\n");
+
+const playgroundSnippet = [
+  `// apps/docs/content/playgrounds.tsx`,
+  `import { EmptyState } from "@swirski/ui";`,
+  ``,
+  `// Inside playgroundDefinitions:`,
+  `"empty-state": {`,
+  `  controls: [`,
+  `    {`,
+  `      name: "title",`,
+  `      label: "title",`,
+  `      type: "text",`,
+  `      defaultValue: "No projects yet",`,
+  `    },`,
+  `    {`,
+  `      name: "description",`,
+  `      label: "description",`,
+  `      type: "text",`,
+  `      defaultValue: "Create your first project to get started.",`,
+  `    },`,
+  `  ],`,
+  `  render: (values) => (`,
+  `    <EmptyState`,
+  `      title={textValue(values, "title")}`,
+  `      description={textValue(values, "description")}`,
+  `    />`,
+  `  ),`,
+  `  getCode: (values) => \`<EmptyState`,
+  `  title=\${jsxString(textValue(values, "title"))}`,
+  `  description=\${jsxString(textValue(values, "description"))}`,
+  `/>\`,`,
+  `},`,
+].join("\n");
 
 const verifyCommands = `pnpm docs:metadata
 pnpm test:ui
@@ -192,68 +226,57 @@ export default function BuildComponentPage() {
         </div>
 
         <Grid gap="lg" className="md:grid-cols-1">
-          {followUps.map((item, index) => (
-            <Card key={item.title} interactive={false} className="bg-white">
-              <CardContent>
-                <Badge
-                  tone={index === 1 ? "red" : index === 2 ? "blue" : "yellow"}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </Badge>
-                <Title className="mt-5" order={3} size="h4">
-                  {item.title}
-                </Title>
-                <Text className="mt-3" tone="muted" weight="bold">
-                  {item.body}
-                </Text>
-              </CardContent>
-            </Card>
-          ))}
+          <Card interactive={false}>
+            <CardContent>
+              <Badge tone="yellow">Component</Badge>
+              <Title size="h3" className="mt-5">
+                Fill in the component
+              </Title>
+              <Text className="mt-3">
+                Open the generated source file and replace the starter markup,
+                props, and styles with the real component.
+              </Text>
+            </CardContent>
+          </Card>
+
+          <Card interactive={false} className="bg-white">
+            <CardContent>
+              <Badge tone="red">Documentation</Badge>
+              <Title className="mt-5" order={2} size="h3">
+                Add the component docs.
+              </Title>
+              <Text className="mt-3">
+                Import the component in <code>components.tsx</code>, then paste
+                an entry inside <code>componentDocs</code>.
+              </Text>
+              <div className="mt-5">
+                <CodeBlock code={docsSnippet} />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card interactive={false} className="bg-white">
+            <CardContent>
+              <Badge tone="blue">Playground</Badge>
+              <Title className="mt-5" order={2} size="h3">
+                Add editable playground controls.
+              </Title>
+              <Text className="mt-3" tone="muted" weight="bold">
+                Import the component in <code>playgrounds.tsx</code>, then add a
+                key that matches the docs slug.
+              </Text>
+              <div className="mt-5">
+                <CodeBlock code={playgroundSnippet} />
+              </div>
+            </CardContent>
+          </Card>
         </Grid>
-      </Grid>
-
-      <Grid as={Container} gap="xl" className="py-14 md:py-20 lg:grid-cols-2">
-        <Card interactive={false} className="bg-white">
-          <CardContent>
-            <Badge tone="yellow">Docs starter</Badge>
-            <Title className="mt-5" order={2} size="h3">
-              Minimal docs entry
-            </Title>
-            <Text className="mt-3" tone="muted" weight="bold">
-              Paste a docs entry into `apps/docs/content/components.tsx`, then
-              adjust the preview and props.
-            </Text>
-            <div className="mt-5">
-              <CodeBlock code={docsSnippet} />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card interactive={false} className="bg-white">
-          <CardContent>
-            <Badge tone="red">Tiny contract</Badge>
-            <Title className="mt-5" order={2} size="h3">
-              Keep it predictable
-            </Title>
-            <Grid gap="sm" className="mt-5 sm:grid-cols-2">
-              {contract.map((item) => (
-                <Text key={item} weight="black">
-                  {item}
-                </Text>
-              ))}
-            </Grid>
-            <Text className="mt-5" tone="muted" weight="bold">
-              Small, boring APIs are easier to package, copy, document, and
-              support.
-            </Text>
-          </CardContent>
-        </Card>
       </Grid>
 
       <Grid
         as={Container}
         gap="xl"
-        className="border-t-4 border-black py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]"
+        className="py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]"
       >
         <div>
           <SectionLabel>Step 3</SectionLabel>
