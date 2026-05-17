@@ -7,7 +7,9 @@ function PopoverExample() {
   return (
     <Popover>
       <PopoverTrigger>Open popover</PopoverTrigger>
-      <PopoverContent>Popover content</PopoverContent>
+      <PopoverContent aria-label="Formatting options">
+        Popover content
+      </PopoverContent>
     </Popover>
   );
 }
@@ -19,24 +21,35 @@ describe("Popover", () => {
     render(<PopoverExample />);
 
     const trigger = screen.getByRole("button", { name: "Open popover" });
+    expect(trigger).toHaveAttribute("aria-haspopup", "dialog");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).not.toHaveAttribute("aria-controls");
+
     await user.click(trigger);
 
-    const popover = await screen.findByRole("dialog");
+    const popover = await screen.findByRole("dialog", {
+      name: "Formatting options",
+    });
     expect(popover).toHaveTextContent("Popover content");
-    expect(trigger).toHaveAttribute("aria-haspopup", "dialog");
+    expect(popover).toHaveAccessibleName("Formatting options");
     expect(trigger).toHaveAttribute("aria-expanded", "true");
     expect(trigger).toHaveAttribute("aria-controls", popover.id);
   });
 
-  it("closes on Escape", async () => {
+  it("closes on Escape and clears trigger relationship", async () => {
     const user = userEvent.setup();
 
     render(<PopoverExample />);
 
-    await user.click(screen.getByRole("button", { name: "Open popover" }));
+    const trigger = screen.getByRole("button", { name: "Open popover" });
+    await user.click(trigger);
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
 
     await user.keyboard("{Escape}");
+
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).not.toHaveAttribute("aria-controls");
   });
 });
