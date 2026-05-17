@@ -15,6 +15,7 @@ import {
 
 const createdFiles = [
   "packages/ui/src/components/empty-state/EmptyState.tsx",
+  "packages/ui/src/components/empty-state/EmptyState.stories.tsx",
   "packages/ui/src/components/empty-state/index.ts",
   "packages/ui/src/components/empty-state/EmptyState.test.tsx",
   "packages/ui/src/index.ts",

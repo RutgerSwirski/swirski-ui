@@ -1,0 +1,30 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ComponentName } from "./ComponentName";
+
+const meta = {
+  title: "Components/ComponentName",
+  component: ComponentName,
+  args: {
+    title: "Component name",
+    description: "Supporting copy for the generated component story.",
+  },
+} satisfies Meta<typeof ComponentName>;
+
+export default meta;
+
+type Story = StoryObj<typeof ComponentName>;
+
+export const Default: Story = {};
+
+export const Yellow: Story = {
+  args: {
+    tone: "yellow",
+  },
+};
+
+export const Compact: Story = {
+  args: {
+    size: "sm",
+    variant: "compact",
+  },
+};
