@@ -190,7 +190,9 @@ function PropTable({ component }: { component: ComponentDoc }) {
         </div>
 
         <Badge tone="white">
-          {generatedCount ? `${generatedCount} generated` : `${rows.length} documented`}
+          {generatedCount
+            ? `${generatedCount} generated`
+            : `${rows.length} documented`}
         </Badge>
       </div>
 

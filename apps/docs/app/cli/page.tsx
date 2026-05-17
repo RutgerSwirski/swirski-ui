@@ -279,7 +279,7 @@ export default function CliPage() {
 
         <Card
           interactive={false}
-          className="bg-[#0B0B0C] text-white shadow-[10px_10px_0_#FFD400]"
+          className="bg-[#0B0B0C] text-black shadow-[10px_10px_0_#FFD400]"
         >
           <CardContent className="p-6 md:p-8">
             <Grid gap="lg" className="lg:grid-cols-[1fr_auto] lg:items-end">
@@ -289,7 +289,7 @@ export default function CliPage() {
                   Package for updates. CLI for ownership. shadcn for registry
                   access.
                 </Title>
-                <Text className="mt-4 max-w-2xl text-white/75" weight="bold">
+                <Text className="mt-4 max-w-2xl text-black/75" weight="bold">
                   These are three doors into the same Swirski design language.
                   The right one depends on whether you want imports, local
                   source, or shadcn-compatible registry installs.

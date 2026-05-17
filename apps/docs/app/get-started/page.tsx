@@ -216,7 +216,10 @@ export default function GetStartedPage() {
           <NavBar />
 
           <section className="py-14 md:py-16">
-            <Grid gap="xl" className="lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
+            <Grid
+              gap="xl"
+              className="lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end"
+            >
               <div>
                 <SectionLabel>Get started</SectionLabel>
 
@@ -303,7 +306,7 @@ export default function GetStartedPage() {
         <section className="pt-14 md:pt-20">
           <Card
             interactive={false}
-            className="bg-[#0B0B0C] text-white shadow-[8px_8px_0_#FFD400]"
+            className="bg-[#0B0B0C] text-black shadow-[8px_8px_0_#FFD400]"
           >
             <CardContent className="p-6 md:p-8">
               <Grid gap="lg" className="lg:grid-cols-[1fr_auto] lg:items-end">
@@ -315,7 +318,7 @@ export default function GetStartedPage() {
                     need ownership.
                   </Title>
 
-                  <Text className="mt-4 max-w-2xl text-white/75" weight="bold">
+                  <Text className="mt-4 max-w-2xl text-black/75" weight="bold">
                     Less technical users can treat Swirski like a normal UI
                     package. More technical users can copy components through
                     Swirski CLI or shadcn and edit the source directly.
