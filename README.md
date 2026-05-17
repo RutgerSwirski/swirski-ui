@@ -375,4 +375,4 @@ Swirski UI is actively growing. The component surface is broad, but some complex
 
 ## License
 
-License information has not been added yet.
+Swirski UI is released under the MIT License. See [LICENSE](./LICENSE).

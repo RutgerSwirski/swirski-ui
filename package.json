@@ -1,6 +1,7 @@
 {
   "name": "swirski-ui-workspace",
   "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "storybook": "pnpm --filter @swirski/ui storybook",
