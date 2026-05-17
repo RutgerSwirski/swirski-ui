@@ -2,6 +2,7 @@
   "name": "@swirski/cli",
   "version": "0.1.0",
   "private": false,
+  "license": "MIT",
   "type": "module",
   "bin": {
     "swirski": "./src/index.js",
