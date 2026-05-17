@@ -17,7 +17,7 @@ const systemItems = [
     label: "01",
     title: "Shared design language",
     body: "Tone, size and variant create a common API across components, so Button, Badge, Card, Text and future components all speak the same language.",
-    code: `type SwirskiTone = "default" | "muted" | "blue" | "yellow" | "red";
+    code: `type SwirskiTone = "muted" | "blue" | "yellow" | "red";
 
 type SwirskiSize = "xs" | "sm" | "md" | "lg" | "xl" | "display";
 
@@ -30,7 +30,7 @@ type SwirskiVariant = "solid" | "outline" | "soft" | "ghost" | "plain";`,
     code: `type ButtonProps = SwirskiSystemProps<
   "solid" | "outline" | "ghost",
   "sm" | "md" | "lg",
-  "default" | "yellow" | "blue" | "red"
+  "yellow" | "blue" | "red"
 >;`,
   },
   {
@@ -180,9 +180,7 @@ export default function SystemPage() {
               >
                 <CardContent>
                   <Badge
-                    tone={
-                      index === 2 ? "blue" : index === 1 ? "red" : "yellow"
-                    }
+                    tone={index === 2 ? "blue" : index === 1 ? "red" : "yellow"}
                   >
                     {item.title}
                   </Badge>

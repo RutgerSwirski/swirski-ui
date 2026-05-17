@@ -13,7 +13,6 @@ import clsx, { type ClassValue } from "clsx";
 
 // create the swirski tone system
 export type SwirskiTone =
-  | "default"
   | "muted"
   | "subtle"
   | "inverted"
@@ -27,13 +26,7 @@ export type SwirskiTone =
 export type SwirskiSize = "xs" | "sm" | "md" | "lg" | "xl" | "display";
 
 // create the swirski variant system
-export type SwirskiVariant =
-  | "solid"
-  | "outline"
-  | "soft"
-  | "ghost"
-  | "plain"
-  | "default";
+export type SwirskiVariant = "solid" | "outline" | "soft" | "ghost" | "plain";
 
 export type SwirskiSystemProps<
   Variant extends string = SwirskiVariant,
