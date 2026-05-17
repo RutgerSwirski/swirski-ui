@@ -12,16 +12,17 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./styles.css"
   },
   "sideEffects": [
-    "./dist/styles.css"
+    "./styles.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "styles.css"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts && cp src/styles.css dist/styles.css",
+    "build": "tsup src/index.ts --format esm --dts",
     "test": "vitest run",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0",
     "build-storybook": "storybook build"
