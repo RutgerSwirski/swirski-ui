@@ -4,7 +4,7 @@
 
 Swirski UI sits between shadcn/ui and Mantine: package primitives for speed, copyable source for ownership, and strong visual defaults built from thick borders, hard shadows, expressive typography, practical app components, and theme tokens.
 
-Current package version: `@swirski/ui@1.2.5`.
+Current package version: `@swirski/ui@1.2.6`.
 
 Primary install paths:
 

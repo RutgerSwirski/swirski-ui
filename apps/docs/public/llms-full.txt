@@ -2,7 +2,7 @@
 
 Swirski UI is a React component package for bold, graphic, studio-flavored interfaces. It combines thick borders, hard shadows, expressive typography, custom cursors, practical app primitives, theme tokens, docs, playgrounds, generated props tables, examples, and registry workflows.
 
-Current package version: `@swirski/ui@1.2.5`.
+Current package version: `@swirski/ui@1.2.6`.
 
 Docs site: https://ui.swirski.dev
 
