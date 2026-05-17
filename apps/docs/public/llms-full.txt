@@ -25,7 +25,8 @@ Starter template: https://ui.swirski.dev/templates/component/README.md
 
 When adding a component, treat it as a package feature, docs feature, and registry feature at the same time:
 
-- Start from the component template when possible.
+- Start with `pnpm create:component <component-name>` when possible.
+- Use the component template files when you want to inspect or copy the scaffold by hand.
 - Pick a lowercase registry slug and PascalCase export.
 - Design the API around `variant`, `size`, `tone`, `className`, forwarded refs, and native props.
 - Use `cn`, `swirskiAttrs`, and `Slot` when polymorphic composition is useful.
