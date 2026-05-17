@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
@@ -13,9 +14,12 @@
     },
     "./styles.css": "./src/styles.css"
   },
+  "sideEffects": [
+    "./src/styles.css"
+  ],
   "files": [
     "dist",
-    "src/styles.css"
+    "./src/styles.css"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
