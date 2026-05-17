@@ -3,8 +3,6 @@
 @import "tailwindcss";
 @import "@swirski/ui/styles.css";
 
-@source "../../../packages/ui/src";
-
 @theme {
   --font-anton: var(--font-anton);
   --font-bangers: var(--font-bangers);

@@ -1,3 +1,5 @@
+@source "./**/*.{js,mjs,cjs}";
+
 @import "tailwindcss";
 
 @import "@fontsource/anton";
