@@ -57,6 +57,14 @@ function optionText(option: SelectOption) {
   return option.label ?? option.value;
 }
 
+function optionSearchText(option: SelectOption) {
+  if (typeof option.label === "string" || typeof option.label === "number") {
+    return String(option.label);
+  }
+
+  return option.value;
+}
+
 function getEnabledIndex(options: SelectOption[], startIndex = 0) {
   const directIndex = options.findIndex(
     (option, index) => index >= startIndex && !option.disabled,
@@ -67,6 +75,16 @@ function getEnabledIndex(options: SelectOption[], startIndex = 0) {
   }
 
   return options.findIndex((option) => !option.disabled);
+}
+
+function getLastEnabledIndex(options: SelectOption[]) {
+  for (let index = options.length - 1; index >= 0; index -= 1) {
+    if (!options[index]?.disabled) {
+      return index;
+    }
+  }
+
+  return -1;
 }
 
 function moveHighlight(
@@ -91,6 +109,39 @@ function moveHighlight(
   return currentIndex;
 }
 
+function findMatchingOptionIndex(
+  options: SelectOption[],
+  search: string,
+  currentIndex: number,
+) {
+  if (!search || !options.length) {
+    return -1;
+  }
+
+  const normalizedSearch = search.toLowerCase();
+  const isRepeatedCharacterSearch =
+    normalizedSearch.length > 1 &&
+    normalizedSearch.split("").every((char) => char === normalizedSearch[0]);
+  const lookup = isRepeatedCharacterSearch
+    ? normalizedSearch[0]
+    : normalizedSearch;
+
+  for (let offset = 1; offset <= options.length; offset += 1) {
+    const index = (currentIndex + offset + options.length) % options.length;
+    const option = options[index];
+
+    if (
+      option &&
+      !option.disabled &&
+      optionSearchText(option).toLowerCase().startsWith(lookup)
+    ) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+
 export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
   options,
   value,
@@ -110,6 +161,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
 }, ref) {
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const typeaheadSearchRef = useRef("");
+  const typeaheadTimeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(
+    null,
+  );
   const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
@@ -133,6 +188,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
     [options, selectedValue],
   );
   const listboxId = `${generatedId}-listbox`;
+
+  useEffect(() => {
+    return () => {
+      if (typeaheadTimeoutRef.current) {
+        window.clearTimeout(typeaheadTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -201,13 +264,46 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
     });
   }, [isOpen, options, selectedIndex]);
 
+  useEffect(() => {
+    if (!isOpen || highlightedIndex < 0) {
+      return;
+    }
+
+    const option = document.getElementById(
+      `${listboxId}-option-${highlightedIndex}`,
+    );
+
+    option?.scrollIntoView?.({ block: "nearest" });
+  }, [highlightedIndex, isOpen, listboxId]);
+
   function selectValue(nextValue: string) {
     if (value === undefined) {
       setInternalValue(nextValue);
     }
 
     onValueChange?.(nextValue);
+    clearTypeahead();
     setIsOpen(false);
+  }
+
+  function clearTypeahead() {
+    typeaheadSearchRef.current = "";
+
+    if (typeaheadTimeoutRef.current) {
+      window.clearTimeout(typeaheadTimeoutRef.current);
+      typeaheadTimeoutRef.current = null;
+    }
+  }
+
+  function queueTypeaheadReset() {
+    if (typeaheadTimeoutRef.current) {
+      window.clearTimeout(typeaheadTimeoutRef.current);
+    }
+
+    typeaheadTimeoutRef.current = window.setTimeout(() => {
+      typeaheadSearchRef.current = "";
+      typeaheadTimeoutRef.current = null;
+    }, 700);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
@@ -221,6 +317,20 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
       setHighlightedIndex((currentIndex) =>
         moveHighlight(options, currentIndex, event.key === "ArrowDown" ? 1 : -1),
       );
+      return;
+    }
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      setIsOpen(true);
+      setHighlightedIndex(getEnabledIndex(options, 0));
+      return;
+    }
+
+    if (event.key === "End") {
+      event.preventDefault();
+      setIsOpen(true);
+      setHighlightedIndex(getLastEnabledIndex(options));
       return;
     }
 
@@ -242,7 +352,32 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
     }
 
     if (event.key === "Escape") {
+      clearTypeahead();
       setIsOpen(false);
+      return;
+    }
+
+    if (
+      event.key.length === 1 &&
+      !event.altKey &&
+      !event.ctrlKey &&
+      !event.metaKey
+    ) {
+      event.preventDefault();
+
+      typeaheadSearchRef.current = `${typeaheadSearchRef.current}${event.key}`;
+      queueTypeaheadReset();
+
+      const nextIndex = findMatchingOptionIndex(
+        options,
+        typeaheadSearchRef.current,
+        highlightedIndex >= 0 ? highlightedIndex : selectedIndex,
+      );
+
+      if (nextIndex !== -1) {
+        setIsOpen(true);
+        setHighlightedIndex(nextIndex);
+      }
     }
   }
 

@@ -104,4 +104,46 @@ describe("Select", () => {
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
+
+  it("supports Home, End, and typeahead navigation", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+
+    render(
+      <Select
+        options={options}
+        defaultValue="yellow"
+        onValueChange={onValueChange}
+      />,
+    );
+
+    const trigger = screen.getByRole("button", { name: /yellow/i });
+    trigger.focus();
+
+    await user.keyboard("{End}");
+
+    const listbox = await screen.findByRole("listbox");
+    expect(trigger).toHaveAttribute(
+      "aria-activedescendant",
+      `${listbox.id}-option-1`,
+    );
+
+    await user.keyboard("{Home}");
+    expect(trigger).toHaveAttribute(
+      "aria-activedescendant",
+      `${listbox.id}-option-0`,
+    );
+
+    await user.keyboard("b");
+    expect(trigger).toHaveAttribute(
+      "aria-activedescendant",
+      `${listbox.id}-option-1`,
+    );
+
+    await user.keyboard("{Enter}");
+
+    expect(onValueChange).toHaveBeenCalledWith("blue");
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /blue/i })).toHaveFocus();
+  });
 });

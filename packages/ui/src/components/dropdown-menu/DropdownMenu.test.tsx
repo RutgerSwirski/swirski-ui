@@ -10,9 +10,11 @@ import {
 
 function DropdownExample({
   onArchive = vi.fn(),
+  onRename = vi.fn(),
   onSelect = vi.fn(),
 }: {
   onArchive?: () => void;
+  onRename?: () => void;
   onSelect?: () => void;
 }) {
   return (
@@ -23,6 +25,7 @@ function DropdownExample({
         <DropdownMenuItem disabled onClick={onArchive}>
           Archive
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={onRename}>Rename</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -53,11 +56,12 @@ describe("DropdownMenu", () => {
 
     expect(onSelect).toHaveBeenCalledTimes(1);
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(trigger).not.toHaveAttribute("aria-controls");
   });
 
-  it("opens from keyboard activation and closes on Escape without moving focus", async () => {
+  it("opens from keyboard activation and closes on Escape with focus returned", async () => {
     const user = userEvent.setup();
 
     render(<DropdownExample />);
@@ -67,8 +71,9 @@ describe("DropdownMenu", () => {
 
     await user.keyboard("{Enter}");
 
-    expect(await screen.findByRole("menu")).toBeInTheDocument();
-    expect(trigger).toHaveFocus();
+    const menu = await screen.findByRole("menu");
+    expect(within(menu).getByRole("menuitem", { name: "Duplicate" }))
+      .toHaveFocus();
 
     await user.keyboard("{Escape}");
 
@@ -76,6 +81,53 @@ describe("DropdownMenu", () => {
     expect(trigger).toHaveFocus();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(trigger).not.toHaveAttribute("aria-controls");
+  });
+
+  it("moves through enabled items with arrow, Home, and End keys", async () => {
+    const user = userEvent.setup();
+    const onRename = vi.fn();
+
+    render(<DropdownExample onRename={onRename} />);
+
+    const trigger = screen.getByRole("button", { name: "Actions" });
+    trigger.focus();
+
+    await user.keyboard("{ArrowDown}");
+
+    const menu = await screen.findByRole("menu");
+    const duplicateItem = within(menu).getByRole("menuitem", {
+      name: "Duplicate",
+    });
+    const archiveItem = within(menu).getByRole("menuitem", {
+      name: "Archive",
+    });
+    const renameItem = within(menu).getByRole("menuitem", {
+      name: "Rename",
+    });
+
+    expect(duplicateItem).toHaveFocus();
+    expect(archiveItem).toBeDisabled();
+
+    await user.keyboard("{ArrowDown}");
+    expect(renameItem).toHaveFocus();
+
+    await user.keyboard("{ArrowDown}");
+    expect(duplicateItem).toHaveFocus();
+
+    await user.keyboard("{ArrowUp}");
+    expect(renameItem).toHaveFocus();
+
+    await user.keyboard("{Home}");
+    expect(duplicateItem).toHaveFocus();
+
+    await user.keyboard("{End}");
+    expect(renameItem).toHaveFocus();
+
+    await user.keyboard("{Enter}");
+
+    expect(onRename).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
   });
 
   it("keeps disabled menu items inert", async () => {
