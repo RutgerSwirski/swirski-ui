@@ -6,6 +6,8 @@ import {
   ReactNode,
   createContext,
   forwardRef,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MutableRefObject,
   useContext,
   useEffect,
   useId,
@@ -19,13 +21,16 @@ import { usePortalRoot } from "../../system/usePortalRoot";
 export type DropdownMenuVariant = "default" | "compact";
 export type DropdownMenuSize = "sm" | "md" | "lg";
 export type DropdownMenuTone = "default";
+type DropdownMenuFocusIntent = "first" | "last" | null;
 
 type DropdownMenuContextValue = {
   open: boolean;
   setOpen: (open: boolean) => void;
   rootRef: React.RefObject<HTMLDivElement | null>;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
   contentRef: React.RefObject<HTMLDivElement | null>;
   contentId: string;
+  focusIntentRef: MutableRefObject<DropdownMenuFocusIntent>;
 };
 
 const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null);
@@ -38,6 +43,29 @@ function useDropdownMenu() {
   }
 
   return context;
+}
+
+function getEnabledMenuItems(content: HTMLElement) {
+  return Array.from(content.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+    .filter((item) => !item.hasAttribute("disabled"))
+    .filter((item) => item.getAttribute("aria-disabled") !== "true");
+}
+
+function getCurrentMenuItemIndex(content: HTMLElement) {
+  return getEnabledMenuItems(content).findIndex(
+    (item) => item === document.activeElement,
+  );
+}
+
+function focusMenuItem(content: HTMLElement, index: number) {
+  const items = getEnabledMenuItems(content);
+
+  if (!items.length) {
+    return;
+  }
+
+  const nextIndex = (index + items.length) % items.length;
+  items[nextIndex]?.focus();
 }
 
 export type DropdownMenuProps = {
@@ -60,7 +88,9 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
   ) {
   const contentId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const focusIntentRef = useRef<DropdownMenuFocusIntent>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -96,7 +126,15 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
 
   return (
     <DropdownMenuContext.Provider
-      value={{ open, setOpen, rootRef, contentRef, contentId }}
+      value={{
+        open,
+        setOpen,
+        rootRef,
+        triggerRef,
+        contentRef,
+        contentId,
+        focusIntentRef,
+      }}
     >
       <div
         ref={composeRefs(rootRef, ref)}
@@ -137,14 +175,16 @@ export const DropdownMenuTrigger = forwardRef<
   size = "md",
   tone = "default",
   onClick,
+  onKeyDown,
   ...props
 }, ref) {
-  const { contentId, open, setOpen } = useDropdownMenu();
+  const { contentId, focusIntentRef, open, setOpen, triggerRef } =
+    useDropdownMenu();
   const Component = asChild ? Slot : "button";
 
   return (
     <Component
-      ref={ref}
+      ref={composeRefs(triggerRef, ref)}
       className={cn(
         "border-4 border-black bg-white font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
         triggerSizeStyles[size],
@@ -156,6 +196,30 @@ export const DropdownMenuTrigger = forwardRef<
 
         if (!event.defaultPrevented) {
           setOpen(!open);
+        }
+      }}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (
+          event.key === "ArrowDown" ||
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+          event.preventDefault();
+          focusIntentRef.current = "first";
+          setOpen(true);
+          return;
+        }
+
+        if (event.key === "ArrowUp") {
+          event.preventDefault();
+          focusIntentRef.current = "last";
+          setOpen(true);
         }
       }}
       type={asChild ? undefined : "button"}
@@ -186,10 +250,19 @@ export const DropdownMenuContent = forwardRef<
   variant = "default",
   size = "md",
   tone = "default",
+  onKeyDown,
   style,
   ...props
 }, ref) {
-  const { contentId, contentRef, open, rootRef } = useDropdownMenu();
+  const {
+    contentId,
+    contentRef,
+    focusIntentRef,
+    open,
+    rootRef,
+    setOpen,
+    triggerRef,
+  } = useDropdownMenu();
   const portalRoot = usePortalRoot();
   const [position, setPosition] = useState<{
     left: number;
@@ -225,6 +298,62 @@ export const DropdownMenuContent = forwardRef<
     };
   }, [align, open, rootRef]);
 
+  useEffect(() => {
+    if (!open || !position || !contentRef.current || !focusIntentRef.current) {
+      return;
+    }
+
+    focusMenuItem(
+      contentRef.current,
+      focusIntentRef.current === "first" ? 0 : -1,
+    );
+    focusIntentRef.current = null;
+  }, [contentRef, focusIntentRef, open, position]);
+
+  function handleKeyDown(event: ReactKeyboardEvent<HTMLDivElement>) {
+    onKeyDown?.(event);
+
+    if (event.defaultPrevented || !contentRef.current) {
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      focusMenuItem(
+        contentRef.current,
+        getCurrentMenuItemIndex(contentRef.current) + 1,
+      );
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      focusMenuItem(
+        contentRef.current,
+        getCurrentMenuItemIndex(contentRef.current) - 1,
+      );
+      return;
+    }
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      focusMenuItem(contentRef.current, 0);
+      return;
+    }
+
+    if (event.key === "End") {
+      event.preventDefault();
+      focusMenuItem(contentRef.current, -1);
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setOpen(false);
+      triggerRef.current?.focus();
+    }
+  }
+
   if (!open || !position || !portalRoot) {
     return null;
   }
@@ -238,6 +367,7 @@ export const DropdownMenuContent = forwardRef<
         className,
       )}
       id={contentId}
+      onKeyDown={handleKeyDown}
       role="menu"
       {...swirskiAttrs("dropdown-menu-content", { size, tone, variant })}
       style={{
@@ -279,20 +409,24 @@ export const DropdownMenuItem = forwardRef<
   tone = "default",
   ...props
 }, ref) {
-  const { setOpen } = useDropdownMenu();
+  const { setOpen, triggerRef } = useDropdownMenu();
   const Component = asChild ? Slot : "button";
 
   return (
     <Component
       ref={ref}
       className={cn(
-        "block w-full text-left font-black uppercase transition hover:bg-[#FFD400]",
+        "block w-full text-left font-black uppercase transition hover:bg-[#FFD400] focus-visible:bg-[#FFD400] focus-visible:outline-none disabled:cursor-not-allowed disabled:text-black/35",
         itemSizeStyles[size],
         className,
       )}
       onClick={(event) => {
         onClick?.(event);
-        setOpen(false);
+
+        if (!event.defaultPrevented) {
+          setOpen(false);
+          triggerRef.current?.focus();
+        }
       }}
       role="menuitem"
       type={asChild ? undefined : "button"}
