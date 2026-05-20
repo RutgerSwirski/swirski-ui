@@ -154,7 +154,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     disabled = false,
     name,
     selectedIndicator = "x",
-    showSelectedIndicator = true,
+    showSelectedIndicator = false,
     className,
     triggerClassName,
     contentClassName,
