@@ -23,6 +23,30 @@ export const Picker: Story = {
         <a className="font-black underline" href="#cursor-story">
           Tiny link test
         </a>
+        <Button disabled tone="white">
+          Locked
+        </Button>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div
+          className="grid min-h-24 place-items-center border-4 border-black bg-[#0057FF] p-4 text-center font-black uppercase text-white"
+          data-cursor="pan"
+        >
+          Pan board
+        </div>
+        <div
+          aria-busy="true"
+          className="grid min-h-24 place-items-center border-4 border-black bg-[#FFD400] p-4 text-center font-black uppercase"
+        >
+          Busy
+        </div>
+        <div
+          className="grid min-h-24 place-items-center border-4 border-black bg-white p-4 text-center font-black uppercase"
+          data-cursor="crosshair"
+        >
+          Target
+        </div>
       </div>
     </CursorProvider>
   ),
@@ -40,6 +64,12 @@ export const SideDock: Story = {
           <a className="font-black underline" href="#cursor-dock-story">
             Tiny link test
           </a>
+          <div
+            className="grid min-h-24 min-w-48 place-items-center border-4 border-black bg-[#0057FF] p-4 text-center font-black uppercase text-white"
+            data-cursor="pan"
+          >
+            Pan board
+          </div>
         </div>
       </div>
     </CursorProvider>

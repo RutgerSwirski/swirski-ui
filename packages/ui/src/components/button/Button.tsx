@@ -39,7 +39,7 @@ type ButtonNativeProps = ButtonBaseProps &
 export type ButtonProps = ButtonLinkProps | ButtonNativeProps;
 
 const baseStyles =
-  "inline-flex max-w-full items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex max-w-full items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase transition-all duration-200 disabled:cursor-not-allowed disabled:hover:cursor-not-allowed disabled:opacity-60";
 
 const shadowFeedbackStyles =
   "shadow-[var(--sw-shadow-md)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2";

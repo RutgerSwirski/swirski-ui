@@ -1129,6 +1129,27 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
           <Button className="w-fit" href="#preview" tone="white">
             Link cursor
           </Button>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div
+              className="grid min-h-20 place-items-center border-4 border-black bg-[#0057FF] p-3 text-center font-black uppercase text-white"
+              data-cursor="pan"
+            >
+              Pan board
+            </div>
+            <div
+              aria-busy="true"
+              className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] p-3 text-center font-black uppercase"
+            >
+              Busy
+            </div>
+            <button
+              className="min-h-20 border-4 border-black bg-neutral-200 p-3 font-black uppercase text-black/50"
+              disabled
+              type="button"
+            >
+              Locked
+            </button>
+          </div>
         </div>
       </CursorProvider>
     ),
@@ -1143,6 +1164,27 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
     <Button className="w-fit" href="#preview" tone="white">
       Link cursor
     </Button>
+    <div className="grid gap-3 sm:grid-cols-3">
+      <div
+        className="grid min-h-20 place-items-center border-4 border-black bg-[#0057FF] p-3 text-center font-black uppercase text-white"
+        data-cursor="pan"
+      >
+        Pan board
+      </div>
+      <div
+        aria-busy="true"
+        className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] p-3 text-center font-black uppercase"
+      >
+        Busy
+      </div>
+      <button
+        className="min-h-20 border-4 border-black bg-neutral-200 p-3 font-black uppercase text-black/50"
+        disabled
+        type="button"
+      >
+        Locked
+      </button>
+    </div>
   </div>
 </CursorProvider>`,
   },
