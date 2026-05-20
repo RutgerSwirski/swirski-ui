@@ -24,7 +24,8 @@
     "build": "tsup src/index.ts --format esm --dts && node scripts/build-styles.mjs",
     "test": "vitest run",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "pnpm build"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
