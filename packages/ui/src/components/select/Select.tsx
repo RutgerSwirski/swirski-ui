@@ -464,11 +464,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
                   className={cn(
                     "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
                     optionSizeStyles[size],
-                    isHighlighted && !option.disabled && "bg-[#FFD400]",
-                    isSelected && "bg-[#0057FF] text-black",
+                    isHighlighted &&
+                      !option.disabled &&
+                      "bg-[#0057FF] text-white",
+                    isSelected && "bg-[#0057FF] text-white",
                     option.disabled
                       ? "cursor-not-allowed text-black/35"
-                      : "hover:bg-[#FFD400] hover:text-black",
+                      : "hover:bg-[#0057FF] hover:text-white",
                     optionClassName,
                   )}
                   disabled={option.disabled}
@@ -485,6 +487,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
                   {...swirskiAttrs("select-option", { size, tone, variant })}
                 >
                   <span>{optionText(option)}</span>
+
+                  {/* insert clear button */}
+
                   {showSelectedIndicator && isSelected && (
                     <span aria-hidden="true">{selectedIndicator}</span>
                   )}
