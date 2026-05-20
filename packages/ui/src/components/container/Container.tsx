@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactNode, forwardRef } from "react";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type ContainerVariant = "default" | "fluid";
-export type ContainerSize = "sm" | "md" | "lg" | "xl";
+export type ContainerSize = "sm" | "md" | "lg" | "xl" | "2xl";
 export type ContainerTone = "default";
 
 export type ContainerProps = {
@@ -18,6 +18,7 @@ const sizeStyles: Record<ContainerSize, string> = {
   md: "max-w-5xl",
   lg: "max-w-6xl",
   xl: "max-w-7xl",
+  "2xl": "max-w-150",
 };
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
