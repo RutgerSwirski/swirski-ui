@@ -465,7 +465,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
                     "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
                     optionSizeStyles[size],
                     isHighlighted && !option.disabled && "bg-[#FFD400]",
-                    isSelected && "bg-[#0057FF] text-white",
+                    isSelected && "bg-[#0057FF] text-black",
                     option.disabled
                       ? "cursor-not-allowed text-black/35"
                       : "hover:bg-[#FFD400] hover:text-black",
