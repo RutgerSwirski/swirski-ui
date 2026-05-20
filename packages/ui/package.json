@@ -34,6 +34,7 @@
   "dependencies": {
     "@fontsource/anton": "^5.2.7",
     "@fontsource/bangers": "^5.2.8",
+    "postcss-cli": "^11.0.1",
     "clsx": "^2.1.1"
   },
   "devDependencies": {
