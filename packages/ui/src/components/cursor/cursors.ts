@@ -8,6 +8,9 @@ export type SwirskiCursor = {
   active: string;
   cursor: string;
   pointer: string;
+  text?: string;
+  zoomIn?: string;
+  zoomOut?: string;
   preview: string;
   swatch: string;
 };
@@ -22,10 +25,11 @@ function cursorValue(
   svg: string,
   hotspotX: number,
   hotspotY: number,
-  fallback: "auto" | "pointer",
+  fallback: "auto" | "pointer" | "text" | "zoom-in" | "zoom-out",
 ) {
   return `url("${toDataUri(svg)}") ${hotspotX} ${hotspotY}, ${fallback}`;
 }
+
 function pixelArrow(fill: string, accent: string, shadow: string) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
   <!-- offset comic shadow -->
@@ -45,6 +49,22 @@ function pixelArrow(fill: string, accent: string, shadow: string) {
 </svg>`;
 }
 
+function pixelTextCursor(fill: string, accent: string, shadow: string) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- offset comic shadow -->
+  <path d="M13 4h8v4h-3v18h3v4h-8v-4h3V8h-3z" fill="${shadow}"/>
+
+  <!-- black chunky outline -->
+  <path d="M10 1h12v7h-4v16h4v7H10v-7h4V8h-4z" fill="#0B0B0C"/>
+
+  <!-- main fill -->
+  <path d="M13 4h6v2h-3v20h3v2h-6v-2h3V6h-3z" fill="${fill}"/>
+
+  <!-- pop-art highlight -->
+  <path d="M17 7h1v17h-1zM14 5h2v1h-2zM14 26h2v1h-2z" fill="${accent}"/>
+</svg>`;
+}
+
 function pixelHand(fill: string, accent: string, shadow: string) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
   <!-- offset comic shadow -->
@@ -61,6 +81,37 @@ function pixelHand(fill: string, accent: string, shadow: string) {
 
   <!-- Swirski stitch marks -->
   <path d="M12 23h1v1h-1zM14 24h1v1h-1zM16 23h1v1h-1zM18 24h1v1h-1z" fill="#0B0B0C"/>
+</svg>`;
+}
+
+function pixelMagnifier(
+  fill: string,
+  accent: string,
+  shadow: string,
+  mode: "in" | "out",
+) {
+  const verticalMark =
+    mode === "in" ? `<path d="M14 9h3v11h-3z" fill="#0B0B0C"/>` : "";
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- offset comic shadow -->
+  <path d="M8 4h11v3h4v4h3v11h-3v3h3v3h3v3h-7v-3h-3v-3H8v-3H5V8h3z" fill="${shadow}"/>
+
+  <!-- black chunky outline -->
+  <path d="M6 1h14v3h4v4h3v14h-3v2h3v3h3v5h-8v-3h-3v-3H6v-3H3V5h3z" fill="#0B0B0C"/>
+
+  <!-- lens fill -->
+  <path d="M8 4h10v3h3v3h3v10h-3v3H8v-3H6V7h2z" fill="${fill}"/>
+
+  <!-- handle fill -->
+  <path d="M20 23h3v3h3v3h-3v-3h-3z" fill="${fill}"/>
+
+  <!-- plus/minus mark -->
+  <path d="M10 13h11v3H10z" fill="#0B0B0C"/>
+  ${verticalMark}
+
+  <!-- highlight -->
+  <path d="M9 6h5v2H9zM8 8h2v5H8z" fill="${accent}"/>
 </svg>`;
 }
 
@@ -90,13 +141,18 @@ function pixelCursorSet(fill: string, accent: string, shadow: string) {
   const cursor = pixelArrow(fill, accent, shadow);
   const pointer = pixelHand(fill, accent, shadow);
   const active = pixelClickHand(fill, accent, shadow);
+  const text = pixelTextCursor(fill, accent, shadow);
+  const zoomIn = pixelMagnifier(fill, accent, shadow, "in");
+  const zoomOut = pixelMagnifier(fill, accent, shadow, "out");
 
   return {
     active: cursorValue(active, 14, 10, "pointer"),
     cursor: cursorValue(cursor, 5, 2, "auto"),
     pointer: cursorValue(pointer, 15, 3, "pointer"),
+    text: cursorValue(text, 16, 16, "text"),
+    zoomIn: cursorValue(zoomIn, 15, 15, "zoom-in"),
+    zoomOut: cursorValue(zoomOut, 15, 15, "zoom-out"),
     preview: toDataUri(cursor),
-    
   };
 }
 

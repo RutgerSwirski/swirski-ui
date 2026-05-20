@@ -3,6 +3,7 @@ export * from "./use-clipboard/index";
 export * from "./use-controllable-state/index";
 export * from "./use-disclosure/index";
 export * from "./use-escape-key/index";
+export * from "./use-is-pathname-active/index";
 export * from "./use-local-storage/index";
 export * from "./use-media-query/index";
 export * from "./use-reduced-motion/index";

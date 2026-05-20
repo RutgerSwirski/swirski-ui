@@ -26,7 +26,8 @@ const outlineToneStyles: Record<BadgeTone, string> = {
   blue: "bg-[var(--sw-color-surface)] text-[var(--sw-color-blue)]",
   yellow: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
   red: "bg-[var(--sw-color-surface)] text-[var(--sw-color-red)]",
-  white: "bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]",
+  white:
+    "bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]",
   black: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 
@@ -44,16 +45,20 @@ const sizeStyles: Record<BadgeSize, string> = {
   lg: "px-4 py-2 text-base",
 };
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge({
-  asChild = false,
-  children,
-  variant = "solid",
-  tone = "yellow",
-  size = "md",
-  className,
-  withShadow = true,
-  ...props
-}, ref) {
+export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
+  {
+    asChild = false,
+    children,
+    variant = "solid",
+    tone = "yellow",
+    size = "md",
+    className,
+    withShadow = true,
+    // position = "top-left",
+    ...props
+  },
+  ref,
+) {
   const Component = asChild ? Slot : "span";
 
   return (

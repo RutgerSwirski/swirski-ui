@@ -28,6 +28,14 @@ type CursorContextValue = {
 };
 
 const CursorContext = createContext<CursorContextValue | null>(null);
+const cursorVariableNames = [
+  "--swirski-cursor",
+  "--swirski-cursor-pointer",
+  "--swirski-cursor-active",
+  "--swirski-cursor-text",
+  "--swirski-cursor-zoom-in",
+  "--swirski-cursor-zoom-out",
+] as const;
 
 export type CursorProviderProps = {
   children: ReactNode;
@@ -65,6 +73,22 @@ const cursorSelectorStyles = `
   }
 
   [data-swirski-cursor] :is(
+    [data-cursor="zoom-in"],
+    [data-swirski-cursor-zoom="in"],
+    .cursor-zoom-in
+  ) {
+    cursor: var(--swirski-cursor-zoom-in);
+  }
+
+  [data-swirski-cursor] :is(
+    [data-cursor="zoom-out"],
+    [data-swirski-cursor-zoom="out"],
+    .cursor-zoom-out
+  ) {
+    cursor: var(--swirski-cursor-zoom-out);
+  }
+
+  [data-swirski-cursor] :is(
     a,
     button,
     summary,
@@ -90,9 +114,10 @@ const cursorSelectorStyles = `
   [data-swirski-cursor] :is(
     input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="reset"]):not([type="submit"]),
     textarea,
+    [data-cursor="text"],
     [contenteditable="true"]
   ) {
-    cursor: text;
+    cursor: var(--swirski-cursor-text);
   }
 }
 `;
@@ -142,21 +167,24 @@ function findCursor(cursors: SwirskiCursor[], cursorId: CursorId) {
 }
 
 export const CursorProvider = forwardRef<HTMLDivElement, CursorProviderProps>(
-  function CursorProvider({
-  children,
-  className,
-  cursors = swirskiCursors,
-  cursor,
-  defaultCursor = "bolt",
-  onCursorChange,
-  storageKey = "swirski-cursor",
-  variant = "default",
-  size = "md",
-  tone = "default",
-  onPointerDownCapture,
-  style,
-  ...props
-}, ref) {
+  function CursorProvider(
+    {
+      children,
+      className,
+      cursors = swirskiCursors,
+      cursor,
+      defaultCursor = "bolt",
+      onCursorChange,
+      storageKey = "swirski-cursor",
+      variant = "default",
+      size = "md",
+      tone = "default",
+      onPointerDownCapture,
+      style,
+      ...props
+    },
+    ref,
+  ) {
   const isControlled = cursor !== undefined;
 
   const [selectedCursor, setSelectedCursor] = useState<CursorId>(() => {
@@ -233,11 +261,65 @@ export const CursorProvider = forwardRef<HTMLDivElement, CursorProviderProps>(
     [activeCursor, cursors, setCursor],
   );
 
-  const cursorStyle = {
-    "--swirski-cursor": activeCursor.cursor,
-    "--swirski-cursor-pointer": activeCursor.pointer,
-    "--swirski-cursor-active": activeCursor.active,
-  } as CSSProperties;
+  const cursorStyle = useMemo(
+    () =>
+      ({
+        "--swirski-cursor": activeCursor.cursor,
+        "--swirski-cursor-pointer": activeCursor.pointer,
+        "--swirski-cursor-active": activeCursor.active,
+        "--swirski-cursor-text": activeCursor.text ?? activeCursor.cursor,
+        "--swirski-cursor-zoom-in": activeCursor.zoomIn ?? activeCursor.pointer,
+        "--swirski-cursor-zoom-out":
+          activeCursor.zoomOut ?? activeCursor.pointer,
+      }) as CSSProperties,
+    [
+      activeCursor.active,
+      activeCursor.cursor,
+      activeCursor.pointer,
+      activeCursor.text,
+      activeCursor.zoomIn,
+      activeCursor.zoomOut,
+    ],
+  );
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const body = document.body;
+    const previousCursor = body.getAttribute("data-swirski-cursor");
+    const previousVariables = cursorVariableNames.map((name) =>
+      body.style.getPropertyValue(name),
+    );
+
+    body.setAttribute("data-swirski-cursor", activeCursor.id);
+    cursorVariableNames.forEach((name) => {
+      const value = cursorStyle[name as keyof typeof cursorStyle];
+
+      if (typeof value === "string") {
+        body.style.setProperty(name, value);
+      }
+    });
+
+    return () => {
+      if (previousCursor === null) {
+        body.removeAttribute("data-swirski-cursor");
+      } else {
+        body.setAttribute("data-swirski-cursor", previousCursor);
+      }
+
+      cursorVariableNames.forEach((name, index) => {
+        const previousValue = previousVariables[index];
+
+        if (previousValue) {
+          body.style.setProperty(name, previousValue);
+        } else {
+          body.style.removeProperty(name);
+        }
+      });
+    };
+  }, [activeCursor.id, cursorStyle]);
 
   return (
     <CursorContext.Provider value={value}>

@@ -7,6 +7,7 @@ export { CardBadge } from "./CardBadge";
 export type { CardProps, CardSize, CardTone, CardVariant } from "./Card";
 export type {
   CardBadgeProps,
+  CardBadgePosition,
   CardBadgeSize,
   CardBadgeTone,
   CardBadgeVariant,
