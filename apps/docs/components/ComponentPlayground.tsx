@@ -7,7 +7,7 @@ import {
   type PlaygroundControl,
   type PlaygroundValue,
   type PlaygroundValues,
-} from "@/content/playgrounds";
+} from "@/content/components/playgrounds";
 import {
   Badge,
   Card,

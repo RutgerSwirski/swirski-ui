@@ -1779,7 +1779,7 @@
           "prop": "size",
           "component": "Container",
           "sourceType": "ContainerProps",
-          "type": "'sm' | 'md' | 'lg' | 'xl'",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'fluid'",
           "required": false,
           "defaultValue": "\"lg\"",
           "description": "Generated from ContainerProps.",
@@ -5089,7 +5089,7 @@
           "sourceType": "SelectProps",
           "type": "boolean",
           "required": false,
-          "defaultValue": "true",
+          "defaultValue": "false",
           "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },

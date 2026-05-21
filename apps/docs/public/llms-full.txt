@@ -32,8 +32,9 @@ When adding a component, treat it as a package feature, docs feature, and regist
 - Use `cn`, `swirskiAttrs`, and `Slot` when polymorphic composition is useful.
 - Add `packages/ui/src/components/<slug>/<Name>.tsx` and `packages/ui/src/components/<slug>/index.ts`.
 - Export it from `packages/ui/src/index.ts`.
-- Add docs metadata in `apps/docs/content/components.tsx`.
-- Add playground metadata in `apps/docs/content/playgrounds.tsx` when the component has meaningful variants.
+- Add docs metadata in `apps/docs/content/components/<slug>/component.tsx`.
+- Add playground metadata in `apps/docs/content/components/<slug>/playground.tsx` when the component has meaningful variants.
+- Add hook docs metadata in `apps/docs/content/hooks/<slug>/hook.tsx` and register it in `apps/docs/content/hooks/index.ts`.
 - Add the registry manifest entry in `registry/swirski.registry.json`.
 - Add tests for accessibility, keyboard behavior, focus, disabled state, and controlled/uncontrolled behavior when relevant.
 - Run `pnpm docs:metadata`, `pnpm test:ui`, `pnpm build:ui`, `pnpm registry:shadcn`, and `pnpm build`.

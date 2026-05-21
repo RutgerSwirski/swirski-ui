@@ -94,6 +94,11 @@ function toPascalCase(slug) {
     .join("");
 }
 
+function toCamelCase(slug) {
+  const pascal = toPascalCase(slug);
+  return pascal.charAt(0).toLowerCase() + pascal.slice(1);
+}
+
 function toTitle(slug) {
   return slug
     .split("-")
@@ -116,6 +121,7 @@ function assertValidSlug(slug) {
 function replacePlaceholders(content, values) {
   return content
     .replaceAll("ComponentName", values.name)
+    .replaceAll("componentName", values.camelName)
     .replaceAll("component-name", values.slug)
     .replaceAll("Component name", values.title)
     .replaceAll("Feedback", values.docsCategory)
@@ -257,17 +263,18 @@ function printNextSteps(values) {
   console.log(`
 Next steps:
   1. Replace placeholder copy and adjust the component source and stories.
-  2. Add a docs entry in apps/docs/content/components.tsx.
-  3. Add a playground entry in apps/docs/content/playgrounds.tsx if useful.
-  4. Run:
+  2. Add docs metadata in apps/docs/content/components/${values.slug}/component.tsx.
+  3. Add a playground in apps/docs/content/components/${values.slug}/playground.tsx if useful.
+  4. Register those files in apps/docs/content/components/index.ts and playgrounds.ts.
+  5. Run:
      pnpm docs:metadata
      pnpm test:ui
      pnpm registry:shadcn
      pnpm build
 
 Template snippets:
-  ${path.relative(repoRoot, path.join(templateRoot, "docs-entry.tsx.template"))}
-  ${path.relative(repoRoot, path.join(templateRoot, "playground-entry.tsx.template"))}
+  ${path.relative(repoRoot, path.join(templateRoot, "component.tsx.template"))}
+  ${path.relative(repoRoot, path.join(templateRoot, "playground.tsx.template"))}
 `);
 }
 
@@ -318,6 +325,7 @@ function main() {
         ? args.description
         : `${toTitle(slug)} component.`,
     docsCategory,
+    camelName: toCamelCase(slug),
     name: toPascalCase(slug),
     slug,
     title: toTitle(slug),

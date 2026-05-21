@@ -26,7 +26,7 @@ const navItems = [
   { href: "/components", label: "Components" },
   { href: "/hooks", label: "Hooks" },
   { href: "/cli", label: "CLI" },
-  { href: "/examples", label: "Examples" },
+  // { href: "/examples", label: "Examples" },
 ];
 
 export default function NavBar() {

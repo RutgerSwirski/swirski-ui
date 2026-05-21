@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import CodeBlock from "@/components/CodeBlock";
 import NavBar from "@/components/NavBar";
-import { componentDocs, type ComponentDoc } from "@/content/components";
+import { hookDocs } from "@/content/hooks";
+import type { HookDoc } from "@/content/types";
 import {
   Badge,
   Button,
@@ -27,10 +28,6 @@ type Props = {
     slug: string;
   }>;
 };
-
-const hookDocs = componentDocs.filter(
-  (component) => component.category === "Hooks",
-);
 
 const breakdownItems = [
   {
@@ -77,7 +74,7 @@ function CodePanel({
   );
 }
 
-function PropTable({ hook }: { hook: ComponentDoc }) {
+function PropTable({ hook }: { hook: HookDoc }) {
   return (
     <section id="props" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
@@ -130,7 +127,7 @@ function PropTable({ hook }: { hook: ComponentDoc }) {
   );
 }
 
-function ReturnTable({ hook }: { hook: ComponentDoc }) {
+function ReturnTable({ hook }: { hook: HookDoc }) {
   return (
     <section id="returns" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">

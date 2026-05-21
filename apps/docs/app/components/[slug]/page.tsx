@@ -3,6 +3,7 @@ import CodeBlock from "@/components/CodeBlock";
 import ComponentPlayground from "@/components/ComponentPlayground";
 import NavBar from "@/components/NavBar";
 import { componentDocs, type ComponentDoc } from "@/content/components";
+import { hookDocs } from "@/content/hooks";
 import generatedPropsMetadata from "@/content/generated-props.json";
 import {
   Badge,
@@ -92,9 +93,7 @@ const baseBreakdownItems = [
   },
 ] as const;
 
-const componentOnlyDocs = componentDocs.filter(
-  (component) => component.category !== "Hooks",
-);
+const componentOnlyDocs = componentDocs;
 
 function getComponentIndex(slug: string) {
   return componentOnlyDocs.findIndex((item) => item.slug === slug);
@@ -295,9 +294,7 @@ export default async function ComponentPage({ params }: Props) {
   const component = componentOnlyDocs[componentIndex];
 
   if (!component) {
-    const hook = componentDocs.find(
-      (item) => item.category === "Hooks" && item.slug === slug,
-    );
+    const hook = hookDocs.find((item) => item.slug === slug);
 
     if (hook) {
       redirect(`/hooks/${hook.slug}`);

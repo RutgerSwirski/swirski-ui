@@ -16,9 +16,7 @@ import Link from "next/link";
 
 const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
 
-const componentOnlyDocs = componentDocs.filter(
-  (component) => component.category !== "Hooks",
-);
+const componentOnlyDocs = componentDocs;
 
 const categories = Array.from(
   new Set(componentOnlyDocs.map((component) => component.category)),
