@@ -189,7 +189,7 @@ export default function ComponentsPage() {
                   </Badge>
                 </div>
 
-                <Grid columns={2} gap="lg" className="md:grid-cols-2">
+                <Grid gap="lg" className="md:grid-cols-2! grid-cols-1">
                   {components.map((component) => {
                     return (
                       <Link
