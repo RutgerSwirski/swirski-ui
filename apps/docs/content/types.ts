@@ -20,8 +20,8 @@ export type ComponentDoc = {
   importCode: string;
   usageCode: string;
   compositionCode?: string;
-  preview: ReactNode;
-  props: PropDoc[];
+  preview?: ReactNode;
+  props?: PropDoc[];
   returns?: PropDoc[];
 };
 

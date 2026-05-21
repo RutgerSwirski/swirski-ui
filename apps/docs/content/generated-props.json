@@ -1811,9 +1811,14 @@
     },
     "cursor": {
       "files": [
+        "packages/ui/src/components/cursor/CursorContext.tsx",
         "packages/ui/src/components/cursor/CursorDock.tsx",
         "packages/ui/src/components/cursor/CursorPicker.tsx",
         "packages/ui/src/components/cursor/CursorProvider.tsx",
+        "packages/ui/src/components/cursor/cursor-selectors.ts",
+        "packages/ui/src/components/cursor/cursor-state.ts",
+        "packages/ui/src/components/cursor/cursor-storage.ts",
+        "packages/ui/src/components/cursor/cursor-style.ts",
         "packages/ui/src/components/cursor/cursors.ts"
       ],
       "props": [
@@ -2174,333 +2179,16 @@
     },
     "dialog": {
       "files": [
-        "packages/ui/src/components/dialog/Dialog.tsx"
+        "packages/ui/src/components/dialog/Dialog.tsx",
+        "packages/ui/src/components/dialog/DialogClose.tsx",
+        "packages/ui/src/components/dialog/DialogContent.tsx",
+        "packages/ui/src/components/dialog/DialogContext.tsx",
+        "packages/ui/src/components/dialog/DialogSections.tsx",
+        "packages/ui/src/components/dialog/DialogTrigger.tsx",
+        "packages/ui/src/components/dialog/dialog-types.ts",
+        "packages/ui/src/components/dialog/dialog-utils.ts"
       ],
       "props": [
-        {
-          "name": "Dialog.children",
-          "prop": "children",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "ReactNode",
-          "required": true,
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "Dialog.defaultOpen",
-          "prop": "defaultOpen",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "Dialog.onOpenChange",
-          "prop": "onOpenChange",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "((open: boolean) => void)",
-          "required": false,
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "Dialog.open",
-          "prop": "open",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "boolean",
-          "required": false,
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "Dialog.size",
-          "prop": "size",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "Dialog.tone",
-          "prop": "tone",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "'default'",
-          "required": false,
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "Dialog.variant",
-          "prop": "variant",
-          "component": "Dialog",
-          "sourceType": "DialogProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "description": "Generated from DialogProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTrigger.asChild",
-          "prop": "asChild",
-          "component": "DialogTrigger",
-          "sourceType": "DialogTriggerProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DialogTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTrigger.size",
-          "prop": "size",
-          "component": "DialogTrigger",
-          "sourceType": "DialogTriggerProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DialogTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTrigger.tone",
-          "prop": "tone",
-          "component": "DialogTrigger",
-          "sourceType": "DialogTriggerProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTrigger.variant",
-          "prop": "variant",
-          "component": "DialogTrigger",
-          "sourceType": "DialogTriggerProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogContent.size",
-          "prop": "size",
-          "component": "DialogContent",
-          "sourceType": "DialogContentProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DialogContentProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogContent.tone",
-          "prop": "tone",
-          "component": "DialogContent",
-          "sourceType": "DialogContentProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogContentProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogContent.variant",
-          "prop": "variant",
-          "component": "DialogContent",
-          "sourceType": "DialogContentProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogContentProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogHeader.asChild",
-          "prop": "asChild",
-          "component": "DialogHeader",
-          "sourceType": "DialogHeaderProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DialogHeaderProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogHeader.size",
-          "prop": "size",
-          "component": "DialogHeader",
-          "sourceType": "DialogHeaderProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DialogHeaderProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogHeader.tone",
-          "prop": "tone",
-          "component": "DialogHeader",
-          "sourceType": "DialogHeaderProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogHeaderProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogHeader.variant",
-          "prop": "variant",
-          "component": "DialogHeader",
-          "sourceType": "DialogHeaderProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogHeaderProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTitle.asChild",
-          "prop": "asChild",
-          "component": "DialogTitle",
-          "sourceType": "DialogTitleProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DialogTitleProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTitle.size",
-          "prop": "size",
-          "component": "DialogTitle",
-          "sourceType": "DialogTitleProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DialogTitleProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTitle.tone",
-          "prop": "tone",
-          "component": "DialogTitle",
-          "sourceType": "DialogTitleProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogTitleProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogTitle.variant",
-          "prop": "variant",
-          "component": "DialogTitle",
-          "sourceType": "DialogTitleProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogTitleProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogDescription.asChild",
-          "prop": "asChild",
-          "component": "DialogDescription",
-          "sourceType": "DialogDescriptionProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DialogDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogDescription.size",
-          "prop": "size",
-          "component": "DialogDescription",
-          "sourceType": "DialogDescriptionProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DialogDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogDescription.tone",
-          "prop": "tone",
-          "component": "DialogDescription",
-          "sourceType": "DialogDescriptionProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogDescription.variant",
-          "prop": "variant",
-          "component": "DialogDescription",
-          "sourceType": "DialogDescriptionProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogFooter.asChild",
-          "prop": "asChild",
-          "component": "DialogFooter",
-          "sourceType": "DialogFooterProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DialogFooterProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogFooter.size",
-          "prop": "size",
-          "component": "DialogFooter",
-          "sourceType": "DialogFooterProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DialogFooterProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogFooter.tone",
-          "prop": "tone",
-          "component": "DialogFooter",
-          "sourceType": "DialogFooterProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogFooterProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
-        {
-          "name": "DialogFooter.variant",
-          "prop": "variant",
-          "component": "DialogFooter",
-          "sourceType": "DialogFooterProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DialogFooterProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
-        },
         {
           "name": "DialogClose.asChild",
           "prop": "asChild",
@@ -2510,7 +2198,7 @@
           "required": false,
           "defaultValue": "false",
           "description": "Generated from DialogCloseProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
+          "sourceFile": "packages/ui/src/components/dialog/DialogClose.tsx"
         },
         {
           "name": "DialogClose.size",
@@ -2521,7 +2209,7 @@
           "required": false,
           "defaultValue": "\"md\"",
           "description": "Generated from DialogCloseProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
+          "sourceFile": "packages/ui/src/components/dialog/DialogClose.tsx"
         },
         {
           "name": "DialogClose.tone",
@@ -2532,7 +2220,7 @@
           "required": false,
           "defaultValue": "\"default\"",
           "description": "Generated from DialogCloseProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
+          "sourceFile": "packages/ui/src/components/dialog/DialogClose.tsx"
         },
         {
           "name": "DialogClose.variant",
@@ -2543,7 +2231,331 @@
           "required": false,
           "defaultValue": "\"default\"",
           "description": "Generated from DialogCloseProps.",
-          "sourceFile": "packages/ui/src/components/dialog/Dialog.tsx"
+          "sourceFile": "packages/ui/src/components/dialog/DialogClose.tsx"
+        },
+        {
+          "name": "DialogContent.size",
+          "prop": "size",
+          "component": "DialogContent",
+          "sourceType": "DialogContentProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DialogContentProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContent.tsx"
+        },
+        {
+          "name": "DialogContent.tone",
+          "prop": "tone",
+          "component": "DialogContent",
+          "sourceType": "DialogContentProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogContentProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContent.tsx"
+        },
+        {
+          "name": "DialogContent.variant",
+          "prop": "variant",
+          "component": "DialogContent",
+          "sourceType": "DialogContentProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogContentProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContent.tsx"
+        },
+        {
+          "name": "Dialog.children",
+          "prop": "children",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "Dialog.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "Dialog.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "Dialog.open",
+          "prop": "open",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "Dialog.size",
+          "prop": "size",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "Dialog.tone",
+          "prop": "tone",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "'default'",
+          "required": false,
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "Dialog.variant",
+          "prop": "variant",
+          "component": "Dialog",
+          "sourceType": "DialogProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "description": "Generated from DialogProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogContext.tsx"
+        },
+        {
+          "name": "DialogHeader.asChild",
+          "prop": "asChild",
+          "component": "DialogHeader",
+          "sourceType": "DialogHeaderProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DialogHeaderProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogHeader.size",
+          "prop": "size",
+          "component": "DialogHeader",
+          "sourceType": "DialogHeaderProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DialogHeaderProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogHeader.tone",
+          "prop": "tone",
+          "component": "DialogHeader",
+          "sourceType": "DialogHeaderProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogHeaderProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogHeader.variant",
+          "prop": "variant",
+          "component": "DialogHeader",
+          "sourceType": "DialogHeaderProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogHeaderProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogTitle.asChild",
+          "prop": "asChild",
+          "component": "DialogTitle",
+          "sourceType": "DialogTitleProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DialogTitleProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogTitle.size",
+          "prop": "size",
+          "component": "DialogTitle",
+          "sourceType": "DialogTitleProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DialogTitleProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogTitle.tone",
+          "prop": "tone",
+          "component": "DialogTitle",
+          "sourceType": "DialogTitleProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogTitleProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogTitle.variant",
+          "prop": "variant",
+          "component": "DialogTitle",
+          "sourceType": "DialogTitleProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogTitleProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogDescription.asChild",
+          "prop": "asChild",
+          "component": "DialogDescription",
+          "sourceType": "DialogDescriptionProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DialogDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogDescription.size",
+          "prop": "size",
+          "component": "DialogDescription",
+          "sourceType": "DialogDescriptionProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DialogDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogDescription.tone",
+          "prop": "tone",
+          "component": "DialogDescription",
+          "sourceType": "DialogDescriptionProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogDescription.variant",
+          "prop": "variant",
+          "component": "DialogDescription",
+          "sourceType": "DialogDescriptionProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogFooter.asChild",
+          "prop": "asChild",
+          "component": "DialogFooter",
+          "sourceType": "DialogFooterProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DialogFooterProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogFooter.size",
+          "prop": "size",
+          "component": "DialogFooter",
+          "sourceType": "DialogFooterProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DialogFooterProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogFooter.tone",
+          "prop": "tone",
+          "component": "DialogFooter",
+          "sourceType": "DialogFooterProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogFooterProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogFooter.variant",
+          "prop": "variant",
+          "component": "DialogFooter",
+          "sourceType": "DialogFooterProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogFooterProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogSections.tsx"
+        },
+        {
+          "name": "DialogTrigger.asChild",
+          "prop": "asChild",
+          "component": "DialogTrigger",
+          "sourceType": "DialogTriggerProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DialogTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogTrigger.tsx"
+        },
+        {
+          "name": "DialogTrigger.size",
+          "prop": "size",
+          "component": "DialogTrigger",
+          "sourceType": "DialogTriggerProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DialogTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogTrigger.tsx"
+        },
+        {
+          "name": "DialogTrigger.tone",
+          "prop": "tone",
+          "component": "DialogTrigger",
+          "sourceType": "DialogTriggerProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogTrigger.tsx"
+        },
+        {
+          "name": "DialogTrigger.variant",
+          "prop": "variant",
+          "component": "DialogTrigger",
+          "sourceType": "DialogTriggerProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DialogTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dialog/DialogTrigger.tsx"
         }
       ]
     },
@@ -2663,300 +2675,16 @@
     },
     "drawer": {
       "files": [
-        "packages/ui/src/components/drawer/Drawer.tsx"
+        "packages/ui/src/components/drawer/Drawer.tsx",
+        "packages/ui/src/components/drawer/DrawerClose.tsx",
+        "packages/ui/src/components/drawer/DrawerContent.tsx",
+        "packages/ui/src/components/drawer/DrawerContext.tsx",
+        "packages/ui/src/components/drawer/DrawerSections.tsx",
+        "packages/ui/src/components/drawer/DrawerTrigger.tsx",
+        "packages/ui/src/components/drawer/drawer-types.ts",
+        "packages/ui/src/components/drawer/drawer-utils.ts"
       ],
       "props": [
-        {
-          "name": "Drawer.children",
-          "prop": "children",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "ReactNode",
-          "required": true,
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "Drawer.defaultOpen",
-          "prop": "defaultOpen",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "Drawer.onOpenChange",
-          "prop": "onOpenChange",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "((open: boolean) => void)",
-          "required": false,
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "Drawer.open",
-          "prop": "open",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "boolean",
-          "required": false,
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "Drawer.size",
-          "prop": "size",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "Drawer.tone",
-          "prop": "tone",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "'default'",
-          "required": false,
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "Drawer.variant",
-          "prop": "variant",
-          "component": "Drawer",
-          "sourceType": "DrawerProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "description": "Generated from DrawerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTrigger.asChild",
-          "prop": "asChild",
-          "component": "DrawerTrigger",
-          "sourceType": "DrawerTriggerProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DrawerTriggerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTrigger.size",
-          "prop": "size",
-          "component": "DrawerTrigger",
-          "sourceType": "DrawerTriggerProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DrawerTriggerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTrigger.tone",
-          "prop": "tone",
-          "component": "DrawerTrigger",
-          "sourceType": "DrawerTriggerProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerTriggerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTrigger.variant",
-          "prop": "variant",
-          "component": "DrawerTrigger",
-          "sourceType": "DrawerTriggerProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerTriggerProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerContent.side",
-          "prop": "side",
-          "component": "DrawerContent",
-          "sourceType": "DrawerContentProps",
-          "type": "'left' | 'right' | 'top' | 'bottom'",
-          "required": false,
-          "defaultValue": "\"right\"",
-          "description": "Generated from DrawerContentProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerContent.size",
-          "prop": "size",
-          "component": "DrawerContent",
-          "sourceType": "DrawerContentProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DrawerContentProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerContent.tone",
-          "prop": "tone",
-          "component": "DrawerContent",
-          "sourceType": "DrawerContentProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerContentProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerContent.variant",
-          "prop": "variant",
-          "component": "DrawerContent",
-          "sourceType": "DrawerContentProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerContentProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerHeader.asChild",
-          "prop": "asChild",
-          "component": "DrawerHeader",
-          "sourceType": "DrawerHeaderProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DrawerHeaderProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerHeader.size",
-          "prop": "size",
-          "component": "DrawerHeader",
-          "sourceType": "DrawerHeaderProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DrawerHeaderProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerHeader.tone",
-          "prop": "tone",
-          "component": "DrawerHeader",
-          "sourceType": "DrawerHeaderProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerHeaderProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerHeader.variant",
-          "prop": "variant",
-          "component": "DrawerHeader",
-          "sourceType": "DrawerHeaderProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerHeaderProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTitle.asChild",
-          "prop": "asChild",
-          "component": "DrawerTitle",
-          "sourceType": "DrawerTitleProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DrawerTitleProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTitle.size",
-          "prop": "size",
-          "component": "DrawerTitle",
-          "sourceType": "DrawerTitleProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DrawerTitleProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTitle.tone",
-          "prop": "tone",
-          "component": "DrawerTitle",
-          "sourceType": "DrawerTitleProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerTitleProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerTitle.variant",
-          "prop": "variant",
-          "component": "DrawerTitle",
-          "sourceType": "DrawerTitleProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerTitleProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerDescription.asChild",
-          "prop": "asChild",
-          "component": "DrawerDescription",
-          "sourceType": "DrawerDescriptionProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DrawerDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerDescription.size",
-          "prop": "size",
-          "component": "DrawerDescription",
-          "sourceType": "DrawerDescriptionProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DrawerDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerDescription.tone",
-          "prop": "tone",
-          "component": "DrawerDescription",
-          "sourceType": "DrawerDescriptionProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
-        {
-          "name": "DrawerDescription.variant",
-          "prop": "variant",
-          "component": "DrawerDescription",
-          "sourceType": "DrawerDescriptionProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DrawerDescriptionProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
-        },
         {
           "name": "DrawerClose.asChild",
           "prop": "asChild",
@@ -2966,7 +2694,7 @@
           "required": false,
           "defaultValue": "false",
           "description": "Generated from DrawerCloseProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
+          "sourceFile": "packages/ui/src/components/drawer/DrawerClose.tsx"
         },
         {
           "name": "DrawerClose.size",
@@ -2977,7 +2705,7 @@
           "required": false,
           "defaultValue": "\"md\"",
           "description": "Generated from DrawerCloseProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
+          "sourceFile": "packages/ui/src/components/drawer/DrawerClose.tsx"
         },
         {
           "name": "DrawerClose.tone",
@@ -2988,7 +2716,7 @@
           "required": false,
           "defaultValue": "\"default\"",
           "description": "Generated from DrawerCloseProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
+          "sourceFile": "packages/ui/src/components/drawer/DrawerClose.tsx"
         },
         {
           "name": "DrawerClose.variant",
@@ -2999,13 +2727,310 @@
           "required": false,
           "defaultValue": "\"default\"",
           "description": "Generated from DrawerCloseProps.",
-          "sourceFile": "packages/ui/src/components/drawer/Drawer.tsx"
+          "sourceFile": "packages/ui/src/components/drawer/DrawerClose.tsx"
+        },
+        {
+          "name": "DrawerContent.side",
+          "prop": "side",
+          "component": "DrawerContent",
+          "sourceType": "DrawerContentProps",
+          "type": "'left' | 'right' | 'top' | 'bottom'",
+          "required": false,
+          "defaultValue": "\"right\"",
+          "description": "Generated from DrawerContentProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContent.tsx"
+        },
+        {
+          "name": "DrawerContent.size",
+          "prop": "size",
+          "component": "DrawerContent",
+          "sourceType": "DrawerContentProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DrawerContentProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContent.tsx"
+        },
+        {
+          "name": "DrawerContent.tone",
+          "prop": "tone",
+          "component": "DrawerContent",
+          "sourceType": "DrawerContentProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerContentProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContent.tsx"
+        },
+        {
+          "name": "DrawerContent.variant",
+          "prop": "variant",
+          "component": "DrawerContent",
+          "sourceType": "DrawerContentProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerContentProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContent.tsx"
+        },
+        {
+          "name": "Drawer.children",
+          "prop": "children",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "Drawer.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "Drawer.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "Drawer.open",
+          "prop": "open",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "Drawer.size",
+          "prop": "size",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "Drawer.tone",
+          "prop": "tone",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "'default'",
+          "required": false,
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "Drawer.variant",
+          "prop": "variant",
+          "component": "Drawer",
+          "sourceType": "DrawerProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "description": "Generated from DrawerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerContext.tsx"
+        },
+        {
+          "name": "DrawerHeader.asChild",
+          "prop": "asChild",
+          "component": "DrawerHeader",
+          "sourceType": "DrawerHeaderProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DrawerHeaderProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerHeader.size",
+          "prop": "size",
+          "component": "DrawerHeader",
+          "sourceType": "DrawerHeaderProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DrawerHeaderProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerHeader.tone",
+          "prop": "tone",
+          "component": "DrawerHeader",
+          "sourceType": "DrawerHeaderProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerHeaderProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerHeader.variant",
+          "prop": "variant",
+          "component": "DrawerHeader",
+          "sourceType": "DrawerHeaderProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerHeaderProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerTitle.asChild",
+          "prop": "asChild",
+          "component": "DrawerTitle",
+          "sourceType": "DrawerTitleProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DrawerTitleProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerTitle.size",
+          "prop": "size",
+          "component": "DrawerTitle",
+          "sourceType": "DrawerTitleProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DrawerTitleProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerTitle.tone",
+          "prop": "tone",
+          "component": "DrawerTitle",
+          "sourceType": "DrawerTitleProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerTitleProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerTitle.variant",
+          "prop": "variant",
+          "component": "DrawerTitle",
+          "sourceType": "DrawerTitleProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerTitleProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerDescription.asChild",
+          "prop": "asChild",
+          "component": "DrawerDescription",
+          "sourceType": "DrawerDescriptionProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DrawerDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerDescription.size",
+          "prop": "size",
+          "component": "DrawerDescription",
+          "sourceType": "DrawerDescriptionProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DrawerDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerDescription.tone",
+          "prop": "tone",
+          "component": "DrawerDescription",
+          "sourceType": "DrawerDescriptionProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerDescription.variant",
+          "prop": "variant",
+          "component": "DrawerDescription",
+          "sourceType": "DrawerDescriptionProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerDescriptionProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerSections.tsx"
+        },
+        {
+          "name": "DrawerTrigger.asChild",
+          "prop": "asChild",
+          "component": "DrawerTrigger",
+          "sourceType": "DrawerTriggerProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DrawerTriggerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerTrigger.tsx"
+        },
+        {
+          "name": "DrawerTrigger.size",
+          "prop": "size",
+          "component": "DrawerTrigger",
+          "sourceType": "DrawerTriggerProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DrawerTriggerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerTrigger.tsx"
+        },
+        {
+          "name": "DrawerTrigger.tone",
+          "prop": "tone",
+          "component": "DrawerTrigger",
+          "sourceType": "DrawerTriggerProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerTriggerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerTrigger.tsx"
+        },
+        {
+          "name": "DrawerTrigger.variant",
+          "prop": "variant",
+          "component": "DrawerTrigger",
+          "sourceType": "DrawerTriggerProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DrawerTriggerProps.",
+          "sourceFile": "packages/ui/src/components/drawer/DrawerTrigger.tsx"
         }
       ]
     },
     "dropdown-menu": {
       "files": [
-        "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
+        "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx",
+        "packages/ui/src/components/dropdown-menu/DropdownMenuContent.tsx",
+        "packages/ui/src/components/dropdown-menu/DropdownMenuContext.tsx",
+        "packages/ui/src/components/dropdown-menu/DropdownMenuItem.tsx",
+        "packages/ui/src/components/dropdown-menu/DropdownMenuTrigger.tsx",
+        "packages/ui/src/components/dropdown-menu/dropdown-menu-types.ts",
+        "packages/ui/src/components/dropdown-menu/dropdown-menu-utils.ts"
       ],
       "props": [
         {
@@ -3042,138 +3067,6 @@
           "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
         },
         {
-          "name": "DropdownMenuTrigger.asChild",
-          "prop": "asChild",
-          "component": "DropdownMenuTrigger",
-          "sourceType": "DropdownMenuTriggerProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DropdownMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuTrigger.size",
-          "prop": "size",
-          "component": "DropdownMenuTrigger",
-          "sourceType": "DropdownMenuTriggerProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DropdownMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuTrigger.tone",
-          "prop": "tone",
-          "component": "DropdownMenuTrigger",
-          "sourceType": "DropdownMenuTriggerProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DropdownMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuTrigger.variant",
-          "prop": "variant",
-          "component": "DropdownMenuTrigger",
-          "sourceType": "DropdownMenuTriggerProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DropdownMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuContent.align",
-          "prop": "align",
-          "component": "DropdownMenuContent",
-          "sourceType": "DropdownMenuContentProps",
-          "type": "'start' | 'end'",
-          "required": false,
-          "defaultValue": "\"start\"",
-          "description": "Generated from DropdownMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuContent.size",
-          "prop": "size",
-          "component": "DropdownMenuContent",
-          "sourceType": "DropdownMenuContentProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DropdownMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuContent.tone",
-          "prop": "tone",
-          "component": "DropdownMenuContent",
-          "sourceType": "DropdownMenuContentProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DropdownMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuContent.variant",
-          "prop": "variant",
-          "component": "DropdownMenuContent",
-          "sourceType": "DropdownMenuContentProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DropdownMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuItem.asChild",
-          "prop": "asChild",
-          "component": "DropdownMenuItem",
-          "sourceType": "DropdownMenuItemProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from DropdownMenuItemProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuItem.size",
-          "prop": "size",
-          "component": "DropdownMenuItem",
-          "sourceType": "DropdownMenuItemProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from DropdownMenuItemProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuItem.tone",
-          "prop": "tone",
-          "component": "DropdownMenuItem",
-          "sourceType": "DropdownMenuItemProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DropdownMenuItemProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
-          "name": "DropdownMenuItem.variant",
-          "prop": "variant",
-          "component": "DropdownMenuItem",
-          "sourceType": "DropdownMenuItemProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from DropdownMenuItemProps.",
-          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
-        },
-        {
           "name": "DropdownMenuSeparator.size",
           "prop": "size",
           "component": "DropdownMenuSeparator",
@@ -3205,6 +3098,138 @@
           "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuSeparatorProps.",
           "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenu.tsx"
+        },
+        {
+          "name": "DropdownMenuContent.align",
+          "prop": "align",
+          "component": "DropdownMenuContent",
+          "sourceType": "DropdownMenuContentProps",
+          "type": "'start' | 'end'",
+          "required": false,
+          "defaultValue": "\"start\"",
+          "description": "Generated from DropdownMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuContent.tsx"
+        },
+        {
+          "name": "DropdownMenuContent.size",
+          "prop": "size",
+          "component": "DropdownMenuContent",
+          "sourceType": "DropdownMenuContentProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DropdownMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuContent.tsx"
+        },
+        {
+          "name": "DropdownMenuContent.tone",
+          "prop": "tone",
+          "component": "DropdownMenuContent",
+          "sourceType": "DropdownMenuContentProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DropdownMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuContent.tsx"
+        },
+        {
+          "name": "DropdownMenuContent.variant",
+          "prop": "variant",
+          "component": "DropdownMenuContent",
+          "sourceType": "DropdownMenuContentProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DropdownMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuContent.tsx"
+        },
+        {
+          "name": "DropdownMenuItem.asChild",
+          "prop": "asChild",
+          "component": "DropdownMenuItem",
+          "sourceType": "DropdownMenuItemProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DropdownMenuItemProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuItem.tsx"
+        },
+        {
+          "name": "DropdownMenuItem.size",
+          "prop": "size",
+          "component": "DropdownMenuItem",
+          "sourceType": "DropdownMenuItemProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DropdownMenuItemProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuItem.tsx"
+        },
+        {
+          "name": "DropdownMenuItem.tone",
+          "prop": "tone",
+          "component": "DropdownMenuItem",
+          "sourceType": "DropdownMenuItemProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DropdownMenuItemProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuItem.tsx"
+        },
+        {
+          "name": "DropdownMenuItem.variant",
+          "prop": "variant",
+          "component": "DropdownMenuItem",
+          "sourceType": "DropdownMenuItemProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DropdownMenuItemProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuItem.tsx"
+        },
+        {
+          "name": "DropdownMenuTrigger.asChild",
+          "prop": "asChild",
+          "component": "DropdownMenuTrigger",
+          "sourceType": "DropdownMenuTriggerProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DropdownMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuTrigger.tsx"
+        },
+        {
+          "name": "DropdownMenuTrigger.size",
+          "prop": "size",
+          "component": "DropdownMenuTrigger",
+          "sourceType": "DropdownMenuTriggerProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from DropdownMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuTrigger.tsx"
+        },
+        {
+          "name": "DropdownMenuTrigger.tone",
+          "prop": "tone",
+          "component": "DropdownMenuTrigger",
+          "sourceType": "DropdownMenuTriggerProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DropdownMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuTrigger.tsx"
+        },
+        {
+          "name": "DropdownMenuTrigger.variant",
+          "prop": "variant",
+          "component": "DropdownMenuTrigger",
+          "sourceType": "DropdownMenuTriggerProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from DropdownMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/dropdown-menu/DropdownMenuTrigger.tsx"
         }
       ]
     },
@@ -3861,9 +3886,436 @@
     },
     "navbar": {
       "files": [
+        "packages/ui/src/components/navbar/MobileMenu.tsx",
+        "packages/ui/src/components/navbar/MobileMenuContent.tsx",
+        "packages/ui/src/components/navbar/MobileMenuContext.tsx",
+        "packages/ui/src/components/navbar/MobileMenuControls.tsx",
+        "packages/ui/src/components/navbar/MobileMenuSections.tsx",
         "packages/ui/src/components/navbar/Navbar.tsx"
       ],
       "props": [
+        {
+          "name": "MobileMenuContent.side",
+          "prop": "side",
+          "component": "MobileMenuContent",
+          "sourceType": "MobileMenuContentProps",
+          "type": "'left' | 'right'",
+          "required": false,
+          "defaultValue": "\"right\"",
+          "description": "Generated from MobileMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContent.tsx"
+        },
+        {
+          "name": "MobileMenuContent.size",
+          "prop": "size",
+          "component": "MobileMenuContent",
+          "sourceType": "MobileMenuContentProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContent.tsx"
+        },
+        {
+          "name": "MobileMenuContent.tone",
+          "prop": "tone",
+          "component": "MobileMenuContent",
+          "sourceType": "MobileMenuContentProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContent.tsx"
+        },
+        {
+          "name": "MobileMenuContent.variant",
+          "prop": "variant",
+          "component": "MobileMenuContent",
+          "sourceType": "MobileMenuContentProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuContentProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContent.tsx"
+        },
+        {
+          "name": "MobileMenu.children",
+          "prop": "children",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenu.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenu.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenu.open",
+          "prop": "open",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenu.size",
+          "prop": "size",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenu.tone",
+          "prop": "tone",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "'default'",
+          "required": false,
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenu.variant",
+          "prop": "variant",
+          "component": "MobileMenu",
+          "sourceType": "MobileMenuProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "description": "Generated from MobileMenuProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuContext.tsx"
+        },
+        {
+          "name": "MobileMenuTrigger.asChild",
+          "prop": "asChild",
+          "component": "MobileMenuTrigger",
+          "sourceType": "MobileMenuTriggerProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuTrigger.label",
+          "prop": "label",
+          "component": "MobileMenuTrigger",
+          "sourceType": "MobileMenuTriggerProps",
+          "type": "string",
+          "required": false,
+          "defaultValue": "\"Open navigation menu\"",
+          "description": "Generated from MobileMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuTrigger.size",
+          "prop": "size",
+          "component": "MobileMenuTrigger",
+          "sourceType": "MobileMenuTriggerProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuTrigger.tone",
+          "prop": "tone",
+          "component": "MobileMenuTrigger",
+          "sourceType": "MobileMenuTriggerProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuTrigger.variant",
+          "prop": "variant",
+          "component": "MobileMenuTrigger",
+          "sourceType": "MobileMenuTriggerProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuTriggerProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuClose.asChild",
+          "prop": "asChild",
+          "component": "MobileMenuClose",
+          "sourceType": "MobileMenuCloseProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuCloseProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuClose.size",
+          "prop": "size",
+          "component": "MobileMenuClose",
+          "sourceType": "MobileMenuCloseProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuCloseProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuClose.tone",
+          "prop": "tone",
+          "component": "MobileMenuClose",
+          "sourceType": "MobileMenuCloseProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuCloseProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuClose.variant",
+          "prop": "variant",
+          "component": "MobileMenuClose",
+          "sourceType": "MobileMenuCloseProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuCloseProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuControls.tsx"
+        },
+        {
+          "name": "MobileMenuHeader.asChild",
+          "prop": "asChild",
+          "component": "MobileMenuHeader",
+          "sourceType": "MobileMenuHeaderProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuHeaderProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuHeader.size",
+          "prop": "size",
+          "component": "MobileMenuHeader",
+          "sourceType": "MobileMenuHeaderProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuHeaderProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuHeader.tone",
+          "prop": "tone",
+          "component": "MobileMenuHeader",
+          "sourceType": "MobileMenuHeaderProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuHeaderProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuHeader.variant",
+          "prop": "variant",
+          "component": "MobileMenuHeader",
+          "sourceType": "MobileMenuHeaderProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuHeaderProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuTitle.asChild",
+          "prop": "asChild",
+          "component": "MobileMenuTitle",
+          "sourceType": "MobileMenuTitleProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuTitleProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuTitle.size",
+          "prop": "size",
+          "component": "MobileMenuTitle",
+          "sourceType": "MobileMenuTitleProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuTitleProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuTitle.tone",
+          "prop": "tone",
+          "component": "MobileMenuTitle",
+          "sourceType": "MobileMenuTitleProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuTitleProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuTitle.variant",
+          "prop": "variant",
+          "component": "MobileMenuTitle",
+          "sourceType": "MobileMenuTitleProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuTitleProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuNav.asChild",
+          "prop": "asChild",
+          "component": "MobileMenuNav",
+          "sourceType": "MobileMenuNavProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuNavProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuNav.size",
+          "prop": "size",
+          "component": "MobileMenuNav",
+          "sourceType": "MobileMenuNavProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuNavProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuNav.tone",
+          "prop": "tone",
+          "component": "MobileMenuNav",
+          "sourceType": "MobileMenuNavProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuNavProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuNav.variant",
+          "prop": "variant",
+          "component": "MobileMenuNav",
+          "sourceType": "MobileMenuNavProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuNavProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.active",
+          "prop": "active",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.as",
+          "prop": "as",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "ElementType",
+          "required": false,
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.asChild",
+          "prop": "asChild",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.closeOnSelect",
+          "prop": "closeOnSelect",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "true",
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.size",
+          "prop": "size",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.tone",
+          "prop": "tone",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "'default'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
+        {
+          "name": "MobileMenuLink.variant",
+          "prop": "variant",
+          "component": "MobileMenuLink",
+          "sourceType": "MobileMenuLinkProps",
+          "type": "'default' | 'compact'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from MobileMenuLinkProps.",
+          "sourceFile": "packages/ui/src/components/navbar/MobileMenuSections.tsx"
+        },
         {
           "name": "Navbar.asChild",
           "prop": "asChild",
@@ -4113,428 +4565,6 @@
           "required": false,
           "defaultValue": "\"default\"",
           "description": "Generated from NavbarActionsProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.children",
-          "prop": "children",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "ReactNode",
-          "required": true,
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.defaultOpen",
-          "prop": "defaultOpen",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.onOpenChange",
-          "prop": "onOpenChange",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "((open: boolean) => void)",
-          "required": false,
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.open",
-          "prop": "open",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "boolean",
-          "required": false,
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.size",
-          "prop": "size",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.tone",
-          "prop": "tone",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "'default'",
-          "required": false,
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenu.variant",
-          "prop": "variant",
-          "component": "MobileMenu",
-          "sourceType": "MobileMenuProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "description": "Generated from MobileMenuProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTrigger.asChild",
-          "prop": "asChild",
-          "component": "MobileMenuTrigger",
-          "sourceType": "MobileMenuTriggerProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTrigger.label",
-          "prop": "label",
-          "component": "MobileMenuTrigger",
-          "sourceType": "MobileMenuTriggerProps",
-          "type": "string",
-          "required": false,
-          "defaultValue": "\"Open navigation menu\"",
-          "description": "Generated from MobileMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTrigger.size",
-          "prop": "size",
-          "component": "MobileMenuTrigger",
-          "sourceType": "MobileMenuTriggerProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTrigger.tone",
-          "prop": "tone",
-          "component": "MobileMenuTrigger",
-          "sourceType": "MobileMenuTriggerProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTrigger.variant",
-          "prop": "variant",
-          "component": "MobileMenuTrigger",
-          "sourceType": "MobileMenuTriggerProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuTriggerProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuContent.side",
-          "prop": "side",
-          "component": "MobileMenuContent",
-          "sourceType": "MobileMenuContentProps",
-          "type": "'left' | 'right'",
-          "required": false,
-          "defaultValue": "\"right\"",
-          "description": "Generated from MobileMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuContent.size",
-          "prop": "size",
-          "component": "MobileMenuContent",
-          "sourceType": "MobileMenuContentProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuContent.tone",
-          "prop": "tone",
-          "component": "MobileMenuContent",
-          "sourceType": "MobileMenuContentProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuContent.variant",
-          "prop": "variant",
-          "component": "MobileMenuContent",
-          "sourceType": "MobileMenuContentProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuContentProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuHeader.asChild",
-          "prop": "asChild",
-          "component": "MobileMenuHeader",
-          "sourceType": "MobileMenuHeaderProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuHeaderProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuHeader.size",
-          "prop": "size",
-          "component": "MobileMenuHeader",
-          "sourceType": "MobileMenuHeaderProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuHeaderProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuHeader.tone",
-          "prop": "tone",
-          "component": "MobileMenuHeader",
-          "sourceType": "MobileMenuHeaderProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuHeaderProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuHeader.variant",
-          "prop": "variant",
-          "component": "MobileMenuHeader",
-          "sourceType": "MobileMenuHeaderProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuHeaderProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTitle.asChild",
-          "prop": "asChild",
-          "component": "MobileMenuTitle",
-          "sourceType": "MobileMenuTitleProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuTitleProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTitle.size",
-          "prop": "size",
-          "component": "MobileMenuTitle",
-          "sourceType": "MobileMenuTitleProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuTitleProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTitle.tone",
-          "prop": "tone",
-          "component": "MobileMenuTitle",
-          "sourceType": "MobileMenuTitleProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuTitleProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuTitle.variant",
-          "prop": "variant",
-          "component": "MobileMenuTitle",
-          "sourceType": "MobileMenuTitleProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuTitleProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuNav.asChild",
-          "prop": "asChild",
-          "component": "MobileMenuNav",
-          "sourceType": "MobileMenuNavProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuNavProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuNav.size",
-          "prop": "size",
-          "component": "MobileMenuNav",
-          "sourceType": "MobileMenuNavProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuNavProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuNav.tone",
-          "prop": "tone",
-          "component": "MobileMenuNav",
-          "sourceType": "MobileMenuNavProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuNavProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuNav.variant",
-          "prop": "variant",
-          "component": "MobileMenuNav",
-          "sourceType": "MobileMenuNavProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuNavProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.active",
-          "prop": "active",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.as",
-          "prop": "as",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "ElementType",
-          "required": false,
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.asChild",
-          "prop": "asChild",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.closeOnSelect",
-          "prop": "closeOnSelect",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "true",
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.size",
-          "prop": "size",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.tone",
-          "prop": "tone",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuLink.variant",
-          "prop": "variant",
-          "component": "MobileMenuLink",
-          "sourceType": "MobileMenuLinkProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuLinkProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuClose.asChild",
-          "prop": "asChild",
-          "component": "MobileMenuClose",
-          "sourceType": "MobileMenuCloseProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from MobileMenuCloseProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuClose.size",
-          "prop": "size",
-          "component": "MobileMenuClose",
-          "sourceType": "MobileMenuCloseProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from MobileMenuCloseProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuClose.tone",
-          "prop": "tone",
-          "component": "MobileMenuClose",
-          "sourceType": "MobileMenuCloseProps",
-          "type": "'default'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuCloseProps.",
-          "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
-        },
-        {
-          "name": "MobileMenuClose.variant",
-          "prop": "variant",
-          "component": "MobileMenuClose",
-          "sourceType": "MobileMenuCloseProps",
-          "type": "'default' | 'compact'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from MobileMenuCloseProps.",
           "sourceFile": "packages/ui/src/components/navbar/Navbar.tsx"
         }
       ]
@@ -4986,11 +5016,14 @@
     },
     "select": {
       "files": [
-        "packages/ui/src/components/select/Select.tsx"
+        "packages/ui/src/components/select/Select.tsx",
+        "packages/ui/src/components/select/SelectContent.tsx",
+        "packages/ui/src/components/select/select-types.ts",
+        "packages/ui/src/components/select/select-utils.ts"
       ],
       "props": [
         {
-          "name": "contentClassName",
+          "name": "Select.contentClassName",
           "prop": "contentClassName",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5000,7 +5033,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "defaultValue",
+          "name": "Select.defaultValue",
           "prop": "defaultValue",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5010,7 +5043,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "disabled",
+          "name": "Select.disabled",
           "prop": "disabled",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5021,7 +5054,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "name",
+          "name": "Select.name",
           "prop": "name",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5031,7 +5064,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "onValueChange",
+          "name": "Select.onValueChange",
           "prop": "onValueChange",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5041,7 +5074,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "optionClassName",
+          "name": "Select.optionClassName",
           "prop": "optionClassName",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5051,7 +5084,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "options",
+          "name": "Select.options",
           "prop": "options",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5061,7 +5094,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "placeholder",
+          "name": "Select.placeholder",
           "prop": "placeholder",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5072,7 +5105,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "selectedIndicator",
+          "name": "Select.selectedIndicator",
           "prop": "selectedIndicator",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5083,7 +5116,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "showSelectedIndicator",
+          "name": "Select.showSelectedIndicator",
           "prop": "showSelectedIndicator",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5094,7 +5127,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "size",
+          "name": "Select.size",
           "prop": "size",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5105,7 +5138,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "tone",
+          "name": "Select.tone",
           "prop": "tone",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5116,7 +5149,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "triggerClassName",
+          "name": "Select.triggerClassName",
           "prop": "triggerClassName",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5126,7 +5159,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "value",
+          "name": "Select.value",
           "prop": "value",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5136,7 +5169,7 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
-          "name": "variant",
+          "name": "Select.variant",
           "prop": "variant",
           "component": "Select",
           "sourceType": "SelectProps",
@@ -5145,6 +5178,156 @@
           "defaultValue": "\"default\"",
           "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
+        },
+        {
+          "name": "SelectContent.contentClassName",
+          "prop": "contentClassName",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.contentPosition",
+          "prop": "contentPosition",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "SelectContentPosition",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.contentRef",
+          "prop": "contentRef",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "Ref<HTMLDivElement>",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.highlightedIndex",
+          "prop": "highlightedIndex",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "number",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.listboxId",
+          "prop": "listboxId",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "string",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.onOptionHover",
+          "prop": "onOptionHover",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "(index: number) => void",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.onOptionSelect",
+          "prop": "onOptionSelect",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "(value: string) => void",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.optionClassName",
+          "prop": "optionClassName",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.options",
+          "prop": "options",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "SelectOption[]",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.selectedIndicator",
+          "prop": "selectedIndicator",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.selectedValue",
+          "prop": "selectedValue",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "string",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.showSelectedIndicator",
+          "prop": "showSelectedIndicator",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "boolean",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.size",
+          "prop": "size",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.tone",
+          "prop": "tone",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "'default'",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.variant",
+          "prop": "variant",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "'default' | 'filled'",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
         }
       ]
     },

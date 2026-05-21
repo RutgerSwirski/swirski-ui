@@ -14,7 +14,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
-import { usePortalRoot } from "../../system/usePortalRoot";
+import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 
 export type PopoverVariant = "default" | "compact";
 export type PopoverSize = "sm" | "md" | "lg";
@@ -50,78 +50,83 @@ function usePopover() {
   return context;
 }
 
-export const Popover = forwardRef<HTMLDivElement, PopoverProps>(function Popover({
-  children,
-  open,
-  defaultOpen = false,
-  onOpenChange,
-  className,
-  variant = "default",
-  size = "md",
-  tone = "default",
-  ...props
-}, ref) {
-  const contentId = useId();
-  const rootRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const isControlled = open !== undefined;
-  const currentOpen = open ?? internalOpen;
+export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
+  function Popover(
+    {
+      children,
+      open,
+      defaultOpen = false,
+      onOpenChange,
+      className,
+      variant = "default",
+      size = "md",
+      tone = "default",
+      ...props
+    },
+    ref,
+  ) {
+    const contentId = useId();
+    const rootRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [internalOpen, setInternalOpen] = useState(defaultOpen);
+    const isControlled = open !== undefined;
+    const currentOpen = open ?? internalOpen;
 
-  function setOpen(nextOpen: boolean) {
-    if (!isControlled) {
-      setInternalOpen(nextOpen);
+    function setOpen(nextOpen: boolean) {
+      if (!isControlled) {
+        setInternalOpen(nextOpen);
+      }
+
+      onOpenChange?.(nextOpen);
     }
 
-    onOpenChange?.(nextOpen);
-  }
-
-  useEffect(() => {
-    if (!currentOpen) {
-      return;
-    }
-
-    const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target as Node;
-
-      if (
-        !rootRef.current?.contains(target) &&
-        !contentRef.current?.contains(target)
-      ) {
-        setOpen(false);
+    useEffect(() => {
+      if (!currentOpen) {
+        return;
       }
-    };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
-    };
+      const handlePointerDown = (event: PointerEvent) => {
+        const target = event.target as Node;
 
-    window.addEventListener("pointerdown", handlePointerDown);
-    window.addEventListener("keydown", handleKeyDown);
+        if (
+          !rootRef.current?.contains(target) &&
+          !contentRef.current?.contains(target)
+        ) {
+          setOpen(false);
+        }
+      };
 
-    return () => {
-      window.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [currentOpen]);
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          setOpen(false);
+        }
+      };
 
-  return (
-    <PopoverContext.Provider
-      value={{ open: currentOpen, setOpen, rootRef, contentRef, contentId }}
-    >
-      <div
-        ref={composeRefs(rootRef, ref)}
-        className={cn("relative w-fit", className)}
-        {...swirskiAttrs("popover", { size, tone, variant })}
-        {...props}
+      window.addEventListener("pointerdown", handlePointerDown);
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        window.removeEventListener("pointerdown", handlePointerDown);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [currentOpen]);
+
+    return (
+      <PopoverContext.Provider
+        value={{ open: currentOpen, setOpen, rootRef, contentRef, contentId }}
       >
-        {children}
-      </div>
-    </PopoverContext.Provider>
-  );
-});
+        <div
+          ref={composeRefs(rootRef, ref)}
+          className={cn("relative w-fit", className)}
+          {...swirskiAttrs("popover", { size, tone, variant })}
+          {...props}
+        >
+          {children}
+        </div>
+      </PopoverContext.Provider>
+    );
+  },
+);
 
 Popover.displayName = "Popover";
 
@@ -138,16 +143,21 @@ const triggerSizeStyles: Record<PopoverSize, string> = {
   lg: "px-5 py-3 text-base",
 };
 
-export const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>(
-  function PopoverTrigger({
-  asChild = false,
-  className,
-  variant = "default",
-  size = "md",
-  tone = "default",
-  onClick,
-  ...props
-}, ref) {
+export const PopoverTrigger = forwardRef<
+  HTMLButtonElement,
+  PopoverTriggerProps
+>(function PopoverTrigger(
+  {
+    asChild = false,
+    className,
+    variant = "default",
+    size = "md",
+    tone = "default",
+    onClick,
+    ...props
+  },
+  ref,
+) {
   const { contentId, open, setOpen } = usePopover();
   const Component = asChild ? Slot : "button";
 
@@ -187,76 +197,80 @@ export type PopoverContentProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
-  function PopoverContent({
-  className,
-  align = "start",
-  variant = "default",
-  size = "md",
-  tone = "default",
-  style,
-  ...props
-}, ref) {
-  const { contentId, contentRef, open, rootRef } = usePopover();
-  const portalRoot = usePortalRoot();
-  const [position, setPosition] = useState<{
-    left: number;
-    top: number;
-  } | null>(null);
+  function PopoverContent(
+    {
+      className,
+      align = "start",
+      variant = "default",
+      size = "md",
+      tone = "default",
+      style,
+      ...props
+    },
+    ref,
+  ) {
+    const { contentId, contentRef, open, rootRef } = usePopover();
+    const portalRoot = usePortalRoot();
+    const [position, setPosition] = useState<{
+      left: number;
+      top: number;
+    } | null>(null);
 
-  useEffect(() => {
-    if (!open) {
-      setPosition(null);
-      return;
-    }
-
-    function updatePosition() {
-      const rect = rootRef.current?.getBoundingClientRect();
-
-      if (!rect) {
+    useEffect(() => {
+      if (!open) {
+        setPosition(null);
         return;
       }
 
-      setPosition({
-        left: align === "end" ? rect.right : rect.left,
-        top: rect.bottom + 8,
-      });
+      function updatePosition() {
+        const rect = rootRef.current?.getBoundingClientRect();
+
+        if (!rect) {
+          return;
+        }
+
+        setPosition({
+          left: align === "end" ? rect.right : rect.left,
+          top: rect.bottom + 8,
+        });
+      }
+
+      updatePosition();
+      window.addEventListener("resize", updatePosition);
+      window.addEventListener("scroll", updatePosition, true);
+
+      return () => {
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition, true);
+      };
+    }, [align, open, rootRef]);
+
+    if (!open || !position || !portalRoot) {
+      return null;
     }
 
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [align, open, rootRef]);
-
-  if (!open || !position || !portalRoot) {
-    return null;
-  }
-
-  return createPortal(
-    <div
-      ref={composeRefs(contentRef, ref)}
-      className={cn(
-        "fixed z-[1000] w-72 border-4 border-black bg-white p-4 shadow-[8px_8px_0_#0B0B0C]",
-        variant === "compact" && "p-3 shadow-[4px_4px_0_#0B0B0C]",
-        className,
-      )}
-      id={contentId}
-      role="dialog"
-      {...swirskiAttrs("popover-content", { size, tone, variant })}
-      style={{
-        left: position.left,
-        top: position.top,
-        transform: align === "end" ? "translateX(-100%)" : undefined,
-        ...style,
-      }}
-      {...props}
-    />,
-    portalRoot,
-  );
-});
+    return createPortal(
+      <div
+        ref={composeRefs(contentRef, ref)}
+        className={cn(
+          "fixed z-[1000] w-72 border-4 border-black bg-white p-4 shadow-[8px_8px_0_#0B0B0C]",
+          variant === "compact" && "p-3 shadow-[4px_4px_0_#0B0B0C]",
+          className,
+        )}
+        id={contentId}
+        role="dialog"
+        {...swirskiAttrs("popover-content", { size, tone, variant })}
+        style={{
+          left: position.left,
+          top: position.top,
+          transform: align === "end" ? "translateX(-100%)" : undefined,
+          ...style,
+        }}
+        {...props}
+      />,
+      portalRoot,
+    );
+  },
+);
 
 PopoverContent.displayName = "PopoverContent";

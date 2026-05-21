@@ -16,6 +16,10 @@ type PropTableProps = {
 };
 
 export function PropTable({ badgeLabel, rows }: PropTableProps) {
+  if (!rows?.length) {
+    return null;
+  }
+
   return (
     <section id="props" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">

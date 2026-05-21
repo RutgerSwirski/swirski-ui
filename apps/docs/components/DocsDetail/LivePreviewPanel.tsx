@@ -8,6 +8,11 @@ export function LivePreviewPanel({
   title: string;
   children: ReactNode;
 }) {
+
+  if(!children) {
+    return null;
+  }
+  
   return (
     <section id="preview" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">

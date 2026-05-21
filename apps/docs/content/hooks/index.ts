@@ -8,6 +8,7 @@ import { useLocalStorageHookDoc } from "./use-local-storage/hook";
 import { useMediaQueryHookDoc } from "./use-media-query/hook";
 import { useReducedMotionHookDoc } from "./use-reduced-motion/hook";
 import { useClipboardHookDoc } from "./use-clipboard/hook";
+import { usePortalRootHookDoc } from "./use-portal-root/hook";
 
 export type { HookDoc, PropDoc } from "../types";
 
@@ -21,4 +22,5 @@ export const hookDocs: HookDoc[] = [
   useMediaQueryHookDoc,
   useReducedMotionHookDoc,
   useClipboardHookDoc,
+  usePortalRootHookDoc,
 ];
