@@ -14,7 +14,7 @@ import {
   NavbarBrand,
   NavbarLink,
   NavbarNav,
-} from "./Navbar";
+} from "./index";
 
 const meta = {
   title: "Components/Navbar",
@@ -48,7 +48,9 @@ export const Default: Story = {
           <MobileMenuContent>
             <MobileMenuHeader>
               <MobileMenuTitle>Menu</MobileMenuTitle>
-              <MobileMenuClose aria-label="Close navigation menu">x</MobileMenuClose>
+              <MobileMenuClose aria-label="Close navigation menu">
+                x
+              </MobileMenuClose>
             </MobileMenuHeader>
             <MobileMenuNav aria-label="Mobile navigation">
               <MobileMenuLink href="/components" active>
