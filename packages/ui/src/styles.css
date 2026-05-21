@@ -50,3 +50,56 @@
   --font-anton: "Anton", sans-serif;
   --font-bangers: "Bangers", cursive;
 }
+
+@keyframes swirski-pixel-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-55%);
+  }
+}
+
+@keyframes swirski-pixel-bars {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes swirski-pixel-flicker {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: translate(1px, -1px);
+  }
+}
+
+@keyframes swirski-pixel-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(900%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-swirski-component="loader"] *,
+  [data-swirski-component="loader"] {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
