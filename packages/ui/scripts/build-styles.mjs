@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 
 import { execFileSync } from "node:child_process";
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,12 +18,25 @@ const packageDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(packageDir, "dist");
 const stylesPath = join(distDir, "styles.css");
 
+const binName = process.platform === "win32" ? "postcss.cmd" : "postcss";
+const localPostcssBin = join(packageDir, "node_modules", ".bin", binName);
+const postcssCommand = existsSync(localPostcssBin) ? localPostcssBin : binName;
+
 execFileSync(
-  "postcss",
-  ["src/styles.css", "-o", "dist/styles.css", "--env", "production", "--config", "."],
+  postcssCommand,
+  [
+    "src/styles.css",
+    "-o",
+    "dist/styles.css",
+    "--env",
+    "production",
+    "--config",
+    ".",
+  ],
   {
     cwd: packageDir,
     stdio: "inherit",
+    shell: process.platform === "win32",
   },
 );
 
@@ -43,7 +63,11 @@ for (const fontPackage of fontPackages) {
     copyFileSync(join(fontFilesDir, fileName), join(outputDir, fileName));
   }
 
-  const escapedPackageName = fontPackage.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const escapedPackageName = fontPackage.name.replace(
+    /[.*+?^${}()|[\]\\]/g,
+    "\\$&",
+  );
+
   const fontUrlPattern = new RegExp(
     `url\\((["']?)[^)"']*${escapedPackageName}/files/([^)"']+)\\1\\)`,
     "g",
@@ -51,7 +75,8 @@ for (const fontPackage of fontPackages) {
 
   styles = styles.replace(
     fontUrlPattern,
-    (_match, quote, fileName) => `url(${quote}./fonts/${fontPackage.outputDir}/${fileName}${quote})`,
+    (_match, quote, fileName) =>
+      `url(${quote}./fonts/${fontPackage.outputDir}/${fileName}${quote})`,
   );
 }
 

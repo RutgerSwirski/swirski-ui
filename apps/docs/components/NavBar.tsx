@@ -14,6 +14,7 @@ import {
   NavbarBrand,
   NavbarLink,
   NavbarNav,
+  isPathnameActive,
 } from "@swirski/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,10 +28,6 @@ const navItems = [
   { href: "/cli", label: "CLI" },
   { href: "/examples", label: "Examples" },
 ];
-
-function isActivePath(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -46,7 +43,7 @@ export default function NavBar() {
             key={item.href}
             as={Link}
             href={item.href}
-            active={isActivePath(pathname, item.href)}
+            active={isPathnameActive(item.href, pathname)}
           >
             {item.label}
           </NavbarLink>
@@ -68,7 +65,7 @@ export default function NavBar() {
                   key={item.href}
                   as={Link}
                   href={item.href}
-                  active={isActivePath(pathname, item.href)}
+                  active={isPathnameActive(item.href, pathname)}
                 >
                   {item.label}
                 </MobileMenuLink>

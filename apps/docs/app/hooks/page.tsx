@@ -36,7 +36,12 @@ const hookGroups = [
   },
   {
     title: "Interaction",
-    hooks: ["useClickOutside", "useEscapeKey", "useClipboard"],
+    hooks: [
+      "useClickOutside",
+      "useEscapeKey",
+      "useClipboard",
+      "useIsPathnameActive",
+    ],
   },
 ];
 
@@ -56,6 +61,10 @@ const recipes = [
   {
     hook: "useClipboard",
     use: "Copy buttons, registry commands, install snippets and code blocks.",
+  },
+  {
+    hook: "useIsPathnameActive",
+    use: "Navigation links, sidebars, breadcrumbs and active route styling.",
   },
 ];
 

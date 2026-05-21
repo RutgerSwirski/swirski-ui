@@ -105,6 +105,24 @@ describe("Select", () => {
     expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
 
+  it("can hide the selected option indicator", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Select
+        options={options}
+        defaultValue="yellow"
+        showSelectedIndicator={false}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /yellow/i }));
+
+    expect(screen.getByRole("option", { name: "Yellow" })).toHaveTextContent(
+      /^Yellow$/,
+    );
+  });
+
   it("supports Home, End, and typeahead navigation", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

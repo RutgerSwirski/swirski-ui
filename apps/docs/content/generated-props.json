@@ -1418,6 +1418,17 @@
           "sourceFile": "packages/ui/src/components/card/CardBadge.tsx"
         },
         {
+          "name": "CardBadge.position",
+          "prop": "position",
+          "component": "CardBadge",
+          "sourceType": "CardBadgeProps",
+          "type": "'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'",
+          "required": false,
+          "defaultValue": "\"top-left\"",
+          "description": "Generated from CardBadgeProps.",
+          "sourceFile": "packages/ui/src/components/card/CardBadge.tsx"
+        },
+        {
           "name": "CardBadge.size",
           "prop": "size",
           "component": "CardBadge",
@@ -4973,67 +4984,6 @@
         }
       ]
     },
-    "section-label": {
-      "files": [
-        "packages/ui/src/components/section-label/SectionLabel.tsx"
-      ],
-      "props": [
-        {
-          "name": "asChild",
-          "prop": "asChild",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "boolean",
-          "required": false,
-          "defaultValue": "false",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "children",
-          "prop": "children",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "size",
-          "prop": "size",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "defaultValue": "\"md\"",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "tone",
-          "prop": "tone",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "'blue' | 'yellow' | 'red' | 'white'",
-          "required": false,
-          "defaultValue": "\"yellow\"",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        },
-        {
-          "name": "variant",
-          "prop": "variant",
-          "component": "SectionLabel",
-          "sourceType": "SectionLabelProps",
-          "type": "'default' | 'flat'",
-          "required": false,
-          "defaultValue": "\"default\"",
-          "description": "Generated from SectionLabelProps.",
-          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
-        }
-      ]
-    },
     "select": {
       "files": [
         "packages/ui/src/components/select/Select.tsx"
@@ -5122,6 +5072,28 @@
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
         },
         {
+          "name": "selectedIndicator",
+          "prop": "selectedIndicator",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": "\"x\"",
+          "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/components/select/Select.tsx"
+        },
+        {
+          "name": "showSelectedIndicator",
+          "prop": "showSelectedIndicator",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "true",
+          "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/components/select/Select.tsx"
+        },
+        {
           "name": "size",
           "prop": "size",
           "component": "Select",
@@ -5173,6 +5145,67 @@
           "defaultValue": "\"default\"",
           "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/components/select/Select.tsx"
+        }
+      ]
+    },
+    "section-label": {
+      "files": [
+        "packages/ui/src/components/section-label/SectionLabel.tsx"
+      ],
+      "props": [
+        {
+          "name": "asChild",
+          "prop": "asChild",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "children",
+          "prop": "children",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "size",
+          "prop": "size",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "tone",
+          "prop": "tone",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "'blue' | 'yellow' | 'red' | 'white'",
+          "required": false,
+          "defaultValue": "\"yellow\"",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
+        },
+        {
+          "name": "variant",
+          "prop": "variant",
+          "component": "SectionLabel",
+          "sourceType": "SectionLabelProps",
+          "type": "'default' | 'flat'",
+          "required": false,
+          "defaultValue": "\"default\"",
+          "description": "Generated from SectionLabelProps.",
+          "sourceFile": "packages/ui/src/components/section-label/SectionLabel.tsx"
         }
       ]
     },
@@ -5304,44 +5337,6 @@
           "defaultValue": "\"default\"",
           "description": "Generated from SliderProps.",
           "sourceFile": "packages/ui/src/components/slider/Slider.tsx"
-        }
-      ]
-    },
-    "swirski-provider": {
-      "files": [
-        "packages/ui/src/theme/SwirskiProvider.tsx"
-      ],
-      "props": [
-        {
-          "name": "children",
-          "prop": "children",
-          "component": "SwirskiProvider",
-          "sourceType": "SwirskiProviderProps",
-          "type": "ReactNode",
-          "required": true,
-          "description": "Generated from SwirskiProviderProps.",
-          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
-        },
-        {
-          "name": "colorScheme",
-          "prop": "colorScheme",
-          "component": "SwirskiProvider",
-          "sourceType": "SwirskiProviderProps",
-          "type": "'light' | 'dark'",
-          "required": false,
-          "defaultValue": "\"light\"",
-          "description": "Generated from SwirskiProviderProps.",
-          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
-        },
-        {
-          "name": "theme",
-          "prop": "theme",
-          "component": "SwirskiProvider",
-          "sourceType": "SwirskiProviderProps",
-          "type": "SwirskiTheme",
-          "required": false,
-          "description": "Generated from SwirskiProviderProps.",
-          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
         }
       ]
     },
@@ -6313,6 +6308,44 @@
         }
       ]
     },
+    "swirski-provider": {
+      "files": [
+        "packages/ui/src/theme/SwirskiProvider.tsx"
+      ],
+      "props": [
+        {
+          "name": "children",
+          "prop": "children",
+          "component": "SwirskiProvider",
+          "sourceType": "SwirskiProviderProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from SwirskiProviderProps.",
+          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
+        },
+        {
+          "name": "colorScheme",
+          "prop": "colorScheme",
+          "component": "SwirskiProvider",
+          "sourceType": "SwirskiProviderProps",
+          "type": "'light' | 'dark'",
+          "required": false,
+          "defaultValue": "\"light\"",
+          "description": "Generated from SwirskiProviderProps.",
+          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
+        },
+        {
+          "name": "theme",
+          "prop": "theme",
+          "component": "SwirskiProvider",
+          "sourceType": "SwirskiProviderProps",
+          "type": "SwirskiTheme",
+          "required": false,
+          "description": "Generated from SwirskiProviderProps.",
+          "sourceFile": "packages/ui/src/theme/SwirskiProvider.tsx"
+        }
+      ]
+    },
     "use-click-outside": {
       "files": [
         "packages/ui/src/hooks/use-click-outside/useClickOutside.ts"
@@ -6371,6 +6404,12 @@
     "use-escape-key": {
       "files": [
         "packages/ui/src/hooks/use-escape-key/useEscapeKey.ts"
+      ],
+      "props": []
+    },
+    "use-is-pathname-active": {
+      "files": [
+        "packages/ui/src/hooks/use-is-pathname-active/useIsPathnameActive.ts"
       ],
       "props": []
     },

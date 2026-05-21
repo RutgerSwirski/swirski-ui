@@ -46,6 +46,7 @@
     { "name": "use-controllable-state", "category": "hooks", "description": "Build controlled or uncontrolled component state.", "source": "packages/ui/src/hooks/use-controllable-state" },
     { "name": "use-disclosure", "category": "hooks", "description": "Open, close and toggle boolean disclosure state.", "source": "packages/ui/src/hooks/use-disclosure", "dependencies": ["use-controllable-state"] },
     { "name": "use-escape-key", "category": "hooks", "description": "Run a callback when Escape is pressed.", "source": "packages/ui/src/hooks/use-escape-key" },
+    { "name": "use-is-pathname-active", "category": "hooks", "description": "Check whether a pathname matches the current URL path.", "source": "packages/ui/src/hooks/use-is-pathname-active" },
     { "name": "use-local-storage", "category": "hooks", "description": "Persist React state in localStorage.", "source": "packages/ui/src/hooks/use-local-storage" },
     { "name": "use-media-query", "category": "hooks", "description": "Track a CSS media query.", "source": "packages/ui/src/hooks/use-media-query" },
     { "name": "use-reduced-motion", "category": "hooks", "description": "Read prefers-reduced-motion.", "source": "packages/ui/src/hooks/use-reduced-motion", "dependencies": ["use-media-query"] }

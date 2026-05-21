@@ -328,12 +328,13 @@ export const componentDocs: ComponentDoc[] = [
     slug: "cursor",
     title: "Cursor",
     description:
-      "A playful pixel-art cursor provider with arrow, hover hand and click hand states.",
+      "A playful pixel-art cursor provider with arrow, hover, click, text, zoom, panning and status states.",
     category: "Interaction",
     importCode: `import { Button, CursorProvider, CursorDock } from "@swirski/ui";`,
     usageCode: `<CursorProvider>
   <CursorDock />
   <Button href="/components">Hover me</Button>
+  <div data-cursor="pan">Pan surface</div>
 </CursorProvider>`,
     preview: (
       <CursorProvider className="relative min-h-64 space-y-6 overflow-hidden p-2">
@@ -343,6 +344,29 @@ export const componentDocs: ComponentDoc[] = [
           <Button href="/components/cursor" tone="white">
             Link cursor
           </Button>
+          <Button disabled tone="white">
+            Locked
+          </Button>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div
+            className="grid min-h-20 place-items-center border-4 border-black bg-[#0057FF] p-3 text-center font-black uppercase text-white"
+            data-cursor="pan"
+          >
+            Pan board
+          </div>
+          <div
+            aria-busy="true"
+            className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] p-3 text-center font-black uppercase"
+          >
+            Busy
+          </div>
+          <div
+            className="grid min-h-20 place-items-center border-4 border-black bg-white p-3 text-center font-black uppercase"
+            data-cursor="crosshair"
+          >
+            Target
+          </div>
         </div>
       </CursorProvider>
     ),
@@ -365,10 +389,22 @@ export const componentDocs: ComponentDoc[] = [
         description: "Initial cursor when the provider is uncontrolled.",
       },
       {
+        name: "CursorProvider.cursors",
+        type: "SwirskiCursor[]",
+        description:
+          "Custom cursor sets. Optional fields can supply pointer, active, disabled, text, zoom, grab, grabbing, busy and status cursor assets.",
+      },
+      {
         name: "CursorProvider.storageKey",
         type: "string | false",
         defaultValue: '"swirski-cursor"',
         description: "Local storage key, or false to skip persistence.",
+      },
+      {
+        name: "data-cursor",
+        type: '"pointer" | "active" | "disabled" | "text" | "zoom-in" | "zoom-out" | "pan" | "grab" | "grabbing" | "move" | "resize" | "copy" | "crosshair" | "help" | "progress" | "wait" | "not-allowed"',
+        description:
+          "Opts any descendant into a specific cursor state. Tailwind cursor utility classes are recognized too.",
       },
       {
         name: "CursorDock.position",
@@ -1242,6 +1278,47 @@ useClickOutside(ref, () => setOpen(false), {
         type: "void",
         description:
           "Registers a keydown listener in an effect and returns no value.",
+      },
+    ],
+  },
+  {
+    slug: "use-is-pathname-active",
+    title: "useIsPathnameActive",
+    description:
+      "Checks whether a pathname matches the current URL path, including nested routes.",
+    category: "Hooks",
+    importCode: `import { useIsPathnameActive } from "@swirski/ui";`,
+    usageCode: `const active = useIsPathnameActive(
+  "/components",
+  "/components/button",
+);`,
+    preview: <Badge tone="blue">Active route helper</Badge>,
+    props: [
+      {
+        name: "pathname",
+        type: "string | URL",
+        required: true,
+        description: "Target pathname or URL to match.",
+      },
+      {
+        name: "currentUrl",
+        type: "string | URL",
+        required: true,
+        description: "Current route URL or pathname.",
+      },
+      {
+        name: "options.exact",
+        type: "boolean",
+        defaultValue: "false",
+        description: "Require an exact pathname match.",
+      },
+    ],
+    returns: [
+      {
+        name: "active",
+        type: "boolean",
+        description:
+          "True when currentUrl matches pathname or a nested child path.",
       },
     ],
   },

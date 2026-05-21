@@ -33,6 +33,8 @@ export type SelectProps = {
   placeholder?: string;
   disabled?: boolean;
   name?: string;
+  selectedIndicator?: ReactNode;
+  showSelectedIndicator?: boolean;
   triggerClassName?: string;
   contentClassName?: string;
   optionClassName?: string;
@@ -142,23 +144,28 @@ function findMatchingOptionIndex(
   return -1;
 }
 
-export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
-  options,
-  value,
-  defaultValue,
-  onValueChange,
-  placeholder = "Select an option",
-  disabled = false,
-  name,
-  className,
-  triggerClassName,
-  contentClassName,
-  optionClassName,
-  variant = "default",
-  size = "md",
-  tone = "default",
-  ...props
-}, ref) {
+export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
+  {
+    options,
+    value,
+    defaultValue,
+    onValueChange,
+    placeholder = "Select an option",
+    disabled = false,
+    name,
+    selectedIndicator = "x",
+    showSelectedIndicator = false,
+    className,
+    triggerClassName,
+    contentClassName,
+    optionClassName,
+    variant = "default",
+    size = "md",
+    tone = "default",
+    ...props
+  },
+  ref,
+) {
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const typeaheadSearchRef = useRef("");
@@ -313,7 +320,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
       event.preventDefault();
       setIsOpen(true);
       setHighlightedIndex((currentIndex) =>
-        moveHighlight(options, currentIndex, event.key === "ArrowDown" ? 1 : -1),
+        moveHighlight(
+          options,
+          currentIndex,
+          event.key === "ArrowDown" ? 1 : -1,
+        ),
       );
       return;
     }
@@ -430,7 +441,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
           <div
             ref={contentRef}
             className={cn(
-              "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C]",
+              "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C] min-w-50",
               contentClassName,
             )}
             id={listboxId}
@@ -453,11 +464,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
                   className={cn(
                     "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
                     optionSizeStyles[size],
-                    isHighlighted && !option.disabled && "bg-[#FFD400]",
+                    isHighlighted &&
+                      !option.disabled &&
+                      "bg-[#0057FF] text-white",
                     isSelected && "bg-[#0057FF] text-white",
                     option.disabled
                       ? "cursor-not-allowed text-black/35"
-                      : "hover:bg-[#FFD400] hover:text-black",
+                      : "hover:bg-[#0057FF] hover:text-white",
                     optionClassName,
                   )}
                   disabled={option.disabled}
@@ -474,7 +487,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({
                   {...swirskiAttrs("select-option", { size, tone, variant })}
                 >
                   <span>{optionText(option)}</span>
-                  {isSelected && <span aria-hidden="true">x</span>}
+
+                  {/* insert clear button */}
+
+                  {showSelectedIndicator && isSelected && (
+                    <span aria-hidden="true">{selectedIndicator}</span>
+                  )}
                 </button>
               );
             })}
