@@ -254,8 +254,8 @@ export default function GetStartedPage() {
         </Container>
       </div>
 
-      <Container className="py-14 md:py-20">
-        <Grid gap="lg" className="md:grid-cols-3">
+      <Container className="py-14 md:py-18">
+        {/* <Grid gap="lg" className="md:grid-cols-1">
           {workflowCards.map((item) => (
             <Card key={item.title} interactive={false} className="bg-white">
               <CardContent className="flex h-full flex-col p-6">
@@ -266,15 +266,17 @@ export default function GetStartedPage() {
                 <Text className="mt-3" tone="muted" weight="bold">
                   {item.body}
                 </Text>
-                <Button className="mt-6 w-full" href={item.href} tone="white">
+                <Button className="mt-6 w-fit" href={item.href} tone="white">
                   {item.cta}
                 </Button>
               </CardContent>
             </Card>
           ))}
-        </Grid>
+        </Grid> */}
 
-        <Grid gap="xl" className="mt-14">
+        <Grid gap="xl" 
+        // className="mt-14"
+        >
           <WorkflowSection
             id="package"
             label="Workflow 01"

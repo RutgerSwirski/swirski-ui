@@ -27,9 +27,7 @@ export default function Hero() {
         >
           Browse components
         </Button>
-        <Button as={Link} href="/examples" tone="yellow">
-          See examples
-        </Button>
+
         <Button
           target="_blank"
           href="https://github.com/rutgerswirski/swirski-ui"

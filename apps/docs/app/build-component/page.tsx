@@ -150,14 +150,14 @@ export default function BuildComponentPage() {
               </Text>
             </div>
 
-            <Card interactive={false} className="bg-[#FFD400]">
+            {/* <Card interactive={false} className="bg-[#FFD400]">
               <CardContent>
                 <Badge tone="black">Command</Badge>
                 <code className="mt-5 block break-words border-4 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_#0B0B0C] sm:text-base">
                   pnpm create:component empty-state
                 </code>
               </CardContent>
-            </Card>
+            </Card> */}
           </Grid>
         </Container>
       </div>
