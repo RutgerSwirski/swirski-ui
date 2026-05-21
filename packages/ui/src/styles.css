@@ -87,12 +87,13 @@
 }
 
 @keyframes swirski-pixel-scan {
-  0% {
+  0%,
+  100% {
     transform: translateX(-100%);
   }
 
-  100% {
-    transform: translateX(900%);
+  50% {
+    transform: translateX(100%);
   }
 }
 
