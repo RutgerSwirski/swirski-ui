@@ -5450,21 +5450,21 @@
           "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
         },
         {
-          "name": "SelectContent.contentPosition",
-          "prop": "contentPosition",
-          "component": "SelectContent",
-          "sourceType": "SelectContentProps",
-          "type": "SelectContentPosition",
-          "required": true,
-          "description": "Generated from SelectContentProps.",
-          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
-        },
-        {
           "name": "SelectContent.contentRef",
           "prop": "contentRef",
           "component": "SelectContent",
           "sourceType": "SelectContentProps",
           "type": "Ref<HTMLDivElement>",
+          "required": true,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.contentStyle",
+          "prop": "contentStyle",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "CSSProperties",
           "required": true,
           "description": "Generated from SelectContentProps.",
           "sourceFile": "packages/ui/src/components/select/SelectContent.tsx"
@@ -6865,6 +6865,12 @@
     "use-media-query": {
       "files": [
         "packages/ui/src/hooks/use-media-query/useMediaQuery.ts"
+      ],
+      "props": []
+    },
+    "use-portal-root": {
+      "files": [
+        "packages/ui/src/hooks/use-portal-root/usePortalRoot.ts"
       ],
       "props": []
     },
