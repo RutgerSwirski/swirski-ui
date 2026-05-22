@@ -5,7 +5,7 @@ export const usePortalRootHookDoc: HookDoc = {
   slug: "use-portal-root",
   title: "usePortalRoot",
   description:
-    "Returns a root element to use for portals. Used by usePortal hook.",
+    "Returns the document body once the app has mounted so portal components can render safely.",
   category: "Hooks",
   importCode: `import { usePortalRoot } from "@swirski/ui";`,
   usageCode: `const portalRoot = usePortalRoot();`,

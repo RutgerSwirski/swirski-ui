@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-portal-root",
+  "type": "registry:hook",
+  "title": "Use Portal Root",
+  "description": "Return document.body after mount for portal rendering.",
+  "registryDependencies": [],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "packages/ui/src/hooks/use-portal-root/index.ts",
+      "content": "export { usePortalRoot } from \"./usePortalRoot\";\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-portal-root/index.ts"
+    },
+    {
+      "path": "packages/ui/src/hooks/use-portal-root/usePortalRoot.ts",
+      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\nexport function usePortalRoot() {\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\n\n  useEffect(() => {\n    setPortalRoot(document.body);\n  }, []);\n\n  return portalRoot;\n}\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-portal-root/usePortalRoot.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "hooks"
+  ],
+  "meta": {
+    "swirskiCategory": "hooks",
+    "swirskiSource": "packages/ui/src/hooks/use-portal-root"
+  }
+}

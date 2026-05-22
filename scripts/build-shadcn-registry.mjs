@@ -15,6 +15,7 @@ const repoRoot = path.resolve(__dirname, "..");
 const sourceRegistryPath = path.join(repoRoot, "registry/swirski.registry.json");
 const outputRoot = path.join(repoRoot, "apps/docs/public");
 const itemsOutputRoot = path.join(outputRoot, "r");
+const registryOutputPath = path.join(outputRoot, "registry.json");
 const registryItemSchema = "https://ui.shadcn.com/schema/registry-item.json";
 const registrySchema = "https://ui.shadcn.com/schema/registry.json";
 const publicRegistryUrl = "https://ui.swirski.dev";
@@ -168,9 +169,10 @@ function main() {
     items,
   };
 
-  rmSync(outputRoot, { force: true, recursive: true });
+  rmSync(itemsOutputRoot, { force: true, recursive: true });
+  rmSync(registryOutputPath, { force: true });
   mkdirSync(itemsOutputRoot, { recursive: true });
-  writeJson(path.join(outputRoot, "registry.json"), registry);
+  writeJson(registryOutputPath, registry);
 
   for (const item of items) {
     writeJson(path.join(itemsOutputRoot, `${item.name}.json`), item);
