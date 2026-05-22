@@ -59,19 +59,20 @@ export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(
     },
     ref,
   ) {
-    const { setHasTitle, titleId } = useDrawer();
+    const { setLabelledById, titleId } = useDrawer();
     const Component = asChild ? Slot : "h2";
+    const id = props.id ?? titleId;
 
     useEffect(() => {
-      setHasTitle(true);
-      return () => setHasTitle(false);
-    }, [setHasTitle]);
+      setLabelledById(id);
+      return () => setLabelledById(undefined);
+    }, [id, setLabelledById]);
 
     return (
       <Component
         ref={ref}
         className={cn("font-anton text-4xl uppercase leading-none", className)}
-        id={props.id ?? titleId}
+        id={id}
         {...swirskiAttrs("drawer-title", { size, tone, variant })}
         {...props}
       />
@@ -102,19 +103,20 @@ export const DrawerDescription = forwardRef<
   },
   ref,
 ) {
-  const { descriptionId, setHasDescription } = useDrawer();
+  const { descriptionId, setDescribedById } = useDrawer();
   const Component = asChild ? Slot : "p";
+  const id = props.id ?? descriptionId;
 
   useEffect(() => {
-    setHasDescription(true);
-    return () => setHasDescription(false);
-  }, [setHasDescription]);
+    setDescribedById(id);
+    return () => setDescribedById(undefined);
+  }, [id, setDescribedById]);
 
   return (
     <Component
       ref={ref}
       className={cn("text-sm font-bold leading-6 text-black/65", className)}
-      id={props.id ?? descriptionId}
+      id={id}
       {...swirskiAttrs("drawer-description", { size, tone, variant })}
       {...props}
     />

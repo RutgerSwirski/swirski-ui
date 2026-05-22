@@ -1,10 +1,10 @@
 "use client";
 
 import type { HTMLAttributes } from "react";
-import { forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
-import { focusInitialElement, trapFocus } from "../../system/focus";
+import { useModalOverlay } from "../../system/overlay";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 import { useDrawer } from "./DrawerContext";
 import type {
@@ -35,52 +35,15 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     },
     ref,
   ) {
-    const { descriptionId, hasDescription, hasTitle, open, setOpen, titleId } =
-      useDrawer();
+    const { describedById, labelledById, open, setOpen } = useDrawer();
     const portalRoot = usePortalRoot();
     const contentRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-      if (!open) {
-        return;
-      }
-
-      const previouslyFocusedElement =
-        document.activeElement as HTMLElement | null;
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      const animationFrame = window.requestAnimationFrame(() => {
-        if (contentRef.current) {
-          focusInitialElement(contentRef.current);
-        }
-      });
-
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-          setOpen(false);
-          return;
-        }
-
-        if (contentRef.current) {
-          trapFocus(contentRef.current, event);
-        }
-      };
-
-      window.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        window.cancelAnimationFrame(animationFrame);
-        document.body.style.overflow = originalOverflow;
-        window.removeEventListener("keydown", handleKeyDown);
-
-        if (
-          previouslyFocusedElement &&
-          document.contains(previouslyFocusedElement)
-        ) {
-          previouslyFocusedElement.focus();
-        }
-      };
-    }, [open, setOpen]);
+    useModalOverlay({
+      contentRef,
+      onEscape: () => setOpen(false),
+      open,
+    });
 
     if (!open || !portalRoot) {
       return null;
@@ -104,10 +67,8 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
           )}
           role="dialog"
           aria-modal="true"
-          aria-labelledby={hasTitle ? titleId : props["aria-labelledby"]}
-          aria-describedby={
-            hasDescription ? descriptionId : props["aria-describedby"]
-          }
+          aria-labelledby={labelledById ?? props["aria-labelledby"]}
+          aria-describedby={describedById ?? props["aria-describedby"]}
           tabIndex={-1}
           {...swirskiAttrs("drawer-content", { size, tone, variant })}
           {...props}

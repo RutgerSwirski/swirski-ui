@@ -24,6 +24,21 @@ function DrawerExample() {
   );
 }
 
+function CustomSlotIdDrawerExample() {
+  return (
+    <Drawer>
+      <DrawerTrigger>Open custom drawer</DrawerTrigger>
+      <DrawerContent>
+        <DrawerTitle id="custom-drawer-title">Custom drawer</DrawerTitle>
+        <DrawerDescription id="custom-drawer-description">
+          Custom drawer description.
+        </DrawerDescription>
+        <DrawerClose>Close custom drawer</DrawerClose>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
 describe("Drawer", () => {
   it("opens as a labelled modal, traps focus, and returns focus on Escape", async () => {
     const user = userEvent.setup();
@@ -50,5 +65,24 @@ describe("Drawer", () => {
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
+  });
+
+  it("uses custom title and description ids from slots", async () => {
+    const user = userEvent.setup();
+
+    render(<CustomSlotIdDrawerExample />);
+
+    await user.click(screen.getByRole("button", { name: "Open custom drawer" }));
+
+    const drawer = await screen.findByRole("dialog", {
+      name: "Custom drawer",
+    });
+
+    expect(drawer).toHaveAttribute("aria-labelledby", "custom-drawer-title");
+    expect(drawer).toHaveAttribute(
+      "aria-describedby",
+      "custom-drawer-description",
+    );
+    expect(drawer).toHaveAccessibleDescription("Custom drawer description.");
   });
 });

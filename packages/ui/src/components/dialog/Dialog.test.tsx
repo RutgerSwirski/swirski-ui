@@ -40,6 +40,21 @@ function CustomAriaDialogExample() {
   );
 }
 
+function CustomSlotIdDialogExample() {
+  return (
+    <Dialog>
+      <DialogTrigger>Open custom id dialog</DialogTrigger>
+      <DialogContent>
+        <DialogTitle id="custom-dialog-title">Custom title</DialogTitle>
+        <DialogDescription id="custom-dialog-description">
+          Custom description.
+        </DialogDescription>
+        <DialogClose>Close custom dialog</DialogClose>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 describe("Dialog", () => {
   it("opens as a labelled modal, traps focus, and returns focus on Escape", async () => {
     const user = userEvent.setup();
@@ -104,5 +119,26 @@ describe("Dialog", () => {
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
+  });
+
+  it("uses custom title and description ids from slots", async () => {
+    const user = userEvent.setup();
+
+    render(<CustomSlotIdDialogExample />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Open custom id dialog" }),
+    );
+
+    const dialog = await screen.findByRole("dialog", {
+      name: "Custom title",
+    });
+
+    expect(dialog).toHaveAttribute("aria-labelledby", "custom-dialog-title");
+    expect(dialog).toHaveAttribute(
+      "aria-describedby",
+      "custom-dialog-description",
+    );
+    expect(dialog).toHaveAccessibleDescription("Custom description.");
   });
 });

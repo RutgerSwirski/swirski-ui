@@ -59,19 +59,20 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
     },
     ref,
   ) {
-    const { setHasTitle, titleId } = useDialog();
+    const { setLabelledById, titleId } = useDialog();
     const Component = asChild ? Slot : "h2";
+    const id = props.id ?? titleId;
 
     useEffect(() => {
-      setHasTitle(true);
-      return () => setHasTitle(false);
-    }, [setHasTitle]);
+      setLabelledById(id);
+      return () => setLabelledById(undefined);
+    }, [id, setLabelledById]);
 
     return (
       <Component
         ref={ref}
         className={cn("font-anton text-4xl uppercase leading-none", className)}
-        id={props.id ?? titleId}
+        id={id}
         {...swirskiAttrs("dialog-title", { size, tone, variant })}
         {...props}
       />
@@ -102,19 +103,20 @@ export const DialogDescription = forwardRef<
   },
   ref,
 ) {
-  const { descriptionId, setHasDescription } = useDialog();
+  const { descriptionId, setDescribedById } = useDialog();
   const Component = asChild ? Slot : "p";
+  const id = props.id ?? descriptionId;
 
   useEffect(() => {
-    setHasDescription(true);
-    return () => setHasDescription(false);
-  }, [setHasDescription]);
+    setDescribedById(id);
+    return () => setDescribedById(undefined);
+  }, [id, setDescribedById]);
 
   return (
     <Component
       ref={ref}
       className={cn("text-sm font-bold leading-6 text-black/65", className)}
-      id={props.id ?? descriptionId}
+      id={id}
       {...swirskiAttrs("dialog-description", { size, tone, variant })}
       {...props}
     />

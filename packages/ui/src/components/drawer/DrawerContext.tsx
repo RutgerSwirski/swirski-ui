@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { createContext, useContext, useId, useState } from "react";
+import { createContext, useCallback, useContext, useId, useState } from "react";
 import type { DrawerSize, DrawerTone, DrawerVariant } from "./drawer-types";
 
 type DrawerContextValue = {
@@ -9,10 +9,10 @@ type DrawerContextValue = {
   setOpen: (open: boolean) => void;
   titleId: string;
   descriptionId: string;
-  hasTitle: boolean;
-  hasDescription: boolean;
-  setHasTitle: (value: boolean) => void;
-  setHasDescription: (value: boolean) => void;
+  labelledById?: string;
+  describedById?: string;
+  setLabelledById: (id: string | undefined) => void;
+  setDescribedById: (id: string | undefined) => void;
 };
 
 export const DrawerContext = createContext<DrawerContextValue | null>(null);
@@ -49,18 +49,18 @@ export function Drawer({
   const titleId = useId();
   const descriptionId = useId();
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [hasTitle, setHasTitle] = useState(false);
-  const [hasDescription, setHasDescription] = useState(false);
+  const [labelledById, setLabelledById] = useState<string | undefined>();
+  const [describedById, setDescribedById] = useState<string | undefined>();
   const isControlled = open !== undefined;
   const currentOpen = open ?? internalOpen;
 
-  function setOpen(nextOpen: boolean) {
+  const setOpen = useCallback((nextOpen: boolean) => {
     if (!isControlled) {
       setInternalOpen(nextOpen);
     }
 
     onOpenChange?.(nextOpen);
-  }
+  }, [isControlled, onOpenChange]);
 
   return (
     <DrawerContext.Provider
@@ -69,10 +69,10 @@ export function Drawer({
         setOpen,
         titleId,
         descriptionId,
-        hasTitle,
-        hasDescription,
-        setHasTitle,
-        setHasDescription,
+        labelledById,
+        describedById,
+        setLabelledById,
+        setDescribedById,
       }}
     >
       {children}
