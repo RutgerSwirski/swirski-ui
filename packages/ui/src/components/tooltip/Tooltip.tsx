@@ -5,13 +5,13 @@ import {
   ReactNode,
   forwardRef,
   useCallback,
-  useEffect,
   useId,
   useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
 import { Slot, cn, swirskiAttrs } from "../../system";
+import { useFloatingPosition } from "../../system/floating";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 
 export type TooltipVariant = "default";
@@ -57,54 +57,22 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
   ) {
     const Component = asChild ? Slot : "span";
     const triggerRef = useRef<HTMLElement | null>(null);
+    const tooltipRef = useRef<HTMLSpanElement | null>(null);
     const tooltipId = `${useId()}-tooltip`;
     const portalRoot = usePortalRoot();
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
-    const [position, setPosition] = useState<{
-      left: number;
-      top: number;
-    } | null>(null);
     const open = hovered || focused;
+    const tooltipStyle = useFloatingPosition({
+      floatingRef: tooltipRef,
+      open,
+      placement: "top",
+      referenceRef: triggerRef,
+    });
     const describedBy =
       [props["aria-describedby"], open ? tooltipId : undefined]
         .filter(Boolean)
         .join(" ") || undefined;
-
-    useEffect(() => {
-      if (!open) {
-        setPosition(null);
-        return;
-      }
-
-      function updatePosition() {
-        const rect = triggerRef.current?.getBoundingClientRect();
-
-        if (!rect) {
-          return;
-        }
-
-        const viewportPadding = 12;
-        const centeredLeft = rect.left + rect.width / 2;
-
-        setPosition({
-          left: Math.min(
-            Math.max(centeredLeft, viewportPadding),
-            window.innerWidth - viewportPadding,
-          ),
-          top: Math.max(rect.top - 8, viewportPadding),
-        });
-      }
-
-      updatePosition();
-      window.addEventListener("resize", updatePosition);
-      window.addEventListener("scroll", updatePosition, true);
-
-      return () => {
-        window.removeEventListener("resize", updatePosition);
-        window.removeEventListener("scroll", updatePosition, true);
-      };
-    }, [open]);
 
     const setTriggerRef = useCallback(
       (node: HTMLElement | null) => {
@@ -124,21 +92,18 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
 
     const tooltipContent =
       open &&
-      position &&
       portalRoot &&
       createPortal(
         <span
+          ref={tooltipRef}
           className={cn(
-            "pointer-events-none fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] -translate-x-1/2 -translate-y-full border-4 border-black font-black uppercase",
+            "pointer-events-none fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] border-4 border-black font-black uppercase",
             sizeStyles[size],
             toneStyles[tone],
           )}
           id={tooltipId}
           role="tooltip"
-          style={{
-            left: position.left,
-            top: position.top,
-          }}
+          style={tooltipStyle}
           {...swirskiAttrs("tooltip-content", { size, tone, variant })}
         >
           {content}

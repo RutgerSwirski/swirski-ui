@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from "react";
+import type { CSSProperties, ReactNode, Ref } from "react";
 import { cn, swirskiAttrs } from "../../system";
 import type {
   SelectOption,
@@ -8,16 +8,10 @@ import type {
 } from "./select-types";
 import { optionSizeStyles, optionText } from "./select-utils";
 
-export type SelectContentPosition = {
-  left: number;
-  top: number;
-  width: number;
-};
-
 export type SelectContentProps = {
   contentClassName?: string;
-  contentPosition: SelectContentPosition;
   contentRef: Ref<HTMLDivElement>;
+  contentStyle: CSSProperties;
   highlightedIndex: number;
   listboxId: string;
   onOptionHover: (index: number) => void;
@@ -34,8 +28,8 @@ export type SelectContentProps = {
 
 export default function SelectContent({
   contentClassName,
-  contentPosition,
   contentRef,
+  contentStyle,
   highlightedIndex,
   listboxId,
   onOptionHover,
@@ -59,11 +53,7 @@ export default function SelectContent({
       id={listboxId}
       role="listbox"
       {...swirskiAttrs("select-content", { size, tone, variant })}
-      style={{
-        left: contentPosition.left,
-        top: contentPosition.top,
-        width: contentPosition.width,
-      }}
+      style={contentStyle}
     >
       {options.map((option, index) => {
         const isSelected = option.value === selectedValue;

@@ -111,7 +111,12 @@ function createBaseItem() {
     title: "Swirski Base",
     description:
       "Shared Swirski UI system helpers, theme provider, CSS variables and base styles.",
-    dependencies: ["clsx", "@fontsource/anton", "@fontsource/bangers"],
+    dependencies: [
+      "clsx",
+      "@floating-ui/dom",
+      "@fontsource/anton",
+      "@fontsource/bangers",
+    ],
     files,
     docs:
       'Import the generated `@ui/swirski/styles.css` once in your app entry, then wrap your app with `SwirskiProvider` when you want theme tokens.',

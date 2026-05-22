@@ -10,8 +10,9 @@ import {
   focusVisibleStyles,
   swirskiAttrs,
 } from "../../system";
+import { useFloatingPosition } from "../../system/floating";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
-import SelectContent, { type SelectContentPosition } from "./SelectContent";
+import SelectContent from "./SelectContent";
 import type {
   SelectOption,
   SelectSize,
@@ -81,11 +82,16 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const [contentPosition, setContentPosition] =
-    useState<SelectContentPosition | null>(null);
   const [internalValue, setInternalValue] = useState(
     defaultValue ?? options.find((option) => !option.disabled)?.value ?? "",
   );
+  const contentStyle = useFloatingPosition({
+    floatingRef: contentRef,
+    matchReferenceWidth: true,
+    open: isOpen,
+    placement: "bottom-start",
+    referenceRef: rootRef,
+  });
   const selectedValue = value ?? internalValue;
   const selectedIndex = options.findIndex(
     (option) => option.value === selectedValue,
@@ -127,36 +133,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
 
     return () => {
       window.removeEventListener("pointerdown", handlePointerDown);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setContentPosition(null);
-      return;
-    }
-
-    function updatePosition() {
-      const rect = rootRef.current?.getBoundingClientRect();
-
-      if (!rect) {
-        return;
-      }
-
-      setContentPosition({
-        left: rect.left,
-        top: rect.bottom + 8,
-        width: rect.width,
-      });
-    }
-
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
     };
   }, [isOpen]);
 
@@ -342,12 +318,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       </button>
 
       {isOpen &&
-        contentPosition &&
         portalRoot &&
         createPortal(
           <SelectContent
             contentClassName={contentClassName}
-            contentPosition={contentPosition}
+            contentStyle={contentStyle}
             contentRef={contentRef}
             highlightedIndex={highlightedIndex}
             listboxId={listboxId}

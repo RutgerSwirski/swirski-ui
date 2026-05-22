@@ -21,6 +21,7 @@ import {
   focusVisibleStyles,
   swirskiAttrs,
 } from "../../system";
+import { useFloatingPosition } from "../../system/floating";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 
 export type PopoverVariant = "default" | "compact";
@@ -220,41 +221,14 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   ) {
     const { contentId, contentRef, open, rootRef } = usePopover();
     const portalRoot = usePortalRoot();
-    const [position, setPosition] = useState<{
-      left: number;
-      top: number;
-    } | null>(null);
+    const floatingStyle = useFloatingPosition({
+      floatingRef: contentRef,
+      open,
+      placement: align === "end" ? "bottom-end" : "bottom-start",
+      referenceRef: rootRef,
+    });
 
-    useEffect(() => {
-      if (!open) {
-        setPosition(null);
-        return;
-      }
-
-      function updatePosition() {
-        const rect = rootRef.current?.getBoundingClientRect();
-
-        if (!rect) {
-          return;
-        }
-
-        setPosition({
-          left: align === "end" ? rect.right : rect.left,
-          top: rect.bottom + 8,
-        });
-      }
-
-      updatePosition();
-      window.addEventListener("resize", updatePosition);
-      window.addEventListener("scroll", updatePosition, true);
-
-      return () => {
-        window.removeEventListener("resize", updatePosition);
-        window.removeEventListener("scroll", updatePosition, true);
-      };
-    }, [align, open, rootRef]);
-
-    if (!open || !position || !portalRoot) {
+    if (!open || !portalRoot) {
       return null;
     }
 
@@ -270,9 +244,7 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         role="dialog"
         {...swirskiAttrs("popover-content", { size, tone, variant })}
         style={{
-          left: position.left,
-          top: position.top,
-          transform: align === "end" ? "translateX(-100%)" : undefined,
+          ...floatingStyle,
           ...style,
         }}
         {...props}

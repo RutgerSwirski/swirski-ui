@@ -32,10 +32,11 @@
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.6",
     "@fontsource/anton": "^5.2.7",
     "@fontsource/bangers": "^5.2.8",
-    "postcss-cli": "^11.0.1",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "postcss-cli": "^11.0.1"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.3.6",

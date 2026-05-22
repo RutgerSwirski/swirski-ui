@@ -4,9 +4,10 @@ import type {
   HTMLAttributes,
   KeyboardEvent as ReactKeyboardEvent,
 } from "react";
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
+import { useFloatingPosition } from "../../system/floating";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 import { useDropdownMenu } from "./DropdownMenuContext";
 import type {
@@ -21,11 +22,6 @@ export type DropdownMenuContentProps = HTMLAttributes<HTMLDivElement> & {
   variant?: DropdownMenuVariant;
   size?: DropdownMenuSize;
   tone?: DropdownMenuTone;
-};
-
-type ContentPosition = {
-  left: number;
-  top: number;
 };
 
 export const DropdownMenuContent = forwardRef<
@@ -54,39 +50,15 @@ export const DropdownMenuContent = forwardRef<
     triggerRef,
   } = useDropdownMenu();
   const portalRoot = usePortalRoot();
-  const [position, setPosition] = useState<ContentPosition | null>(null);
+  const floatingStyle = useFloatingPosition({
+    floatingRef: contentRef,
+    open,
+    placement: align === "end" ? "bottom-end" : "bottom-start",
+    referenceRef: rootRef,
+  });
 
   useEffect(() => {
-    if (!open) {
-      setPosition(null);
-      return;
-    }
-
-    function updatePosition() {
-      const rect = rootRef.current?.getBoundingClientRect();
-
-      if (!rect) {
-        return;
-      }
-
-      setPosition({
-        left: align === "end" ? rect.right : rect.left,
-        top: rect.bottom + 8,
-      });
-    }
-
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [align, open, rootRef]);
-
-  useEffect(() => {
-    if (!open || !position || !contentRef.current || !focusIntentRef.current) {
+    if (!open || !contentRef.current || !focusIntentRef.current) {
       return;
     }
 
@@ -95,7 +67,7 @@ export const DropdownMenuContent = forwardRef<
       focusIntentRef.current === "first" ? 0 : -1,
     );
     focusIntentRef.current = null;
-  }, [contentRef, focusIntentRef, open, position]);
+  }, [contentRef, focusIntentRef, open]);
 
   function handleKeyDown(event: ReactKeyboardEvent<HTMLDivElement>) {
     onKeyDown?.(event);
@@ -141,7 +113,7 @@ export const DropdownMenuContent = forwardRef<
     }
   }
 
-  if (!open || !position || !portalRoot) {
+  if (!open || !portalRoot) {
     return null;
   }
 
@@ -158,9 +130,7 @@ export const DropdownMenuContent = forwardRef<
       role="menu"
       {...swirskiAttrs("dropdown-menu-content", { size, tone, variant })}
       style={{
-        left: position.left,
-        top: position.top,
-        transform: align === "end" ? "translateX(-100%)" : undefined,
+        ...floatingStyle,
         ...style,
       }}
       {...props}
