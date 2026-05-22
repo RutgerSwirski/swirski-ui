@@ -7,7 +7,7 @@ import type {
   MouseEvent,
 } from "react";
 import { forwardRef } from "react";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 import type { NavbarSize, NavbarTone, NavbarVariant } from "./Navbar";
 import { useMobileMenu } from "./MobileMenuContext";
 
@@ -151,7 +151,8 @@ export const MobileMenuLink = forwardRef<HTMLAnchorElement, MobileMenuLinkProps>
       <ResolvedComponent
         ref={ref}
         className={cn(
-          "flex min-h-14 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-3 text-lg font-black uppercase text-[var(--sw-color-ink)] no-underline transition hover:bg-[var(--sw-color-yellow)]",
+          "flex min-h-14 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-3 text-lg font-black uppercase text-[var(--sw-color-ink)] no-underline outline-none transition hover:bg-[var(--sw-color-yellow)]",
+          focusVisibleStyles,
           active
             ? "bg-[var(--sw-color-yellow)] shadow-[var(--sw-shadow-sm)]"
             : "bg-[var(--sw-color-paper)]",

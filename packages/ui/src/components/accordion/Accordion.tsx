@@ -4,7 +4,7 @@ import {
   ReactNode,
   forwardRef,
 } from "react";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 
 export type AccordionVariant = "default" | "compact";
 export type AccordionSize = "sm" | "md" | "lg";
@@ -107,7 +107,8 @@ export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(
     <summary
       ref={ref}
       className={cn(
-        "flex cursor-pointer list-none items-center justify-between gap-4 font-black uppercase marker:hidden [&::-webkit-details-marker]:hidden",
+        "flex cursor-pointer list-none items-center justify-between gap-4 font-black uppercase outline-none marker:hidden [&::-webkit-details-marker]:hidden",
+        focusVisibleStyles,
         triggerSizeStyles[size],
         className,
       )}

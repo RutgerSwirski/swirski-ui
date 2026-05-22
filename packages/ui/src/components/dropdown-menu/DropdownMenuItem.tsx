@@ -39,14 +39,14 @@ export const DropdownMenuItem = forwardRef<
   const Component = asChild ? Slot : "button";
 
   const baseStyles =
-    "block w-full text-left font-black uppercase transition hover:bg-[#FFD400] focus-visible:bg-[#FFD400] focus-visible:outline-none disabled:cursor-not-allowed disabled:text-black/35";
+    "block w-full text-left font-black uppercase transition hover:bg-[var(--sw-color-yellow)] focus-visible:bg-[var(--sw-color-yellow)] focus-visible:outline-none disabled:cursor-not-allowed disabled:text-black/35 disabled:hover:bg-transparent";
 
   return (
     <Component
       ref={ref}
       className={cn(
         baseStyles,
-        active && "bg-[#FFD400]",
+        active && "bg-[var(--sw-color-yellow)]",
         itemSizeStyles[size],
         className,
       )}

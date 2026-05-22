@@ -3,7 +3,13 @@
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { cn, composeRefs, swirskiAttrs } from "../../system";
+import {
+  cn,
+  composeRefs,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 import SelectContent, { type SelectContentPosition } from "./SelectContent";
 import type {
@@ -308,8 +314,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         className={cn(
-          "flex w-full items-center justify-between gap-3 border-4 border-black text-left font-black uppercase text-[#0B0B0C] shadow-[4px_4px_0_#0B0B0C] outline-none transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#0B0B0C] focus-visible:shadow-[6px_6px_0_#0057FF] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500",
-          variant === "default" ? "bg-white" : "bg-[#F5F5F3]",
+          "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+          focusVisibleStyles,
+          disabledInteractiveStyles,
+          variant === "default" ? "bg-[var(--sw-color-surface)]" : "bg-[var(--sw-color-paper)]",
           triggerSizeStyles[size],
           triggerClassName,
         )}
@@ -325,7 +333,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         <span
           aria-hidden="true"
           className={cn(
-            "grid size-6 shrink-0 place-items-center border-2 border-black bg-[#FFD400] leading-none transition",
+            "grid size-6 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] leading-none transition",
             isOpen && "rotate-180",
           )}
         >

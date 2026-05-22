@@ -53,7 +53,7 @@ export default function SelectContent({
     <div
       ref={contentRef}
       className={cn(
-        "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C] min-w-50",
+        "fixed z-[1000] max-h-64 min-w-50 overflow-y-auto border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] p-1 shadow-[7px_7px_0_var(--sw-color-shadow)]",
         contentClassName,
       )}
       id={listboxId}
@@ -76,11 +76,11 @@ export default function SelectContent({
             className={cn(
               "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
               optionSizeStyles[size],
-              isHighlighted && !option.disabled && "bg-[#0057FF] text-white",
-              isSelected && "bg-[#0057FF] text-white",
+              isHighlighted && !option.disabled && "bg-[var(--sw-color-blue)] text-white",
+              isSelected && "bg-[var(--sw-color-blue)] text-white",
               option.disabled
                 ? "cursor-not-allowed text-black/35"
-                : "hover:bg-[#0057FF] hover:text-white",
+                : "hover:bg-[var(--sw-color-blue)] hover:text-white",
               optionClassName,
             )}
             disabled={option.disabled}

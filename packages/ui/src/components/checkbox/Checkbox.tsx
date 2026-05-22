@@ -28,9 +28,9 @@ const checkSizeStyles: Record<CheckboxSize, string> = {
 };
 
 const toneStyles: Record<CheckboxTone, string> = {
-  yellow: "peer-checked:bg-[#FFD400]",
-  blue: "peer-checked:bg-[#0057FF]",
-  red: "peer-checked:bg-[#FF3131]",
+  yellow: "peer-checked:bg-[var(--sw-color-yellow)]",
+  blue: "peer-checked:bg-[var(--sw-color-blue)]",
+  red: "peer-checked:bg-[var(--sw-color-red)]",
 };
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({
@@ -50,7 +50,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
       className={cn(
         "group inline-flex w-fit items-start gap-3",
         disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
-        variant === "card" && "border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]",
+        variant === "card" && "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] p-3 shadow-[4px_4px_0_var(--sw-color-shadow)]",
         containerClassName,
         className,
       )}
@@ -67,7 +67,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
         />
         <span
           className={cn(
-            "absolute inset-0 border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C] transition peer-focus-visible:shadow-[4px_4px_0_#0057FF]",
+            "absolute inset-0 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[var(--sw-shadow-sm)] transition peer-focus-visible:shadow-[4px_4px_0_var(--sw-color-focus)]",
             toneStyles[tone],
           )}
         />

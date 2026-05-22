@@ -28,9 +28,9 @@ const thumbSizeStyles: Record<SwitchSize, string> = {
 };
 
 const toneStyles: Record<SwitchTone, string> = {
-  blue: "peer-checked:bg-[#0057FF]",
-  yellow: "peer-checked:bg-[#FFD400]",
-  red: "peer-checked:bg-[#FF3131]",
+  blue: "peer-checked:bg-[var(--sw-color-blue)]",
+  yellow: "peer-checked:bg-[var(--sw-color-yellow)]",
+  red: "peer-checked:bg-[var(--sw-color-red)]",
 };
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch({
@@ -50,13 +50,13 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
       className={cn(
         "group inline-flex w-fit items-center gap-3",
         disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
-        variant === "card" && "border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]",
+        variant === "card" && "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] p-3 shadow-[4px_4px_0_var(--sw-color-shadow)]",
         containerClassName,
         className,
       )}
       {...swirskiAttrs("switch", { size, tone, variant })}
     >
-      <span className={cn("relative inline-flex shrink-0 items-center border-4 border-black bg-white shadow-[4px_4px_0_#0B0B0C] transition group-active:translate-x-0.5 group-active:translate-y-0.5 group-active:shadow-none", trackSizeStyles[size])}>
+      <span className={cn("relative inline-flex shrink-0 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[4px_4px_0_var(--sw-color-shadow)] transition group-active:translate-x-0.5 group-active:translate-y-0.5 group-active:shadow-none", trackSizeStyles[size])}>
         <input
           type="checkbox"
           role="switch"
@@ -66,8 +66,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
           {...swirskiAttrs("switch-input", { size, tone, variant })}
           {...props}
         />
-        <span className={cn("absolute inset-0 bg-white transition peer-focus-visible:shadow-[0_0_0_3px_#FFD400]", toneStyles[tone])} />
-        <span className={cn("relative ml-1 border-2 border-black bg-[#FFD400] transition peer-checked:bg-white", thumbSizeStyles[size])} />
+        <span className={cn("absolute inset-0 bg-[var(--sw-color-surface)] transition peer-focus-visible:shadow-[0_0_0_3px_var(--sw-color-focus)]", toneStyles[tone])} />
+        <span className={cn("relative ml-1 border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] transition peer-checked:bg-[var(--sw-color-surface)]", thumbSizeStyles[size])} />
       </span>
       {(label || description) && (
         <span className="grid gap-1">

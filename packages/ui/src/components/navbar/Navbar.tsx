@@ -16,7 +16,14 @@ import {
   type DropdownMenuProps,
 } from "../dropdown-menu/DropdownMenu";
 import { useDropdownMenu } from "../dropdown-menu/DropdownMenuContext";
-import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+import {
+  Slot,
+  cn,
+  composeRefs,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
 
 export type NavbarVariant = "default" | "compact";
 export type NavbarSize = "sm" | "md" | "lg";
@@ -30,7 +37,9 @@ function navbarLinkStyles({
   variant: NavbarVariant;
 }) {
   return cn(
-    "inline-flex min-h-11 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-2 text-sm font-black uppercase text-[var(--sw-color-ink)] no-underline transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--sw-color-yellow)] active:translate-y-0 active:scale-[0.98]",
+    "inline-flex min-h-11 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-2 text-sm font-black uppercase text-[var(--sw-color-ink)] no-underline outline-none transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--sw-color-yellow)] active:translate-y-0 active:scale-[0.98] disabled:hover:bg-[var(--sw-color-surface)]",
+    focusVisibleStyles,
+    disabledInteractiveStyles,
     active
       ? "bg-[var(--sw-color-yellow)] shadow-[var(--sw-shadow-sm)]"
       : "bg-[var(--sw-color-surface)]",

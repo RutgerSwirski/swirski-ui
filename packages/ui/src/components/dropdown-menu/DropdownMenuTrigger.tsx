@@ -2,7 +2,14 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
-import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
+import {
+  Slot,
+  cn,
+  composeRefs,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
 import { useDropdownMenu } from "./DropdownMenuContext";
 import type {
   DropdownMenuSize,
@@ -43,9 +50,11 @@ export const DropdownMenuTrigger = forwardRef<
     <Component
       ref={composeRefs(triggerRef, ref)}
       className={cn(
-        "border-4 border-black bg-white font-black uppercase shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] font-black uppercase shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+        focusVisibleStyles,
+        disabledInteractiveStyles,
         triggerSizeStyles[size],
-        variant === "compact" && "shadow-none",
+        variant === "compact" && "shadow-none disabled:hover:shadow-none",
         className,
       )}
       onClick={(event) => {

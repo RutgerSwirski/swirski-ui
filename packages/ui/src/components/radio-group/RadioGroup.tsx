@@ -43,9 +43,9 @@ const dotSizeStyles: Record<RadioGroupSize, string> = {
 };
 
 const toneStyles: Record<RadioGroupTone, string> = {
-  yellow: "peer-checked:bg-[#FFD400]",
-  blue: "peer-checked:bg-[#0057FF]",
-  red: "peer-checked:bg-[#FF3131]",
+  yellow: "peer-checked:bg-[var(--sw-color-yellow)]",
+  blue: "peer-checked:bg-[var(--sw-color-blue)]",
+  red: "peer-checked:bg-[var(--sw-color-red)]",
 };
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
@@ -73,7 +73,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           key={option.value}
           className={cn(
             "group inline-flex w-fit items-start gap-3",
-            variant === "card" && "border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]",
+            variant === "card" && "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] p-3 shadow-[4px_4px_0_var(--sw-color-shadow)]",
             option.disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
           )}
           data-swirski-radio-option={option.value}
@@ -91,8 +91,8 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
               {...swirskiAttrs("radio-group-input", { size, tone, variant })}
               {...props}
             />
-            <span className={cn("absolute inset-0 rounded-full border-4 border-black bg-white shadow-[3px_3px_0_#0B0B0C]", toneStyles[tone])} />
-            <span className={cn("relative hidden rounded-full bg-black peer-checked:block", dotSizeStyles[size])} />
+            <span className={cn("absolute inset-0 rounded-full border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[var(--sw-shadow-sm)] transition peer-focus-visible:shadow-[4px_4px_0_var(--sw-color-focus)]", toneStyles[tone])} />
+            <span className={cn("relative hidden rounded-full bg-[var(--sw-color-ink)] peer-checked:block", dotSizeStyles[size])} />
           </span>
           <span className="grid gap-1">
             <span className="font-black leading-5">{option.label}</span>
