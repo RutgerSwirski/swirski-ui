@@ -16,6 +16,7 @@
     "release:ui": "node scripts/release-ui.mjs",
     "test:ui": "pnpm --filter @swirski/ui test",
     "install:docs": "pnpm --filter docs install",
-    "artifacts:update": "pnpm docs:metadata && pnpm llms:build && pnpm registry:shadcn"
+    "artifacts:update": "pnpm docs:metadata && pnpm llms:build && pnpm registry:shadcn",
+    "test": "pnpm test:ui && pnpm build:ui pnpm build && pnpm --filter @swirski/ui build-storybook"
   }
 }
