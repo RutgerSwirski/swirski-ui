@@ -60,7 +60,7 @@ jobs:
             apps/docs/public/llms-full.txt \
             apps/docs/public/registry.json \
             apps/docs/public/r
-    
+
   ui-build:
     runs-on: ubuntu-latest
 
@@ -80,7 +80,7 @@ jobs:
 
       - name: Build UI
         run: pnpm build:ui
-  
+
   docs-build:
     runs-on: ubuntu-latest
 
@@ -101,7 +101,7 @@ jobs:
       - name: Build docs
         run: pnpm build
 
- build-storybook:
+  storybook-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -119,5 +119,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Build Storybook
-        run: pnpm build:storybook
-        
+        run: pnpm --filter @swirski/ui build-storybook
