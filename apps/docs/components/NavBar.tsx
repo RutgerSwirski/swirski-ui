@@ -77,7 +77,7 @@ export default function NavBar() {
 
             return (
               <NavbarDropdown key={item.label}>
-                <NavbarDropdownTrigger active={active} variant="compact">
+                <NavbarDropdownTrigger active={active}>
                   {item.label}
                 </NavbarDropdownTrigger>
                 <NavbarDropdownContent align="end">
