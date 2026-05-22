@@ -16,6 +16,7 @@ export type DropdownMenuItemProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: DropdownMenuVariant;
   size?: DropdownMenuSize;
   tone?: DropdownMenuTone;
+  active?: boolean;
 };
 
 export const DropdownMenuItem = forwardRef<
@@ -29,6 +30,7 @@ export const DropdownMenuItem = forwardRef<
     variant = "default",
     size = "md",
     tone = "default",
+    active = false,
     ...props
   },
   ref,
@@ -36,11 +38,15 @@ export const DropdownMenuItem = forwardRef<
   const { setOpen, triggerRef } = useDropdownMenu();
   const Component = asChild ? Slot : "button";
 
+  const baseStyles =
+    "block w-full text-left font-black uppercase transition hover:bg-[#FFD400] focus-visible:bg-[#FFD400] focus-visible:outline-none disabled:cursor-not-allowed disabled:text-black/35";
+
   return (
     <Component
       ref={ref}
       className={cn(
-        "block w-full text-left font-black uppercase transition hover:bg-[#FFD400] focus-visible:bg-[#FFD400] focus-visible:outline-none disabled:cursor-not-allowed disabled:text-black/35",
+        baseStyles,
+        active && "bg-[#FFD400]",
         itemSizeStyles[size],
         className,
       )}
@@ -55,6 +61,7 @@ export const DropdownMenuItem = forwardRef<
       role="menuitem"
       type={asChild ? undefined : "button"}
       {...swirskiAttrs("dropdown-menu-item", { size, tone, variant })}
+      data-active={active ? "" : undefined}
       {...props}
     />
   );

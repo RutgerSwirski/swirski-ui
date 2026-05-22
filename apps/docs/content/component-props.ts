@@ -19,7 +19,7 @@ const generatedPropsByComponent = generatedPropsMetadata.components as Record<
 
 function getHumanNote(
   prop: GeneratedPropDoc,
-  manualProps: ComponentDoc["props"],
+  manualProps: PropDoc[] = [],
 ) {
   return manualProps.find(
     (manualProp) =>
@@ -30,6 +30,7 @@ function getHumanNote(
 }
 
 export function getComponentPropRows(component: ComponentDoc) {
+  const manualProps = component.props ?? [];
   const generatedProps =
     generatedPropsByComponent[component.slug]?.props.filter(
       (prop) => prop.type !== "never",
@@ -38,7 +39,7 @@ export function getComponentPropRows(component: ComponentDoc) {
   if (!generatedProps.length) {
     return {
       generatedCount: 0,
-      rows: component.props,
+      rows: manualProps,
     };
   }
 
@@ -50,7 +51,7 @@ export function getComponentPropRows(component: ComponentDoc) {
     ]),
   );
   const generatedRows = generatedProps.map<PropDoc>((prop) => {
-    const humanNote = getHumanNote(prop, component.props);
+    const humanNote = getHumanNote(prop, manualProps);
 
     return {
       name: prop.name,
@@ -60,7 +61,7 @@ export function getComponentPropRows(component: ComponentDoc) {
       description: humanNote?.description ?? prop.description,
     };
   });
-  const manualRows = component.props.filter(
+  const manualRows = manualProps.filter(
     (prop) => !generatedNames.has(prop.name),
   );
 

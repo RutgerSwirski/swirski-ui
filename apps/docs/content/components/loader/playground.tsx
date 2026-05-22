@@ -1,6 +1,11 @@
 "use client";
 
-import { Loader } from "@swirski/ui";
+import {
+  Loader,
+  type LoaderSize,
+  type LoaderTone,
+  type LoaderVariant,
+} from "@swirski/ui";
 import type { PlaygroundDefinition } from "../../types";
 import {
   jsxString,
@@ -21,27 +26,21 @@ export const loaderPlayground: PlaygroundDefinition = {
       label: "tone",
       type: "select",
       defaultValue: "blue",
-      options: ["blue", "yellow", "red", "black"],
+      options: ["blue", "yellow", "red", "pink", "green", "black"],
     },
     {
       name: "variant",
       label: "variant",
       type: "select",
-      defaultValue: "spinner",
-      options: ["spinner", "pixel-dots", "pixel-bars", "pixel-blocks"],
+      defaultValue: "pixel-dots",
+      options: ["pixel-dots", "pixel-bars", "pixel-blocks", "pixel-scan"],
     },
   ],
   render: (values) => (
     <Loader
-      tone={textValue(values, "tone") as "blue" | "yellow" | "red" | "black"}
-      size={textValue(values, "size") as "sm" | "md" | "lg" | "xl" | "2xl"}
-      variant={
-        textValue(values, "variant") as
-          | "spinner"
-          | "pixel-dots"
-          | "pixel-bars"
-          | "pixel-blocks"
-      }
+      tone={textValue(values, "tone") as LoaderTone}
+      size={textValue(values, "size") as LoaderSize}
+      variant={textValue(values, "variant") as LoaderVariant}
     />
   ),
   getCode: (values) =>

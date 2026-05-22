@@ -12,6 +12,11 @@ export {
   Navbar,
   NavbarActions,
   NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownItem,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
   NavbarLink,
   NavbarNav,
 } from "./Navbar";
@@ -28,6 +33,11 @@ export type {
 export type {
   NavbarActionsProps,
   NavbarBrandProps,
+  NavbarDropdownContentProps,
+  NavbarDropdownItemProps,
+  NavbarDropdownLinkProps,
+  NavbarDropdownProps,
+  NavbarDropdownTriggerProps,
   NavbarLinkProps,
   NavbarNavProps,
   NavbarProps,

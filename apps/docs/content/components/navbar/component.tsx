@@ -10,6 +10,10 @@ import {
   Navbar,
   NavbarActions,
   NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
   NavbarLink,
   NavbarNav,
 } from "@swirski/ui";
@@ -30,6 +34,10 @@ export const navbarComponentDoc: ComponentDoc = {
   Navbar,
   NavbarActions,
   NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
   NavbarLink,
   NavbarNav,
 } from "@swirski/ui";`,
@@ -38,7 +46,14 @@ export const navbarComponentDoc: ComponentDoc = {
   <NavbarNav aria-label="Main navigation">
     <NavbarLink href="/components" active>Components</NavbarLink>
     <NavbarLink href="/hooks">Hooks</NavbarLink>
-    <NavbarLink href="/cli">CLI</NavbarLink>
+    <NavbarDropdown>
+      <NavbarDropdownTrigger>Nerd Stuff</NavbarDropdownTrigger>
+      <NavbarDropdownContent align="end">
+        <NavbarDropdownLink href="/system">System</NavbarDropdownLink>
+        <NavbarDropdownLink href="/cli">CLI</NavbarDropdownLink>
+        <NavbarDropdownLink href="/build-component">Build a component</NavbarDropdownLink>
+      </NavbarDropdownContent>
+    </NavbarDropdown>
   </NavbarNav>
   <NavbarActions>
     <MobileMenu>
@@ -56,7 +71,11 @@ export const navbarComponentDoc: ComponentDoc = {
   compositionCode: `Navbar
 |-- NavbarBrand
 |-- NavbarNav
-|   \`-- NavbarLink
+|   |-- NavbarLink
+|   \`-- NavbarDropdown
+|       |-- NavbarDropdownTrigger
+|       |-- NavbarDropdownContent
+|       \`-- NavbarDropdownLink
 \`-- NavbarActions
     \`-- MobileMenu
         |-- MobileMenuTrigger
@@ -74,7 +93,16 @@ export const navbarComponentDoc: ComponentDoc = {
           Components
         </NavbarLink>
         <NavbarLink href="/hooks">Hooks</NavbarLink>
-        <NavbarLink href="/cli">CLI</NavbarLink>
+        <NavbarDropdown>
+          <NavbarDropdownTrigger>Nerd Stuff</NavbarDropdownTrigger>
+          <NavbarDropdownContent align="end">
+            <NavbarDropdownLink href="/system">System</NavbarDropdownLink>
+            <NavbarDropdownLink href="/cli">CLI</NavbarDropdownLink>
+            <NavbarDropdownLink href="/build-component">
+              Build a component
+            </NavbarDropdownLink>
+          </NavbarDropdownContent>
+        </NavbarDropdown>
       </NavbarNav>
       <NavbarActions>
         <MobileMenu>
@@ -119,6 +147,24 @@ export const navbarComponentDoc: ComponentDoc = {
       type: "boolean",
       defaultValue: "false",
       description: "Marks a link as the current page.",
+    },
+    {
+      name: "NavbarDropdownTrigger.active",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Styles the dropdown trigger as active.",
+    },
+    {
+      name: "NavbarDropdownContent.align",
+      type: '"start" | "end"',
+      defaultValue: '"start"',
+      description: "Aligns the dropdown panel to the trigger.",
+    },
+    {
+      name: "NavbarDropdownLink.active",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Marks a dropdown link as the current page.",
     },
     {
       name: "MobileMenu.open",

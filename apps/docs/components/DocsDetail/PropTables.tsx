@@ -12,7 +12,7 @@ import {
 
 type PropTableProps = {
   badgeLabel?: string;
-  rows: PropDoc[];
+  rows?: PropDoc[];
 };
 
 export function PropTable({ badgeLabel, rows }: PropTableProps) {

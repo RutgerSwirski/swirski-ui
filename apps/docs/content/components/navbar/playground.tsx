@@ -12,6 +12,10 @@ import {
   Navbar,
   NavbarActions,
   NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
   NavbarLink,
   NavbarNav,
 } from "@swirski/ui";
@@ -21,6 +25,13 @@ import {
   textValue,
   booleanValue,
 } from "../playground-utils";
+
+const primaryItems = ["Components", "Hooks"] as const;
+const dropdownItems = ["System", "CLI"] as const;
+
+function isDropdownActive(activeItem: string) {
+  return dropdownItems.some((item) => item === activeItem);
+}
 
 export const navbarPlayground: PlaygroundDefinition = {
   controls: [
@@ -35,7 +46,7 @@ export const navbarPlayground: PlaygroundDefinition = {
       label: "active",
       type: "select",
       defaultValue: "Components",
-      options: ["Components", "Hooks", "CLI"],
+      options: ["Components", "Hooks", "System", "CLI"],
     },
     {
       name: "mobileOpen",
@@ -55,7 +66,7 @@ export const navbarPlayground: PlaygroundDefinition = {
     <Navbar className="w-full border-[length:var(--sw-border-width)] bg-white">
       <NavbarBrand href="#preview">{textValue(values, "brand")}</NavbarBrand>
       <NavbarNav aria-label="Playground navigation">
-        {["Components", "Hooks", "CLI"].map((item) => (
+        {primaryItems.map((item) => (
           <NavbarLink
             active={textValue(values, "active") === item}
             href="#preview"
@@ -64,6 +75,24 @@ export const navbarPlayground: PlaygroundDefinition = {
             {item}
           </NavbarLink>
         ))}
+        <NavbarDropdown>
+          <NavbarDropdownTrigger
+            active={isDropdownActive(textValue(values, "active"))}
+          >
+            More
+          </NavbarDropdownTrigger>
+          <NavbarDropdownContent align="end">
+            {dropdownItems.map((item) => (
+              <NavbarDropdownLink
+                active={textValue(values, "active") === item}
+                href="#preview"
+                key={item}
+              >
+                {item}
+              </NavbarDropdownLink>
+            ))}
+          </NavbarDropdownContent>
+        </NavbarDropdown>
       </NavbarNav>
       <NavbarActions>
         <MobileMenu
@@ -81,7 +110,7 @@ export const navbarPlayground: PlaygroundDefinition = {
               </MobileMenuClose>
             </MobileMenuHeader>
             <MobileMenuNav aria-label="Mobile playground navigation">
-              {["Components", "Hooks", "CLI"].map((item) => (
+              {[...primaryItems, ...dropdownItems].map((item) => (
                 <MobileMenuLink
                   active={textValue(values, "active") === item}
                   href="#preview"
@@ -101,7 +130,13 @@ export const navbarPlayground: PlaygroundDefinition = {
   <NavbarNav aria-label="Main navigation">
     <NavbarLink href="/components"${textValue(values, "active") === "Components" ? " active" : ""}>Components</NavbarLink>
     <NavbarLink href="/hooks"${textValue(values, "active") === "Hooks" ? " active" : ""}>Hooks</NavbarLink>
-    <NavbarLink href="/cli"${textValue(values, "active") === "CLI" ? " active" : ""}>CLI</NavbarLink>
+    <NavbarDropdown>
+      <NavbarDropdownTrigger${isDropdownActive(textValue(values, "active")) ? " active" : ""}>More</NavbarDropdownTrigger>
+      <NavbarDropdownContent align="end">
+        <NavbarDropdownLink href="/system"${textValue(values, "active") === "System" ? " active" : ""}>System</NavbarDropdownLink>
+        <NavbarDropdownLink href="/cli"${textValue(values, "active") === "CLI" ? " active" : ""}>CLI</NavbarDropdownLink>
+      </NavbarDropdownContent>
+    </NavbarDropdown>
   </NavbarNav>
 </Navbar>`,
 };
