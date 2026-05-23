@@ -285,7 +285,7 @@ registry/swirski.registry.json
 
 ## Release `@swirski/ui`
 
-After a feature branch has been merged into `main`, release the package from a clean `main` checkout:
+After a feature branch has been merged into `main`, prepare a release PR from a clean `main` checkout:
 
 ```bash
 pnpm release:ui patch
@@ -298,18 +298,27 @@ pnpm release:ui minor
 pnpm release:ui major
 ```
 
-The release script builds `packages/ui`, bumps `packages/ui/package.json`, publishes the package to npm, creates a release commit and tag, and pushes both to `origin`.
+The release script creates a `release/swirski-ui-x.y.z` branch, builds `packages/ui`, bumps `packages/ui/package.json`, pushes the branch, and opens a PR.
 
-To test the package contents without publishing or changing files:
+After the release PR is merged, publish and tag the package from an updated `main` checkout:
+
+```bash
+git checkout main
+git pull --ff-only
+pnpm release:ui --publish
+```
+
+To preview either step without changing files:
 
 ```bash
 pnpm release:ui patch --dry-run
+pnpm release:ui --publish --dry-run
 ```
 
 If npm asks for two-factor auth:
 
 ```bash
-pnpm release:ui patch --otp 123456
+pnpm release:ui --publish --otp 123456
 ```
 
 ## Development
