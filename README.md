@@ -298,7 +298,7 @@ pnpm release:ui minor
 pnpm release:ui major
 ```
 
-The release script creates a `release/swirski-ui-x.y.z` branch, builds `packages/ui`, bumps `packages/ui/package.json`, pushes the branch, and opens a PR.
+The release script creates a `release/swirski-ui-x.y.z` branch, bumps `packages/ui/package.json`, regenerates docs and registry artifacts, builds `packages/ui`, pushes the branch, and opens a PR.
 
 After the release PR is merged, publish and tag the package from an updated `main` checkout:
 

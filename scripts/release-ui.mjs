@@ -10,6 +10,13 @@ const packageJsonPath = join(rootDir, "packages/ui/package.json");
 const packageJsonRelPath = "packages/ui/package.json";
 const allowedBumps = new Set(["patch", "minor", "major"]);
 const flagsWithValues = new Set(["--base", "--branch", "--otp"]);
+const generatedArtifactPaths = [
+  "apps/docs/content/generated-props.json",
+  "apps/docs/public/llms.txt",
+  "apps/docs/public/llms-full.txt",
+  "apps/docs/public/registry.json",
+  "apps/docs/public/r",
+];
 
 const args = process.argv.slice(2);
 const positionals = getPositionals();
@@ -92,6 +99,7 @@ function prepareReleasePr() {
     assertLocalBranchDoesNotExist(releaseBranch);
     run("git", ["switch", "-c", releaseBranch]);
     writePackageVersion(nextVersion);
+    run("pnpm", ["artifacts:update"]);
   }
 
   run("pnpm", ["--filter", "@swirski/ui", "build"]);
@@ -101,7 +109,7 @@ function prepareReleasePr() {
     return;
   }
 
-  run("git", ["add", packageJsonRelPath]);
+  run("git", ["add", packageJsonRelPath, ...generatedArtifactPaths]);
   run("git", ["commit", "-m", `Release @swirski/ui v${nextVersion}`]);
 
   if (noPush) {
