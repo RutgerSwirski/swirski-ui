@@ -383,6 +383,16 @@ metadata with:
 pnpm llms:build
 ```
 
+## Generated Artifacts
+
+Docs metadata, LLM context, and hosted registry JSON can be refreshed locally with:
+
+```bash
+pnpm artifacts:update
+```
+
+Branch pushes also run the `Update Generated Artifacts` workflow. When generated outputs change, it commits them back to the branch and starts `CI` for the updated commit. For normal GitHub event triggering from that auto-commit, configure a repository secret named `SWIRSKI_ARTIFACTS_TOKEN` with permission to push branches.
+
 ## Current Status
 
 Swirski UI is actively growing. The component surface is broad, but some complex interaction primitives are still early versions. The next quality pass should focus on:

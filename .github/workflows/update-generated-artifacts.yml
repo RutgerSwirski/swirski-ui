@@ -1,0 +1,87 @@
+name: Update Generated Artifacts
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
+      - master
+    paths:
+      - "apps/docs/content/components/**"
+      - "apps/docs/content/hooks/**"
+      - "package.json"
+      - "packages/ui/package.json"
+      - "packages/ui/src/**"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "registry/swirski.registry.json"
+      - "scripts/build-docs-metadata.mjs"
+      - "scripts/build-llms-context.mjs"
+      - "scripts/build-shadcn-registry.mjs"
+
+permissions:
+  actions: write
+  contents: write
+
+concurrency:
+  group: update-generated-artifacts-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-generated-artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.SWIRSKI_ARTIFACTS_TOKEN || github.token }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Generate docs and registry artifacts
+        run: pnpm artifacts:update
+
+      - name: Check generated artifact changes
+        id: generated
+        run: |
+          if git diff --quiet -- \
+            apps/docs/content/generated-props.json \
+            apps/docs/public/llms.txt \
+            apps/docs/public/llms-full.txt \
+            apps/docs/public/registry.json \
+            apps/docs/public/r
+          then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit generated artifacts
+        if: steps.generated.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            apps/docs/content/generated-props.json \
+            apps/docs/public/llms.txt \
+            apps/docs/public/llms-full.txt \
+            apps/docs/public/registry.json \
+            apps/docs/public/r
+          git commit -m "chore: update generated artifacts"
+          git push
+
+      - name: Run CI on updated branch
+        if: steps.generated.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref "${GITHUB_REF_NAME}"
