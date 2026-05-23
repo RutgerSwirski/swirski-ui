@@ -16,9 +16,7 @@ import Link from "next/link";
 
 const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
 
-const componentOnlyDocs = componentDocs.filter(
-  (component) => component.category !== "Hooks",
-);
+const componentOnlyDocs = componentDocs;
 
 const categories = Array.from(
   new Set(componentOnlyDocs.map((component) => component.category)),
@@ -191,7 +189,7 @@ export default function ComponentsPage() {
                   </Badge>
                 </div>
 
-                <Grid columns={1} gap="lg" className="md:grid-cols-2">
+                <Grid gap="lg" className="md:grid-cols-2! grid-cols-1">
                   {components.map((component) => {
                     return (
                       <Link

@@ -2,23 +2,18 @@
 
 import { useEffect, useMemo, useState } from "react";
 import CodeBlock from "@/components/CodeBlock";
+import PlaygroundControlField from "@/components/PlaygroundControlField";
 import {
   playgroundDefinitions,
   type PlaygroundControl,
   type PlaygroundValue,
   type PlaygroundValues,
-} from "@/content/playgrounds";
+} from "@/content/components/playgrounds";
 import {
   Badge,
   Card,
   CardContent,
-  Checkbox,
-  Field,
   Grid,
-  Input,
-  Label,
-  Select,
-  Slider,
   Text,
   Title,
 } from "@swirski/ui";
@@ -33,108 +28,6 @@ function getDefaultValues(controls: PlaygroundControl[]) {
     values[control.name] = control.defaultValue;
     return values;
   }, {});
-}
-
-function ControlField({
-  control,
-  value,
-  onChange,
-}: {
-  control: PlaygroundControl;
-  value: PlaygroundValue;
-  onChange: (value: PlaygroundValue) => void;
-}) {
-  const fieldId = `playground-${control.name
-    .replace(/[^a-z0-9]+/gi, "-")
-    .toLowerCase()}`;
-
-  if (control.type === "select") {
-    return (
-      <Field>
-        <Label>{control.label}</Label>
-        <Select
-          options={control.options.map((option) => ({
-            value: option,
-            label: option,
-          }))}
-          value={String(value)}
-          onValueChange={onChange}
-        />
-      </Field>
-    );
-  }
-
-  if (control.type === "text") {
-    return (
-      <Field>
-        <Label htmlFor={fieldId}>{control.label}</Label>
-        <Input
-          id={fieldId}
-          value={String(value)}
-          onChange={(event) => onChange(event.target.value)}
-        />
-      </Field>
-    );
-  }
-
-  if (control.type === "number") {
-    const numberValue = typeof value === "number" ? value : Number(value);
-
-    return (
-      <Field>
-        <div className="flex items-center justify-between gap-3">
-          <Label htmlFor={fieldId}>{control.label}</Label>
-          <Badge size="sm" tone="white">
-            {numberValue}
-          </Badge>
-        </div>
-        <Slider
-          id={fieldId}
-          min={control.min}
-          max={control.max}
-          step={control.step ?? 1}
-          value={numberValue}
-          onChange={(event) => onChange(Number(event.target.value))}
-        />
-      </Field>
-    );
-  }
-
-  if (control.type === "color") {
-    return (
-      <Field>
-        <Label htmlFor={fieldId}>{control.label}</Label>
-        <Grid gap="sm" className="grid-cols-[3rem_1fr]">
-          <Input
-            id={fieldId}
-            className="p-1"
-            type="color"
-            value={String(value)}
-            onChange={(event) => onChange(event.target.value)}
-          />
-          <Input
-            aria-label={`${control.label} value`}
-            value={String(value)}
-            onChange={(event) => onChange(event.target.value)}
-          />
-        </Grid>
-      </Field>
-    );
-  }
-
-  return (
-    <Field className="border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]">
-      <Checkbox
-        label={
-          <Text component="span" size="xs" weight="black" className="uppercase">
-            {control.label}
-          </Text>
-        }
-        checked={Boolean(value)}
-        onChange={(event) => onChange(event.target.checked)}
-      />
-    </Field>
-  );
 }
 
 function UsageCodePanel({ code }: { code: string }) {
@@ -242,7 +135,7 @@ export default function ComponentPlayground({
               </Text>
               <Grid gap="md">
                 {definition.controls.map((control) => (
-                  <ControlField
+                  <PlaygroundControlField
                     key={control.name}
                     control={control}
                     value={values[control.name] ?? control.defaultValue}

@@ -1,48 +1,22 @@
 # Swirski UI Full LLM Context
 
-Swirski UI is a React component package for bold, graphic, studio-flavored interfaces. It combines thick borders, hard shadows, expressive typography, custom cursors, practical app primitives, theme tokens, docs, playgrounds, generated props tables, examples, and registry workflows.
+Generated from `packages/ui/package.json`, `registry/swirski.registry.json`, and docs metadata in `apps/docs/content`.
 
-Current package version: `@swirski/ui@1.2.6`.
+Current package version: `@swirski/ui@1.2.9`.
 
 Docs site: https://ui.swirski.dev
 
 ## What Swirski UI Is
 
-Swirski UI is intended to sit somewhere between shadcn/ui and Mantine:
+Swirski UI is a React component package for bold, graphic, studio-flavored interfaces. It combines thick borders, hard shadows, expressive typography, custom cursors, practical app primitives, theme tokens, docs, playgrounds, generated props metadata, examples, and registry workflows.
 
-- Use `@swirski/ui` when an app wants a normal package install and package updates.
-- Use `@swirski/cli` when an app wants Swirski source copied into its own component folders.
-- Use the hosted shadcn-compatible registry when an app already uses shadcn workflows and wants direct registry item URLs.
-- Use `SwirskiProvider` when the app wants Swirski CSS tokens for color, fonts, borders, shadows, and color scheme.
+Use `@swirski/ui` for normal package installs, `@swirski/cli` for source-copy ownership, and hosted shadcn-compatible registry items for shadcn workflows.
 
 The visual language is loud but practical: strong borders, hard offset shadows, graphic color, uppercase labels, expressive display fonts, dense app primitives, and `className` escape hatches.
-
-## Build a Swirski Component
-
-Detailed guide: https://ui.swirski.dev/build-component
-
-Starter template: https://ui.swirski.dev/templates/component/README.md
-
-When adding a component, treat it as a package feature, docs feature, and registry feature at the same time:
-
-- Start with `pnpm create:component <component-name>` when possible.
-- Use the component template files when you want to inspect or copy the scaffold by hand.
-- Pick a lowercase registry slug and PascalCase export.
-- Design the API around `variant`, `size`, `tone`, `className`, forwarded refs, and native props.
-- Use `cn`, `swirskiAttrs`, and `Slot` when polymorphic composition is useful.
-- Add `packages/ui/src/components/<slug>/<Name>.tsx` and `packages/ui/src/components/<slug>/index.ts`.
-- Export it from `packages/ui/src/index.ts`.
-- Add docs metadata in `apps/docs/content/components.tsx`.
-- Add playground metadata in `apps/docs/content/playgrounds.tsx` when the component has meaningful variants.
-- Add the registry manifest entry in `registry/swirski.registry.json`.
-- Add tests for accessibility, keyboard behavior, focus, disabled state, and controlled/uncontrolled behavior when relevant.
-- Run `pnpm docs:metadata`, `pnpm test:ui`, `pnpm build:ui`, `pnpm registry:shadcn`, and `pnpm build`.
 
 ## Install Workflows
 
 ### Package
-
-Install:
 
 ```bash
 pnpm add @swirski/ui
@@ -54,7 +28,7 @@ Import styles once in the app entry:
 import "@swirski/ui/styles.css";
 ```
 
-Import components:
+Import components from the package root:
 
 ```tsx
 import { Button, Card, CardContent, Text, Title } from "@swirski/ui";
@@ -66,50 +40,21 @@ Tailwind CSS v4 package consumers should make Tailwind scan the package output:
 @source "../node_modules/@swirski/ui/dist";
 ```
 
-Use package imports when the app wants updates through npm.
-
 ### Swirski CLI
-
-Install:
 
 ```bash
 pnpm add -D @swirski/cli
-```
-
-Initialize and add items:
-
-```bash
 pnpm exec swirski init
-pnpm exec swirski list
 pnpm exec swirski add button
 pnpm exec swirski add button card dialog
-pnpm exec swirski add use-disclosure use-clipboard
-pnpm exec swirski add --all
 ```
-
-The CLI reads `registry/swirski.registry.json` and copies source from `packages/ui/src/components/*` or `packages/ui/src/hooks/*` into the configured app path. Storybook files are intentionally skipped by the local CLI.
-
-Default generated config:
-
-```json
-{
-  "componentsPath": "src/components/ui",
-  "stylePath": "src/styles.css"
-}
-```
-
-Use the CLI when the app wants source ownership.
 
 ### shadcn Registry
-
-View or add hosted registry items:
 
 ```bash
 pnpm dlx shadcn@latest view https://ui.swirski.dev/r/button.json
 pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json
 ```
-
-Configure a namespace in `components.json`:
 
 ```json
 {
@@ -119,35 +64,9 @@ Configure a namespace in `components.json`:
 }
 ```
 
-Then install by namespace:
-
-```bash
-pnpm dlx shadcn@latest add @swirski/button @swirski/dialog
-```
-
-Registry root:
-
-```txt
-https://ui.swirski.dev/registry.json
-```
-
-Registry item URL pattern:
-
-```txt
-https://ui.swirski.dev/r/{name}.json
-```
-
-Shared base item:
-
-```txt
-https://ui.swirski.dev/r/swirski-base.json
-```
-
-The hosted shadcn output preserves the package source tree under `@ui/swirski/...` so relative imports such as `../../system` continue to resolve after install.
+Registry root: https://ui.swirski.dev/registry.json
 
 ## Theme Provider
-
-Wrap the app in `SwirskiProvider` to set CSS tokens:
 
 ```tsx
 import { SwirskiProvider, createSwirskiTheme } from "@swirski/ui";
@@ -165,14 +84,6 @@ export function App() {
     </SwirskiProvider>
   );
 }
-```
-
-Dark mode:
-
-```tsx
-<SwirskiProvider colorScheme="dark">
-  <App />
-</SwirskiProvider>
 ```
 
 Core tokens:
@@ -196,100 +107,1730 @@ Core tokens:
 --sw-font-display
 ```
 
-## Component Catalogue
+## Code Generation Guidance
 
-### Foundations
+- Import package examples from `@swirski/ui`.
+- Use copied-source imports only when the user is using `@swirski/cli` or shadcn registry installs.
+- Prefer `variant`, `size`, `tone`, native props, forwarded refs, and `className` escape hatches.
+- Prefer theme tokens and shared system helpers over hardcoded one-off styles.
+- Preserve native HTML semantics where Swirski already uses them.
+- Use `@floating-ui/dom` positioning through the shared system helper for floating content.
+- Keep docs metadata, registry metadata, and package exports in sync when adding components.
 
-- `SwirskiProvider`: Theme provider and token helpers. Docs: https://ui.swirski.dev/components/swirski-provider
-- `Title`: Heading primitive exported through Typography. Docs: https://ui.swirski.dev/components/typography
-- `Text`: Text primitive exported through Typography. Docs: https://ui.swirski.dev/components/typography
-- `Container`: Centered page width helper. Docs: https://ui.swirski.dev/components/container
-- `Grid`: Reusable CSS grid layout primitive. Docs: https://ui.swirski.dev/components/grid
-- `Separator`: Visual divider. Docs: https://ui.swirski.dev/components/separator
-- `SectionLabel`: Tilted section label. Docs: https://ui.swirski.dev/components/section-label
+## Backgrounds
 
-### Actions and Feedback
+### DiagonalLines
 
-- `Button`: Bold action primitive. Docs: https://ui.swirski.dev/components/button. Registry: https://ui.swirski.dev/r/button.json
-- `Badge`: Compact status label. Docs: https://ui.swirski.dev/components/badge
-- `Alert`, `AlertTitle`, `AlertDescription`: Composable callout block. Docs: https://ui.swirski.dev/components/alert
-- `Toast`, `ToastProvider`, `useToast`: Status messages for save states, confirmations, and errors. Docs: https://ui.swirski.dev/components/toast
-- `Progress`: Simple progress meter. Docs: https://ui.swirski.dev/components/progress
-- `Loader`: Compact loading spinner. Docs: https://ui.swirski.dev/components/loader
-- `Skeleton`: Placeholder block for loading layouts. Docs: https://ui.swirski.dev/components/skeleton
+A configurable diagonal stripe background for punchy poster and pop-art compositions.
 
-### Forms
+Category: Backgrounds
+Docs: https://ui.swirski.dev/components/diagonal-lines
+Registry: https://ui.swirski.dev/r/diagonal-lines.json
+Source: `packages/ui/src/components/diagonal-lines`
 
-- `Field`, `Label`, `Input`, `Textarea`, `FieldHint`, `FieldError`: Field, label, input, and textarea primitives. Docs: https://ui.swirski.dev/components/field
-- `Select`: Custom dropdown picker. Docs: https://ui.swirski.dev/components/select. Registry: https://ui.swirski.dev/r/select.json
-- `Checkbox`: Native checkbox with Swirski mark. Docs: https://ui.swirski.dev/components/checkbox
-- `Switch`: Native switch control. Docs: https://ui.swirski.dev/components/switch
-- `RadioGroup`: Native radio group for choosing one option from a set. Docs: https://ui.swirski.dev/components/radio-group
-- `Slider`: Native range input for numeric controls. Docs: https://ui.swirski.dev/components/slider
+Import:
+```tsx
+import { DiagonalLines } from "@swirski/ui";
+```
 
-### Overlays and Interaction
+Usage:
+```tsx
+<div className="relative h-64 overflow-hidden bg-[#FFD400]">
+  <DiagonalLines
+    className="inset-0"
+    angle={-35}
+    color="#0B0B0C"
+    opacity={0.3}
+    spacing={18}
+    thickness={2}
+    accentColor="#FF3131"
+    accentEvery={6}
+    accentThickness={8}
+  />
+</div>
+```
 
-- `Dialog`, `DialogTrigger`, `DialogContent`, `DialogTitle`, `DialogDescription`, `DialogClose`: Modal overlay primitive. Docs: https://ui.swirski.dev/components/dialog. Registry: https://ui.swirski.dev/r/dialog.json
-- `Drawer`: Side sheet primitive. Docs: https://ui.swirski.dev/components/drawer
-- `Popover`, `PopoverTrigger`, `PopoverContent`: Floating content panel. Docs: https://ui.swirski.dev/components/popover
-- `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuItem`: Compact action menu. Docs: https://ui.swirski.dev/components/dropdown-menu
-- `Tooltip`: Hover and focus label. Docs: https://ui.swirski.dev/components/tooltip
-- `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`: Tabbed section primitive. Docs: https://ui.swirski.dev/components/tabs
-- `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`: Native disclosure stack. Docs: https://ui.swirski.dev/components/accordion
-- `CursorProvider`, `CursorDock`, `CursorPicker`: Custom cursor provider and picker. Docs: https://ui.swirski.dev/components/cursor
+Props:
+- `angle`: `number | string` default -45 - Line angle in degrees or any CSS angle value.
+- `color`: `string` default "#0B0B0C" - Primary stripe color.
+- `opacity`: `CSSProperties['opacity']` default 0.2 - Opacity applied to the stripe layer.
+- `spacing`: `number | string` default 18 - Distance before the pattern repeats.
+- `thickness`: `number | string` default 2 - Primary stripe thickness.
+- `accentColor`: `string` - Optional color for heavier accent stripes.
+- `accentEvery`: `number` - Adds accent stripes every N repeats when greater than 1.
+- `accentThickness`: `number | string` default 5 - Thickness for accent stripes.
+- `...divProps`: `Omit<HTMLAttributes<HTMLDivElement>, "color">` - Forwarded to the root div.
 
-### Layout, Navigation, and Data
+### DotGrid
 
-- `Card`, `CardContent`, `CardMedia`, `CardTitle`, `CardMeta`, `CardBadge`: Framed content block. Docs: https://ui.swirski.dev/components/card
-- `Avatar`: Framed user image or fallback. Docs: https://ui.swirski.dev/components/avatar
-- `Navbar`: Header and mobile navigation primitives. Docs: https://ui.swirski.dev/components/navbar
-- `Breadcrumb`: Navigation trail primitives. Docs: https://ui.swirski.dev/components/breadcrumb
-- `Pagination`: Page controls for tables, lists, and archives. Docs: https://ui.swirski.dev/components/pagination
-- `Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeader`, `TableCell`: Base data table. Docs: https://ui.swirski.dev/components/table
+A configurable dot-grid background for subtle texture, halftone fields and pop-art surfaces.
 
-### Visual Texture and Media
+Category: Backgrounds
+Docs: https://ui.swirski.dev/components/dot-grid
+Registry: https://ui.swirski.dev/r/dot-grid.json
+Source: `packages/ui/src/components/dot-grid`
 
-- `DotGrid`: Dot grid background primitive. Docs: https://ui.swirski.dev/components/dot-grid
-- `LineGrid`: Line grid background primitive. Docs: https://ui.swirski.dev/components/line-grid
-- `DiagonalLines`: Diagonal stripe background primitive. Docs: https://ui.swirski.dev/components/diagonal-lines
-- `ImageFrame`: Framed image surface. Docs: https://ui.swirski.dev/components/image-frame
+Import:
+```tsx
+import { DotGrid } from "@swirski/ui";
+```
 
-## Hooks
+Usage:
+```tsx
+<div className="relative h-64 overflow-hidden bg-[#FFD400]">
+  <DotGrid
+    className="inset-0"
+    color="#0B0B0C"
+    opacity={0.38}
+    spacing={14}
+    dotSize={1.8}
+    accentColor="#FF3131"
+    accentEvery={5}
+    accentDotSize={5}
+  />
+</div>
+```
 
-- `useDisclosure`: Open, close, and toggle boolean disclosure state. It depends on `useControllableState` in copy workflows. Docs: https://ui.swirski.dev/hooks/use-disclosure
-- `useControllableState`: Build controlled or uncontrolled component state. Docs: https://ui.swirski.dev/hooks/use-controllable-state
-- `useClickOutside`: Run a callback when pointer events happen outside an element. Docs: https://ui.swirski.dev/hooks/use-click-outside
-- `useEscapeKey`: Run a callback when Escape is pressed. Docs: https://ui.swirski.dev/hooks/use-escape-key
-- `useLocalStorage`: Persist React state in localStorage with serializer hooks. Docs: https://ui.swirski.dev/hooks/use-local-storage
-- `useMediaQuery`: Track a CSS media query in React state. Docs: https://ui.swirski.dev/hooks/use-media-query
-- `useReducedMotion`: Read the user preference for reduced motion. It depends on `useMediaQuery` in copy workflows. Docs: https://ui.swirski.dev/hooks/use-reduced-motion
-- `useClipboard`: Copy text to the clipboard and track copied/error state. Docs: https://ui.swirski.dev/hooks/use-clipboard
+Props:
+- `color`: `string` default "currentColor" - Primary dot color.
+- `opacity`: `CSSProperties['opacity']` - Opacity applied to the grid layer.
+- `spacing`: `number | string` default 13 - Distance between dots.
+- `dotSize`: `number | string` default 1.2 - Primary dot radius.
+- `accentColor`: `string` - Optional color for larger accent dots.
+- `accentEvery`: `number` - Adds an accent dot every N grid cells when greater than 1.
+- `accentDotSize`: `number | string` default 3 - Accent dot radius.
+- `...divProps`: `Omit<HTMLAttributes<HTMLDivElement>, "color">` - Forwarded to the root div.
 
-## Import Guidance for Code Generation
+### LineGrid
 
-When generating package-based examples, import from `@swirski/ui`:
+A configurable line grid background with optional heavier accent lines for pop-art surfaces.
 
+Category: Backgrounds
+Docs: https://ui.swirski.dev/components/line-grid
+Registry: https://ui.swirski.dev/r/line-grid.json
+Source: `packages/ui/src/components/line-grid`
+
+Import:
+```tsx
+import { LineGrid } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<div className="relative h-64 overflow-hidden bg-[#FFD400]">
+  <LineGrid
+    className="inset-0"
+    horizontalColor="#0B0B0C"
+    horizontalSpacing={18}
+    horizontalThickness={2}
+    verticalColor="#0057FF"
+    verticalSpacing={26}
+    verticalThickness={1}
+    opacity={0.34}
+    accentColor="#FF3131"
+    accentEvery={4}
+    accentThickness={5}
+  />
+</div>
+```
+
+Props:
+- `color`: `string` default "#0B0B0C" - Fallback color for horizontal and vertical lines.
+- `opacity`: `CSSProperties['opacity']` default 0.2 - Opacity applied to the grid layer.
+- `spacing`: `number | string` default 18 - Fallback spacing for both directions.
+- `thickness`: `number | string` default 1 - Fallback line thickness for both directions.
+- `direction`: `"both" | "horizontal" | "vertical"` default "both" - Which line directions to render.
+- `horizontalColor`: `string` - Overrides the horizontal line color.
+- `verticalColor`: `string` - Overrides the vertical line color.
+- `accentColor`: `string` - Optional color for heavier accent lines.
+- `accentEvery`: `number` - Adds accent lines every N cells when greater than 1.
+- `accentThickness`: `number | string` default 3 - Thickness for accent lines.
+- `...divProps`: `Omit<HTMLAttributes<HTMLDivElement>, "color">` - Forwarded to the root div.
+
+## Buttons
+
+### Button
+
+A bold Swirski UI button used for links, actions and call-to-actions.
+
+Category: Buttons
+Docs: https://ui.swirski.dev/components/button
+Registry: https://ui.swirski.dev/r/button.json
+Source: `packages/ui/src/components/button`
+
+Import:
+```tsx
+import { Button } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Button href="/pieces">View pieces</Button>
+```
+
+Props:
+- `children`: `ReactNode` required - Button label or inline content.
+- `href`: `string` - Renders the button as an anchor when provided.
+- `as`: `ElementType` - Custom component used for the root element, such as Next.js Link.
+- `tone`: `"blue" | "yellow" | "red" | "white" | "black"` default "blue" - Applies the Swirski color treatment.
+- `variant`: `"solid" | "outline" | "ghost"` default "solid" - Controls the visual treatment independently from tone.
+- `size`: `"sm" | "md" | "lg"` default "md" - Controls the button scale.
+- `asChild`: `boolean` default false - Passes button props to a single child element.
+- `icon`: `"arrow-up-right" | "github"` - Adds a bundled icon beside the label.
+- `iconSide`: `"left" | "right"` default "left" - Controls where the optional icon is rendered.
+- `className`: `string` - Adds classes to the root button or anchor.
+- `...anchorProps`: `AnchorHTMLAttributes<HTMLAnchorElement>` - Forwarded when the component renders an anchor.
+- `...buttonProps`: `ButtonHTMLAttributes<HTMLButtonElement>` - Forwarded when the component renders a button.
+
+## Cards
+
+### Card
+
+A bordered content block for projects, pieces, links and previews.
+
+Category: Cards
+Docs: https://ui.swirski.dev/components/card
+Registry: https://ui.swirski.dev/r/card.json
+Source: `packages/ui/src/components/card`
+
+Import:
+```tsx
+import { Card, CardContent, CardTitle, Text } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Card>
+  <CardContent>
+    <CardTitle>Patchwork Jacket</CardTitle>
+    <Text className="mt-3" tone="muted" weight="bold">
+      A framed content primitive with Swirski borders and shadows.
+    </Text>
+  </CardContent>
+</Card>
+```
+
+Composition:
+```txt
+Card
+`-- CardContent
+    |-- CardTitle
+    `-- children
+```
+
+Props:
+- `children`: `ReactNode` required - Card body content.
+- `interactive`: `boolean` default true - Enables hover and active movement styles.
+- `className`: `string` - Adds classes to the card root.
+- `CardContent.className`: `string` - Adds classes to the padded content wrapper.
+- `CardTitle.children`: `ReactNode` required - Title content rendered inside the card heading.
+
+## Disclosure
+
+### Accordion
+
+A disclosure component built on details and summary, with no client JavaScript required.
+
+Category: Disclosure
+Docs: https://ui.swirski.dev/components/accordion
+Registry: https://ui.swirski.dev/r/accordion.json
+Source: `packages/ui/src/components/accordion`
+
+Import:
 ```tsx
 import {
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Text,
-  Title,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@swirski/ui";
 ```
 
-When generating copied-source examples for users of the Swirski CLI or shadcn registry, assume files are copied into the app and imports may need to use the user's configured aliases.
+Usage:
+```tsx
+<Accordion>
+  <AccordionItem open>
+    <AccordionTrigger>What makes it Swirski?</AccordionTrigger>
+    <AccordionContent>
+      Thick borders, punchy color, loud type and plain HTML behavior.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
 
-Use `className` for local layout and minor styling overrides. Use `SwirskiProvider` and CSS variables for broad theme changes.
+Composition:
+```txt
+Accordion
+`-- AccordionItem
+    |-- AccordionTrigger
+    `-- AccordionContent
+```
 
-Prefer native primitives where Swirski already uses them, such as native checkbox, switch, radio, slider, details-based accordion, and semantic table elements.
+Props:
+- `Accordion.className`: `string` - Adds classes to the accordion wrapper.
+- `AccordionItem.open`: `boolean` default false - Uses the native details open state.
+- `AccordionItem.className`: `string` - Adds classes to the details element.
+- `AccordionTrigger.children`: `ReactNode` required - Summary label for the disclosure item.
+- `AccordionTrigger.className`: `string` - Adds classes to the summary element.
+- `AccordionContent.className`: `string` - Adds classes to the content panel.
+- `...detailsProps`: `DetailsHTMLAttributes<HTMLDetailsElement>` - Forwarded to each accordion item.
+
+## Feedback
+
+### Alert
+
+A loud composable feedback block for announcements, errors and status messages.
+
+Category: Feedback
+Docs: https://ui.swirski.dev/components/alert
+Registry: https://ui.swirski.dev/r/alert.json
+Source: `packages/ui/src/components/alert`
+
+Import:
+```tsx
+import { Alert, AlertTitle, AlertDescription } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Alert tone="yellow">
+  <AlertTitle>Heads up</AlertTitle>
+  <AlertDescription>New components are ready to try.</AlertDescription>
+</Alert>
+```
+
+Props:
+- `children`: `ReactNode` required - Alert content, usually AlertTitle and AlertDescription.
+- `tone`: `"blue" | "yellow" | "red" | "white"` default "yellow" - Applies the alert surface color.
+- `role`: `AriaRole` default "status" - Accessible live-region role for the alert container.
+- `className`: `string` - Adds classes to the root alert.
+- `AlertTitle.className`: `string` - Adds classes to the title heading.
+- `AlertDescription.className`: `string` - Adds classes to the description paragraph.
+
+### Badge
+
+A compact high-contrast label for statuses, tags and small interface signals.
+
+Category: Feedback
+Docs: https://ui.swirski.dev/components/badge
+Registry: https://ui.swirski.dev/r/badge.json
+Source: `packages/ui/src/components/badge`
+
+Import:
+```tsx
+import { Badge } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Badge tone="yellow">New drop</Badge>
+```
+
+Props:
+- `children`: `ReactNode` required - Badge text or inline content.
+- `tone`: `"blue" | "yellow" | "red" | "white" | "black"` default "yellow" - Applies one of the Swirski status color treatments.
+- `size`: `"sm" | "md"` default "md" - Controls the compact badge padding and text size.
+- `className`: `string` - Adds classes to the root span.
+- `...spanProps`: `HTMLAttributes<HTMLSpanElement>` - Forwarded to the root span.
+
+### Loader
+
+A compact loading spinner for pending states.
+
+Category: Feedback
+Docs: https://ui.swirski.dev/components/loader
+Registry: https://ui.swirski.dev/r/loader.json
+Source: `packages/ui/src/components/loader`
+
+Import:
+```tsx
+import { Loader } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Loader size="md" />
+```
+
+Props:
+- `size`: `"sm" | "md" | "lg" | "xl" | "2xl"` default "md" - Controls the spinner size.
+- `className`: `string` - Adds classes to the spinner.
+
+### Progress
+
+A simple progress meter for loading and completion states.
+
+Category: Feedback
+Docs: https://ui.swirski.dev/components/progress
+Registry: https://ui.swirski.dev/r/progress.json
+Source: `packages/ui/src/components/progress`
+
+Import:
+```tsx
+import { Progress } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Progress value={64} />
+```
+
+Props:
+- `value`: `number` default 0 - Current progress value.
+- `max`: `number` default 100 - Maximum progress value.
+- `className`: `string` - Adds classes to the progress track.
+
+### Skeleton
+
+A placeholder block for loading layouts.
+
+Category: Feedback
+Docs: https://ui.swirski.dev/components/skeleton
+Registry: https://ui.swirski.dev/r/skeleton.json
+Source: `packages/ui/src/components/skeleton`
+
+Import:
+```tsx
+import { Skeleton } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Skeleton className="h-24 w-full" />
+```
+
+Props:
+- `className`: `string` - Controls the skeleton size and extra styling.
+- `...divProps`: `HTMLAttributes<HTMLDivElement>` - Forwarded to the root div.
+
+### Toast
+
+Status messages for save states, confirmations and errors.
+
+Category: Feedback
+Docs: https://ui.swirski.dev/components/toast
+Registry: https://ui.swirski.dev/r/toast.json
+Source: `packages/ui/src/components/toast`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import { Toast, ToastDescription, ToastTitle } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Toast tone="yellow">
+  <ToastTitle>Saved</ToastTitle>
+  <ToastDescription>Your changes are live.</ToastDescription>
+</Toast>
+```
+
+Props:
+- `tone`: `"blue" | "yellow" | "red" | "white"` default "yellow" - Applies the toast color treatment.
+- `ToastProvider`: `{ children: ReactNode }` - Provider for managed toasts and useToast.
+- `useToast`: `() => ToastContextValue` - Adds and removes managed toasts.
+
+## Forms
+
+### Checkbox
+
+A native checkbox with a chunky Swirski mark, label and optional description.
+
+Category: Forms
+Docs: https://ui.swirski.dev/components/checkbox
+Registry: https://ui.swirski.dev/r/checkbox.json
+Source: `packages/ui/src/components/checkbox`
+
+Import:
+```tsx
+import { Checkbox } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Checkbox
+  label="Send launch updates"
+  description="A compact, native checkbox with a custom Swirski mark."
+/>
+```
+
+Props:
+- `label`: `ReactNode` - Visible label rendered beside the checkbox.
+- `description`: `ReactNode` - Optional supporting text below the label.
+- `containerClassName`: `string` - Adds classes to the root label wrapper.
+- `className`: `string` - Adds classes to the hidden native checkbox input.
+- `disabled`: `boolean` default false - Disables interaction and dims the wrapper.
+- `...inputProps`: `Omit<InputHTMLAttributes<HTMLInputElement>, "type">` - Forwarded to the native checkbox input.
+
+### Field
+
+A form field set with label, input, textarea and hint primitives built from native elements.
+
+Category: Forms
+Docs: https://ui.swirski.dev/components/field
+Registry: https://ui.swirski.dev/r/field.json
+Source: `packages/ui/src/components/field`
+
+Import:
+```tsx
+import {
+  Field,
+  FieldError,
+  FieldHint,
+  Input,
+  Label,
+  Textarea,
+} from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Field>
+  <Label htmlFor="email">Email</Label>
+  <Input id="email" placeholder="studio@swirski.dev" />
+  <FieldHint>Use the address where clients can reach you.</FieldHint>
+</Field>
+```
+
+Composition:
+```txt
+Field
+|-- Label
+|-- Input | Textarea | Select | Checkbox | RadioGroup
+|-- FieldHint
+`-- FieldError
+```
+
+Props:
+- `Field.className`: `string` - Adds classes to the field wrapper.
+- `Label.htmlFor`: `string` - Connects the label to an input or textarea id.
+- `Label.className`: `string` - Adds classes to the label.
+- `Input`: `InputHTMLAttributes<HTMLInputElement>` - Forwards native input props and refs.
+- `Textarea`: `TextareaHTMLAttributes<HTMLTextAreaElement>` - Forwards native textarea props and refs.
+- `FieldHint.className`: `string` - Adds classes to helper text.
+- `FieldError.className`: `string` - Adds classes to validation text.
+
+### RadioGroup
+
+A native radio group for choosing one option from a set.
+
+Category: Forms
+Docs: https://ui.swirski.dev/components/radio-group
+Registry: https://ui.swirski.dev/r/radio-group.json
+Source: `packages/ui/src/components/radio-group`
+
+Import:
+```tsx
+import { RadioGroup } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<RadioGroup
+  name="tone"
+  defaultValue="blue"
+  options={[
+    { value: "blue", label: "Blue" },
+    { value: "yellow", label: "Yellow" },
+  ]}
+/>
+```
+
+Props:
+- `name`: `string` required - Native radio group name.
+- `options`: `RadioGroupOption[]` required - Options rendered as radio inputs.
+- `value`: `string` - Controlled selected value.
+- `defaultValue`: `string` - Initial selected value.
+- `onValueChange`: `(value: string) => void` - Called when the selected value changes.
+
+### Select
+
+A custom dropdown picker for option sets, playground controls and compact forms.
+
+Category: Forms
+Docs: https://ui.swirski.dev/components/select
+Registry: https://ui.swirski.dev/r/select.json
+Source: `packages/ui/src/components/select`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import { Select } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Select
+  placeholder="Pick a tone"
+  options={[
+    { value: "yellow", label: "Yellow" },
+    { value: "blue", label: "Blue" },
+    { value: "red", label: "Red" },
+  ]}
+/>
+```
+
+Composition:
+```txt
+Field
+|-- Label
+|-- Select
+|   `-- options[]
+|       |-- value
+|       `-- label
+`-- FieldHint | FieldError
+```
+
+Props:
+- `options`: `SelectOption[]` required - Options shown in the dropdown list.
+- `value`: `string` - Controlled selected option value.
+- `defaultValue`: `string` - Initial selected option value when uncontrolled.
+- `onValueChange`: `(value: string) => void` - Called when a new option is selected.
+- `placeholder`: `string` default "Select an option" - Text shown when no option is selected.
+- `disabled`: `boolean` default false - Disables the trigger and prevents selection.
+- `name`: `string` - Adds a hidden input for native form submission.
+- `triggerClassName`: `string` - Adds classes to the dropdown trigger.
+- `contentClassName`: `string` - Adds classes to the dropdown content panel.
+- `optionClassName`: `string` - Adds classes to each dropdown option.
+
+### Slider
+
+A native range input for numeric controls.
+
+Category: Forms
+Docs: https://ui.swirski.dev/components/slider
+Registry: https://ui.swirski.dev/r/slider.json
+Source: `packages/ui/src/components/slider`
+
+Import:
+```tsx
+import { Slider } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Slider defaultValue={64} min={0} max={100} />
+```
+
+Props:
+- `...inputProps`: `InputHTMLAttributes<HTMLInputElement>` - Forwarded to the native range input.
+- `className`: `string` - Adds classes to the range input.
+
+### Switch
+
+A native checkbox presented as a switch for binary preferences and settings.
+
+Category: Forms
+Docs: https://ui.swirski.dev/components/switch
+Registry: https://ui.swirski.dev/r/switch.json
+Source: `packages/ui/src/components/switch`
+
+Import:
+```tsx
+import { Switch } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Switch label="Studio mode" defaultChecked />
+```
+
+Props:
+- `label`: `ReactNode` - Visible label rendered beside the switch.
+- `description`: `ReactNode` - Optional supporting text below the label.
+- `containerClassName`: `string` - Adds classes to the root label wrapper.
+- `className`: `string` - Adds classes to the hidden native checkbox input.
+- `disabled`: `boolean` default false - Disables interaction and dims the wrapper.
+- `...inputProps`: `Omit<InputHTMLAttributes<HTMLInputElement>, "type">` - Forwarded to the native switch input.
+
+## Interaction
+
+### Cursor
+
+A playful pixel-art cursor provider with arrow, hover, click, text, zoom, panning and status states.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/cursor
+Registry: https://ui.swirski.dev/r/cursor.json
+Source: `packages/ui/src/components/cursor`
+
+Import:
+```tsx
+import { Button, CursorProvider, CursorDock } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<CursorProvider>
+  <CursorDock />
+  <Button href="/components">Hover me</Button>
+  <div data-cursor="pan">Pan surface</div>
+</CursorProvider>
+```
+
+Props:
+- `CursorProvider.children`: `ReactNode` required - Content that should receive the Swirski cursor styles.
+- `CursorProvider.cursor`: `CursorId` - Controlled cursor id.
+- `CursorProvider.defaultCursor`: `CursorId` default "bolt" - Initial cursor when the provider is uncontrolled.
+- `CursorProvider.cursors`: `SwirskiCursor[]` - Custom cursor sets. Optional fields can supply pointer, active, disabled, text, zoom, grab, grabbing, busy and status cursor assets.
+- `CursorProvider.storageKey`: `string | false` default "swirski-cursor" - Local storage key, or false to skip persistence.
+- `data-cursor`: `"pointer" | "active" | "disabled" | "text" | "zoom-in" | "zoom-out" | "pan" | "grab" | "grabbing" | "move" | "resize" | "copy" | "crosshair" | "help" | "progress" | "wait" | "not-allowed"` - Opts any descendant into a specific cursor state. Tailwind cursor utility classes are recognized too.
+- `CursorDock.position`: `"fixed" | "absolute"` default "fixed" - Positions the dock against the viewport or parent.
+- `CursorDock.side`: `"left" | "right"` default "right" - Side where the cursor dock opens.
+- `CursorDock.label`: `string` default "Choose cursor" - Accessible label for the dock trigger.
+
+### Dialog
+
+A modal overlay for confirmations, details and focused forms.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/dialog
+Registry: https://ui.swirski.dev/r/dialog.json
+Source: `packages/ui/src/components/dialog`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import { Dialog, DialogContent, DialogTrigger } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Dialog>
+  <DialogTrigger>Open dialog</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Delete piece?</DialogTitle>
+      <DialogDescription>This action needs confirmation.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose>Cancel</DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+Composition:
+```txt
+Dialog
+|-- DialogTrigger
+`-- DialogContent
+    |-- DialogHeader
+    |   |-- DialogTitle
+    |   `-- DialogDescription
+    |-- DialogFooter
+    `-- DialogClose
+```
+
+Props:
+- `open`: `boolean` - Controlled open state.
+- `defaultOpen`: `boolean` default false - Initial uncontrolled open state.
+- `onOpenChange`: `(open: boolean) => void` - Called when the dialog opens or closes.
+- `className`: `string` - Available on trigger, content and layout slots.
+
+### Drawer
+
+A side sheet for mobile menus, settings panels and command surfaces.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/drawer
+Registry: https://ui.swirski.dev/r/drawer.json
+Source: `packages/ui/src/components/drawer`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import { Drawer, DrawerContent, DrawerTrigger } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Drawer>
+  <DrawerTrigger>Open drawer</DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Settings</DrawerTitle>
+      <DrawerDescription>Panel content lives here.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerClose>Close</DrawerClose>
+  </DrawerContent>
+</Drawer>
+```
+
+Composition:
+```txt
+Drawer
+|-- DrawerTrigger
+`-- DrawerContent
+    |-- DrawerHeader
+    |   |-- DrawerTitle
+    |   `-- DrawerDescription
+    `-- DrawerClose
+```
+
+Props:
+- `open`: `boolean` - Controlled open state.
+- `defaultOpen`: `boolean` default false - Initial uncontrolled open state.
+- `DrawerContent.side`: `"left" | "right" | "top" | "bottom"` default "right" - Where the drawer enters from.
+- `onOpenChange`: `(open: boolean) => void` - Called when the drawer opens or closes.
+
+### DropdownMenu
+
+A compact actions menu for navs, profile menus and table rows.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/dropdown-menu
+Registry: https://ui.swirski.dev/r/dropdown-menu.json
+Source: `packages/ui/src/components/dropdown-menu`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+Composition:
+```txt
+DropdownMenu
+|-- DropdownMenuTrigger
+`-- DropdownMenuContent
+    |-- DropdownMenuItem
+    |-- DropdownMenuSeparator
+    `-- DropdownMenuItem
+```
+
+Props:
+- `DropdownMenuTrigger`: `ButtonHTMLAttributes<HTMLButtonElement>` - Button props forwarded to the trigger.
+- `DropdownMenuContent.align`: `"start" | "end"` default "start" - Aligns the menu to the trigger.
+- `DropdownMenuItem`: `ButtonHTMLAttributes<HTMLButtonElement>` - Button props forwarded to each item.
+
+### Popover
+
+A floating panel for filters, quick settings and small editable surfaces.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/popover
+Registry: https://ui.swirski.dev/r/popover.json
+Source: `packages/ui/src/components/popover`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import { Popover, PopoverContent, PopoverTrigger } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Popover>
+  <PopoverTrigger>Filters</PopoverTrigger>
+  <PopoverContent>Quick controls live here.</PopoverContent>
+</Popover>
+```
+
+Composition:
+```txt
+Popover
+|-- PopoverTrigger
+`-- PopoverContent
+```
+
+Props:
+- `open`: `boolean` - Controlled open state.
+- `defaultOpen`: `boolean` default false - Initial uncontrolled open state.
+- `align`: `"start" | "end"` default "start" - Aligns the content to the trigger.
+- `className`: `string` - Adds classes to root, trigger or content slots.
+
+### Tabs
+
+Tabbed sections for settings, dashboards and previews.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/tabs
+Registry: https://ui.swirski.dev/r/tabs.json
+Source: `packages/ui/src/components/tabs`
+
+Import:
+```tsx
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Tabs defaultValue="preview">
+  <TabsList>
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview">Preview content</TabsContent>
+  <TabsContent value="code">Code content</TabsContent>
+</Tabs>
+```
+
+Composition:
+```txt
+Tabs
+|-- TabsList
+|   `-- TabsTrigger
+`-- TabsContent
+```
+
+Props:
+- `defaultValue`: `string` required - Initial active tab value.
+- `value`: `string` - Controlled active tab value.
+- `onValueChange`: `(value: string) => void` - Called when a tab is selected.
+- `TabsTrigger.value`: `string` required - Value this trigger activates.
+
+### Tooltip
+
+A compact hover/focus label for icon buttons and dense UI.
+
+Category: Interaction
+Docs: https://ui.swirski.dev/components/tooltip
+Registry: https://ui.swirski.dev/r/tooltip.json
+Source: `packages/ui/src/components/tooltip`
+Copy dependencies: `use-portal-root`
+
+Import:
+```tsx
+import { Tooltip } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Tooltip content="Save changes">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+Props:
+- `content`: `ReactNode` required - Tooltip label content.
+- `children`: `ReactNode` required - Element that owns the tooltip.
+- `className`: `string` - Adds classes to the tooltip wrapper.
+
+## Layout
+
+### AppShell
+
+Composable application layout primitives for sidebars, navbars and bounded page content.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/app-shell
+Registry: https://ui.swirski.dev/r/app-shell.json
+Source: `packages/ui/src/components/app-shell`
+
+Import:
+```tsx
+import {
+  AppShell,
+  AppShellBody,
+  AppShellContent,
+  AppShellMain,
+  AppShellNavbar,
+  AppShellSidebar,
+} from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<AppShell>
+  <AppShellSidebar aria-label="Workspace navigation">
+    <nav>...</nav>
+  </AppShellSidebar>
+  <AppShellBody>
+    <AppShellNavbar>Studio workspace</AppShellNavbar>
+    <AppShellMain>
+      <AppShellContent>
+        Page content
+      </AppShellContent>
+    </AppShellMain>
+  </AppShellBody>
+</AppShell>
+```
+
+Composition:
+```txt
+AppShell
+|-- AppShellSidebar
+`-- AppShellBody
+    |-- AppShellNavbar
+    `-- AppShellMain
+        `-- AppShellContent
+```
+
+Props:
+- `AppShell.children`: `ReactNode` required - Composed shell regions, usually sidebar and body.
+- `AppShell.size`: `"sm" | "md" | "lg"` default "md" - Controls shared spacing and navbar height.
+- `AppShell.variant`: `"default" | "compact"` default "default" - Switches between regular and denser shell chrome.
+- `AppShell.tone`: `"default" | "white" | "black"` default "default" - Applies the root shell surface treatment.
+- `AppShell.asChild`: `boolean` default false - Renders the child as the root shell element.
+- `AppShellSidebar.width`: `"sm" | "md" | "lg"` default "md" - Controls the responsive sidebar width.
+- `AppShellSidebar.collapseBelow`: `"md" | "lg" | "never"` default "md" - Viewport where the sidebar is hidden below.
+- `AppShellSidebar.side`: `"left" | "right"` default "left" - Places the sidebar on either side of the shell.
+- `AppShellSidebar.sticky`: `boolean` default true - Pins the sidebar during page scrolling.
+- `AppShellNavbar.sticky`: `boolean` default true - Pins the navbar to the top edge while scrolling.
+- `AppShellContent.width`: `"sm" | "md" | "lg" | "xl" | "full"` default "lg" - Controls the maximum width of the content rail.
+
+### Avatar
+
+A framed user image or fallback for accounts, comments and navs.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/avatar
+Registry: https://ui.swirski.dev/r/avatar.json
+Source: `packages/ui/src/components/avatar`
+
+Import:
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Avatar>
+  <AvatarFallback>RS</AvatarFallback>
+</Avatar>
+```
+
+Props:
+- `Avatar`: `HTMLAttributes<HTMLDivElement>` - Props forwarded to the root avatar.
+- `AvatarImage`: `ImgHTMLAttributes<HTMLImageElement>` - Props forwarded to the image.
+- `AvatarFallback`: `HTMLAttributes<HTMLSpanElement>` - Props forwarded to the fallback.
+
+### Breadcrumb
+
+Navigation trail primitives for docs and app pages.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/breadcrumb
+Registry: https://ui.swirski.dev/r/breadcrumb.json
+Source: `packages/ui/src/components/breadcrumb`
+
+Import:
+```tsx
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem><BreadcrumbLink href="/">Docs</BreadcrumbLink></BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem><BreadcrumbPage>Components</BreadcrumbPage></BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+Props:
+- `Breadcrumb`: `HTMLAttributes<HTMLElement>` - Props forwarded to the nav.
+- `BreadcrumbLink`: `AnchorHTMLAttributes<HTMLAnchorElement> & { as?: ElementType }` - Props forwarded to links. Use as to render framework links like Next.js Link.
+- `BreadcrumbPage`: `HTMLAttributes<HTMLSpanElement>` - Current page item.
+
+### Container
+
+A responsive page-width wrapper for sections, shells and documentation layouts.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/container
+Registry: https://ui.swirski.dev/r/container.json
+Source: `packages/ui/src/components/container`
+
+Import:
+```tsx
+import { Container } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Container size="md">
+  <Card>
+    <CardContent>
+      <Title order={2} size="h4">Contained section</Title>
+      <Text tone="muted" weight="bold">
+        Keep page content aligned without rewriting max-width classes.
+      </Text>
+    </CardContent>
+  </Card>
+</Container>
+```
+
+Props:
+- `children`: `ReactNode` required - Container content.
+- `size`: `"sm" | "md" | "lg" | "xl"` default "lg" - Applies the standard max-width.
+- `variant`: `"default" | "fluid"` default "default" - Uses a constrained or full-width layout.
+- `tone`: `"default"` default "default" - Reserved tone hook for Swirski data attributes.
+- `asChild`: `boolean` default false - Renders the child as the root element.
+- `...divProps`: `HTMLAttributes<HTMLDivElement>` - Forwarded to the rendered container.
+
+### Grid
+
+A reusable CSS grid primitive for page sections, card clusters and dense interface layouts.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/grid
+Registry: https://ui.swirski.dev/r/grid.json
+Source: `packages/ui/src/components/grid`
+
+Import:
+```tsx
+import { Grid } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Grid columns={3} gap="md" className="md:grid-cols-3">
+  <Card><CardContent>One</CardContent></Card>
+  <Card><CardContent>Two</CardContent></Card>
+  <Card><CardContent>Three</CardContent></Card>
+</Grid>
+```
+
+Props:
+- `children`: `ReactNode` required - Grid content.
+- `as`: `ElementType` default "div" - Custom root element or component.
+- `columns`: `1 | 2 | 3 | 4 | 5 | 6 | 12` - Applies a static grid column count.
+- `gap`: `"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"` - Applies a standard gap size.
+- `align`: `"start" | "center" | "end" | "stretch"` - Applies item alignment.
+- `content`: `"start" | "center" | "end" | "between"` - Applies grid content alignment.
+- `className`: `string` - Adds classes to the root grid.
+- `...elementProps`: `HTMLAttributes<HTMLElement>` - Forwarded to the root element.
+
+### Navbar
+
+Composable header primitives with a reusable hamburger menu for mobile navigation.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/navbar
+Registry: https://ui.swirski.dev/r/navbar.json
+Source: `packages/ui/src/components/navbar`
+Copy dependencies: `dropdown-menu`, `use-portal-root`
+
+Import:
+```tsx
+import {
+  MobileMenu,
+  MobileMenuContent,
+  MobileMenuLink,
+  MobileMenuNav,
+  MobileMenuTrigger,
+  Navbar,
+  NavbarActions,
+  NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
+  NavbarLink,
+  NavbarNav,
+} from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Navbar>
+  <NavbarBrand href="/">Swirski UI</NavbarBrand>
+  <NavbarNav aria-label="Main navigation">
+    <NavbarLink href="/components" active>Components</NavbarLink>
+    <NavbarLink href="/hooks">Hooks</NavbarLink>
+    <NavbarDropdown>
+      <NavbarDropdownTrigger>Nerd Stuff</NavbarDropdownTrigger>
+      <NavbarDropdownContent align="end">
+        <NavbarDropdownLink href="/system">System</NavbarDropdownLink>
+        <NavbarDropdownLink href="/cli">CLI</NavbarDropdownLink>
+        <NavbarDropdownLink href="/build-component">Build a component</NavbarDropdownLink>
+      </NavbarDropdownContent>
+    </NavbarDropdown>
+  </NavbarNav>
+  <NavbarActions>
+    <MobileMenu>
+      <MobileMenuTrigger />
+      <MobileMenuContent>
+        <MobileMenuNav aria-label="Mobile navigation">
+          <MobileMenuLink href="/components" active>Components</MobileMenuLink>
+          <MobileMenuLink href="/hooks">Hooks</MobileMenuLink>
+          <MobileMenuLink href="/cli">CLI</MobileMenuLink>
+        </MobileMenuNav>
+      </MobileMenuContent>
+    </MobileMenu>
+  </NavbarActions>
+</Navbar>
+```
+
+Composition:
+```txt
+Navbar
+|-- NavbarBrand
+|-- NavbarNav
+|   |-- NavbarLink
+|   `-- NavbarDropdown
+|       |-- NavbarDropdownTrigger
+|       |-- NavbarDropdownContent
+|       `-- NavbarDropdownLink
+`-- NavbarActions
+    `-- MobileMenu
+        |-- MobileMenuTrigger
+        `-- MobileMenuContent
+            |-- MobileMenuHeader
+            |   |-- MobileMenuTitle
+            |   `-- MobileMenuClose
+            `-- MobileMenuNav
+                `-- MobileMenuLink
+```
+
+Props:
+- `Navbar`: `HTMLAttributes<HTMLElement>` - Props forwarded to the root header.
+- `NavbarBrand`: `AnchorHTMLAttributes<HTMLAnchorElement>` - Props forwarded to the brand link.
+- `NavbarNav`: `HTMLAttributes<HTMLElement>` - Props forwarded to the desktop nav.
+- `NavbarLink.active`: `boolean` default false - Marks a link as the current page.
+- `NavbarDropdownTrigger.active`: `boolean` default false - Styles the dropdown trigger as active.
+- `NavbarDropdownContent.align`: `"start" | "end"` default "start" - Aligns the dropdown panel to the trigger.
+- `NavbarDropdownLink.active`: `boolean` default false - Marks a dropdown link as the current page.
+- `MobileMenu.open`: `boolean` - Controlled mobile menu open state.
+- `MobileMenu.defaultOpen`: `boolean` default false - Initial uncontrolled open state.
+- `MobileMenuContent.side`: `"left" | "right"` default "right" - Side used for the menu panel.
+- `MobileMenuLink.closeOnSelect`: `boolean` default true - Closes the menu after a link is selected.
+
+### Pagination
+
+Page controls for tables, lists and archives.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/pagination
+Registry: https://ui.swirski.dev/r/pagination.json
+Source: `packages/ui/src/components/pagination`
+
+Import:
+```tsx
+import { Pagination } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Pagination page={2} total={5} />
+```
+
+Props:
+- `page`: `number` required - Current page.
+- `total`: `number` required - Total number of pages.
+- `onPageChange`: `(page: number) => void` - Called when a page button is pressed.
+
+### Separator
+
+A small visual divider for sections, menus and dense layouts.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/separator
+Registry: https://ui.swirski.dev/r/separator.json
+Source: `packages/ui/src/components/separator`
+
+Import:
+```tsx
+import { Separator } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Separator />
+```
+
+Props:
+- `orientation`: `"horizontal" | "vertical"` default "horizontal" - Divider direction.
+- `className`: `string` - Adds classes to the divider.
+
+### Table
+
+A bold base table for data lists before adding DataTable behavior.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/table
+Registry: https://ui.swirski.dev/r/table.json
+Source: `packages/ui/src/components/table`
+
+Import:
+```tsx
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Table>
+  <TableHead>
+    <TableRow><TableHeader>Name</TableHeader><TableHeader>Status</TableHeader></TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow><TableCell>Studio</TableCell><TableCell>Live</TableCell></TableRow>
+  </TableBody>
+</Table>
+```
+
+Composition:
+```txt
+Table
+|-- TableHead
+|   `-- TableRow
+|       `-- TableHeader
+`-- TableBody
+    `-- TableRow
+        `-- TableCell
+```
+
+Props:
+- `Table`: `TableHTMLAttributes<HTMLTableElement>` - Props forwarded to the table element.
+- `TableHeader`: `ThHTMLAttributes<HTMLTableCellElement>` - Props forwarded to header cells.
+- `TableCell`: `TdHTMLAttributes<HTMLTableCellElement>` - Props forwarded to body cells.
+
+## Media
+
+### ImageFrame
+
+A framed media primitive for screenshots, product shots, visual examples and editorial layouts.
+
+Category: Media
+Docs: https://ui.swirski.dev/components/image-frame
+Registry: https://ui.swirski.dev/r/image-frame.json
+Source: `packages/ui/src/components/image-frame`
+
+Import:
+```tsx
+import { ImageFrame } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<ImageFrame caption="Studio proof" tone="paper">
+  <img src="/preview.jpg" alt="Preview" />
+</ImageFrame>
+```
+
+Props:
+- `children`: `ReactNode` required - Media or visual content rendered inside the frame.
+- `caption`: `ReactNode` - Optional caption pinned inside the frame.
+- `size`: `"sm" | "md" | "lg"` default "md" - Sets the Swirski size data attribute.
+- `tone`: `"paper" | "white" | "black"` default "paper" - Applies the frame background and text treatment.
+- `variant`: `"default" | "plain"` default "default" - Toggles the border and offset shadow treatment.
+- `asChild`: `boolean` default false - Renders the child as the root element.
+- `...divProps`: `HTMLAttributes<HTMLDivElement>` - Forwarded to the rendered frame.
+
+## Theming
+
+### SwirskiProvider
+
+Theme provider for Swirski tokens, color schemes and per-app brand overrides.
+
+Category: Theming
+Docs: https://ui.swirski.dev/components/swirski-provider
+Registry: https://ui.swirski.dev/r/swirski-provider.json
+Source: `packages/ui/src/theme`
+
+Import:
+```tsx
+import { SwirskiProvider, createSwirskiTheme } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const theme = createSwirskiTheme({
+  colorBlue: "#0047FF",
+  colorYellow: "#FFE45C",
+  shadowMd: "8px 8px 0 var(--sw-color-shadow)",
+});
+
+<SwirskiProvider theme={theme}>
+  <App />
+</SwirskiProvider>
+```
+
+Props:
+- `colorScheme`: `"light" | "dark"` default "light" - Selects the default light or dark token set.
+- `theme`: `SwirskiTheme` - Overrides any Swirski token or adds custom CSS variables.
+- `createSwirskiTheme`: `(theme: SwirskiTheme) => SwirskiTheme` - Small helper for typed theme objects.
+- `useSwirskiTheme`: `() => SwirskiThemeTokens` - Reads the resolved theme inside React components.
+
+## Typography
+
+### SectionLabel
+
+A chunky rotated heading label for editorial section markers, callouts and page breaks.
+
+Category: Typography
+Docs: https://ui.swirski.dev/components/section-label
+Registry: https://ui.swirski.dev/r/section-label.json
+Source: `packages/ui/src/components/section-label`
+
+Import:
+```tsx
+import { SectionLabel } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<SectionLabel tone="yellow">Featured</SectionLabel>
+```
+
+Props:
+- `children`: `ReactNode` required - Label text.
+- `size`: `"sm" | "md" | "lg"` default "md" - Applies the label padding and heading scale.
+- `tone`: `"yellow" | "white" | "blue" | "red"` default "yellow" - Applies the label color treatment.
+- `variant`: `"default" | "flat"` default "default" - Toggles the offset shadow treatment.
+- `asChild`: `boolean` default false - Renders the child as the root element.
+- `...headingProps`: `HTMLAttributes<HTMLHeadingElement>` - Forwarded to the rendered heading.
+
+### Typography
+
+Heading and body text primitives with semantic controls, reusable scales and Swirski tone presets.
+
+Category: Typography
+Docs: https://ui.swirski.dev/components/typography
+Registry: https://ui.swirski.dev/r/typography.json
+Source: `packages/ui/src/components/typography`
+
+Import:
+```tsx
+import { Text, Title } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Title order={1} size="display">Build expressive interfaces.</Title>
+<Text size="xl" tone="muted" weight="bold">
+  A small UI library for expressive, editorial web interfaces.
+</Text>
+```
+
+Props:
+- `Title.children`: `ReactNode` required - Heading content.
+- `Title.order`: `1 | 2 | 3 | 4 | 5 | 6` default 1 - Chooses the semantic heading element.
+- `Title.size`: `"display" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"` - Overrides the visual heading scale.
+- `Title.tone`: `"default" | "muted" | "inverted"` default "default" - Applies the standard title color treatment.
+- `Title.as`: `ElementType` - Custom heading element or component.
+- `Title.asChild`: `boolean` default false - Renders the child as the root element.
+- `Text.children`: `ReactNode` required - Text content.
+- `Text.component`: `"p" | "span" | "div"` default "p" - Chooses the rendered text element.
+- `Text.size`: `"xs" | "sm" | "md" | "lg" | "xl" | "2xl"` default "md" - Applies the standard text scale.
+- `Text.variant`: `"default" | "lead" | "caption"` default "default" - Applies the standard text role treatment.
+- `Text.tone`: `"default" | "muted" | "subtle" | "inverted"` default "default" - Applies the standard text color treatment.
+- `Text.weight`: `"regular" | "medium" | "bold" | "black"` default "regular" - Applies the text weight.
+- `Text.as`: `ElementType` - Custom text element or component.
+- `Text.asChild`: `boolean` default false - Renders the child as the root element.
+
+## Hooks
+
+### useClickOutside
+
+Runs a callback when pointer events happen outside a referenced element.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-click-outside
+Registry: https://ui.swirski.dev/r/use-click-outside.json
+Source: `packages/ui/src/hooks/use-click-outside`
+
+Import:
+```tsx
+import { useClickOutside } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const ref = useRef<HTMLDivElement>(null);
+
+useClickOutside(ref, () => setOpen(false), {
+  enabled: open,
+});
+```
+
+Props:
+- `ref`: `RefObject<HTMLElement | null>` required - Element that owns the inside area.
+- `handler`: `(event: Event) => void` required - Runs when the event target is outside the ref.
+- `options.enabled`: `boolean` default true - Turns listeners on or off.
+- `options.events`: `Array<"mousedown" | "pointerdown" | "touchstart">` default ["pointerdown"] - Events to listen for.
+
+Returns:
+- `return`: `void` - Registers document listeners in an effect and returns no value.
+
+### useClipboard
+
+Copies text to the clipboard and tracks copied/error state.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-clipboard
+Registry: https://ui.swirski.dev/r/use-clipboard.json
+Source: `packages/ui/src/hooks/use-clipboard`
+
+Import:
+```tsx
+import { useClipboard } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const clipboard = useClipboard();
+
+<Button onClick={() => clipboard.copy("pnpm add @swirski/ui")}>
+  {clipboard.copied ? "Copied" : "Copy"}
+</Button>
+```
+
+Props:
+- `options.timeout`: `number` default 1600 - Copied-state reset delay in milliseconds.
+
+Returns:
+- `copied`: `boolean` - True immediately after a successful copy.
+- `copy`: `(value: string) => Promise<void>` - Copies text to the clipboard.
+- `error`: `Error | null` - Last copy error.
+- `reset`: `() => void` - Clears copied and error state.
+
+### useControllableState
+
+A small helper for components that support both controlled and uncontrolled state.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-controllable-state
+Registry: https://ui.swirski.dev/r/use-controllable-state.json
+Source: `packages/ui/src/hooks/use-controllable-state`
+
+Import:
+```tsx
+import { useControllableState } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const [value, setValue] = useControllableState({
+  value: props.value,
+  defaultValue: props.defaultValue ?? "",
+  onChange: props.onValueChange,
+});
+```
+
+Props:
+- `value`: `T` - Controlled value.
+- `defaultValue`: `T` required - Uncontrolled initial value.
+- `onChange`: `(value: T) => void` - Called when the setter resolves a value.
+
+Returns:
+- `value`: `T` - Current controlled or uncontrolled value.
+- `setValue`: `Dispatch<SetStateAction<T>>` - Updates internal state or calls onChange with the resolved value.
+
+### useDisclosure
+
+Boolean open/close/toggle state for dialogs, drawers, popovers and custom disclosure UI.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-disclosure
+Registry: https://ui.swirski.dev/r/use-disclosure.json
+Source: `packages/ui/src/hooks/use-disclosure`
+Copy dependencies: `use-controllable-state`
+
+Import:
+```tsx
+import { useDisclosure } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const [opened, handlers] = useDisclosure(false);
+
+<Button onClick={handlers.toggle}>
+  {opened ? "Close" : "Open"}
+</Button>
+```
+
+Props:
+- `defaultOpened`: `boolean` default false - Initial uncontrolled disclosure state.
+- `options.value`: `boolean` - Controlled disclosure state.
+- `options.onChange`: `(opened: boolean) => void` - Called whenever state changes.
+
+Returns:
+- `opened`: `boolean` - Current disclosure state.
+- `handlers.open`: `() => void` - Sets the disclosure state to open.
+- `handlers.close`: `() => void` - Sets the disclosure state to closed.
+- `handlers.toggle`: `() => void` - Flips the current disclosure state.
+- `handlers.set`: `(opened: boolean) => void` - Sets the disclosure state directly.
+
+### useEscapeKey
+
+Runs a callback when Escape is pressed.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-escape-key
+Registry: https://ui.swirski.dev/r/use-escape-key.json
+Source: `packages/ui/src/hooks/use-escape-key`
+
+Import:
+```tsx
+import { useEscapeKey } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+useEscapeKey(() => setOpen(false), {
+  enabled: open,
+});
+```
+
+Props:
+- `handler`: `(event: KeyboardEvent) => void` required - Runs when Escape is pressed.
+- `options.enabled`: `boolean` default true - Turns the key listener on or off.
+- `options.target`: `Document | HTMLElement | Window | null` - Event target, defaults to document.
+
+Returns:
+- `return`: `void` - Registers a keydown listener in an effect and returns no value.
+
+### useIsPathnameActive
+
+Checks whether a pathname matches the current URL path, including nested routes.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-is-pathname-active
+Registry: https://ui.swirski.dev/r/use-is-pathname-active.json
+Source: `packages/ui/src/hooks/use-is-pathname-active`
+
+Import:
+```tsx
+import { useIsPathnameActive } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const active = useIsPathnameActive(
+  "/components",
+  "/components/button",
+);
+```
+
+Props:
+- `pathname`: `string | URL` required - Target pathname or URL to match.
+- `currentUrl`: `string | URL` required - Current route URL or pathname.
+- `options.exact`: `boolean` default false - Require an exact pathname match.
+
+Returns:
+- `active`: `boolean` - True when currentUrl matches pathname or a nested child path.
+
+### useLocalStorage
+
+Persists React state in localStorage with serializer hooks.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-local-storage
+Registry: https://ui.swirski.dev/r/use-local-storage.json
+Source: `packages/ui/src/hooks/use-local-storage`
+
+Import:
+```tsx
+import { useLocalStorage } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const [cursor, setCursor, clearCursor] = useLocalStorage(
+  "swirski-cursor",
+  "bolt",
+);
+```
+
+Props:
+- `key`: `string` required - localStorage key.
+- `defaultValue`: `T` required - Fallback value.
+- `options.serialize`: `(value: T) => string` - Custom serializer.
+- `options.deserialize`: `(value: string) => T` - Custom parser.
+
+Returns:
+- `value`: `T` - Current state, initialized from defaultValue and then hydrated from localStorage.
+- `setValue`: `Dispatch<SetStateAction<T>>` - Updates React state and persists the serialized value.
+- `removeValue`: `() => void` - Removes the stored item and resets state to defaultValue.
+
+### useMediaQuery
+
+Tracks a CSS media query in React state.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-media-query
+Registry: https://ui.swirski.dev/r/use-media-query.json
+Source: `packages/ui/src/hooks/use-media-query`
+
+Import:
+```tsx
+import { useMediaQuery } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const isDesktop = useMediaQuery("(min-width: 1024px)");
+```
+
+Props:
+- `query`: `string` required - CSS media query to observe.
+- `initialValue`: `boolean` default false - Initial value before the browser runs the query.
+
+Returns:
+- `matches`: `boolean` - Whether the media query currently matches.
+
+### usePortalRoot
+
+Returns the document body once the app has mounted so portal components can render safely.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-portal-root
+Registry: https://ui.swirski.dev/r/use-portal-root.json
+Source: `packages/ui/src/hooks/use-portal-root`
+
+Import:
+```tsx
+import { usePortalRoot } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const portalRoot = usePortalRoot();
+```
+
+Returns:
+- `portalRoot`: `HTMLElement` - Root element to use for portals.
+
+### useReducedMotion
+
+Reads the user preference for reduced motion.
+
+Category: Hooks
+Docs: https://ui.swirski.dev/hooks/use-reduced-motion
+Registry: https://ui.swirski.dev/r/use-reduced-motion.json
+Source: `packages/ui/src/hooks/use-reduced-motion`
+Copy dependencies: `use-media-query`
+
+Import:
+```tsx
+import { useReducedMotion } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+const reducedMotion = useReducedMotion();
+```
+
+Props:
+- `initialValue`: `boolean` default false - Initial value before the media query runs.
+
+Returns:
+- `reducedMotion`: `boolean` - True when prefers-reduced-motion is reduce.
 
 ## Workspace Development
-
-The repository is a pnpm workspace:
 
 ```txt
 apps/docs        Documentation site
@@ -304,39 +1845,24 @@ Common commands:
 pnpm install
 pnpm dev
 pnpm storybook
+pnpm docs:metadata
+pnpm llms:build
 pnpm build:ui
-pnpm build
-pnpm registry:list
 pnpm registry:shadcn
 pnpm test:ui
-```
-
-Release command for `@swirski/ui`:
-
-```bash
-pnpm release:ui patch
-pnpm release:ui minor
-pnpm release:ui major
-```
-
-Dry-run package release:
-
-```bash
-pnpm release:ui patch --dry-run
+pnpm build
 ```
 
 ## Current Quality Notes
 
-Swirski UI has a broad component surface, docs pages, playgrounds, generated props metadata, examples, component tests for several interactive primitives, and hosted shadcn-compatible registry output.
+Swirski UI has a broad component surface, docs pages, playgrounds, generated props metadata, examples, component tests for several interactive primitives, shared modal overlay behavior for Dialog and Drawer, shared Floating UI positioning for DropdownMenu, Popover, Select, and Tooltip, and hosted shadcn-compatible registry output.
 
 Important near-term quality work:
 
 - Validate hosted shadcn registry items in CI.
 - Smoke test remote shadcn installs for key components.
 - Add per-component install tabs for package, Swirski CLI, and shadcn workflows.
-- Strengthen accessibility tests for Dialog, DropdownMenu, Popover, Tooltip, and Select.
-- Add richer keyboard navigation for DropdownMenu.
-- Consider a shared Floating UI positioning layer for floating components.
+- Continue strengthening accessibility tests for complex interaction primitives.
 
 ## License
 

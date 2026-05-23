@@ -205,6 +205,18 @@ function stripUndefined(typeString) {
     .trim();
 }
 
+function normalizeTypeString(typeString) {
+  return stripUndefined(typeString)
+    .replace(
+      /import\("[^"]*node_modules\/\.pnpm\/csstype@[^"]*\/node_modules\/csstype\/index"\)\.Property\.([A-Za-z]+)/g,
+      "CSSProperties['$1']",
+    )
+    .replace(
+      /import\("[^"]*node_modules\/\.pnpm\/@types\+react@[^"]*\/node_modules\/@types\/react\/index"\)\./g,
+      "React.",
+    );
+}
+
 function isUndefinedType(type) {
   return Boolean(type.flags & ts.TypeFlags.Undefined);
 }
@@ -260,7 +272,7 @@ function propTypeString(symbol, declaration, checker) {
     return expandedUnion;
   }
 
-  return stripUndefined(
+  return normalizeTypeString(
     checker.typeToString(
       propType,
       declaration,

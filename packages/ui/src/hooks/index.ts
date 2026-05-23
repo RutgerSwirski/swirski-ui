@@ -6,4 +6,5 @@ export * from "./use-escape-key/index";
 export * from "./use-is-pathname-active/index";
 export * from "./use-local-storage/index";
 export * from "./use-media-query/index";
+export * from "./use-portal-root/index";
 export * from "./use-reduced-motion/index";

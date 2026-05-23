@@ -14,7 +14,7 @@ export const Default: Story = {
   args: {
     size: "md",
     tone: "blue",
-    variant: "spinner",
+    variant: "pixel-dots",
   },
   render: (args) => (
     <div className="flex items-center justify-center h-40">

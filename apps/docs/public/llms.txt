@@ -2,9 +2,9 @@
 
 > Swirski UI is a React component package for bold, graphic, studio-flavored interfaces. It supports package imports from `@swirski/ui`, a source-copy workflow through `@swirski/cli`, and shadcn-compatible hosted registry items.
 
-Swirski UI sits between shadcn/ui and Mantine: package primitives for speed, copyable source for ownership, and strong visual defaults built from thick borders, hard shadows, expressive typography, practical app components, and theme tokens.
+Generated from `packages/ui/package.json`, `registry/swirski.registry.json`, and docs metadata in `apps/docs/content`.
 
-Current package version: `@swirski/ui@1.2.6`.
+Current package version: `@swirski/ui@1.2.9`.
 
 Primary install paths:
 
@@ -18,58 +18,71 @@ Primary install paths:
 - [Get Started](https://ui.swirski.dev/get-started): Package, Swirski CLI, and shadcn registry setup.
 - [CLI and Registry](https://ui.swirski.dev/cli): Details for `@swirski/cli`, hosted registry URLs, and namespace setup.
 - [System](https://ui.swirski.dev/system): Theme tokens, `SwirskiProvider`, component anatomy, and `asChild` conventions.
-- [Build a Component](https://ui.swirski.dev/build-component): Guide for creating a new Swirski component with `pnpm create:component <name>`, plus the starter template, docs, registry metadata, and verification.
-- [Component Template](https://ui.swirski.dev/templates/component/README.md): Copyable starter kit for source, export, test, docs, playground, and registry files.
+- [Build a Component](https://ui.swirski.dev/build-component): Guide for creating a new Swirski component.
 - [Components](https://ui.swirski.dev/components): Component index with examples, imports, props, and playgrounds.
 - [Hooks](https://ui.swirski.dev/hooks): Hook index and recipes.
 - [Examples](https://ui.swirski.dev/examples): Composed UI examples built from Swirski primitives.
-- [Full LLM Context](https://ui.swirski.dev/llms-full.txt): Expanded reference with install workflows, component catalogue, hooks, registry notes, and code guidance.
+- [Full LLM Context](https://ui.swirski.dev/llms-full.txt): Expanded generated reference.
 
 ## Registry
 
 - [shadcn registry root](https://ui.swirski.dev/registry.json): Full hosted registry index.
 - [swirski-base item](https://ui.swirski.dev/r/swirski-base.json): Shared system helpers, theme files, CSS variables, and base styles.
-- [Button registry item](https://ui.swirski.dev/r/button.json): Minimal action primitive install example.
-- [Dialog registry item](https://ui.swirski.dev/r/dialog.json): Modal overlay install example.
-- [Select registry item](https://ui.swirski.dev/r/select.json): Custom dropdown picker install example.
+- Registry item URL pattern: `https://ui.swirski.dev/r/{name}.json`
 
 ## Component Docs
 
-- [Accordion](https://ui.swirski.dev/components/accordion): Native disclosure stack.
-- [Alert](https://ui.swirski.dev/components/alert): Composable callout block.
-- [Avatar](https://ui.swirski.dev/components/avatar): Framed user image or fallback.
-- [Badge](https://ui.swirski.dev/components/badge): Compact status label.
-- [Breadcrumb](https://ui.swirski.dev/components/breadcrumb): Navigation trail primitives.
-- [Button](https://ui.swirski.dev/components/button): Bold action primitive.
-- [Card](https://ui.swirski.dev/components/card): Framed content block.
-- [Checkbox](https://ui.swirski.dev/components/checkbox): Native checkbox with Swirski mark.
-- [Container](https://ui.swirski.dev/components/container): Centered page width helper.
-- [Cursor](https://ui.swirski.dev/components/cursor): Custom cursor provider and picker.
-- [Dialog](https://ui.swirski.dev/components/dialog): Modal overlay primitive.
-- [Drawer](https://ui.swirski.dev/components/drawer): Side sheet primitive.
-- [DropdownMenu](https://ui.swirski.dev/components/dropdown-menu): Compact action menu.
-- [Field](https://ui.swirski.dev/components/field): Field, label, input, and textarea primitives.
-- [Grid](https://ui.swirski.dev/components/grid): Reusable CSS grid layout primitive.
-- [ImageFrame](https://ui.swirski.dev/components/image-frame): Framed image surface.
-- [Navbar](https://ui.swirski.dev/components/navbar): Header and mobile navigation primitives.
-- [Popover](https://ui.swirski.dev/components/popover): Floating content panel.
-- [Select](https://ui.swirski.dev/components/select): Custom dropdown picker.
-- [SwirskiProvider](https://ui.swirski.dev/components/swirski-provider): Theme provider and token helpers.
-- [Tabs](https://ui.swirski.dev/components/tabs): Tabbed section primitive.
-- [Toast](https://ui.swirski.dev/components/toast): Status messages and toast provider.
-- [Tooltip](https://ui.swirski.dev/components/tooltip): Hover and focus label.
-- [Typography](https://ui.swirski.dev/components/typography): Title and Text primitives.
+- [Accordion](https://ui.swirski.dev/components/accordion): A disclosure component built on details and summary, with no client JavaScript required. Import: `import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/accordion.json.
+- [Alert](https://ui.swirski.dev/components/alert): A loud composable feedback block for announcements, errors and status messages. Import: `import { Alert, AlertTitle, AlertDescription } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/alert.json.
+- [AppShell](https://ui.swirski.dev/components/app-shell): Composable application layout primitives for sidebars, navbars and bounded page content. Import: `import { AppShell, AppShellBody, AppShellContent, AppShellMain, AppShellNavbar, AppShellSidebar, } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/app-shell.json.
+- [Avatar](https://ui.swirski.dev/components/avatar): A framed user image or fallback for accounts, comments and navs. Import: `import { Avatar, AvatarFallback, AvatarImage } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/avatar.json.
+- [Badge](https://ui.swirski.dev/components/badge): A compact high-contrast label for statuses, tags and small interface signals. Import: `import { Badge } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/badge.json.
+- [Breadcrumb](https://ui.swirski.dev/components/breadcrumb): Navigation trail primitives for docs and app pages. Import: `import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/breadcrumb.json.
+- [Button](https://ui.swirski.dev/components/button): A bold Swirski UI button used for links, actions and call-to-actions. Import: `import { Button } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/button.json.
+- [Card](https://ui.swirski.dev/components/card): A bordered content block for projects, pieces, links and previews. Import: `import { Card, CardContent, CardTitle, Text } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/card.json.
+- [Checkbox](https://ui.swirski.dev/components/checkbox): A native checkbox with a chunky Swirski mark, label and optional description. Import: `import { Checkbox } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/checkbox.json.
+- [Container](https://ui.swirski.dev/components/container): A responsive page-width wrapper for sections, shells and documentation layouts. Import: `import { Container } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/container.json.
+- [Cursor](https://ui.swirski.dev/components/cursor): A playful pixel-art cursor provider with arrow, hover, click, text, zoom, panning and status states. Import: `import { Button, CursorProvider, CursorDock } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/cursor.json.
+- [DiagonalLines](https://ui.swirski.dev/components/diagonal-lines): A configurable diagonal stripe background for punchy poster and pop-art compositions. Import: `import { DiagonalLines } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/diagonal-lines.json.
+- [Dialog](https://ui.swirski.dev/components/dialog): A modal overlay for confirmations, details and focused forms. Import: `import { Dialog, DialogContent, DialogTrigger } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/dialog.json.
+- [DotGrid](https://ui.swirski.dev/components/dot-grid): A configurable dot-grid background for subtle texture, halftone fields and pop-art surfaces. Import: `import { DotGrid } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/dot-grid.json.
+- [Drawer](https://ui.swirski.dev/components/drawer): A side sheet for mobile menus, settings panels and command surfaces. Import: `import { Drawer, DrawerContent, DrawerTrigger } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/drawer.json.
+- [DropdownMenu](https://ui.swirski.dev/components/dropdown-menu): A compact actions menu for navs, profile menus and table rows. Import: `import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/dropdown-menu.json.
+- [Field](https://ui.swirski.dev/components/field): A form field set with label, input, textarea and hint primitives built from native elements. Import: `import { Field, FieldError, FieldHint, Input, Label, Textarea, } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/field.json.
+- [Grid](https://ui.swirski.dev/components/grid): A reusable CSS grid primitive for page sections, card clusters and dense interface layouts. Import: `import { Grid } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/grid.json.
+- [ImageFrame](https://ui.swirski.dev/components/image-frame): A framed media primitive for screenshots, product shots, visual examples and editorial layouts. Import: `import { ImageFrame } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/image-frame.json.
+- [LineGrid](https://ui.swirski.dev/components/line-grid): A configurable line grid background with optional heavier accent lines for pop-art surfaces. Import: `import { LineGrid } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/line-grid.json.
+- [Loader](https://ui.swirski.dev/components/loader): A compact loading spinner for pending states. Import: `import { Loader } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/loader.json.
+- [Navbar](https://ui.swirski.dev/components/navbar): Composable header primitives with a reusable hamburger menu for mobile navigation. Import: `import { MobileMenu, MobileMenuContent, MobileMenuLink, MobileMenuNav, MobileMenuTrigger, Navbar, NavbarActions, NavbarBrand, NavbarDropdown, NavbarDropdownContent, NavbarDropdownLink, NavbarDropdownTrigger, NavbarLink, NavbarNav, } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/navbar.json.
+- [Pagination](https://ui.swirski.dev/components/pagination): Page controls for tables, lists and archives. Import: `import { Pagination } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/pagination.json.
+- [Popover](https://ui.swirski.dev/components/popover): A floating panel for filters, quick settings and small editable surfaces. Import: `import { Popover, PopoverContent, PopoverTrigger } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/popover.json.
+- [Progress](https://ui.swirski.dev/components/progress): A simple progress meter for loading and completion states. Import: `import { Progress } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/progress.json.
+- [RadioGroup](https://ui.swirski.dev/components/radio-group): A native radio group for choosing one option from a set. Import: `import { RadioGroup } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/radio-group.json.
+- [SectionLabel](https://ui.swirski.dev/components/section-label): A chunky rotated heading label for editorial section markers, callouts and page breaks. Import: `import { SectionLabel } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/section-label.json.
+- [Select](https://ui.swirski.dev/components/select): A custom dropdown picker for option sets, playground controls and compact forms. Import: `import { Select } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/select.json.
+- [Separator](https://ui.swirski.dev/components/separator): A small visual divider for sections, menus and dense layouts. Import: `import { Separator } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/separator.json.
+- [Skeleton](https://ui.swirski.dev/components/skeleton): A placeholder block for loading layouts. Import: `import { Skeleton } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/skeleton.json.
+- [Slider](https://ui.swirski.dev/components/slider): A native range input for numeric controls. Import: `import { Slider } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/slider.json.
+- [SwirskiProvider](https://ui.swirski.dev/components/swirski-provider): Theme provider for Swirski tokens, color schemes and per-app brand overrides. Import: `import { SwirskiProvider, createSwirskiTheme } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/swirski-provider.json.
+- [Switch](https://ui.swirski.dev/components/switch): A native checkbox presented as a switch for binary preferences and settings. Import: `import { Switch } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/switch.json.
+- [Table](https://ui.swirski.dev/components/table): A bold base table for data lists before adding DataTable behavior. Import: `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/table.json.
+- [Tabs](https://ui.swirski.dev/components/tabs): Tabbed sections for settings, dashboards and previews. Import: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/tabs.json.
+- [Toast](https://ui.swirski.dev/components/toast): Status messages for save states, confirmations and errors. Import: `import { Toast, ToastDescription, ToastTitle } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/toast.json.
+- [Tooltip](https://ui.swirski.dev/components/tooltip): A compact hover/focus label for icon buttons and dense UI. Import: `import { Tooltip } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/tooltip.json.
+- [Typography](https://ui.swirski.dev/components/typography): Heading and body text primitives with semantic controls, reusable scales and Swirski tone presets. Import: `import { Text, Title } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/typography.json.
 
 ## Hook Docs
 
-- [useClipboard](https://ui.swirski.dev/hooks/use-clipboard): Copy text and track copied/error state.
-- [useClickOutside](https://ui.swirski.dev/hooks/use-click-outside): Run a callback when pointer events happen outside an element.
-- [useControllableState](https://ui.swirski.dev/hooks/use-controllable-state): Build controlled or uncontrolled component state.
-- [useDisclosure](https://ui.swirski.dev/hooks/use-disclosure): Open, close, and toggle boolean disclosure state.
-- [useEscapeKey](https://ui.swirski.dev/hooks/use-escape-key): Run a callback when Escape is pressed.
-- [useLocalStorage](https://ui.swirski.dev/hooks/use-local-storage): Persist React state in localStorage.
-- [useMediaQuery](https://ui.swirski.dev/hooks/use-media-query): Track a CSS media query.
-- [useReducedMotion](https://ui.swirski.dev/hooks/use-reduced-motion): Read `prefers-reduced-motion`.
+- [useClickOutside](https://ui.swirski.dev/hooks/use-click-outside): Runs a callback when pointer events happen outside a referenced element. Import: `import { useClickOutside } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-click-outside.json.
+- [useClipboard](https://ui.swirski.dev/hooks/use-clipboard): Copies text to the clipboard and tracks copied/error state. Import: `import { useClipboard } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-clipboard.json.
+- [useControllableState](https://ui.swirski.dev/hooks/use-controllable-state): A small helper for components that support both controlled and uncontrolled state. Import: `import { useControllableState } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-controllable-state.json.
+- [useDisclosure](https://ui.swirski.dev/hooks/use-disclosure): Boolean open/close/toggle state for dialogs, drawers, popovers and custom disclosure UI. Import: `import { useDisclosure } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-disclosure.json.
+- [useEscapeKey](https://ui.swirski.dev/hooks/use-escape-key): Runs a callback when Escape is pressed. Import: `import { useEscapeKey } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-escape-key.json.
+- [useIsPathnameActive](https://ui.swirski.dev/hooks/use-is-pathname-active): Checks whether a pathname matches the current URL path, including nested routes. Import: `import { useIsPathnameActive } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-is-pathname-active.json.
+- [useLocalStorage](https://ui.swirski.dev/hooks/use-local-storage): Persists React state in localStorage with serializer hooks. Import: `import { useLocalStorage } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-local-storage.json.
+- [useMediaQuery](https://ui.swirski.dev/hooks/use-media-query): Tracks a CSS media query in React state. Import: `import { useMediaQuery } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-media-query.json.
+- [usePortalRoot](https://ui.swirski.dev/hooks/use-portal-root): Returns the document body once the app has mounted so portal components can render safely. Import: `import { usePortalRoot } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-portal-root.json.
+- [useReducedMotion](https://ui.swirski.dev/hooks/use-reduced-motion): Reads the user preference for reduced motion. Import: `import { useReducedMotion } from "@swirski/ui";`. Registry: https://ui.swirski.dev/r/use-reduced-motion.json.
 
 ## Optional
 

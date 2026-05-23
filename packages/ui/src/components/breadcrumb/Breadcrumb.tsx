@@ -5,7 +5,7 @@ import {
   ReactNode,
   forwardRef,
 } from "react";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 
 export type BreadcrumbVariant = "default" | "plain";
 export type BreadcrumbSize = "sm" | "md";
@@ -127,6 +127,8 @@ export const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>
     <ResolvedComponent
       ref={ref}
       className={cn(
+        "outline-none",
+        focusVisibleStyles,
         variant === "default" && "underline decoration-4 underline-offset-4",
         className,
       )}

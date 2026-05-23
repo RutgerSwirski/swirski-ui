@@ -31,11 +31,11 @@ const optionsCommand = `pnpm create:component pricing-card \\
 const dryRunCommand = `pnpm create:component empty-state --dry-run`;
 
 const docsSnippet = [
-  `// apps/docs/content/components.tsx`,
+  `// apps/docs/content/components/empty-state/component.tsx`,
   `import { EmptyState } from "@swirski/ui";`,
+  `import type { ComponentDoc } from "../../types";`,
   ``,
-  `// Inside componentDocs:`,
-  `{`,
+  `export const emptyStateComponentDoc: ComponentDoc = {`,
   `  slug: "empty-state",`,
   `  title: "EmptyState",`,
   `  category: "Feedback",`,
@@ -64,15 +64,20 @@ const docsSnippet = [
   `      description: "Optional supporting copy.",`,
   `    },`,
   `  ],`,
-  `},`,
+  `};`,
+  ``,
+  `// Then add emptyStateComponentDoc to apps/docs/content/components/index.ts.`,
 ].join("\n");
 
 const playgroundSnippet = [
-  `// apps/docs/content/playgrounds.tsx`,
-  `import { EmptyState } from "@swirski/ui";`,
+  `// apps/docs/content/components/empty-state/playground.tsx`,
+  `"use client";`,
   ``,
-  `// Inside playgroundDefinitions:`,
-  `"empty-state": {`,
+  `import { EmptyState } from "@swirski/ui";`,
+  `import type { PlaygroundDefinition } from "../../types";`,
+  `import { jsxString, textValue } from "../playground-utils";`,
+  ``,
+  `export const emptyStatePlayground: PlaygroundDefinition = {`,
   `  controls: [`,
   `    {`,
   `      name: "title",`,
@@ -97,7 +102,9 @@ const playgroundSnippet = [
   `  title=\${jsxString(textValue(values, "title"))}`,
   `  description=\${jsxString(textValue(values, "description"))}`,
   `/>\`,`,
-  `},`,
+  `};`,
+  ``,
+  `// Then add emptyStatePlayground to apps/docs/content/components/playgrounds.ts.`,
 ].join("\n");
 
 const verifyCommands = `pnpm docs:metadata
@@ -143,14 +150,14 @@ export default function BuildComponentPage() {
               </Text>
             </div>
 
-            <Card interactive={false} className="bg-[#FFD400]">
+            {/* <Card interactive={false} className="bg-[#FFD400]">
               <CardContent>
                 <Badge tone="black">Command</Badge>
                 <code className="mt-5 block break-words border-4 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_#0B0B0C] sm:text-base">
                   pnpm create:component empty-state
                 </code>
               </CardContent>
-            </Card>
+            </Card> */}
           </Grid>
         </Container>
       </div>
@@ -247,8 +254,8 @@ export default function BuildComponentPage() {
                 Add the component docs.
               </Title>
               <Text className="mt-3">
-                Import the component in <code>components.tsx</code>, then paste
-                an entry inside <code>componentDocs</code>.
+                Create <code>component.tsx</code> inside the component docs
+                folder, then add it to the content index.
               </Text>
               <div className="mt-5">
                 <CodeBlock code={docsSnippet} />
@@ -263,8 +270,8 @@ export default function BuildComponentPage() {
                 Add editable playground controls.
               </Title>
               <Text className="mt-3" tone="muted" weight="bold">
-                Import the component in <code>playgrounds.tsx</code>, then add a
-                key that matches the docs slug.
+                Create <code>playground.tsx</code> beside the docs file, then
+                register a key that matches the docs slug.
               </Text>
               <div className="mt-5">
                 <CodeBlock code={playgroundSnippet} />

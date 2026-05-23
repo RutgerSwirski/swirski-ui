@@ -23,3 +23,6 @@ build
 
 # npm
 .npmrc
+
+# storybook static
+storybook-static

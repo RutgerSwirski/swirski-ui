@@ -367,13 +367,21 @@ The docs site publishes LLM-friendly project context at:
 - `https://ui.swirski.dev/llms.txt`
 - `https://ui.swirski.dev/llms-full.txt`
 
+These files are generated from package metadata, the registry manifest, and docs
+metadata with:
+
+```bash
+pnpm llms:build
+```
+
 ## Current Status
 
 Swirski UI is actively growing. The component surface is broad, but some complex interaction primitives are still early versions. The next quality pass should focus on:
 
-- stronger accessibility for overlays and menus
-- portal rendering and focus traps
-- collision-aware positioning for popovers/tooltips/dropdowns
+- validating hosted registry items in CI
+- smoke testing remote shadcn installs for key components
+- per-component install tabs for package, Swirski CLI and shadcn workflows
+- continuing accessibility tests for complex interaction primitives
 - interaction tests
 - richer Storybook coverage
 - shadcn-compatible remote registry output

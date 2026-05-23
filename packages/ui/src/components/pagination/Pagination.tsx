@@ -1,7 +1,12 @@
 "use client";
 
 import { ButtonHTMLAttributes, HTMLAttributes, forwardRef } from "react";
-import { cn, swirskiAttrs } from "../../system";
+import {
+  cn,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
 
 export type PaginationVariant = "default" | "compact";
 export type PaginationSize = "sm" | "md" | "lg";
@@ -88,9 +93,9 @@ const sizeStyles: Record<PaginationSize, string> = {
 };
 
 const activeToneStyles: Record<PaginationTone, string> = {
-  blue: "bg-[#0057FF] text-white",
-  yellow: "bg-[#FFD400] text-black",
-  black: "bg-[#0B0B0C] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-black)]",
+  black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
 export const PaginationButton = forwardRef<
@@ -108,10 +113,12 @@ export const PaginationButton = forwardRef<
     <button
       ref={ref}
       className={cn(
-        "border-4 border-black font-black uppercase shadow-[3px_3px_0_#0B0B0C] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-black/40",
+        "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase shadow-[var(--sw-shadow-sm)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-black/40 disabled:hover:shadow-[var(--sw-shadow-sm)]",
+        focusVisibleStyles,
+        disabledInteractiveStyles,
         sizeStyles[size],
-        active ? activeToneStyles[tone] : "bg-white",
-        variant === "compact" && "shadow-none",
+        active ? activeToneStyles[tone] : "bg-[var(--sw-color-surface)]",
+        variant === "compact" && "shadow-none disabled:hover:shadow-none",
         className,
       )}
       type="button"

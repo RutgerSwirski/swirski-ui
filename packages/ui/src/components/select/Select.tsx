@@ -1,29 +1,39 @@
 "use client";
 
-import {
-  HTMLAttributes,
-  KeyboardEvent,
-  ReactNode,
-  forwardRef,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
+import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { cn, composeRefs, swirskiAttrs } from "../../system";
-import { usePortalRoot } from "../../system/usePortalRoot";
+import {
+  cn,
+  composeRefs,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
+import { useFloatingPosition } from "../../system/floating";
+import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
+import SelectContent from "./SelectContent";
+import type {
+  SelectOption,
+  SelectSize,
+  SelectTone,
+  SelectVariant,
+} from "./select-types";
+import {
+  findMatchingOptionIndex,
+  getEnabledIndex,
+  getLastEnabledIndex,
+  moveHighlight,
+  optionText,
+  triggerSizeStyles,
+} from "./select-utils";
 
-export type SelectVariant = "default" | "filled";
-export type SelectSize = "sm" | "md" | "lg";
-export type SelectTone = "default";
-
-export type SelectOption = {
-  value: string;
-  label?: ReactNode;
-  disabled?: boolean;
-};
+export type {
+  SelectOption,
+  SelectSize,
+  SelectTone,
+  SelectVariant,
+} from "./select-types";
 
 export type SelectProps = {
   options: SelectOption[];
@@ -42,107 +52,6 @@ export type SelectProps = {
   size?: SelectSize;
   tone?: SelectTone;
 } & Omit<HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange">;
-
-const triggerSizeStyles: Record<SelectSize, string> = {
-  sm: "min-h-10 px-3 py-1.5 text-xs",
-  md: "min-h-12 px-3 py-2 text-sm",
-  lg: "min-h-14 px-4 py-3 text-base",
-};
-
-const optionSizeStyles: Record<SelectSize, string> = {
-  sm: "min-h-9 px-2 py-1.5 text-xs",
-  md: "min-h-10 px-3 py-2 text-xs",
-  lg: "min-h-12 px-4 py-3 text-sm",
-};
-
-function optionText(option: SelectOption) {
-  return option.label ?? option.value;
-}
-
-function optionSearchText(option: SelectOption) {
-  if (typeof option.label === "string" || typeof option.label === "number") {
-    return String(option.label);
-  }
-
-  return option.value;
-}
-
-function getEnabledIndex(options: SelectOption[], startIndex = 0) {
-  const directIndex = options.findIndex(
-    (option, index) => index >= startIndex && !option.disabled,
-  );
-
-  if (directIndex !== -1) {
-    return directIndex;
-  }
-
-  return options.findIndex((option) => !option.disabled);
-}
-
-function getLastEnabledIndex(options: SelectOption[]) {
-  for (let index = options.length - 1; index >= 0; index -= 1) {
-    if (!options[index]?.disabled) {
-      return index;
-    }
-  }
-
-  return -1;
-}
-
-function moveHighlight(
-  options: SelectOption[],
-  currentIndex: number,
-  direction: 1 | -1,
-) {
-  if (!options.some((option) => !option.disabled)) {
-    return currentIndex;
-  }
-
-  let nextIndex = currentIndex;
-
-  for (let count = 0; count < options.length; count += 1) {
-    nextIndex = (nextIndex + direction + options.length) % options.length;
-
-    if (!options[nextIndex]?.disabled) {
-      return nextIndex;
-    }
-  }
-
-  return currentIndex;
-}
-
-function findMatchingOptionIndex(
-  options: SelectOption[],
-  search: string,
-  currentIndex: number,
-) {
-  if (!search || !options.length) {
-    return -1;
-  }
-
-  const normalizedSearch = search.toLowerCase();
-  const isRepeatedCharacterSearch =
-    normalizedSearch.length > 1 &&
-    normalizedSearch.split("").every((char) => char === normalizedSearch[0]);
-  const lookup = isRepeatedCharacterSearch
-    ? normalizedSearch[0]
-    : normalizedSearch;
-
-  for (let offset = 1; offset <= options.length; offset += 1) {
-    const index = (currentIndex + offset + options.length) % options.length;
-    const option = options[index];
-
-    if (
-      option &&
-      !option.disabled &&
-      optionSearchText(option).toLowerCase().startsWith(lookup)
-    ) {
-      return index;
-    }
-  }
-
-  return -1;
-}
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   {
@@ -173,14 +82,16 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const [contentPosition, setContentPosition] = useState<{
-    left: number;
-    top: number;
-    width: number;
-  } | null>(null);
   const [internalValue, setInternalValue] = useState(
     defaultValue ?? options.find((option) => !option.disabled)?.value ?? "",
   );
+  const contentStyle = useFloatingPosition({
+    floatingRef: contentRef,
+    matchReferenceWidth: true,
+    open: isOpen,
+    placement: "bottom-start",
+    referenceRef: rootRef,
+  });
   const selectedValue = value ?? internalValue;
   const selectedIndex = options.findIndex(
     (option) => option.value === selectedValue,
@@ -222,36 +133,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
 
     return () => {
       window.removeEventListener("pointerdown", handlePointerDown);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setContentPosition(null);
-      return;
-    }
-
-    function updatePosition() {
-      const rect = rootRef.current?.getBoundingClientRect();
-
-      if (!rect) {
-        return;
-      }
-
-      setContentPosition({
-        left: rect.left,
-        top: rect.bottom + 8,
-        width: rect.width,
-      });
-    }
-
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
     };
   }, [isOpen]);
 
@@ -409,8 +290,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         className={cn(
-          "flex w-full items-center justify-between gap-3 border-4 border-black text-left font-black uppercase text-[#0B0B0C] shadow-[4px_4px_0_#0B0B0C] outline-none transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#0B0B0C] focus-visible:shadow-[6px_6px_0_#0057FF] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500",
-          variant === "default" ? "bg-white" : "bg-[#F5F5F3]",
+          "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+          focusVisibleStyles,
+          disabledInteractiveStyles,
+          variant === "default" ? "bg-[var(--sw-color-surface)]" : "bg-[var(--sw-color-paper)]",
           triggerSizeStyles[size],
           triggerClassName,
         )}
@@ -426,7 +309,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         <span
           aria-hidden="true"
           className={cn(
-            "grid size-6 shrink-0 place-items-center border-2 border-black bg-[#FFD400] leading-none transition",
+            "grid size-6 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] leading-none transition",
             isOpen && "rotate-180",
           )}
         >
@@ -435,68 +318,25 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       </button>
 
       {isOpen &&
-        contentPosition &&
         portalRoot &&
         createPortal(
-          <div
-            ref={contentRef}
-            className={cn(
-              "fixed z-[1000] max-h-64 overflow-y-auto border-4 border-black bg-white p-1 shadow-[7px_7px_0_#0B0B0C] min-w-50",
-              contentClassName,
-            )}
-            id={listboxId}
-            role="listbox"
-            {...swirskiAttrs("select-content", { size, tone, variant })}
-            style={{
-              left: contentPosition.left,
-              top: contentPosition.top,
-              width: contentPosition.width,
-            }}
-          >
-            {options.map((option, index) => {
-              const isSelected = option.value === selectedValue;
-              const isHighlighted = index === highlightedIndex;
-
-              return (
-                <button
-                  aria-disabled={option.disabled}
-                  aria-selected={isSelected}
-                  className={cn(
-                    "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
-                    optionSizeStyles[size],
-                    isHighlighted &&
-                      !option.disabled &&
-                      "bg-[#0057FF] text-white",
-                    isSelected && "bg-[#0057FF] text-white",
-                    option.disabled
-                      ? "cursor-not-allowed text-black/35"
-                      : "hover:bg-[#0057FF] hover:text-white",
-                    optionClassName,
-                  )}
-                  disabled={option.disabled}
-                  id={`${listboxId}-option-${index}`}
-                  key={option.value}
-                  onClick={() => selectValue(option.value)}
-                  onMouseEnter={() => {
-                    if (!option.disabled) {
-                      setHighlightedIndex(index);
-                    }
-                  }}
-                  role="option"
-                  type="button"
-                  {...swirskiAttrs("select-option", { size, tone, variant })}
-                >
-                  <span>{optionText(option)}</span>
-
-                  {/* insert clear button */}
-
-                  {showSelectedIndicator && isSelected && (
-                    <span aria-hidden="true">{selectedIndicator}</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>,
+          <SelectContent
+            contentClassName={contentClassName}
+            contentStyle={contentStyle}
+            contentRef={contentRef}
+            highlightedIndex={highlightedIndex}
+            listboxId={listboxId}
+            onOptionHover={setHighlightedIndex}
+            onOptionSelect={selectValue}
+            optionClassName={optionClassName}
+            options={options}
+            selectedIndicator={selectedIndicator}
+            selectedValue={selectedValue}
+            showSelectedIndicator={showSelectedIndicator}
+            size={size}
+            tone={tone}
+            variant={variant}
+          />,
           portalRoot,
         )}
     </div>

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-is-pathname-active",
+  "type": "registry:hook",
+  "title": "Use Is Pathname Active",
+  "description": "Check whether a pathname matches the current URL path.",
+  "registryDependencies": [],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "packages/ui/src/hooks/use-is-pathname-active/index.ts",
+      "content": "export {\n  isPathnameActive,\n  useIsPathnameActive,\n} from \"./useIsPathnameActive\";\nexport type {\n  IsPathnameActiveOptions,\n  PathnameUrl,\n} from \"./useIsPathnameActive\";\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-is-pathname-active/index.ts"
+    },
+    {
+      "path": "packages/ui/src/hooks/use-is-pathname-active/useIsPathnameActive.test.ts",
+      "content": "import { describe, expect, it } from \"vitest\";\nimport { isPathnameActive } from \"./useIsPathnameActive\";\n\ndescribe(\"isPathnameActive\", () => {\n  it(\"matches exact and nested paths\", () => {\n    expect(isPathnameActive(\"/components\", \"/components\")).toBe(true);\n    expect(isPathnameActive(\"/components\", \"/components/button\")).toBe(true);\n    expect(isPathnameActive(\"/components\", \"/components-button\")).toBe(false);\n  });\n\n  it(\"supports exact matching\", () => {\n    expect(\n      isPathnameActive(\"/components\", \"/components/button\", { exact: true }),\n    ).toBe(false);\n  });\n\n  it(\"normalizes URLs, query strings, and trailing slashes\", () => {\n    expect(\n      isPathnameActive(\n        \"/components/\",\n        \"https://swirski.dev/components/button?tab=props\",\n      ),\n    ).toBe(true);\n  });\n\n  it(\"only marks the root path active for the root URL\", () => {\n    expect(isPathnameActive(\"/\", \"/\")).toBe(true);\n    expect(isPathnameActive(\"/\", \"/components\")).toBe(false);\n  });\n});\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-is-pathname-active/useIsPathnameActive.test.ts"
+    },
+    {
+      "path": "packages/ui/src/hooks/use-is-pathname-active/useIsPathnameActive.ts",
+      "content": "\"use client\";\n\nimport { useMemo } from \"react\";\n\nexport type IsPathnameActiveOptions = {\n  exact?: boolean;\n};\n\nexport type PathnameUrl = string | URL;\n\nconst URL_BASE = \"https://swirski.local\";\n\nfunction toPathname(value: PathnameUrl) {\n  if (value instanceof URL) {\n    return normalizePathname(value.pathname);\n  }\n\n  return normalizePathname(new URL(value, URL_BASE).pathname);\n}\n\nfunction normalizePathname(pathname: string) {\n  const normalizedPathname = pathname.startsWith(\"/\")\n    ? pathname\n    : `/${pathname}`;\n\n  if (normalizedPathname === \"/\") {\n    return normalizedPathname;\n  }\n\n  return normalizedPathname.replace(/\\/+$/, \"\");\n}\n\nexport function isPathnameActive(\n  pathname: PathnameUrl,\n  currentUrl: PathnameUrl,\n  { exact = false }: IsPathnameActiveOptions = {},\n) {\n  const targetPathname = toPathname(pathname);\n  const currentPathname = toPathname(currentUrl);\n\n  if (exact || targetPathname === \"/\") {\n    return currentPathname === targetPathname;\n  }\n\n  return (\n    currentPathname === targetPathname ||\n    currentPathname.startsWith(`${targetPathname}/`)\n  );\n}\n\nexport function useIsPathnameActive(\n  pathname: PathnameUrl,\n  currentUrl: PathnameUrl,\n  { exact = false }: IsPathnameActiveOptions = {},\n) {\n  return useMemo(\n    () => isPathnameActive(pathname, currentUrl, { exact }),\n    [currentUrl, exact, pathname],\n  );\n}\n",
+      "type": "registry:hook",
+      "target": "@ui/swirski/hooks/use-is-pathname-active/useIsPathnameActive.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "hooks"
+  ],
+  "meta": {
+    "swirskiCategory": "hooks",
+    "swirskiSource": "packages/ui/src/hooks/use-is-pathname-active"
+  }
+}

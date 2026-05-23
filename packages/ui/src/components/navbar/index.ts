@@ -7,9 +7,16 @@ export {
   MobileMenuNav,
   MobileMenuTitle,
   MobileMenuTrigger,
+} from "./MobileMenu";
+export {
   Navbar,
   NavbarActions,
   NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownItem,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
   NavbarLink,
   NavbarNav,
 } from "./Navbar";
@@ -22,8 +29,15 @@ export type {
   MobileMenuProps,
   MobileMenuTitleProps,
   MobileMenuTriggerProps,
+} from "./MobileMenu";
+export type {
   NavbarActionsProps,
   NavbarBrandProps,
+  NavbarDropdownContentProps,
+  NavbarDropdownItemProps,
+  NavbarDropdownLinkProps,
+  NavbarDropdownProps,
+  NavbarDropdownTriggerProps,
   NavbarLinkProps,
   NavbarNavProps,
   NavbarProps,

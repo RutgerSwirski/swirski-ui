@@ -33,11 +33,6 @@ const foundations = [
     title: "shadcn registry access",
     body: "Install hosted Swirski registry items with the shadcn CLI when your project already uses that workflow.",
   },
-  {
-    label: "04",
-    title: "Built for customization",
-    body: "Theme tokens, className escape hatches, data attributes, asChild support and readable source keep the system flexible.",
-  },
 ];
 
 const showcaseComponents = [
@@ -85,8 +80,7 @@ const showcaseComponents = [
   },
   {
     name: "Typography",
-    description:
-      "Heading and body text primitives with reusable size scales.",
+    description: "Heading and body text primitives with reusable size scales.",
     href: "/components/typography",
   },
 ];
@@ -131,10 +125,7 @@ export default function HomePage() {
                     defaults.
                   </Text>
 
-                  <CodeBlock
-                    className="mt-4"
-                    code="pnpm add @swirski/ui"
-                  />
+                  <CodeBlock className="mt-4" code="pnpm add @swirski/ui" />
                 </CardContent>
               </Card>
 
@@ -161,7 +152,7 @@ export default function HomePage() {
                 </CardContent>
               </Card>
 
-              <Card
+              {/* <Card
                 interactive={false}
                 className="shadow-(color:--sw-color-blue)"
               >
@@ -182,7 +173,7 @@ export default function HomePage() {
                     code="pnpm dlx shadcn@latest add https://ui.swirski.dev/r/button.json"
                   />
                 </CardContent>
-              </Card>
+              </Card> */}
             </Grid>
           </Grid>
         </Container>
@@ -190,21 +181,21 @@ export default function HomePage() {
 
       <Container className="py-16 md:py-20">
         <section id="system">
-          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div className="flex flex-col justify-between gap-5 md:flex-row ">
             <div>
               <SectionLabel>System</SectionLabel>
               <Title className="mt-6 max-w-3xl" order={2} size="h1">
                 One system. Three ways to build.
               </Title>
             </div>
-            <Text className="max-w-sm" tone="muted" weight="bold">
+            <Text className="max-w-xl" tone="muted" weight="bold">
               Use Swirski UI as a component library, copy pieces with the
               Swirski CLI, or install hosted registry items with shadcn. The
               same props, tokens and styling hooks keep everything consistent.
             </Text>
           </div>
 
-          <Grid gap="lg" className="mt-10 md:grid-cols-2 lg:grid-cols-4">
+          <Grid gap="lg" className="mt-10 md:grid-cols-3 lg:grid-cols-4">
             {foundations.map((item) => (
               <Card
                 key={item.title}
@@ -228,7 +219,7 @@ export default function HomePage() {
         </section>
 
         <section id="components" className="pt-16 md:pt-20">
-          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div className="flex flex-col justify-between gap-5 md:flex-row">
             <div>
               <SectionLabel>Components</SectionLabel>
 
@@ -236,10 +227,6 @@ export default function HomePage() {
                 Useful primitives with a graphic point of view.
               </Title>
             </div>
-
-            <Button href="/components" tone="white">
-              Browse components
-            </Button>
           </div>
 
           <Grid gap="md" className="mt-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -274,6 +261,10 @@ export default function HomePage() {
               </Link>
             ))}
           </Grid>
+
+          <Button href="/components" tone="white" className="mt-10">
+            Browse components
+          </Button>
         </section>
 
         <section className="pt-16 md:pt-20">
@@ -282,7 +273,7 @@ export default function HomePage() {
             className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
           >
             <CardContent className="p-6 md:p-8">
-              <Grid gap="lg" className="md:grid-cols-[1fr_auto] md:items-end">
+              <Grid gap="lg">
                 <div>
                   <Badge tone="black">Start</Badge>
 

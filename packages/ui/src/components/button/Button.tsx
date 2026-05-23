@@ -5,7 +5,13 @@ import {
   ReactNode,
   forwardRef,
 } from "react";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import {
+  Slot,
+  cn,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
 
 export type ButtonTone = "blue" | "yellow" | "red" | "white" | "black";
 export type ButtonVariant = "solid" | "outline" | "ghost";
@@ -39,13 +45,13 @@ type ButtonNativeProps = ButtonBaseProps &
 export type ButtonProps = ButtonLinkProps | ButtonNativeProps;
 
 const baseStyles =
-  "inline-flex max-w-full items-center justify-center gap-2 hover:cursor-pointer border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase transition-all duration-200 disabled:cursor-not-allowed disabled:hover:cursor-not-allowed disabled:opacity-60";
+  "inline-flex max-w-full items-center justify-center gap-2 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase outline-none transition-all duration-200 hover:cursor-pointer disabled:hover:cursor-not-allowed";
 
 const shadowFeedbackStyles =
-  "shadow-[var(--sw-shadow-md)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2";
+  "shadow-[var(--sw-shadow-md)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2 disabled:hover:shadow-[var(--sw-shadow-md)] disabled:active:shadow-[var(--sw-shadow-md)]";
 
 const flatFeedbackStyles =
-  "hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 active:scale-[0.98]";
+  "hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 active:scale-[0.98] disabled:hover:brightness-100";
 
 const legacyToneVariants: ButtonTone[] = ["blue", "yellow", "red", "white", "black"];
 
@@ -120,6 +126,8 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
   );
   const styles = cn(
     baseStyles,
+    focusVisibleStyles,
+    disabledInteractiveStyles,
     sizeStyles[size],
     normalizedVariant === "solid" && toneStyles[normalizedTone],
     normalizedVariant === "outline" && outlineToneStyles[normalizedTone],

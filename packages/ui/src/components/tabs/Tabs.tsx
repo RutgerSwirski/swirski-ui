@@ -9,7 +9,13 @@ import {
   useContext,
   useState,
 } from "react";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import {
+  Slot,
+  cn,
+  disabledInteractiveStyles,
+  focusVisibleStyles,
+  swirskiAttrs,
+} from "../../system";
 
 export type TabsVariant = "default" | "compact";
 export type TabsSize = "sm" | "md" | "lg";
@@ -132,9 +138,9 @@ const triggerSizeStyles: Record<TabsSize, string> = {
 };
 
 const selectedToneStyles: Record<TabsTone, string> = {
-  blue: "bg-[#0057FF] text-white",
-  yellow: "bg-[#FFD400] text-black",
-  black: "bg-[#0B0B0C] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-black)]",
+  black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
@@ -157,9 +163,11 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         ref={ref}
         aria-selected={isSelected}
         className={cn(
-          "border-4 border-black font-black uppercase transition",
+          "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase outline-none transition-all duration-150 active:scale-[0.98]",
+          focusVisibleStyles,
+          disabledInteractiveStyles,
           triggerSizeStyles[size],
-          isSelected ? selectedToneStyles[tone] : "bg-white hover:bg-[#FFD400]",
+          isSelected ? selectedToneStyles[tone] : "bg-[var(--sw-color-surface)] hover:bg-[var(--sw-color-yellow)] disabled:hover:bg-[var(--sw-color-surface)]",
           variant === "compact" && "border-2",
           className,
         )}

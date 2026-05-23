@@ -1,6 +1,6 @@
 import CodeBlock from "@/components/CodeBlock";
 import NavBar from "@/components/NavBar";
-import { componentDocs } from "@/content/components";
+import { hookDocs } from "@/content/hooks";
 import {
   Badge,
   Button,
@@ -20,10 +20,6 @@ import {
   Title,
 } from "@swirski/ui";
 import Link from "next/link";
-
-const hookDocs = componentDocs.filter(
-  (component) => component.category === "Hooks",
-);
 
 const hookGroups = [
   {

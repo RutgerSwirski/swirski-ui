@@ -14,6 +14,7 @@ hand.
 ## Rename placeholders
 
 - `ComponentName` -> your PascalCase component export, for example `EmptyState`.
+- `componentName` -> your camelCase docs export prefix, for example `emptyState`.
 - `component-name` -> your lowercase registry slug, for example `empty-state`.
 - `Component name` -> your readable title, for example `Empty state`.
 - `feedback` -> the registry category that fits the component.
@@ -24,8 +25,8 @@ hand.
 - `index.ts.template` is the component-folder export.
 - `ComponentName.stories.tsx.template` is the baseline Storybook coverage.
 - `ComponentName.test.tsx.template` is the baseline accessibility/render test.
-- `docs-entry.tsx.template` is a starter entry for `apps/docs/content/components.tsx`.
-- `playground-entry.tsx.template` is a starter entry for `apps/docs/content/playgrounds.tsx`.
+- `component.tsx.template` is a starter docs file for `apps/docs/content/components/<component-name>/component.tsx`.
+- `playground.tsx.template` is a starter playground file for `apps/docs/content/components/<component-name>/playground.tsx`.
 - `registry-entry.json` is the manifest object for `registry/swirski.registry.json`.
 
 ## Checklist
@@ -35,7 +36,7 @@ hand.
 2. Rename the source, story, and test files if you copied by hand.
 3. Replace all placeholders.
 4. Export the component from `packages/ui/src/index.ts` if you copied by hand.
-5. Add the docs and playground entries.
+5. Add the docs and playground files, then register them in the content index files.
 6. Run:
 
 ```bash

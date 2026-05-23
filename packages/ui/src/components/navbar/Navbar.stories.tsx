@@ -12,9 +12,13 @@ import {
   Navbar,
   NavbarActions,
   NavbarBrand,
+  NavbarDropdown,
+  NavbarDropdownContent,
+  NavbarDropdownLink,
+  NavbarDropdownTrigger,
   NavbarLink,
   NavbarNav,
-} from "./Navbar";
+} from "./index";
 
 const meta = {
   title: "Components/Navbar",
@@ -35,7 +39,16 @@ export const Default: Story = {
           Components
         </NavbarLink>
         <NavbarLink href="/hooks">Hooks</NavbarLink>
-        <NavbarLink href="/cli">CLI</NavbarLink>
+        <NavbarDropdown>
+          <NavbarDropdownTrigger>Nerd Stuff</NavbarDropdownTrigger>
+          <NavbarDropdownContent align="end">
+            <NavbarDropdownLink href="/system">System</NavbarDropdownLink>
+            <NavbarDropdownLink href="/cli">CLI</NavbarDropdownLink>
+            <NavbarDropdownLink href="/build-component">
+              Build a component
+            </NavbarDropdownLink>
+          </NavbarDropdownContent>
+        </NavbarDropdown>
       </NavbarNav>
 
       <NavbarActions>
@@ -48,7 +61,9 @@ export const Default: Story = {
           <MobileMenuContent>
             <MobileMenuHeader>
               <MobileMenuTitle>Menu</MobileMenuTitle>
-              <MobileMenuClose aria-label="Close navigation menu">x</MobileMenuClose>
+              <MobileMenuClose aria-label="Close navigation menu">
+                x
+              </MobileMenuClose>
             </MobileMenuHeader>
             <MobileMenuNav aria-label="Mobile navigation">
               <MobileMenuLink href="/components" active>

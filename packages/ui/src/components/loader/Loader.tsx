@@ -2,7 +2,6 @@ import { HTMLAttributes, forwardRef } from "react";
 import { cn, swirskiAttrs } from "../../system";
 
 export type LoaderVariant =
-  | "spinner"
   | "pixel-dots"
   | "pixel-bars"
   | "pixel-blocks"
@@ -198,18 +197,6 @@ function PixelScanLoader({ size }: { size: LoaderSize }) {
   );
 }
 
-function SpinnerLoader({ size, tone }: { size: LoaderSize; tone: LoaderTone }) {
-  return (
-    <span
-      className={cn(
-        "block animate-spin rounded-full shadow-[3px_3px_0_#0B0B0C]",
-        spinnerSizeStyles[size],
-        spinnerToneStyles[tone],
-      )}
-    />
-  );
-}
-
 export const Loader = forwardRef<HTMLSpanElement, LoaderProps>(function Loader(
   {
     variant = "pixel-dots",
@@ -235,7 +222,6 @@ export const Loader = forwardRef<HTMLSpanElement, LoaderProps>(function Loader(
       {...swirskiAttrs("loader", { size, tone, variant })}
       {...props}
     >
-      {variant === "spinner" && <SpinnerLoader size={size} tone={tone} />}
       {variant === "pixel-dots" && <PixelDotsLoader size={size} />}
       {variant === "pixel-bars" && <PixelBarsLoader size={size} />}
       {variant === "pixel-blocks" && <PixelBlocksLoader size={size} />}

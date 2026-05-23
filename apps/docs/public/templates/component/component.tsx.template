@@ -1,4 +1,7 @@
-{
+import { ComponentName } from "@swirski/ui";
+import type { ComponentDoc } from "../../types";
+
+export const componentNameComponentDoc: ComponentDoc = {
   slug: "component-name",
   title: "ComponentName",
   category: "Feedback",
@@ -45,4 +48,4 @@
       description: "Controls the color treatment.",
     },
   ],
-}
+};

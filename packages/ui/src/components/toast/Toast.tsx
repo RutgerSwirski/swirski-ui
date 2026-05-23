@@ -11,7 +11,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { cn, swirskiAttrs } from "../../system";
-import { usePortalRoot } from "../../system/usePortalRoot";
+import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 
 export type ToastTone = "blue" | "yellow" | "red" | "white";
 export type ToastVariant = "solid" | "outline";
@@ -93,13 +93,10 @@ const sizeStyles: Record<ToastSize, string> = {
   lg: "p-5",
 };
 
-export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast({
-  variant = "solid",
-  size = "md",
-  tone = "yellow",
-  className,
-  ...props
-}, ref) {
+export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
+  { variant = "solid", size = "md", tone = "yellow", className, ...props },
+  ref,
+) {
   return (
     <div
       ref={ref}
@@ -125,22 +122,20 @@ export type ToastTitleProps = HTMLAttributes<HTMLHeadingElement> & {
 };
 
 export const ToastTitle = forwardRef<HTMLHeadingElement, ToastTitleProps>(
-  function ToastTitle({
-  className,
-  variant = "solid",
-  size = "md",
-  tone = "yellow",
-  ...props
-}, ref) {
-  return (
-    <h3
-      ref={ref}
-      className={cn("font-black uppercase", className)}
-      {...swirskiAttrs("toast-title", { size, tone, variant })}
-      {...props}
-    />
-  );
-});
+  function ToastTitle(
+    { className, variant = "solid", size = "md", tone = "yellow", ...props },
+    ref,
+  ) {
+    return (
+      <h3
+        ref={ref}
+        className={cn("font-black uppercase", className)}
+        {...swirskiAttrs("toast-title", { size, tone, variant })}
+        {...props}
+      />
+    );
+  },
+);
 
 ToastTitle.displayName = "ToastTitle";
 
@@ -153,13 +148,10 @@ export type ToastDescriptionProps = HTMLAttributes<HTMLParagraphElement> & {
 export const ToastDescription = forwardRef<
   HTMLParagraphElement,
   ToastDescriptionProps
->(function ToastDescription({
-  className,
-  variant = "solid",
-  size = "md",
-  tone = "yellow",
-  ...props
-}, ref) {
+>(function ToastDescription(
+  { className, variant = "solid", size = "md", tone = "yellow", ...props },
+  ref,
+) {
   return (
     <p
       ref={ref}
@@ -179,23 +171,21 @@ export type ToastCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export const ToastClose = forwardRef<HTMLButtonElement, ToastCloseProps>(
-  function ToastClose({
-  className,
-  variant = "solid",
-  size = "md",
-  tone = "yellow",
-  ...props
-}, ref) {
-  return (
-    <button
-      ref={ref}
-      className={cn("ml-auto font-black uppercase underline", className)}
-      type="button"
-      {...swirskiAttrs("toast-close", { size, tone, variant })}
-      {...props}
-    />
-  );
-});
+  function ToastClose(
+    { className, variant = "solid", size = "md", tone = "yellow", ...props },
+    ref,
+  ) {
+    return (
+      <button
+        ref={ref}
+        className={cn("ml-auto font-black uppercase underline", className)}
+        type="button"
+        {...swirskiAttrs("toast-close", { size, tone, variant })}
+        {...props}
+      />
+    );
+  },
+);
 
 ToastClose.displayName = "ToastClose";
 
@@ -206,43 +196,43 @@ export type ToastViewportProps = {
 } & HTMLAttributes<HTMLDivElement>;
 
 export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(
-  function ToastViewport({
-  className,
-  variant = "solid",
-  size = "md",
-  tone = "yellow",
-  ...props
-}, ref) {
-  const { toasts, removeToast } = useToast();
-  const portalRoot = usePortalRoot();
+  function ToastViewport(
+    { className, variant = "solid", size = "md", tone = "yellow", ...props },
+    ref,
+  ) {
+    const { toasts, removeToast } = useToast();
+    const portalRoot = usePortalRoot();
 
-  if (!portalRoot) {
-    return null;
-  }
+    if (!portalRoot) {
+      return null;
+    }
 
-  return createPortal(
-    <div
-      ref={ref}
-      className={cn("fixed bottom-4 right-4 z-50 grid w-80 gap-3", className)}
-      {...swirskiAttrs("toast-viewport", { size, tone, variant })}
-      {...props}
-    >
-      {toasts.map((toast) => (
-        <Toast key={toast.id} tone={toast.tone}>
-          <div className="flex gap-3">
-            <div>
-              <ToastTitle>{toast.title}</ToastTitle>
-              {toast.description && (
-                <ToastDescription>{toast.description}</ToastDescription>
-              )}
+    return createPortal(
+      <div
+        ref={ref}
+        className={cn("fixed bottom-4 right-4 z-50 grid w-80 gap-3", className)}
+        {...swirskiAttrs("toast-viewport", { size, tone, variant })}
+        {...props}
+      >
+        {toasts.map((toast) => (
+          <Toast key={toast.id} tone={toast.tone}>
+            <div className="flex gap-3">
+              <div>
+                <ToastTitle>{toast.title}</ToastTitle>
+                {toast.description && (
+                  <ToastDescription>{toast.description}</ToastDescription>
+                )}
+              </div>
+              <ToastClose onClick={() => removeToast(toast.id)}>
+                Close
+              </ToastClose>
             </div>
-            <ToastClose onClick={() => removeToast(toast.id)}>Close</ToastClose>
-          </div>
-        </Toast>
-      ))}
-    </div>,
-    portalRoot,
-  );
-});
+          </Toast>
+        ))}
+      </div>,
+      portalRoot,
+    );
+  },
+);
 
 ToastViewport.displayName = "ToastViewport";
