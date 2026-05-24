@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages/ui/src/hooks/use-local-storage/index.ts",
-      "content": "export { useLocalStorage } from \"./useLocalStorage\";\nexport type { UseLocalStorageOptions } from \"./useLocalStorage\";\n",
+      "path": "packages\\ui\\src\\hooks\\use-local-storage\\index.ts",
+      "content": "export { useLocalStorage } from \"./useLocalStorage\";\r\nexport type { UseLocalStorageOptions } from \"./useLocalStorage\";\r\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks/use-local-storage/index.ts"
+      "target": "@ui/swirski/hooks\\use-local-storage\\index.ts"
     },
     {
-      "path": "packages/ui/src/hooks/use-local-storage/useLocalStorage.ts",
-      "content": "\"use client\";\n\nimport { Dispatch, SetStateAction, useEffect, useState } from \"react\";\n\nexport type UseLocalStorageOptions<T> = {\n  serialize?: (value: T) => string;\n  deserialize?: (value: string) => T;\n};\n\nexport function useLocalStorage<T>(\n  key: string,\n  defaultValue: T,\n  options: UseLocalStorageOptions<T> = {},\n): [T, Dispatch<SetStateAction<T>>, () => void] {\n  const serialize = options.serialize ?? JSON.stringify;\n  const deserialize = options.deserialize ?? JSON.parse;\n  const [value, setValue] = useState(defaultValue);\n\n  useEffect(() => {\n    try {\n      const storedValue = window.localStorage.getItem(key);\n\n      if (storedValue !== null) {\n        setValue(deserialize(storedValue));\n      }\n    } catch {\n      setValue(defaultValue);\n    }\n  }, [defaultValue, deserialize, key]);\n\n  useEffect(() => {\n    try {\n      window.localStorage.setItem(key, serialize(value));\n    } catch {\n      // Ignore storage failures in private browsing and restricted contexts.\n    }\n  }, [key, serialize, value]);\n\n  function removeValue() {\n    try {\n      window.localStorage.removeItem(key);\n    } finally {\n      setValue(defaultValue);\n    }\n  }\n\n  return [value, setValue, removeValue];\n}\n",
+      "path": "packages\\ui\\src\\hooks\\use-local-storage\\useLocalStorage.ts",
+      "content": "\"use client\";\r\n\r\nimport { Dispatch, SetStateAction, useEffect, useState } from \"react\";\r\n\r\nexport type UseLocalStorageOptions<T> = {\r\n  serialize?: (value: T) => string;\r\n  deserialize?: (value: string) => T;\r\n};\r\n\r\nexport function useLocalStorage<T>(\r\n  key: string,\r\n  defaultValue: T,\r\n  options: UseLocalStorageOptions<T> = {},\r\n): [T, Dispatch<SetStateAction<T>>, () => void] {\r\n  const serialize = options.serialize ?? JSON.stringify;\r\n  const deserialize = options.deserialize ?? JSON.parse;\r\n  const [value, setValue] = useState(defaultValue);\r\n\r\n  useEffect(() => {\r\n    try {\r\n      const storedValue = window.localStorage.getItem(key);\r\n\r\n      if (storedValue !== null) {\r\n        setValue(deserialize(storedValue));\r\n      }\r\n    } catch {\r\n      setValue(defaultValue);\r\n    }\r\n  }, [defaultValue, deserialize, key]);\r\n\r\n  useEffect(() => {\r\n    try {\r\n      window.localStorage.setItem(key, serialize(value));\r\n    } catch {\r\n      // Ignore storage failures in private browsing and restricted contexts.\r\n    }\r\n  }, [key, serialize, value]);\r\n\r\n  function removeValue() {\r\n    try {\r\n      window.localStorage.removeItem(key);\r\n    } finally {\r\n      setValue(defaultValue);\r\n    }\r\n  }\r\n\r\n  return [value, setValue, removeValue];\r\n}\r\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks/use-local-storage/useLocalStorage.ts"
+      "target": "@ui/swirski/hooks\\use-local-storage\\useLocalStorage.ts"
     }
   ],
   "categories": [

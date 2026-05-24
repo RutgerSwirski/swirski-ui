@@ -12,16 +12,16 @@
   ],
   "files": [
     {
-      "path": "packages/ui/src/components/container/Container.tsx",
-      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type ContainerVariant = \"default\" | \"fluid\";\nexport type ContainerSize = \"sm\" | \"md\" | \"lg\" | \"xl\" | \"fluid\";\nexport type ContainerTone = \"default\";\n\nexport type ContainerProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  variant?: ContainerVariant;\n  size?: ContainerSize;\n  tone?: ContainerTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<ContainerSize, string> = {\n  sm: \"max-w-3xl\",\n  md: \"max-w-5xl\",\n  lg: \"max-w-6xl\",\n  xl: \"max-w-7xl\",\n  fluid: \"max-w-full\",\n};\n\nexport const Container = forwardRef<HTMLDivElement, ContainerProps>(\n  function Container(\n    {\n      asChild = false,\n      children,\n      className,\n      variant = \"default\",\n      size = \"lg\",\n      tone = \"default\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"mx-auto w-full min-w-0 px-4 sm:px-6 lg:px-8\",\n          variant === \"default\" && sizeStyles[size],\n          className,\n        )}\n        {...swirskiAttrs(\"container\", { size, tone, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nContainer.displayName = \"Container\";\n",
+      "path": "packages\\ui\\src\\components\\container\\Container.tsx",
+      "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\r\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\r\n\r\nexport type ContainerVariant = \"default\" | \"fluid\";\r\nexport type ContainerSize = \"sm\" | \"md\" | \"lg\" | \"xl\" | \"fluid\";\r\nexport type ContainerTone = \"default\";\r\n\r\nexport type ContainerProps = {\r\n  asChild?: boolean;\r\n  children?: ReactNode;\r\n  variant?: ContainerVariant;\r\n  size?: ContainerSize;\r\n  tone?: ContainerTone;\r\n} & HTMLAttributes<HTMLDivElement>;\r\n\r\nconst sizeStyles: Record<ContainerSize, string> = {\r\n  sm: \"max-w-3xl\",\r\n  md: \"max-w-5xl\",\r\n  lg: \"max-w-6xl\",\r\n  xl: \"max-w-7xl\",\r\n  fluid: \"max-w-full\",\r\n};\r\n\r\nexport const Container = forwardRef<HTMLDivElement, ContainerProps>(\r\n  function Container(\r\n    {\r\n      asChild = false,\r\n      children,\r\n      className,\r\n      variant = \"default\",\r\n      size = \"lg\",\r\n      tone = \"default\",\r\n      ...props\r\n    },\r\n    ref,\r\n  ) {\r\n    const Component = asChild ? Slot : \"div\";\r\n\r\n    return (\r\n      <Component\r\n        ref={ref}\r\n        className={cn(\r\n          \"mx-auto w-full min-w-0 px-4 sm:px-6 lg:px-8\",\r\n          variant === \"default\" && sizeStyles[size],\r\n          className,\r\n        )}\r\n        {...swirskiAttrs(\"container\", { size, tone, variant })}\r\n        {...props}\r\n      >\r\n        {children}\r\n      </Component>\r\n    );\r\n  },\r\n);\r\n\r\nContainer.displayName = \"Container\";\r\n",
       "type": "registry:ui",
-      "target": "@ui/swirski/components/container/Container.tsx"
+      "target": "@ui/swirski/components\\container\\Container.tsx"
     },
     {
-      "path": "packages/ui/src/components/container/index.ts",
-      "content": "export { Container } from \"./Container\";\nexport type {\n  ContainerProps,\n  ContainerSize,\n  ContainerTone,\n  ContainerVariant,\n} from \"./Container\";\n",
+      "path": "packages\\ui\\src\\components\\container\\index.ts",
+      "content": "export { Container } from \"./Container\";\r\nexport type {\r\n  ContainerProps,\r\n  ContainerSize,\r\n  ContainerTone,\r\n  ContainerVariant,\r\n} from \"./Container\";\r\n",
       "type": "registry:ui",
-      "target": "@ui/swirski/components/container/index.ts"
+      "target": "@ui/swirski/components\\container\\index.ts"
     }
   ],
   "categories": [

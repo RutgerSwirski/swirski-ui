@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages/ui/src/hooks/use-escape-key/index.ts",
-      "content": "export { useEscapeKey } from \"./useEscapeKey\";\nexport type { UseEscapeKeyOptions } from \"./useEscapeKey\";\n",
+      "path": "packages\\ui\\src\\hooks\\use-escape-key\\index.ts",
+      "content": "export { useEscapeKey } from \"./useEscapeKey\";\r\nexport type { UseEscapeKeyOptions } from \"./useEscapeKey\";\r\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks/use-escape-key/index.ts"
+      "target": "@ui/swirski/hooks\\use-escape-key\\index.ts"
     },
     {
-      "path": "packages/ui/src/hooks/use-escape-key/useEscapeKey.ts",
-      "content": "\"use client\";\n\nimport { useEffect } from \"react\";\n\nexport type UseEscapeKeyOptions = {\n  enabled?: boolean;\n  target?: Document | HTMLElement | Window | null;\n};\n\nexport function useEscapeKey(\n  handler: (event: KeyboardEvent) => void,\n  options: UseEscapeKeyOptions = {},\n) {\n  const { enabled = true, target } = options;\n\n  useEffect(() => {\n    if (!enabled) {\n      return;\n    }\n\n    const eventTarget = target ?? document;\n\n    const listener = (event: Event) => {\n      const keyboardEvent = event as KeyboardEvent;\n\n      if (keyboardEvent.key === \"Escape\") {\n        handler(keyboardEvent);\n      }\n    };\n\n    eventTarget.addEventListener(\"keydown\", listener);\n\n    return () => eventTarget.removeEventListener(\"keydown\", listener);\n  }, [enabled, handler, target]);\n}\n",
+      "path": "packages\\ui\\src\\hooks\\use-escape-key\\useEscapeKey.ts",
+      "content": "\"use client\";\r\n\r\nimport { useEffect } from \"react\";\r\n\r\nexport type UseEscapeKeyOptions = {\r\n  enabled?: boolean;\r\n  target?: Document | HTMLElement | Window | null;\r\n};\r\n\r\nexport function useEscapeKey(\r\n  handler: (event: KeyboardEvent) => void,\r\n  options: UseEscapeKeyOptions = {},\r\n) {\r\n  const { enabled = true, target } = options;\r\n\r\n  useEffect(() => {\r\n    if (!enabled) {\r\n      return;\r\n    }\r\n\r\n    const eventTarget = target ?? document;\r\n\r\n    const listener = (event: Event) => {\r\n      const keyboardEvent = event as KeyboardEvent;\r\n\r\n      if (keyboardEvent.key === \"Escape\") {\r\n        handler(keyboardEvent);\r\n      }\r\n    };\r\n\r\n    eventTarget.addEventListener(\"keydown\", listener);\r\n\r\n    return () => eventTarget.removeEventListener(\"keydown\", listener);\r\n  }, [enabled, handler, target]);\r\n}\r\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks/use-escape-key/useEscapeKey.ts"
+      "target": "@ui/swirski/hooks\\use-escape-key\\useEscapeKey.ts"
     }
   ],
   "categories": [
