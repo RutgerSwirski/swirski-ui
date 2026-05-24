@@ -103,6 +103,7 @@ function prepareReleasePr() {
   }
 
   run("pnpm", ["--filter", "@swirski/ui", "build"]);
+  run("pnpm", ["check:ui-package"]);
 
   if (dryRun) {
     console.log(`Dry run complete. Real release would create ${releaseBranch} and open a PR into ${baseBranch}.`);
@@ -156,6 +157,7 @@ function publishCurrentVersion() {
   }
 
   run("pnpm", ["--filter", "@swirski/ui", "build"]);
+  run("pnpm", ["check:ui-package"]);
 
   run("pnpm", [
     "--filter",

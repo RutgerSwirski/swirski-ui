@@ -79,6 +79,9 @@ jobs:
       - name: Build UI
         run: pnpm build:ui
 
+      - name: Check UI package tarball
+        run: pnpm check:ui-package
+
   docs-build:
     runs-on: ubuntu-latest
 

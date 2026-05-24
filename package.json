@@ -1,12 +1,13 @@
 {
   "name": "swirski-ui-workspace",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "storybook": "pnpm --filter @swirski/ui storybook",
     "build": "pnpm docs:metadata && pnpm llms:build && pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
+    "check:ui-package": "node scripts/check-ui-package.mjs",
     "create:component": "node scripts/create-component.mjs",
     "docs:metadata": "node scripts/build-docs-metadata.mjs",
     "dev:ui": "pnpm --filter @swirski/ui dev",
