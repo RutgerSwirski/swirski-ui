@@ -10,6 +10,7 @@ const packageJsonPath = join(rootDir, "packages/ui/package.json");
 const packageJsonRelPath = "packages/ui/package.json";
 const allowedBumps = new Set(["patch", "minor", "major"]);
 const flagsWithValues = new Set(["--base", "--branch", "--otp"]);
+const windowsCommandShims = new Set(["npm", "pnpm", "npx", "yarn"]);
 const generatedArtifactPaths = [
   "apps/docs/content/generated-props.json",
   "apps/docs/public/llms.txt",
@@ -212,7 +213,7 @@ function run(command, commandArgs) {
   console.log(`$ ${[command, ...commandArgs].join(" ")}`);
 
   try {
-    execFileSync(command, commandArgs, {
+    execCommand(command, commandArgs, {
       cwd: rootDir,
       stdio: "inherit",
     });
@@ -226,7 +227,7 @@ function run(command, commandArgs) {
 }
 
 function gitOutput(commandArgs) {
-  return execFileSync("git", commandArgs, {
+  return execCommand("git", commandArgs, {
     cwd: rootDir,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -315,7 +316,7 @@ function gitSucceeds(commandArgs) {
 
 function commandSucceeds(command, commandArgs) {
   try {
-    execFileSync(command, commandArgs, {
+    execCommand(command, commandArgs, {
       cwd: rootDir,
       stdio: "ignore",
     });
@@ -323,6 +324,23 @@ function commandSucceeds(command, commandArgs) {
   } catch {
     return false;
   }
+}
+
+function execCommand(command, commandArgs, options) {
+  const executable = windowsCommand(command);
+
+  return execFileSync(executable, commandArgs, {
+    ...options,
+    shell: process.platform === "win32" && executable.endsWith(".cmd"),
+  });
+}
+
+function windowsCommand(command) {
+  if (process.platform === "win32" && windowsCommandShims.has(command)) {
+    return `${command}.cmd`;
+  }
+
+  return command;
 }
 
 function readPackageJson() {
