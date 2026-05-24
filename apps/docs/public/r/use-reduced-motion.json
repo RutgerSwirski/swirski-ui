@@ -10,16 +10,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages\\ui\\src\\hooks\\use-reduced-motion\\index.ts",
-      "content": "export { useReducedMotion } from \"./useReducedMotion\";\r\n",
+      "path": "packages/ui/src/hooks/use-reduced-motion/index.ts",
+      "content": "export { useReducedMotion } from \"./useReducedMotion\";\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-reduced-motion\\index.ts"
+      "target": "@ui/swirski/hooks/use-reduced-motion/index.ts"
     },
     {
-      "path": "packages\\ui\\src\\hooks\\use-reduced-motion\\useReducedMotion.ts",
-      "content": "\"use client\";\r\n\r\nimport { useMediaQuery } from \"../use-media-query\";\r\n\r\nexport function useReducedMotion(initialValue = false) {\r\n  return useMediaQuery(\"(prefers-reduced-motion: reduce)\", initialValue);\r\n}\r\n",
+      "path": "packages/ui/src/hooks/use-reduced-motion/useReducedMotion.ts",
+      "content": "\"use client\";\n\nimport { useMediaQuery } from \"../use-media-query\";\n\nexport function useReducedMotion(initialValue = false) {\n  return useMediaQuery(\"(prefers-reduced-motion: reduce)\", initialValue);\n}\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-reduced-motion\\useReducedMotion.ts"
+      "target": "@ui/swirski/hooks/use-reduced-motion/useReducedMotion.ts"
     }
   ],
   "categories": [

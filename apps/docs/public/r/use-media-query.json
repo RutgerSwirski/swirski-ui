@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages\\ui\\src\\hooks\\use-media-query\\index.ts",
-      "content": "export { useMediaQuery } from \"./useMediaQuery\";\r\n",
+      "path": "packages/ui/src/hooks/use-media-query/index.ts",
+      "content": "export { useMediaQuery } from \"./useMediaQuery\";\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-media-query\\index.ts"
+      "target": "@ui/swirski/hooks/use-media-query/index.ts"
     },
     {
-      "path": "packages\\ui\\src\\hooks\\use-media-query\\useMediaQuery.ts",
-      "content": "\"use client\";\r\n\r\nimport { useEffect, useState } from \"react\";\r\n\r\nexport function useMediaQuery(query: string, initialValue = false) {\r\n  const [matches, setMatches] = useState(initialValue);\r\n\r\n  useEffect(() => {\r\n    const mediaQuery = window.matchMedia(query);\r\n\r\n    setMatches(mediaQuery.matches);\r\n\r\n    const listener = (event: MediaQueryListEvent) => {\r\n      setMatches(event.matches);\r\n    };\r\n\r\n    mediaQuery.addEventListener(\"change\", listener);\r\n\r\n    return () => mediaQuery.removeEventListener(\"change\", listener);\r\n  }, [query]);\r\n\r\n  return matches;\r\n}\r\n",
+      "path": "packages/ui/src/hooks/use-media-query/useMediaQuery.ts",
+      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\nexport function useMediaQuery(query: string, initialValue = false) {\n  const [matches, setMatches] = useState(initialValue);\n\n  useEffect(() => {\n    const mediaQuery = window.matchMedia(query);\n\n    setMatches(mediaQuery.matches);\n\n    const listener = (event: MediaQueryListEvent) => {\n      setMatches(event.matches);\n    };\n\n    mediaQuery.addEventListener(\"change\", listener);\n\n    return () => mediaQuery.removeEventListener(\"change\", listener);\n  }, [query]);\n\n  return matches;\n}\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-media-query\\useMediaQuery.ts"
+      "target": "@ui/swirski/hooks/use-media-query/useMediaQuery.ts"
     }
   ],
   "categories": [

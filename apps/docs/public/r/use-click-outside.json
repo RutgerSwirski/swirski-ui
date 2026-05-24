@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages\\ui\\src\\hooks\\use-click-outside\\index.ts",
-      "content": "export { useClickOutside } from \"./useClickOutside\";\r\nexport type { UseClickOutsideOptions } from \"./useClickOutside\";\r\n",
+      "path": "packages/ui/src/hooks/use-click-outside/index.ts",
+      "content": "export { useClickOutside } from \"./useClickOutside\";\nexport type { UseClickOutsideOptions } from \"./useClickOutside\";\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-click-outside\\index.ts"
+      "target": "@ui/swirski/hooks/use-click-outside/index.ts"
     },
     {
-      "path": "packages\\ui\\src\\hooks\\use-click-outside\\useClickOutside.ts",
-      "content": "\"use client\";\r\n\r\nimport { RefObject, useEffect } from \"react\";\r\n\r\nexport type UseClickOutsideOptions = {\r\n  enabled?: boolean;\r\n  events?: Array<\"mousedown\" | \"pointerdown\" | \"touchstart\">;\r\n};\r\n\r\nexport function useClickOutside<T extends HTMLElement>(\r\n  ref: RefObject<T | null>,\r\n  handler: (event: Event) => void,\r\n  options: UseClickOutsideOptions = {},\r\n) {\r\n  const { enabled = true, events = [\"pointerdown\"] } = options;\r\n\r\n  useEffect(() => {\r\n    if (!enabled) {\r\n      return;\r\n    }\r\n\r\n    const listener = (event: Event) => {\r\n      const element = ref.current;\r\n\r\n      if (!element || element.contains(event.target as Node)) {\r\n        return;\r\n      }\r\n\r\n      handler(event);\r\n    };\r\n\r\n    events.forEach((eventName) => {\r\n      document.addEventListener(eventName, listener);\r\n    });\r\n\r\n    return () => {\r\n      events.forEach((eventName) => {\r\n        document.removeEventListener(eventName, listener);\r\n      });\r\n    };\r\n  }, [enabled, events, handler, ref]);\r\n}\r\n",
+      "path": "packages/ui/src/hooks/use-click-outside/useClickOutside.ts",
+      "content": "\"use client\";\n\nimport { RefObject, useEffect } from \"react\";\n\nexport type UseClickOutsideOptions = {\n  enabled?: boolean;\n  events?: Array<\"mousedown\" | \"pointerdown\" | \"touchstart\">;\n};\n\nexport function useClickOutside<T extends HTMLElement>(\n  ref: RefObject<T | null>,\n  handler: (event: Event) => void,\n  options: UseClickOutsideOptions = {},\n) {\n  const { enabled = true, events = [\"pointerdown\"] } = options;\n\n  useEffect(() => {\n    if (!enabled) {\n      return;\n    }\n\n    const listener = (event: Event) => {\n      const element = ref.current;\n\n      if (!element || element.contains(event.target as Node)) {\n        return;\n      }\n\n      handler(event);\n    };\n\n    events.forEach((eventName) => {\n      document.addEventListener(eventName, listener);\n    });\n\n    return () => {\n      events.forEach((eventName) => {\n        document.removeEventListener(eventName, listener);\n      });\n    };\n  }, [enabled, events, handler, ref]);\n}\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-click-outside\\useClickOutside.ts"
+      "target": "@ui/swirski/hooks/use-click-outside/useClickOutside.ts"
     }
   ],
   "categories": [

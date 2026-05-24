@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages\\ui\\src\\hooks\\use-clipboard\\index.ts",
-      "content": "export { useClipboard } from \"./useClipboard\";\r\nexport type { UseClipboardOptions } from \"./useClipboard\";\r\n",
+      "path": "packages/ui/src/hooks/use-clipboard/index.ts",
+      "content": "export { useClipboard } from \"./useClipboard\";\nexport type { UseClipboardOptions } from \"./useClipboard\";\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-clipboard\\index.ts"
+      "target": "@ui/swirski/hooks/use-clipboard/index.ts"
     },
     {
-      "path": "packages\\ui\\src\\hooks\\use-clipboard\\useClipboard.ts",
-      "content": "\"use client\";\r\n\r\nimport { useCallback, useEffect, useState } from \"react\";\r\n\r\nexport type UseClipboardOptions = {\r\n  timeout?: number;\r\n};\r\n\r\nfunction copyWithTextarea(value: string) {\r\n  const textarea = document.createElement(\"textarea\");\r\n  textarea.value = value;\r\n  textarea.setAttribute(\"readonly\", \"\");\r\n  textarea.style.position = \"fixed\";\r\n  textarea.style.top = \"-9999px\";\r\n  document.body.appendChild(textarea);\r\n  textarea.select();\r\n  document.execCommand(\"copy\");\r\n  document.body.removeChild(textarea);\r\n}\r\n\r\nexport function useClipboard({ timeout = 1600 }: UseClipboardOptions = {}) {\r\n  const [copied, setCopied] = useState(false);\r\n  const [error, setError] = useState<Error | null>(null);\r\n\r\n  useEffect(() => {\r\n    if (!copied) {\r\n      return;\r\n    }\r\n\r\n    const timeoutId = window.setTimeout(() => setCopied(false), timeout);\r\n\r\n    return () => window.clearTimeout(timeoutId);\r\n  }, [copied, timeout]);\r\n\r\n  const copy = useCallback(async (value: string) => {\r\n    try {\r\n      if (navigator.clipboard) {\r\n        await navigator.clipboard.writeText(value);\r\n      } else {\r\n        copyWithTextarea(value);\r\n      }\r\n\r\n      setCopied(true);\r\n      setError(null);\r\n    } catch (copyError) {\r\n      const nextError =\r\n        copyError instanceof Error\r\n          ? copyError\r\n          : new Error(\"Unable to copy to clipboard.\");\r\n\r\n      setError(nextError);\r\n      setCopied(false);\r\n      throw nextError;\r\n    }\r\n  }, []);\r\n\r\n  const reset = useCallback(() => {\r\n    setCopied(false);\r\n    setError(null);\r\n  }, []);\r\n\r\n  return { copied, copy, error, reset };\r\n}\r\n",
+      "path": "packages/ui/src/hooks/use-clipboard/useClipboard.ts",
+      "content": "\"use client\";\n\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type UseClipboardOptions = {\n  timeout?: number;\n};\n\nfunction copyWithTextarea(value: string) {\n  const textarea = document.createElement(\"textarea\");\n  textarea.value = value;\n  textarea.setAttribute(\"readonly\", \"\");\n  textarea.style.position = \"fixed\";\n  textarea.style.top = \"-9999px\";\n  document.body.appendChild(textarea);\n  textarea.select();\n  document.execCommand(\"copy\");\n  document.body.removeChild(textarea);\n}\n\nexport function useClipboard({ timeout = 1600 }: UseClipboardOptions = {}) {\n  const [copied, setCopied] = useState(false);\n  const [error, setError] = useState<Error | null>(null);\n\n  useEffect(() => {\n    if (!copied) {\n      return;\n    }\n\n    const timeoutId = window.setTimeout(() => setCopied(false), timeout);\n\n    return () => window.clearTimeout(timeoutId);\n  }, [copied, timeout]);\n\n  const copy = useCallback(async (value: string) => {\n    try {\n      if (navigator.clipboard) {\n        await navigator.clipboard.writeText(value);\n      } else {\n        copyWithTextarea(value);\n      }\n\n      setCopied(true);\n      setError(null);\n    } catch (copyError) {\n      const nextError =\n        copyError instanceof Error\n          ? copyError\n          : new Error(\"Unable to copy to clipboard.\");\n\n      setError(nextError);\n      setCopied(false);\n      throw nextError;\n    }\n  }, []);\n\n  const reset = useCallback(() => {\n    setCopied(false);\n    setError(null);\n  }, []);\n\n  return { copied, copy, error, reset };\n}\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-clipboard\\useClipboard.ts"
+      "target": "@ui/swirski/hooks/use-clipboard/useClipboard.ts"
     }
   ],
   "categories": [

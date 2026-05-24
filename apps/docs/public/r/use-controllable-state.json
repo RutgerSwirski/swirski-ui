@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages\\ui\\src\\hooks\\use-controllable-state\\index.ts",
-      "content": "export { useControllableState } from \"./useControllableState\";\r\nexport type { UseControllableStateProps } from \"./useControllableState\";\r\n",
+      "path": "packages/ui/src/hooks/use-controllable-state/index.ts",
+      "content": "export { useControllableState } from \"./useControllableState\";\nexport type { UseControllableStateProps } from \"./useControllableState\";\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-controllable-state\\index.ts"
+      "target": "@ui/swirski/hooks/use-controllable-state/index.ts"
     },
     {
-      "path": "packages\\ui\\src\\hooks\\use-controllable-state\\useControllableState.ts",
-      "content": "\"use client\";\r\n\r\nimport { Dispatch, SetStateAction, useCallback, useState } from \"react\";\r\n\r\nexport type UseControllableStateProps<T> = {\r\n  value?: T;\r\n  defaultValue: T;\r\n  onChange?: (value: T) => void;\r\n};\r\n\r\nexport function useControllableState<T>({\r\n  value,\r\n  defaultValue,\r\n  onChange,\r\n}: UseControllableStateProps<T>): [T, Dispatch<SetStateAction<T>>] {\r\n  const [internalValue, setInternalValue] = useState(defaultValue);\r\n  const isControlled = value !== undefined;\r\n  const currentValue = isControlled ? value : internalValue;\r\n\r\n  const setValue = useCallback<Dispatch<SetStateAction<T>>>(\r\n    (nextValue) => {\r\n      const resolvedValue =\r\n        typeof nextValue === \"function\"\r\n          ? (nextValue as (currentValue: T) => T)(currentValue as T)\r\n          : nextValue;\r\n\r\n      if (!isControlled) {\r\n        setInternalValue(resolvedValue);\r\n      }\r\n\r\n      onChange?.(resolvedValue);\r\n    },\r\n    [currentValue, isControlled, onChange],\r\n  );\r\n\r\n  return [currentValue as T, setValue];\r\n}\r\n",
+      "path": "packages/ui/src/hooks/use-controllable-state/useControllableState.ts",
+      "content": "\"use client\";\n\nimport { Dispatch, SetStateAction, useCallback, useState } from \"react\";\n\nexport type UseControllableStateProps<T> = {\n  value?: T;\n  defaultValue: T;\n  onChange?: (value: T) => void;\n};\n\nexport function useControllableState<T>({\n  value,\n  defaultValue,\n  onChange,\n}: UseControllableStateProps<T>): [T, Dispatch<SetStateAction<T>>] {\n  const [internalValue, setInternalValue] = useState(defaultValue);\n  const isControlled = value !== undefined;\n  const currentValue = isControlled ? value : internalValue;\n\n  const setValue = useCallback<Dispatch<SetStateAction<T>>>(\n    (nextValue) => {\n      const resolvedValue =\n        typeof nextValue === \"function\"\n          ? (nextValue as (currentValue: T) => T)(currentValue as T)\n          : nextValue;\n\n      if (!isControlled) {\n        setInternalValue(resolvedValue);\n      }\n\n      onChange?.(resolvedValue);\n    },\n    [currentValue, isControlled, onChange],\n  );\n\n  return [currentValue as T, setValue];\n}\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-controllable-state\\useControllableState.ts"
+      "target": "@ui/swirski/hooks/use-controllable-state/useControllableState.ts"
     }
   ],
   "categories": [

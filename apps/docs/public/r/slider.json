@@ -12,16 +12,16 @@
   ],
   "files": [
     {
-      "path": "packages\\ui\\src\\components\\slider\\Slider.tsx",
-      "content": "import { InputHTMLAttributes, forwardRef } from \"react\";\r\nimport { cn, swirskiAttrs } from \"../../system\";\r\n\r\nexport type SliderVariant = \"default\";\r\nexport type SliderSize = \"sm\" | \"md\" | \"lg\";\r\nexport type SliderTone = \"blue\" | \"yellow\" | \"red\";\r\n\r\nexport type SliderProps = {\r\n  variant?: SliderVariant;\r\n  size?: SliderSize;\r\n  tone?: SliderTone;\r\n} & Omit<InputHTMLAttributes<HTMLInputElement>, \"type\" | \"size\" | \"color\">;\r\n\r\nconst sizeStyles: Record<SliderSize, string> = {\r\n  sm: \"h-1\",\r\n  md: \"h-2\",\r\n  lg: \"h-3\",\r\n};\r\n\r\nconst toneStyles: Record<SliderTone, string> = {\r\n  blue: \"accent-[#0057FF]\",\r\n  yellow: \"accent-[#FFD400]\",\r\n  red: \"accent-[#FF3131]\",\r\n};\r\n\r\nexport const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider({\r\n  className,\r\n  variant = \"default\",\r\n  size = \"md\",\r\n  tone = \"blue\",\r\n  ...props\r\n}, ref) {\r\n  return (\r\n    <input\r\n      ref={ref}\r\n      className={cn(\"w-full\", sizeStyles[size], toneStyles[tone], className)}\r\n      type=\"range\"\r\n      {...swirskiAttrs(\"slider\", { size, tone, variant })}\r\n      {...props}\r\n    />\r\n  );\r\n});\r\n\r\nSlider.displayName = \"Slider\";\r\n",
+      "path": "packages/ui/src/components/slider/Slider.tsx",
+      "content": "import { InputHTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type SliderVariant = \"default\";\nexport type SliderSize = \"sm\" | \"md\" | \"lg\";\nexport type SliderTone = \"blue\" | \"yellow\" | \"red\";\n\nexport type SliderProps = {\n  variant?: SliderVariant;\n  size?: SliderSize;\n  tone?: SliderTone;\n} & Omit<InputHTMLAttributes<HTMLInputElement>, \"type\" | \"size\" | \"color\">;\n\nconst sizeStyles: Record<SliderSize, string> = {\n  sm: \"h-1\",\n  md: \"h-2\",\n  lg: \"h-3\",\n};\n\nconst toneStyles: Record<SliderTone, string> = {\n  blue: \"accent-[#0057FF]\",\n  yellow: \"accent-[#FFD400]\",\n  red: \"accent-[#FF3131]\",\n};\n\nexport const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider({\n  className,\n  variant = \"default\",\n  size = \"md\",\n  tone = \"blue\",\n  ...props\n}, ref) {\n  return (\n    <input\n      ref={ref}\n      className={cn(\"w-full\", sizeStyles[size], toneStyles[tone], className)}\n      type=\"range\"\n      {...swirskiAttrs(\"slider\", { size, tone, variant })}\n      {...props}\n    />\n  );\n});\n\nSlider.displayName = \"Slider\";\n",
       "type": "registry:ui",
-      "target": "@ui/swirski/components\\slider\\Slider.tsx"
+      "target": "@ui/swirski/components/slider/Slider.tsx"
     },
     {
-      "path": "packages\\ui\\src\\components\\slider\\index.ts",
-      "content": "export { Slider } from \"./Slider\";\r\nexport type { SliderProps, SliderSize, SliderTone, SliderVariant } from \"./Slider\";\r\n",
+      "path": "packages/ui/src/components/slider/index.ts",
+      "content": "export { Slider } from \"./Slider\";\nexport type { SliderProps, SliderSize, SliderTone, SliderVariant } from \"./Slider\";\n",
       "type": "registry:ui",
-      "target": "@ui/swirski/components\\slider\\index.ts"
+      "target": "@ui/swirski/components/slider/index.ts"
     }
   ],
   "categories": [

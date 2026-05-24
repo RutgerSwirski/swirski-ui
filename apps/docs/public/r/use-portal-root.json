@@ -8,16 +8,16 @@
   "dependencies": [],
   "files": [
     {
-      "path": "packages\\ui\\src\\hooks\\use-portal-root\\index.ts",
-      "content": "export { usePortalRoot } from \"./usePortalRoot\";\r\n",
+      "path": "packages/ui/src/hooks/use-portal-root/index.ts",
+      "content": "export { usePortalRoot } from \"./usePortalRoot\";\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-portal-root\\index.ts"
+      "target": "@ui/swirski/hooks/use-portal-root/index.ts"
     },
     {
-      "path": "packages\\ui\\src\\hooks\\use-portal-root\\usePortalRoot.ts",
-      "content": "\"use client\";\r\n\r\nimport { useEffect, useState } from \"react\";\r\n\r\nexport function usePortalRoot() {\r\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\r\n\r\n  useEffect(() => {\r\n    setPortalRoot(document.body);\r\n  }, []);\r\n\r\n  return portalRoot;\r\n}\r\n",
+      "path": "packages/ui/src/hooks/use-portal-root/usePortalRoot.ts",
+      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\nexport function usePortalRoot() {\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\n\n  useEffect(() => {\n    setPortalRoot(document.body);\n  }, []);\n\n  return portalRoot;\n}\n",
       "type": "registry:hook",
-      "target": "@ui/swirski/hooks\\use-portal-root\\usePortalRoot.ts"
+      "target": "@ui/swirski/hooks/use-portal-root/usePortalRoot.ts"
     }
   ],
   "categories": [

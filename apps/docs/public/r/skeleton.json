@@ -12,16 +12,16 @@
   ],
   "files": [
     {
-      "path": "packages\\ui\\src\\components\\skeleton\\Skeleton.tsx",
-      "content": "import { HTMLAttributes, forwardRef } from \"react\";\r\nimport { cn, swirskiAttrs } from \"../../system\";\r\n\r\nexport type SkeletonVariant = \"default\" | \"text\";\r\nexport type SkeletonSize = \"sm\" | \"md\" | \"lg\";\r\nexport type SkeletonTone = \"default\" | \"muted\";\r\n\r\nexport type SkeletonProps = {\r\n  variant?: SkeletonVariant;\r\n  size?: SkeletonSize;\r\n  tone?: SkeletonTone;\r\n} & HTMLAttributes<HTMLDivElement>;\r\n\r\nconst sizeStyles: Record<SkeletonSize, string> = {\r\n  sm: \"min-h-4\",\r\n  md: \"min-h-6\",\r\n  lg: \"min-h-10\",\r\n};\r\n\r\nexport const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(\r\n  function Skeleton(\r\n    { className, variant = \"default\", size = \"md\", tone = \"default\", ...props },\r\n    ref,\r\n  ) {\r\n  return (\r\n    <div\r\n      ref={ref}\r\n      className={cn(\r\n        \"animate-pulse border-4 border-black bg-neutral-200 shadow-[4px_4px_0_#0B0B0C]\",\r\n        variant === \"text\" && \"h-4\",\r\n        sizeStyles[size],\r\n        className,\r\n      )}\r\n      {...swirskiAttrs(\"skeleton\", { size, tone, variant })}\r\n      {...props}\r\n    />\r\n  );\r\n  },\r\n);\r\n\r\nSkeleton.displayName = \"Skeleton\";\r\n",
+      "path": "packages/ui/src/components/skeleton/Skeleton.tsx",
+      "content": "import { HTMLAttributes, forwardRef } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\n\nexport type SkeletonVariant = \"default\" | \"text\";\nexport type SkeletonSize = \"sm\" | \"md\" | \"lg\";\nexport type SkeletonTone = \"default\" | \"muted\";\n\nexport type SkeletonProps = {\n  variant?: SkeletonVariant;\n  size?: SkeletonSize;\n  tone?: SkeletonTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<SkeletonSize, string> = {\n  sm: \"min-h-4\",\n  md: \"min-h-6\",\n  lg: \"min-h-10\",\n};\n\nexport const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(\n  function Skeleton(\n    { className, variant = \"default\", size = \"md\", tone = \"default\", ...props },\n    ref,\n  ) {\n  return (\n    <div\n      ref={ref}\n      className={cn(\n        \"animate-pulse border-4 border-black bg-neutral-200 shadow-[4px_4px_0_#0B0B0C]\",\n        variant === \"text\" && \"h-4\",\n        sizeStyles[size],\n        className,\n      )}\n      {...swirskiAttrs(\"skeleton\", { size, tone, variant })}\n      {...props}\n    />\n  );\n  },\n);\n\nSkeleton.displayName = \"Skeleton\";\n",
       "type": "registry:ui",
-      "target": "@ui/swirski/components\\skeleton\\Skeleton.tsx"
+      "target": "@ui/swirski/components/skeleton/Skeleton.tsx"
     },
     {
-      "path": "packages\\ui\\src\\components\\skeleton\\index.ts",
-      "content": "export { Skeleton } from \"./Skeleton\";\r\nexport type {\r\n  SkeletonProps,\r\n  SkeletonSize,\r\n  SkeletonTone,\r\n  SkeletonVariant,\r\n} from \"./Skeleton\";\r\n",
+      "path": "packages/ui/src/components/skeleton/index.ts",
+      "content": "export { Skeleton } from \"./Skeleton\";\nexport type {\n  SkeletonProps,\n  SkeletonSize,\n  SkeletonTone,\n  SkeletonVariant,\n} from \"./Skeleton\";\n",
       "type": "registry:ui",
-      "target": "@ui/swirski/components\\skeleton\\index.ts"
+      "target": "@ui/swirski/components/skeleton/index.ts"
     }
   ],
   "categories": [
