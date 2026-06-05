@@ -1,16 +1,10 @@
-import {
-  Button,
-  DotGrid,
-  Grid,
-  SectionLabel,
-  Text,
-  Title,
-} from "@swirski/ui";
+import { Button, DotGrid, Grid, SectionLabel, Text, Title } from "@swirski/ui";
 import type { ReactNode } from "react";
 
 type DetailHeroAction = {
-  href?: string;
+  href: string;
   label: string;
+  external?: boolean;
 };
 
 type DetailHeroProps = {
@@ -54,7 +48,11 @@ export function DetailHero({
         <div
           className={`border-4 border-black p-4 shadow-[6px_6px_0_#0B0B0C] ${toneClassName}`}
         >
-          <Text className="uppercase text-current opacity-80" size="xs" weight="black">
+          <Text
+            className="uppercase text-current opacity-80"
+            size="xs"
+            weight="black"
+          >
             {metaLabel}
           </Text>
 
@@ -63,7 +61,12 @@ export function DetailHero({
           </Title>
         </div>
 
-        <Button className="w-full" href={action.href}>
+        <Button
+          className="w-full"
+          href={action.href}
+          target={action.external ? "_blank" : undefined}
+          rel={action.external ? "noopener noreferrer" : undefined}
+        >
           {action.label}
         </Button>
       </Grid>
