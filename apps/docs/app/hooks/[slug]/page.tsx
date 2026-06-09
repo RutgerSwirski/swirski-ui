@@ -56,7 +56,10 @@ export default async function HookPage({ params }: Props) {
         <Container className="relative z-10">
           <NavBar />
           <DetailHero
-            action={{ href: "/hooks", label: "Back to hooks" }}
+            action={{
+              href: "/hooks",
+              label: "Back to hooks",
+            }}
             description={hook.description}
             eyebrow="Hook"
             index={hookIndex}
@@ -73,7 +76,11 @@ export default async function HookPage({ params }: Props) {
 
           <LivePreviewPanel title={hook.title}>{hook.preview}</LivePreviewPanel>
 
-          <CodePanel title="Usage" code={hook.usageCode} accent="bg-[#FF3131]" />
+          <CodePanel
+            title="Usage"
+            code={hook.usageCode}
+            accent="bg-[#FF3131]"
+          />
 
           <PropTable rows={hook.props} />
 

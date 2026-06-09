@@ -84,9 +84,14 @@ export default async function ComponentPage({ params }: Props) {
     return notFound();
   }
 
+  const githubHref = `https://github.com/rutgerswirski/swirski-ui/issues/new?assignees=&labels=triage&template=bug_report.md&title=%5B${component.title}%5D+Issue+Title`;
+
   const previousComponent =
-    componentDocs[(componentIndex - 1 + componentDocs.length) % componentDocs.length];
-  const nextComponent = componentDocs[(componentIndex + 1) % componentDocs.length];
+    componentDocs[
+      (componentIndex - 1 + componentDocs.length) % componentDocs.length
+    ];
+  const nextComponent =
+    componentDocs[(componentIndex + 1) % componentDocs.length];
   const { generatedCount, rows } = getComponentPropRows(component);
 
   return (
@@ -95,7 +100,11 @@ export default async function ComponentPage({ params }: Props) {
         <Container className="relative z-10">
           <NavBar />
           <DetailHero
-            action={{ label: "Request Changes" }}
+            action={{
+              label: "Request Changes",
+              href: githubHref,
+              external: true,
+            }}
             description={component.description}
             eyebrow={component.category}
             index={componentIndex}
