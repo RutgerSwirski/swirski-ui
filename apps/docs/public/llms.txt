@@ -4,7 +4,7 @@
 
 Generated from `packages/ui/package.json`, `registry/swirski.registry.json`, and docs metadata in `apps/docs/content`.
 
-Current package version: `@swirski/ui@1.2.10`.
+Current package version: `@swirski/ui@1.2.11`.
 
 Primary install paths:
 
