@@ -114,6 +114,7 @@ function createBaseItem() {
     dependencies: [
       "clsx",
       "@floating-ui/dom",
+      "@fontsource-variable/inter",
       "@fontsource/anton",
       "@fontsource/bangers",
     ],

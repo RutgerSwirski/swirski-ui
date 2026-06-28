@@ -6,7 +6,6 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
-  readdirSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
@@ -41,6 +40,7 @@ execFileSync(
 );
 
 const fontPackages = [
+  { name: "@fontsource-variable/inter", outputDir: "inter" },
   { name: "@fontsource/anton", outputDir: "anton" },
   { name: "@fontsource/bangers", outputDir: "bangers" },
 ];
@@ -55,14 +55,6 @@ for (const fontPackage of fontPackages) {
 
   mkdirSync(outputDir, { recursive: true });
 
-  for (const fileName of readdirSync(fontFilesDir)) {
-    if (!/\.(woff2?|ttf|otf)$/i.test(fileName)) {
-      continue;
-    }
-
-    copyFileSync(join(fontFilesDir, fileName), join(outputDir, fileName));
-  }
-
   const escapedPackageName = fontPackage.name.replace(
     /[.*+?^${}()|[\]\\]/g,
     "\\$&",
@@ -73,11 +65,16 @@ for (const fontPackage of fontPackages) {
     "g",
   );
 
-  styles = styles.replace(
-    fontUrlPattern,
-    (_match, quote, fileName) =>
-      `url(${quote}./fonts/${fontPackage.outputDir}/${fileName}${quote})`,
-  );
+  const copiedFontFiles = new Set();
+
+  styles = styles.replace(fontUrlPattern, (_match, quote, fileName) => {
+    if (!copiedFontFiles.has(fileName)) {
+      copyFileSync(join(fontFilesDir, fileName), join(outputDir, fileName));
+      copiedFontFiles.add(fileName);
+    }
+
+    return `url(${quote}./fonts/${fontPackage.outputDir}/${fileName}${quote})`;
+  });
 }
 
 writeFileSync(stylesPath, styles);

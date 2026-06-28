@@ -52,9 +52,9 @@ const defaultTokens: SwirskiThemeTokens = {
   shadowSm: "3px 3px 0 var(--sw-color-shadow)",
   shadowMd: "6px 6px 0 var(--sw-color-shadow)",
   shadowLg: "10px 10px 0 var(--sw-color-shadow)",
-  fontBody: "var(--font-inter, system-ui, sans-serif)",
-  fontHeading: "var(--font-anton, Impact, sans-serif)",
-  fontDisplay: "var(--font-bangers, Impact, fantasy)",
+  fontBody: 'var(--font-inter, "Inter Variable", "Inter", system-ui, sans-serif)',
+  fontHeading: 'var(--font-anton, "Anton", Impact, sans-serif)',
+  fontDisplay: 'var(--font-bangers, "Bangers", Impact, fantasy)',
 };
 
 const darkTokens: Partial<SwirskiThemeTokens> = {

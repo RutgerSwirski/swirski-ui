@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
+    "@fontsource-variable/inter": "^5.2.8",
     "@fontsource/anton": "^5.2.7",
     "@fontsource/bangers": "^5.2.8",
     "clsx": "^2.1.1",

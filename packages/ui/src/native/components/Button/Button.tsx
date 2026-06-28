@@ -1,9 +1,18 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import type { PressableProps, StyleProp, TextStyle, ViewStyle } from "react-native";
-import { Pressable, Text } from "react-native";
+import type {
+  GestureResponderEvent,
+  PressableProps,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from "react-native";
+import { Animated, Pressable, Text } from "react-native";
 
 import { resolveButtonStyleConfig, type SharedButtonProps } from "../../../shared/contracts";
 import { swirskiColors, swirskiRadii, swirskiSpacing, swirskiTypography } from "../../../shared/tokens";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export type NativeButtonProps = SharedButtonProps &
   Omit<PressableProps, "children" | "style"> & {
@@ -103,10 +112,10 @@ function getButtonStyles({
       ...(withShadow && normalizedVariant !== "ghost"
         ? {
             shadowColor: swirskiColors.shadow,
-            shadowOffset: { width: 4, height: 4 },
+            shadowOffset: { width: 6, height: 6 },
             shadowOpacity: 1,
             shadowRadius: 0,
-            elevation: 4,
+            elevation: 6,
           }
         : {}),
     },
@@ -125,10 +134,14 @@ export function NativeButton({
   variant = "solid",
   withShadow = true,
   accessibilityLabel,
+  onPressIn,
+  onPressOut,
   style,
   textStyle: textStyleProp,
   ...props
 }: NativeButtonProps) {
+  const pressProgress = useRef(new Animated.Value(0)).current;
+  const [isPressed, setIsPressed] = useState(false);
   const { containerStyle, textStyle } = getButtonStyles({
     disabled,
     size,
@@ -136,20 +149,108 @@ export function NativeButton({
     variant,
     withShadow,
   });
+  const { variant: normalizedVariant } = resolveButtonStyleConfig({
+    variant,
+    tone,
+  });
+  const usesShadowFeedback = withShadow && normalizedVariant !== "ghost";
+  const animatedFeedbackStyle = useMemo(
+    () => ({
+      transform: usesShadowFeedback
+        ? [
+            {
+              translateX: pressProgress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 6],
+              }),
+            },
+            {
+              translateY: pressProgress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 6],
+              }),
+            },
+            {
+              scale: pressProgress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0.99],
+              }),
+            },
+          ]
+        : [
+            {
+              scale: pressProgress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0.98],
+              }),
+            },
+          ],
+    }),
+    [pressProgress, usesShadowFeedback],
+  );
+
+  useEffect(() => {
+    if (disabled) {
+      setIsPressed(false);
+      pressProgress.setValue(0);
+    }
+  }, [disabled, pressProgress]);
+
+  const runPressAnimation = (toValue: number) => {
+    if (disabled) {
+      return;
+    }
+
+    Animated.spring(pressProgress, {
+      damping: 14,
+      mass: 0.7,
+      stiffness: 520,
+      toValue,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressIn = (event: GestureResponderEvent) => {
+    setIsPressed(true);
+    runPressAnimation(1);
+    onPressIn?.(event);
+  };
+
+  const handlePressOut = (event: GestureResponderEvent) => {
+    setIsPressed(false);
+    runPressAnimation(0);
+    onPressOut?.(event);
+  };
+
+  const pressableState = useMemo(
+    () => ({
+      pressed: isPressed,
+    }),
+    [isPressed],
+  );
 
   return (
-    <Pressable
+    <AnimatedPressable
       accessibilityLabel={accessibilityLabel ?? (typeof children === "string" ? children : undefined)}
       accessibilityRole="button"
       disabled={disabled}
-      style={(state) => [
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      style={[
         containerStyle,
-        typeof style === "function" ? style(state) : style,
+        animatedFeedbackStyle,
+        isPressed && usesShadowFeedback
+          ? {
+              elevation: 0,
+              shadowOffset: { width: 0, height: 0 },
+            }
+          : undefined,
+        typeof style === "function" ? style(pressableState) : style,
       ]}
       {...props}
     >
       <Text style={[textStyle, textStyleProp]}>{children}</Text>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 

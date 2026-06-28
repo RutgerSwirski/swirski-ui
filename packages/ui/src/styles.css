@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@import "@fontsource-variable/inter";
 @import "@fontsource/anton";
 @import "@fontsource/bangers";
 
@@ -23,7 +24,7 @@
   --sw-shadow-sm: 3px 3px 0 var(--sw-color-shadow);
   --sw-shadow-md: 6px 6px 0 var(--sw-color-shadow);
   --sw-shadow-lg: 10px 10px 0 var(--sw-color-shadow);
-  --sw-font-body: var(--font-inter, system-ui, sans-serif);
+  --sw-font-body: var(--font-inter, "Inter Variable", "Inter", system-ui, sans-serif);
   --sw-font-heading: var(--font-anton, "Anton", sans-serif);
   --sw-font-display: var(--font-bangers, "Bangers", cursive);
 }
@@ -47,6 +48,7 @@
 }
 
 @theme inline {
+  --font-inter: "Inter Variable", "Inter", system-ui, sans-serif;
   --font-anton: "Anton", sans-serif;
   --font-bangers: "Bangers", cursive;
 }
