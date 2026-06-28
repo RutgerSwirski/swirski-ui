@@ -44,10 +44,10 @@ const toneStyles: Record<NativeTextTone, TextStyle> = {
 };
 
 const weightStyles: Record<NativeTextWeight, TextStyle> = {
-  regular: { fontFamily: nativeBodyFontForWeight("regular"), fontWeight: "400" },
-  medium: { fontFamily: nativeBodyFontForWeight("medium"), fontWeight: "500" },
-  bold: { fontFamily: nativeBodyFontForWeight("bold"), fontWeight: "700" },
-  black: { fontFamily: nativeBodyFontForWeight("black"), fontWeight: "900" },
+  regular: { fontWeight: "400" },
+  medium: { fontWeight: "500" },
+  bold: { fontWeight: "700" },
+  black: { fontWeight: "900" },
 };
 
 const variantStyles: Record<NativeTextVariant, TextStyle> = {
@@ -75,7 +75,10 @@ export const NativeText = forwardRef<ComponentRef<typeof RNText>, NativeTextProp
         style={[
           sizeStyles[size],
           toneStyles[tone],
-          weightStyles[weight],
+          {
+            ...weightStyles[weight],
+            fontFamily: nativeBodyFontForWeight(weight),
+          },
           variantStyles[variant],
           style,
         ]}
