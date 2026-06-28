@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "pnpm --filter docs dev",
     "storybook": "pnpm --filter @swirski/ui storybook",
+    "storybook:native": "pnpm --filter @swirski/ui storybook:native",
     "build": "pnpm docs:metadata && pnpm llms:build && pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
     "check:ui-package": "node scripts/check-ui-package.mjs",
