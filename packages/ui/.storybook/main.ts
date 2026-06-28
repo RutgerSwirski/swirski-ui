@@ -5,7 +5,7 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
-  stories: ["../src/**/*.stories.@(ts|tsx)"],
+  stories: ["../src/web/**/*.stories.@(ts|tsx)"],
   addons: ["@storybook/addon-docs"],
   viteFinal: async (config) => {
     config.server = {

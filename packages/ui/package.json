@@ -12,6 +12,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./native": {
+      "types": "./dist/native/index.d.ts",
+      "import": "./dist/native/index.js"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "sideEffects": [
@@ -21,16 +25,28 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts && node scripts/build-styles.mjs",
+    "build": "tsup src/index.ts src/native/index.ts --format esm --dts --outDir dist --clean && node scripts/build-styles.mjs",
     "pack:check": "node ../../scripts/check-ui-package.mjs",
     "test": "vitest run",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0",
+    "storybook:web": "storybook dev -p 6006 --host 0.0.0.0",
+    "storybook:native": "storybook dev -c .storybook/native-web -p 6007 --host 0.0.0.0",
     "build-storybook": "storybook build",
+    "build-storybook:native": "storybook build -c .storybook/native-web -o storybook-static-native",
     "prepack": "pnpm build"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
-    "react-dom": "^18 || ^19"
+    "react-dom": "^18 || ^19",
+    "react-native": ">=0.72"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
@@ -53,6 +69,8 @@
     "postcss-cli": "^11.0.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-native": "^0.76.0",
+    "react-native-web": "^0.21.2",
     "storybook": "^10.3.6",
     "tailwindcss": "^4.2.4",
     "tsup": "^8.5.1",

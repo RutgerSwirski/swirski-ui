@@ -1,102 +1,102 @@
-export * from "./components/accordion/index";
+export * from "./web/components/accordion/index";
 
-export * from "./components/alert/index";
+export * from "./web/components/alert/index";
 
-export * from "./components/app-shell/index";
+export * from "./web/components/app-shell/index";
 
-export * from "./components/avatar/index";
+export * from "./web/components/avatar/index";
 
-export * from "./components/badge/index";
+export * from "./web/components/badge/index";
 
-export * from "./components/breadcrumb/index";
+export * from "./web/components/breadcrumb/index";
 
-export * from "./components/button/index";
+export * from "./web/components/button/index";
 
-export * from "./components/card/index";
+export * from "./web/components/card/index";
 
-export * from "./components/checkbox/index";
+export * from "./web/components/checkbox/index";
 
-export * from "./components/container/index";
+export * from "./web/components/container/index";
 
-export * from "./components/cursor/index";
+export * from "./web/components/cursor/index";
 
-export * from "./components/diagonal-lines/index";
+export * from "./web/components/diagonal-lines/index";
 
-export * from "./components/dialog/index";
+export * from "./web/components/dialog/index";
 
-export * from "./components/dot-grid/index";
+export * from "./web/components/dot-grid/index";
 
-export * from "./components/drawer/index";
+export * from "./web/components/drawer/index";
 
-export * from "./components/dropdown-menu/index";
+export * from "./web/components/dropdown-menu/index";
 
-export * from "./components/field/index";
+export * from "./web/components/field/index";
 
-export * from "./components/grid/index";
+export * from "./web/components/grid/index";
 
-export * from "./components/line-grid/index";
+export * from "./web/components/line-grid/index";
 
-export * from "./components/image-frame/index";
+export * from "./web/components/image-frame/index";
 
-export * from "./components/loader/index";
+export * from "./web/components/loader/index";
 
-export * from "./components/navbar/index";
+export * from "./web/components/navbar/index";
 
-export * from "./components/pagination/index";
+export * from "./web/components/pagination/index";
 
-export * from "./components/popover/index";
+export * from "./web/components/popover/index";
 
-export * from "./components/progress/index";
+export * from "./web/components/progress/index";
 
-export * from "./components/radio-group/index";
+export * from "./web/components/radio-group/index";
 
-export * from "./components/section-label/index";
+export * from "./web/components/section-label/index";
 
-export * from "./components/select/index";
+export * from "./web/components/select/index";
 
-export * from "./components/separator/index";
+export * from "./web/components/separator/index";
 
-export * from "./components/skeleton/index";
+export * from "./web/components/skeleton/index";
 
-export * from "./components/slider/index";
+export * from "./web/components/slider/index";
 
-export * from "./components/switch/index";
+export * from "./web/components/switch/index";
 
-export * from "./components/table/index";
+export * from "./web/components/table/index";
 
-export * from "./components/tabs/index";
+export * from "./web/components/tabs/index";
 
-export * from "./components/toast/index";
+export * from "./web/components/toast/index";
 
-export * from "./components/tooltip/index";
+export * from "./web/components/tooltip/index";
 
-export * from "./components/typography/index";
+export * from "./web/components/typography/index";
 
-export * from "./hooks/index";
+export * from "./web/hooks/index";
 
 // import system index file - a file that adds a swirski system to any component
-export * from "./system/index";
+export * from "./web/system/index";
 
-export * from "./theme/index";
+export * from "./web/theme/index";
 
-export { HeroActions } from "./components/hero-actions/HeroActions";
+export { HeroActions } from "./web/components/hero-actions/HeroActions";
 export type {
   HeroActionsProps,
   HeroActionsSize,
   HeroActionsTone,
   HeroActionsVariant,
-} from "./components/hero-actions/HeroActions";
+} from "./web/components/hero-actions/HeroActions";
 
-export { HeroKicker } from "./components/hero-kicker/HeroKicker";
+export { HeroKicker } from "./web/components/hero-kicker/HeroKicker";
 export type {
   HeroKickerProps,
   HeroKickerSize,
   HeroKickerTone,
   HeroKickerVariant,
-} from "./components/hero-kicker/HeroKicker";
+} from "./web/components/hero-kicker/HeroKicker";
 
-export { HeroLead } from "./components/hero-lead/HeroLead";
-export type { HeroLeadProps } from "./components/hero-lead/HeroLead";
+export { HeroLead } from "./web/components/hero-lead/HeroLead";
+export type { HeroLeadProps } from "./web/components/hero-lead/HeroLead";
 
-export { HeroTitle } from "./components/hero-title/HeroTitle";
-export type { HeroTitleProps } from "./components/hero-title/HeroTitle";
+export { HeroTitle } from "./web/components/hero-title/HeroTitle";
+export type { HeroTitleProps } from "./web/components/hero-title/HeroTitle";
