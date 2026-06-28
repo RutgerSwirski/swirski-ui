@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 
 import {
   Card,
@@ -9,20 +9,35 @@ import {
   CardMeta,
   CardTitle,
 } from "./index";
+import { Text } from "../Text";
 
 const meta = {
   title: "Native/Card",
   component: Card,
   args: {
+    style: { width: 376 },
     children: (
       <>
-        <CardBadge>New</CardBadge>
-        <CardMedia>
-          <View style={{ flex: 1, backgroundColor: "#FFD400" }} />
+        <CardBadge>Featured</CardBadge>
+        <CardBadge position="top-right" tone="black">
+          Archived
+        </CardBadge>
+        <CardMedia aspect="4/5">
+          <Image
+            accessibilityLabel="Blue diamond camp collar shirt on a hanger"
+            resizeMode="cover"
+            source={{
+              uri: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=900&q=80",
+            }}
+            style={{ height: "100%", width: "100%" }}
+          />
         </CardMedia>
-        <CardContent>
-          <CardTitle>Launch Notes</CardTitle>
-          <CardMeta>Native / Product / Today</CardMeta>
+        <CardContent size="lg">
+          <CardTitle>Gary Rhodes Camp Collar Shirt</CardTitle>
+          <CardMeta>Found Fabric / Tops / 2026</CardMeta>
+          <Text size="md" tone="muted" style={{ marginTop: 16 }}>
+            One-of-One
+          </Text>
         </CardContent>
       </>
     ),
