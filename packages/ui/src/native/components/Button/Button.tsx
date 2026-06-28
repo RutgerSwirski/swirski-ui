@@ -11,6 +11,7 @@ import { Animated, Pressable, Text } from "react-native";
 
 import { resolveButtonStyleConfig, type SharedButtonProps } from "../../../shared/contracts";
 import { swirskiColors, swirskiRadii, swirskiSpacing, swirskiTypography } from "../../../shared/tokens";
+import { nativeFontFamilies } from "../../system/fonts";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -121,6 +122,7 @@ function getButtonStyles({
     },
     textStyle: {
       ...sizeConfig,
+      fontFamily: nativeFontFamilies.bodyBlack,
       color: toneStyles[normalizedVariant].color,
     },
   };
