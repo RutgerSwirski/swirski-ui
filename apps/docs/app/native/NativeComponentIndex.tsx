@@ -492,36 +492,44 @@ const nativeCardStyles = [
 
 function PropTable({ group }: { group: NativePropGroup }) {
   return (
-    <div>
+    <div className="min-w-0 max-w-full">
       <Title className="mb-3" order={3} size="h5">
         {group.title}
       </Title>
-      <Table size="sm">
-        <TableHead>
-          <TableRow>
-            <TableHeader>Prop</TableHeader>
-            <TableHeader>Type</TableHeader>
-            <TableHeader>Default</TableHeader>
-            <TableHeader>Details</TableHeader>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {group.props.map((prop) => (
-            <TableRow key={`${group.title}-${prop.name}`}>
-              <TableCell>
-                <code className="font-black text-[#0B0B0C]">{prop.name}</code>
-              </TableCell>
-              <TableCell>
-                <code>{prop.type}</code>
-              </TableCell>
-              <TableCell>
-                {prop.defaultValue ? <code>{prop.defaultValue}</code> : "-"}
-              </TableCell>
-              <TableCell>{prop.description}</TableCell>
+      <div className="min-w-0 max-w-full overflow-x-auto">
+        <Table
+          className="min-w-[44rem]"
+          size="sm"
+          wrapperClassName="min-w-[44rem]"
+        >
+          <TableHead>
+            <TableRow>
+              <TableHeader>Prop</TableHeader>
+              <TableHeader>Type</TableHeader>
+              <TableHeader>Default</TableHeader>
+              <TableHeader>Details</TableHeader>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {group.props.map((prop) => (
+              <TableRow key={`${group.title}-${prop.name}`}>
+                <TableCell>
+                  <code className="font-black text-[#0B0B0C]">
+                    {prop.name}
+                  </code>
+                </TableCell>
+                <TableCell>
+                  <code>{prop.type}</code>
+                </TableCell>
+                <TableCell>
+                  {prop.defaultValue ? <code>{prop.defaultValue}</code> : "-"}
+                </TableCell>
+                <TableCell>{prop.description}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
@@ -538,7 +546,10 @@ function NativeComponentDetails({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {children(() => setOpen(true))}
-      <DialogContent className="max-h-[88vh] overflow-y-auto" size="lg">
+      <DialogContent
+        className="max-h-[88dvh] w-[calc(100vw-2rem)] overflow-y-auto"
+        size="lg"
+      >
         <DialogHeader>
           <Badge tone={component.tone}>{component.name}</Badge>
           <DialogTitle className="mt-3">{component.name}</DialogTitle>
@@ -556,7 +567,7 @@ function NativeComponentDetails({
               >
                 Import
               </Text>
-              <CodeBlock code={component.importCode} />
+              <CodeBlock code={component.importCode} wrap />
             </div>
             <div>
               <Text
@@ -567,7 +578,7 @@ function NativeComponentDetails({
               >
                 Usage
               </Text>
-              <CodeBlock code={component.usageCode} />
+              <CodeBlock code={component.usageCode} wrap />
             </div>
           </Grid>
 
@@ -581,7 +592,7 @@ function NativeComponentDetails({
               >
                 Native structure
               </Text>
-              <CodeBlock code={component.structureCode} />
+              <CodeBlock code={component.structureCode} wrap />
             </div>
           ) : null}
 
