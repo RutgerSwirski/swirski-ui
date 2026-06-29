@@ -24,60 +24,69 @@ That stylesheet is only for web and React Native Web.
 
 ## Bare React Native Setup
 
+Swirski UI ships native font files with the package. After installing, run the
+setup helper from the root of your React Native app:
+
+```bash
+pnpm exec swirski-native setup
+```
+
+The helper creates or updates `react-native.config.*` with the bundled Swirski
+font path and runs `react-native-asset` for you when it finds an `ios` or
+`android` directory. Then rebuild your app:
+
+```bash
+pnpm ios
+# or
+pnpm android
+```
+
 Swirski native components use the same visual typefaces as the web package:
 
 - Inter for body text and metadata
 - Anton for titles and card stickers
 - Bangers for display text
 
-Add these font files to your app, usually in `assets/fonts`:
+The bundled native font files are:
 
 ```txt
-assets/fonts/Anton-Regular.ttf
-assets/fonts/Bangers-Regular.ttf
-assets/fonts/Inter-Regular.ttf
-assets/fonts/Inter-Medium.ttf
-assets/fonts/Inter-Bold.ttf
-assets/fonts/Inter-Black.ttf
+node_modules/@swirski/ui/dist/native/fonts/Anton_400Regular.ttf
+node_modules/@swirski/ui/dist/native/fonts/Bangers_400Regular.ttf
+node_modules/@swirski/ui/dist/native/fonts/Inter_400Regular.ttf
+node_modules/@swirski/ui/dist/native/fonts/Inter_500Medium.ttf
+node_modules/@swirski/ui/dist/native/fonts/Inter_700Bold.ttf
+node_modules/@swirski/ui/dist/native/fonts/Inter_900Black.ttf
 ```
 
-Register the font asset folder in `react-native.config.js`:
+If you prefer manual setup, add the font path yourself:
 
 ```js
 module.exports = {
-  assets: ["./assets/fonts"],
+  assets: ["./node_modules/@swirski/ui/dist/native/fonts"],
 };
 ```
 
-Link the assets and rebuild the native app:
+Then run:
 
 ```bash
-npx react-native-asset
-cd ios && pod install && cd ..
-pnpm ios
-# or
-pnpm android
+npx react-native-asset -a ./node_modules/@swirski/ui/dist/native/fonts
 ```
 
-Then configure Swirski UI with the font family names your native app exposes.
-Call this once before rendering your app.
+You only need to call `configureSwirskiNativeFonts` if your app uses its own
+font files or exposes different native font family names.
 
 ```tsx
 import { configureSwirskiNativeFonts } from "@swirski/ui/native";
 
 configureSwirskiNativeFonts({
-  body: "Inter-Regular",
-  bodyMedium: "Inter-Medium",
-  bodyBold: "Inter-Bold",
-  bodyBlack: "Inter-Black",
-  heading: "Anton-Regular",
-  display: "Bangers-Regular",
+  body: "YourInterRegularName",
+  bodyMedium: "YourInterMediumName",
+  bodyBold: "YourInterBoldName",
+  bodyBlack: "YourInterBlackName",
+  heading: "YourAntonName",
+  display: "YourBangersName",
 });
 ```
-
-If your app registers different names, use those exact names instead. On iOS,
-font family names often follow the font's internal PostScript name. On Android,
-they often follow the linked font file name.
 
 ## Example
 
@@ -129,19 +138,15 @@ Bangers
 
 ## Expo
 
-Expo apps can either load fonts under the default Swirski native names:
+Expo apps can use the same package-bundled fonts through `expo-font`, or load
+their own font files and call `configureSwirskiNativeFonts`.
+
+The default native names are:
 
 ```txt
-Inter_400Regular
-Inter_500Medium
-Inter_700Bold
-Inter_900Black
-Anton_400Regular
-Bangers_400Regular
+iOS: Inter-Regular, Inter-Medium, Inter-Bold, Inter-Black, Anton-Regular, Bangers-Regular
+Android: Inter_400Regular, Inter_500Medium, Inter_700Bold, Inter_900Black, Anton_400Regular, Bangers_400Regular
 ```
-
-Or they can call `configureSwirskiNativeFonts` with custom names, just like a
-bare React Native app.
 
 ## Troubleshooting
 

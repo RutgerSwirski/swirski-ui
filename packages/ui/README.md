@@ -20,5 +20,6 @@ import { Button, Card, Text, Title } from "@swirski/ui";
 import { Button, Card, Text, Title } from "@swirski/ui/native";
 ```
 
-Bare React Native apps must register the Swirski fonts and configure native font
-family names before rendering. See [README.native.md](README.native.md).
+Swirski UI ships native font assets with the package. Bare React Native apps
+can run `pnpm exec swirski-native setup`, then rebuild the native app. See
+[README.native.md](README.native.md).

@@ -16,6 +16,7 @@ const require = createRequire(import.meta.url);
 const packageDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(packageDir, "dist");
 const stylesPath = join(distDir, "styles.css");
+const nativeFontsDir = join(distDir, "native", "fonts");
 
 const binName = process.platform === "win32" ? "postcss.cmd" : "postcss";
 const localPostcssBin = join(packageDir, "node_modules", ".bin", binName);
@@ -78,3 +79,43 @@ for (const fontPackage of fontPackages) {
 }
 
 writeFileSync(stylesPath, styles);
+
+const nativeFontFiles = [
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "400Regular/Inter_400Regular.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "500Medium/Inter_500Medium.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "700Bold/Inter_700Bold.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "900Black/Inter_900Black.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/anton",
+    sourcePath: "400Regular/Anton_400Regular.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/bangers",
+    sourcePath: "400Regular/Bangers_400Regular.ttf",
+  },
+];
+
+mkdirSync(nativeFontsDir, { recursive: true });
+
+for (const fontFile of nativeFontFiles) {
+  const packageJsonPath = require.resolve(`${fontFile.packageName}/package.json`);
+  const fontPackageDir = dirname(packageJsonPath);
+  const fileName = fontFile.sourcePath.split("/").pop();
+
+  copyFileSync(
+    join(fontPackageDir, fontFile.sourcePath),
+    join(nativeFontsDir, fileName),
+  );
+}

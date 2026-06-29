@@ -18,11 +18,16 @@
     },
     "./styles.css": "./dist/styles.css"
   },
+  "bin": {
+    "swirski-native": "./scripts/setup-native.mjs"
+  },
   "sideEffects": [
     "./dist/styles.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "README.native.md",
+    "scripts/setup-native.mjs"
   ],
   "scripts": {
     "build": "tsup src/index.ts src/native/index.ts --format esm --dts --outDir dist --clean && node scripts/build-styles.mjs",
@@ -50,13 +55,15 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@expo-google-fonts/anton": "^0.4.2",
+    "@expo-google-fonts/bangers": "^0.4.1",
+    "@expo-google-fonts/inter": "^0.4.2",
     "@fontsource-variable/inter": "^5.2.8",
     "@fontsource/anton": "^5.2.7",
     "@fontsource/bangers": "^5.2.8",
-    "clsx": "^2.1.1",
-    "postcss-cli": "^11.0.1"
-  },
-  "devDependencies": {
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
     "@tailwindcss/postcss": "^4.2.4",

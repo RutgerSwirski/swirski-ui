@@ -89,8 +89,8 @@ Use the native entrypoint in React Native apps:
 import { Button, Card, Text, Title } from "@swirski/ui/native";
 ```
 
-Bare React Native apps need to register the Swirski font files and configure the
-native font family names before rendering. See
+Swirski UI ships native font assets with the package. Bare React Native apps
+can run `pnpm exec swirski-native setup`, then rebuild the native app. See
 [`packages/ui/README.native.md`](packages/ui/README.native.md) for the full iOS,
 Android, React Native Web, and Expo setup notes.
 
