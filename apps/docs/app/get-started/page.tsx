@@ -40,6 +40,26 @@ const workflowCards = [
   },
 ];
 
+const platformCards = [
+  {
+    label: "Web",
+    title: "React and Next.js apps",
+    body: "Import CSS once, then use the full web component library from @swirski/ui.",
+    code: `import "@swirski/ui/styles.css";
+import { Button, Card, Title } from "@swirski/ui";`,
+    tone: "yellow" as const,
+  },
+  {
+    label: "Native",
+    title: "React Native apps",
+    body: "Use the native entrypoint and run the setup helper once so bundled fonts match the web package.",
+    code: `pnpm exec swirski-native setup
+
+import { Button, Card, Title } from "@swirski/ui/native";`,
+    tone: "blue" as const,
+  },
+];
+
 const packageSteps = [
   {
     title: "Install the package",
@@ -274,9 +294,47 @@ export default function GetStartedPage() {
           ))}
         </Grid> */}
 
-        <Grid gap="xl" 
-        // className="mt-14"
-        >
+        <Grid gap="xl">
+          <section id="platforms" className="scroll-mt-8">
+            <Grid gap="lg" className="lg:grid-cols-[0.85fr_1.15fr]">
+              <div>
+                <SectionLabel>Platforms</SectionLabel>
+                <Title className="mt-6" order={2} size="h2">
+                  Web and native live in the same package.
+                </Title>
+                <Text className="mt-5" tone="muted" weight="bold">
+                  Most of the docs show the web components from @swirski/ui.
+                  React Native apps use @swirski/ui/native and the native setup
+                  helper for bundled fonts.
+                </Text>
+                <Button className="mt-6" href="/native" tone="yellow">
+                  Native setup
+                </Button>
+              </div>
+
+              <Grid gap="lg" className="md:grid-cols-2">
+                {platformCards.map((platform) => (
+                  <Card
+                    key={platform.label}
+                    interactive={false}
+                    className="bg-white"
+                  >
+                    <CardContent className="flex h-full flex-col p-6">
+                      <Badge tone={platform.tone}>{platform.label}</Badge>
+                      <Title className="mt-5" order={3} size="h4">
+                        {platform.title}
+                      </Title>
+                      <Text className="mt-3" tone="muted" weight="bold">
+                        {platform.body}
+                      </Text>
+                      <CodeBlock className="mt-6" code={platform.code} />
+                    </CardContent>
+                  </Card>
+                ))}
+              </Grid>
+            </Grid>
+          </section>
+
           <WorkflowSection
             id="package"
             label="Workflow 01"
