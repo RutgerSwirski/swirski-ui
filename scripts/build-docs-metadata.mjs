@@ -64,6 +64,26 @@ function walkFiles(directory) {
   return files.sort();
 }
 
+function resolveSourcePath(source) {
+  const directPath = path.join(repoRoot, source);
+
+  if (existsSync(directPath)) {
+    return directPath;
+  }
+
+  const webSource = source
+    .replace("packages/ui/src/components/", "packages/ui/src/web/components/")
+    .replace("packages/ui/src/hooks/", "packages/ui/src/web/hooks/")
+    .replace("packages/ui/src/theme", "packages/ui/src/web/theme");
+  const webPath = path.join(repoRoot, webSource);
+
+  if (existsSync(webPath)) {
+    return webPath;
+  }
+
+  throw new Error(`Missing docs metadata source path: ${source}`);
+}
+
 function loadProgram() {
   const configPath = ts.findConfigFile(uiRoot, ts.sys.fileExists, "tsconfig.json");
 
@@ -354,7 +374,7 @@ function createPropsForDeclaration({
 }
 
 function createComponentMetadata({ checker, component, program }) {
-  const sourceRoot = path.join(repoRoot, component.source);
+  const sourceRoot = resolveSourcePath(component.source);
   const files = walkFiles(sourceRoot);
   const propsDeclarations = [];
   const defaultsByComponent = {};
