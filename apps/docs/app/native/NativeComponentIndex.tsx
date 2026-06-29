@@ -481,6 +481,262 @@ const nativeComponentDocs: NativeComponentDoc[] = [
     ],
     webHref: "/components/card",
   },
+  {
+    name: "DotGrid",
+    tone: "white",
+    description:
+      "A dotted native background layer for halftone texture, product cards and punchy Swirski surfaces.",
+    importCode: `import { DotGrid } from "@swirski/ui/native";`,
+    usageCode: `<View style={{ height: 240, position: "relative" }}>
+  <DotGrid color="#0057FF" spacing={13} dotSize={1.2} />
+  <Card>
+    <CardContent>
+      <CardTitle>Launch notes</CardTitle>
+    </CardContent>
+  </Card>
+</View>`,
+    notes: [
+      "Renders an absolute-fill React Native View layer with repeated dot Views.",
+      "The parent should have a measured size. For backgrounds, set the parent to position: \"relative\".",
+      "Use accentEvery for larger periodic dots without adding another dependency.",
+    ],
+    propGroups: [
+      {
+        title: "DotGrid",
+        props: [
+          {
+            name: "color",
+            type: "string",
+            defaultValue: `"#0B0B0C"`,
+            description: "Primary dot color.",
+          },
+          {
+            name: "opacity",
+            type: "number",
+            defaultValue: "0.2",
+            description: "Opacity applied to the whole background layer.",
+          },
+          {
+            name: "spacing",
+            type: "number",
+            defaultValue: "13",
+            description: "Pixel spacing between repeated dot positions.",
+          },
+          {
+            name: "dotSize",
+            type: "number",
+            defaultValue: "1.2",
+            description: "Primary dot diameter.",
+          },
+          {
+            name: "accentEvery",
+            type: "number",
+            description: "Adds an accent dot every N rows and columns.",
+          },
+          {
+            name: "accentColor",
+            type: "string",
+            description: "Accent dot color. Defaults to color.",
+          },
+          {
+            name: "accentDotSize",
+            type: "number",
+            defaultValue: "3",
+            description: "Accent dot diameter.",
+          },
+          {
+            name: "style",
+            type: "StyleProp<ViewStyle>",
+            description: "Styles the absolute-fill background wrapper.",
+          },
+        ],
+      },
+    ],
+    webHref: "/components/dot-grid",
+  },
+  {
+    name: "LineGrid",
+    tone: "blue",
+    description:
+      "A native line-grid background layer with horizontal, vertical or combined grid directions.",
+    importCode: `import { LineGrid } from "@swirski/ui/native";`,
+    usageCode: `<View style={{ height: 240, position: "relative" }}>
+  <LineGrid
+    color="#0B0B0C"
+    direction="both"
+    spacing={18}
+    thickness={1}
+  />
+</View>`,
+    notes: [
+      "Renders an absolute-fill React Native View layer with repeated horizontal and vertical line Views.",
+      "Use direction to render only horizontal lines, only vertical lines or both.",
+      "Accent lines are drawn at the same periodic positions as the web component.",
+    ],
+    propGroups: [
+      {
+        title: "LineGrid",
+        props: [
+          {
+            name: "direction",
+            type: `"both" | "horizontal" | "vertical"`,
+            defaultValue: `"both"`,
+            description: "Controls which line directions render.",
+          },
+          {
+            name: "color",
+            type: "string",
+            defaultValue: `"#0B0B0C"`,
+            description: "Default color for both line directions.",
+          },
+          {
+            name: "opacity",
+            type: "number",
+            defaultValue: "0.2",
+            description: "Opacity applied to the whole background layer.",
+          },
+          {
+            name: "spacing",
+            type: "number",
+            defaultValue: "18",
+            description: "Default spacing for horizontal and vertical lines.",
+          },
+          {
+            name: "thickness",
+            type: "number",
+            defaultValue: "1",
+            description: "Default line thickness.",
+          },
+          {
+            name: "horizontalColor",
+            type: "string",
+            description: "Overrides the horizontal line color.",
+          },
+          {
+            name: "horizontalSpacing",
+            type: "number",
+            description: "Overrides horizontal line spacing.",
+          },
+          {
+            name: "horizontalThickness",
+            type: "number",
+            description: "Overrides horizontal line thickness.",
+          },
+          {
+            name: "verticalColor",
+            type: "string",
+            description: "Overrides the vertical line color.",
+          },
+          {
+            name: "verticalSpacing",
+            type: "number",
+            description: "Overrides vertical line spacing.",
+          },
+          {
+            name: "verticalThickness",
+            type: "number",
+            description: "Overrides vertical line thickness.",
+          },
+          {
+            name: "accentEvery",
+            type: "number",
+            description: "Draws accent lines every N rows or columns.",
+          },
+          {
+            name: "accentColor",
+            type: "string",
+            description: "Accent line color. Defaults to the matching line color.",
+          },
+          {
+            name: "accentThickness",
+            type: "number",
+            defaultValue: "3",
+            description: "Accent line thickness.",
+          },
+        ],
+      },
+    ],
+    webHref: "/components/line-grid",
+  },
+  {
+    name: "DiagonalLines",
+    tone: "red",
+    description:
+      "A native diagonal stripe background layer for editorial cards, callouts and loud section surfaces.",
+    importCode: `import { DiagonalLines } from "@swirski/ui/native";`,
+    usageCode: `<View style={{ height: 240, position: "relative" }}>
+  <DiagonalLines
+    angle={-45}
+    color="#0B0B0C"
+    spacing={18}
+    thickness={2}
+  />
+</View>`,
+    notes: [
+      "Renders an absolute-fill clipped View with a rotated stripe layer.",
+      "angle accepts a number of degrees or a deg string like \"-30deg\".",
+      "Use accentEvery for larger periodic diagonal stripes.",
+    ],
+    propGroups: [
+      {
+        title: "DiagonalLines",
+        props: [
+          {
+            name: "angle",
+            type: `number | \`\${number}deg\``,
+            defaultValue: "-45",
+            description: "Stripe angle in degrees.",
+          },
+          {
+            name: "color",
+            type: "string",
+            defaultValue: `"#0B0B0C"`,
+            description: "Primary stripe color.",
+          },
+          {
+            name: "opacity",
+            type: "number",
+            defaultValue: "0.2",
+            description: "Opacity applied to the whole background layer.",
+          },
+          {
+            name: "spacing",
+            type: "number",
+            defaultValue: "18",
+            description: "Pixel spacing between stripes.",
+          },
+          {
+            name: "thickness",
+            type: "number",
+            defaultValue: "2",
+            description: "Primary stripe thickness.",
+          },
+          {
+            name: "accentEvery",
+            type: "number",
+            description: "Draws an accent stripe every N stripes.",
+          },
+          {
+            name: "accentColor",
+            type: "string",
+            description: "Accent stripe color. Defaults to color.",
+          },
+          {
+            name: "accentThickness",
+            type: "number",
+            defaultValue: "5",
+            description: "Accent stripe thickness.",
+          },
+          {
+            name: "style",
+            type: "StyleProp<ViewStyle>",
+            description: "Styles the absolute-fill background wrapper.",
+          },
+        ],
+      },
+    ],
+    webHref: "/components/diagonal-lines",
+  },
 ];
 
 const nativeCardStyles = [

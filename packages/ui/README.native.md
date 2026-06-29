@@ -14,6 +14,9 @@ import {
   CardContent,
   CardMeta,
   CardTitle,
+  DiagonalLines,
+  DotGrid,
+  LineGrid,
   Text,
   Title,
 } from "@swirski/ui/native";
@@ -97,12 +100,14 @@ import {
   CardContent,
   CardMeta,
   CardTitle,
+  DotGrid,
   Text,
 } from "@swirski/ui/native";
 
 export function ProductCard() {
   return (
     <Card style={{ width: 360 }}>
+      <DotGrid color="#0057FF" opacity={0.14} />
       <CardBadge>Featured</CardBadge>
       <CardBadge position="top-right" tone="black">
         Archived

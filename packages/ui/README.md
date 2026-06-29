@@ -17,7 +17,7 @@ import { Button, Card, Text, Title } from "@swirski/ui";
 ## React Native
 
 ```tsx
-import { Button, Card, Text, Title } from "@swirski/ui/native";
+import { Button, Card, DotGrid, Text, Title } from "@swirski/ui/native";
 ```
 
 Swirski UI ships native font assets with the package. Bare React Native apps
