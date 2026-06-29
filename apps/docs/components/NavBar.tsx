@@ -38,6 +38,7 @@ type NavItem = NavLinkItem | NavGroupItem;
 const navItems: NavItem[] = [
   { href: "/get-started", label: "Get Started" },
   { href: "/components", label: "Components" },
+  { href: "/native", label: "Native" },
   { href: "/hooks", label: "Hooks" },
 
   {

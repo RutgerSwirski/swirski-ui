@@ -12,13 +12,13 @@
   ],
   "files": [
     {
-      "path": "packages/ui/src/components/container/Container.tsx",
+      "path": "packages/ui/src/web/components/container/Container.tsx",
       "content": "import { HTMLAttributes, ReactNode, forwardRef } from \"react\";\nimport { Slot, cn, swirskiAttrs } from \"../../system\";\n\nexport type ContainerVariant = \"default\" | \"fluid\";\nexport type ContainerSize = \"sm\" | \"md\" | \"lg\" | \"xl\" | \"fluid\";\nexport type ContainerTone = \"default\";\n\nexport type ContainerProps = {\n  asChild?: boolean;\n  children?: ReactNode;\n  variant?: ContainerVariant;\n  size?: ContainerSize;\n  tone?: ContainerTone;\n} & HTMLAttributes<HTMLDivElement>;\n\nconst sizeStyles: Record<ContainerSize, string> = {\n  sm: \"max-w-3xl\",\n  md: \"max-w-5xl\",\n  lg: \"max-w-6xl\",\n  xl: \"max-w-7xl\",\n  fluid: \"max-w-full\",\n};\n\nexport const Container = forwardRef<HTMLDivElement, ContainerProps>(\n  function Container(\n    {\n      asChild = false,\n      children,\n      className,\n      variant = \"default\",\n      size = \"lg\",\n      tone = \"default\",\n      ...props\n    },\n    ref,\n  ) {\n    const Component = asChild ? Slot : \"div\";\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"mx-auto w-full min-w-0 px-4 sm:px-6 lg:px-8\",\n          variant === \"default\" && sizeStyles[size],\n          className,\n        )}\n        {...swirskiAttrs(\"container\", { size, tone, variant })}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  },\n);\n\nContainer.displayName = \"Container\";\n",
       "type": "registry:ui",
       "target": "@ui/swirski/components/container/Container.tsx"
     },
     {
-      "path": "packages/ui/src/components/container/index.ts",
+      "path": "packages/ui/src/web/components/container/index.ts",
       "content": "export { Container } from \"./Container\";\nexport type {\n  ContainerProps,\n  ContainerSize,\n  ContainerTone,\n  ContainerVariant,\n} from \"./Container\";\n",
       "type": "registry:ui",
       "target": "@ui/swirski/components/container/index.ts"

@@ -55,7 +55,7 @@ export default function ComponentsPage() {
           <Grid
             as="section"
             gap="xl"
-            className="py-12 md:grid-cols-1 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-end"
+            className="py-12 md:grid-cols-1 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,20rem)] lg:items-start"
           >
             <div className="min-w-0 max-w-4xl">
               <SectionLabel>Components</SectionLabel>
@@ -135,6 +135,20 @@ export default function ComponentsPage() {
                     tone="white"
                   >
                     Open an issue
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card interactive={false} tone="yellow" className="col-span-2 ">
+                <CardContent>
+                  <Text weight="bold">Building in React Native?</Text>
+                  <Button
+                    withShadow={false}
+                    className="mt-4 max-w-full"
+                    href="/native#native-components"
+                    tone="white"
+                  >
+                    Native components
                   </Button>
                 </CardContent>
               </Card>

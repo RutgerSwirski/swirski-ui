@@ -12,34 +12,58 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./native": {
+      "types": "./dist/native/index.d.ts",
+      "import": "./dist/native/index.js"
+    },
     "./styles.css": "./dist/styles.css"
+  },
+  "bin": {
+    "swirski-native": "./scripts/setup-native.mjs"
   },
   "sideEffects": [
     "./dist/styles.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "README.native.md",
+    "scripts/setup-native.mjs"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts && node scripts/build-styles.mjs",
+    "build": "tsup src/index.ts src/native/index.ts --format esm --dts --outDir dist --clean && node scripts/build-styles.mjs",
     "pack:check": "node ../../scripts/check-ui-package.mjs",
     "test": "vitest run",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0",
+    "storybook:web": "storybook dev -p 6006 --host 0.0.0.0",
+    "storybook:native": "storybook dev -c .storybook/native-web -p 6007 --host 0.0.0.0",
     "build-storybook": "storybook build",
+    "build-storybook:native": "storybook build -c .storybook/native-web -o storybook-static-native",
     "prepack": "pnpm build"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
-    "react-dom": "^18 || ^19"
+    "react-dom": "^18 || ^19",
+    "react-native": ">=0.72"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
-    "@fontsource/anton": "^5.2.7",
-    "@fontsource/bangers": "^5.2.8",
-    "clsx": "^2.1.1",
-    "postcss-cli": "^11.0.1"
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
+    "@expo-google-fonts/anton": "^0.4.2",
+    "@expo-google-fonts/bangers": "^0.4.1",
+    "@expo-google-fonts/inter": "^0.4.2",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource/anton": "^5.2.7",
+    "@fontsource/bangers": "^5.2.8",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
     "@tailwindcss/postcss": "^4.2.4",
@@ -53,6 +77,8 @@
     "postcss-cli": "^11.0.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-native": "^0.76.0",
+    "react-native-web": "^0.21.2",
     "storybook": "^10.3.6",
     "tailwindcss": "^4.2.4",
     "tsup": "^8.5.1",

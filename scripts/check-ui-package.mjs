@@ -30,11 +30,26 @@ const files = pack.files
 const requiredFiles = [
   "dist/index.d.ts",
   "dist/index.js",
+  "dist/native/index.d.ts",
+  "dist/native/index.js",
+  "dist/native/fonts/Anton_400Regular.ttf",
+  "dist/native/fonts/Bangers_400Regular.ttf",
+  "dist/native/fonts/Inter_400Regular.ttf",
+  "dist/native/fonts/Inter_500Medium.ttf",
+  "dist/native/fonts/Inter_700Bold.ttf",
+  "dist/native/fonts/Inter_900Black.ttf",
   "dist/styles.css",
   "package.json",
+  "scripts/setup-native.mjs",
 ];
 
-const allowedRootFiles = new Set(["LICENSE", "README.md", "package.json"]);
+const allowedRootFiles = new Set([
+  "LICENSE",
+  "README.md",
+  "README.native.md",
+  "package.json",
+]);
+const allowedScriptFiles = new Set(["scripts/setup-native.mjs"]);
 const leakedPrefixes = ["src/", "scripts/", ".storybook/", "node_modules/"];
 const leakedRootFiles = new Set([
   "postcss.config.js",
@@ -47,15 +62,25 @@ const errors = [];
 const missingFiles = requiredFiles.filter((file) => !files.includes(file));
 const leakedFiles = files.filter(
   (file) =>
-    leakedPrefixes.some((prefix) => file.startsWith(prefix)) ||
-    leakedRootFiles.has(file),
+    !allowedScriptFiles.has(file) &&
+    (leakedPrefixes.some((prefix) => file.startsWith(prefix)) ||
+      leakedRootFiles.has(file)),
 );
 const unexpectedFiles = files.filter(
-  (file) => !file.startsWith("dist/") && !allowedRootFiles.has(file),
+  (file) =>
+    !file.startsWith("dist/") &&
+    !allowedRootFiles.has(file) &&
+    !allowedScriptFiles.has(file),
 );
 
 if (!Array.isArray(packageJson.files) || !packageJson.files.includes("dist")) {
-  errors.push('packages/ui/package.json must publish only the "dist" directory.');
+  errors.push('packages/ui/package.json must publish the "dist" directory.');
+}
+
+if (packageJson.bin?.["swirski-native"] !== "./scripts/setup-native.mjs") {
+  errors.push(
+    'packages/ui/package.json must expose "swirski-native" from ./scripts/setup-native.mjs.',
+  );
 }
 
 for (const field of ["main", "module", "types"]) {

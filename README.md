@@ -81,6 +81,19 @@ sure Tailwind scans the package output:
 If you use the CLI to copy component source into your app, Tailwind will scan
 those copied files naturally.
 
+## Install in React Native
+
+Use the native entrypoint in React Native apps:
+
+```tsx
+import { Button, Card, Text, Title } from "@swirski/ui/native";
+```
+
+Swirski UI ships native font assets with the package. Bare React Native apps
+can run `pnpm exec swirski-native setup`, then rebuild the native app. See
+[`packages/ui/README.native.md`](packages/ui/README.native.md) for the full iOS,
+Android, React Native Web, and Expo setup notes.
+
 ## Copy source with the Swirski CLI
 
 Use the Swirski CLI when you want local component source that your app owns.

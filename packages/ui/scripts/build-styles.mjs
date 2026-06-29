@@ -6,7 +6,6 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
-  readdirSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
@@ -17,6 +16,7 @@ const require = createRequire(import.meta.url);
 const packageDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(packageDir, "dist");
 const stylesPath = join(distDir, "styles.css");
+const nativeFontsDir = join(distDir, "native", "fonts");
 
 const binName = process.platform === "win32" ? "postcss.cmd" : "postcss";
 const localPostcssBin = join(packageDir, "node_modules", ".bin", binName);
@@ -41,6 +41,7 @@ execFileSync(
 );
 
 const fontPackages = [
+  { name: "@fontsource-variable/inter", outputDir: "inter" },
   { name: "@fontsource/anton", outputDir: "anton" },
   { name: "@fontsource/bangers", outputDir: "bangers" },
 ];
@@ -55,14 +56,6 @@ for (const fontPackage of fontPackages) {
 
   mkdirSync(outputDir, { recursive: true });
 
-  for (const fileName of readdirSync(fontFilesDir)) {
-    if (!/\.(woff2?|ttf|otf)$/i.test(fileName)) {
-      continue;
-    }
-
-    copyFileSync(join(fontFilesDir, fileName), join(outputDir, fileName));
-  }
-
   const escapedPackageName = fontPackage.name.replace(
     /[.*+?^${}()|[\]\\]/g,
     "\\$&",
@@ -73,11 +66,56 @@ for (const fontPackage of fontPackages) {
     "g",
   );
 
-  styles = styles.replace(
-    fontUrlPattern,
-    (_match, quote, fileName) =>
-      `url(${quote}./fonts/${fontPackage.outputDir}/${fileName}${quote})`,
-  );
+  const copiedFontFiles = new Set();
+
+  styles = styles.replace(fontUrlPattern, (_match, quote, fileName) => {
+    if (!copiedFontFiles.has(fileName)) {
+      copyFileSync(join(fontFilesDir, fileName), join(outputDir, fileName));
+      copiedFontFiles.add(fileName);
+    }
+
+    return `url(${quote}./fonts/${fontPackage.outputDir}/${fileName}${quote})`;
+  });
 }
 
 writeFileSync(stylesPath, styles);
+
+const nativeFontFiles = [
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "400Regular/Inter_400Regular.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "500Medium/Inter_500Medium.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "700Bold/Inter_700Bold.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/inter",
+    sourcePath: "900Black/Inter_900Black.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/anton",
+    sourcePath: "400Regular/Anton_400Regular.ttf",
+  },
+  {
+    packageName: "@expo-google-fonts/bangers",
+    sourcePath: "400Regular/Bangers_400Regular.ttf",
+  },
+];
+
+mkdirSync(nativeFontsDir, { recursive: true });
+
+for (const fontFile of nativeFontFiles) {
+  const packageJsonPath = require.resolve(`${fontFile.packageName}/package.json`);
+  const fontPackageDir = dirname(packageJsonPath);
+  const fileName = fontFile.sourcePath.split("/").pop();
+
+  copyFileSync(
+    join(fontPackageDir, fontFile.sourcePath),
+    join(nativeFontsDir, fileName),
+  );
+}

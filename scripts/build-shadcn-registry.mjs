@@ -64,6 +64,27 @@ function walkFiles(directory) {
   return files.sort();
 }
 
+function resolveSourcePath(source) {
+  const directPath = path.join(repoRoot, source);
+
+  if (existsSync(directPath)) {
+    return directPath;
+  }
+
+  const webSource = source
+    .replace("packages/ui/src/components/", "packages/ui/src/web/components/")
+    .replace("packages/ui/src/hooks/", "packages/ui/src/web/hooks/")
+    .replace("packages/ui/src/system", "packages/ui/src/web/system")
+    .replace("packages/ui/src/theme", "packages/ui/src/web/theme");
+  const webPath = path.join(repoRoot, webSource);
+
+  if (existsSync(webPath)) {
+    return webPath;
+  }
+
+  throw new Error(`Missing registry source path: ${source}`);
+}
+
 function fileTypeForSource(source, fallbackType) {
   if (source.includes("/hooks/")) {
     return "registry:hook";
@@ -81,7 +102,10 @@ function fileTypeForSource(source, fallbackType) {
 }
 
 function targetForSource(source) {
-  const relativeSource = path.relative(path.join(repoRoot, "packages/ui/src"), source);
+  const relativeSource = path
+    .relative(path.join(repoRoot, "packages/ui/src"), source)
+    .replace(/^web\//, "");
+
   return `@ui/swirski/${relativeSource}`;
 }
 
@@ -99,8 +123,8 @@ function toRegistryFile(filePath, fallbackType) {
 
 function createBaseItem() {
   const files = [
-    ...walkFiles(path.join(repoRoot, "packages/ui/src/system")),
-    ...walkFiles(path.join(repoRoot, "packages/ui/src/theme")),
+    ...walkFiles(resolveSourcePath("packages/ui/src/system")),
+    ...walkFiles(resolveSourcePath("packages/ui/src/theme")),
     path.join(repoRoot, "packages/ui/src/styles.css"),
   ].map((filePath) => toRegistryFile(filePath, "registry:lib"));
 
@@ -114,6 +138,7 @@ function createBaseItem() {
     dependencies: [
       "clsx",
       "@floating-ui/dom",
+      "@fontsource-variable/inter",
       "@fontsource/anton",
       "@fontsource/bangers",
     ],
@@ -128,7 +153,7 @@ function createBaseItem() {
 }
 
 function createRegistryItem(component) {
-  const sourceRoot = path.join(repoRoot, component.source);
+  const sourceRoot = resolveSourcePath(component.source);
   const isHook = component.source.includes("/hooks/");
   const isTheme = component.source.includes("/theme");
   const fallbackType = isHook ? "registry:hook" : "registry:ui";
