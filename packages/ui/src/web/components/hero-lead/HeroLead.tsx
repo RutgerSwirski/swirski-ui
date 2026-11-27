@@ -5,8 +5,11 @@ import type { TextProps, TextSize, TextTone, TextWeight } from "../typography";
 
 export type HeroLeadProps = {
   children?: ReactNode;
+  /** Visual text size. Defaults to lg. */
   size?: TextSize;
+  /** Text color treatment. Defaults to muted. */
   tone?: TextTone;
+  /** Font weight. Defaults to regular. */
   weight?: TextWeight;
 } & TextProps;
 

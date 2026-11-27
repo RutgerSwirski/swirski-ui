@@ -8,9 +8,12 @@ export type TextElement = "p" | "span" | "div";
 export type TextVariant = "default" | "lead" | "caption";
 
 export type TextProps = {
+  /** Element or component to render. Defaults to a paragraph. */
   as?: ElementType;
+  /** Apply Text styling to a single existing child element. */
   asChild?: boolean;
   children?: ReactNode;
+  /** @deprecated Use as to choose the element. */
   component?: TextElement;
   variant?: TextVariant;
   size?: TextSize;

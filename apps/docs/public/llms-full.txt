@@ -1522,12 +1522,12 @@ Props:
 - `Title.as`: `ElementType` - Custom heading element or component.
 - `Title.asChild`: `boolean` default false - Renders the child as the root element.
 - `Text.children`: `ReactNode` required - Text content.
-- `Text.component`: `"p" | "span" | "div"` default "p" - Chooses the rendered text element.
+- `Text.component`: `"p" | "span" | "div"` default "p" - Legacy element selector. Use Text.as in new code.
 - `Text.size`: `"xs" | "sm" | "md" | "lg" | "xl" | "2xl"` default "md" - Applies the standard text scale.
 - `Text.variant`: `"default" | "lead" | "caption"` default "default" - Applies the standard text role treatment.
 - `Text.tone`: `"default" | "muted" | "subtle" | "inverted"` default "default" - Applies the standard text color treatment.
 - `Text.weight`: `"regular" | "medium" | "bold" | "black"` default "regular" - Applies the text weight.
-- `Text.as`: `ElementType` - Custom text element or component.
+- `Text.as`: `ElementType` - Chooses the rendered element or component. Renders a paragraph by default.
 - `Text.asChild`: `boolean` default false - Renders the child as the root element.
 
 ## Hooks

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+/** Track a CSS media query. Returns the initial value until the browser checks it. */
 export function useMediaQuery(query: string, initialValue = false) {
   const [matches, setMatches] = useState(initialValue);
 

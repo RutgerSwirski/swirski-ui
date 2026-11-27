@@ -18,8 +18,8 @@ export const textPlayground: PlaygroundDefinition = {
         "A small UI library for expressive, editorial web interfaces.",
     },
     {
-      name: "component",
-      label: "component",
+      name: "as",
+      label: "as",
       type: "select",
       defaultValue: "p",
       options: ["p", "span", "div"],
@@ -48,7 +48,7 @@ export const textPlayground: PlaygroundDefinition = {
   ],
   render: (values) => (
     <Text
-      component={textValue(values, "component") as "p" | "span" | "div"}
+      as={textValue(values, "as") as "p" | "span" | "div"}
       size={textValue(values, "size") as "xs" | "sm" | "md" | "lg" | "xl"}
       tone={
         textValue(values, "tone") as
@@ -66,7 +66,7 @@ export const textPlayground: PlaygroundDefinition = {
     </Text>
   ),
   getCode: (values) => `<Text
-  component=${jsxString(textValue(values, "component"))}
+  as=${jsxString(textValue(values, "as"))}
   size=${jsxString(textValue(values, "size"))}
   tone=${jsxString(textValue(values, "tone"))}
   weight=${jsxString(textValue(values, "weight"))}

@@ -15,6 +15,7 @@ export type UseDisclosureOptions = {
   onChange?: (opened: boolean) => void;
 };
 
+/** Manage an open state with open, close, and toggle actions. Initially closed by default. */
 export function useDisclosure(
   defaultOpened = false,
   options: UseDisclosureOptions = {},

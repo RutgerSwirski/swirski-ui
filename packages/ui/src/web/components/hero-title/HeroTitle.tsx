@@ -5,7 +5,9 @@ import type { TitleOrder, TitleProps, TitleSize } from "../typography";
 
 export type HeroTitleProps = {
   children?: ReactNode;
+  /** Semantic heading level. Defaults to 1. */
   order?: TitleOrder;
+  /** Visual heading size. Defaults to display. */
   size?: TitleSize;
 } & TitleProps;
 

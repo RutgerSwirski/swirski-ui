@@ -1284,7 +1284,7 @@
           "sourceType": "ButtonProps",
           "type": "'blue' | 'yellow' | 'red' | 'white' | 'black'",
           "required": false,
-          "description": "Generated from ButtonProps.",
+          "description": "Button color. Defaults to blue unless a legacy color variant is supplied.",
           "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
         },
         {
@@ -1295,7 +1295,7 @@
           "type": "'solid' | 'outline' | 'blue' | 'yellow' | 'red' | 'white' | 'black' | 'ghost'",
           "required": false,
           "defaultValue": "\"solid\"",
-          "description": "Generated from ButtonProps.",
+          "description": "Visual treatment. Defaults to solid. Color values here are legacy aliases.",
           "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
         },
         {
@@ -2284,7 +2284,7 @@
           "type": "boolean",
           "required": false,
           "defaultValue": "false",
-          "description": "Generated from DialogProps.",
+          "description": "Initial uncontrolled open state. Defaults to false.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
         {
@@ -2304,7 +2304,7 @@
           "sourceType": "DialogProps",
           "type": "boolean",
           "required": false,
-          "description": "Generated from DialogProps.",
+          "description": "Controlled open state. Pair with onOpenChange.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
         {
@@ -3372,7 +3372,7 @@
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
           "defaultValue": "\"md\"",
-          "description": "Generated from InputProps.",
+          "description": "Visual input height and padding. Defaults to md.",
           "sourceFile": "packages/ui/src/web/components/field/Input.tsx"
         },
         {
@@ -3383,7 +3383,7 @@
           "type": "'default' | 'danger'",
           "required": false,
           "defaultValue": "\"default\"",
-          "description": "Generated from InputProps.",
+          "description": "Border treatment. Use danger for error styling and aria-invalid for validation semantics.",
           "sourceFile": "packages/ui/src/web/components/field/Input.tsx"
         },
         {
@@ -5299,7 +5299,7 @@
           "sourceType": "SelectProps",
           "type": "string",
           "required": false,
-          "description": "Generated from SelectProps.",
+          "description": "Initial uncontrolled selection. Defaults to the first enabled option.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -5330,7 +5330,7 @@
           "sourceType": "SelectProps",
           "type": "((value: string) => void)",
           "required": false,
-          "description": "Generated from SelectProps.",
+          "description": "Called with the option value when the user selects an option.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -5425,7 +5425,7 @@
           "sourceType": "SelectProps",
           "type": "string",
           "required": false,
-          "description": "Generated from SelectProps.",
+          "description": "Controlled selected option value. Pair with onValueChange.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -6596,7 +6596,7 @@
           "sourceType": "TextProps",
           "type": "ElementType",
           "required": false,
-          "description": "Generated from TextProps.",
+          "description": "Element or component to render. Defaults to a paragraph.",
           "sourceFile": "packages/ui/src/web/components/typography/Text.tsx"
         },
         {
@@ -6607,7 +6607,7 @@
           "type": "boolean",
           "required": false,
           "defaultValue": "false",
-          "description": "Generated from TextProps.",
+          "description": "Apply Text styling to a single existing child element.",
           "sourceFile": "packages/ui/src/web/components/typography/Text.tsx"
         },
         {
@@ -6714,7 +6714,7 @@
           "type": "1 | 2 | 3 | 4 | 5 | 6",
           "required": false,
           "defaultValue": "1",
-          "description": "Generated from TitleProps.",
+          "description": "Semantic heading level. Defaults to 1.",
           "sourceFile": "packages/ui/src/web/components/typography/Title.tsx"
         },
         {
@@ -6724,7 +6724,7 @@
           "sourceType": "TitleProps",
           "type": "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'display'",
           "required": false,
-          "description": "Generated from TitleProps.",
+          "description": "Visual size. Defaults to the size matching order, such as h2 for order={2}.",
           "sourceFile": "packages/ui/src/web/components/typography/Title.tsx"
         },
         {

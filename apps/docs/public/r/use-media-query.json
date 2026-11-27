@@ -15,7 +15,7 @@
     },
     {
       "path": "packages/ui/src/web/hooks/use-media-query/useMediaQuery.ts",
-      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\nexport function useMediaQuery(query: string, initialValue = false) {\n  const [matches, setMatches] = useState(initialValue);\n\n  useEffect(() => {\n    const mediaQuery = window.matchMedia(query);\n\n    setMatches(mediaQuery.matches);\n\n    const listener = (event: MediaQueryListEvent) => {\n      setMatches(event.matches);\n    };\n\n    mediaQuery.addEventListener(\"change\", listener);\n\n    return () => mediaQuery.removeEventListener(\"change\", listener);\n  }, [query]);\n\n  return matches;\n}\n",
+      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\n/** Track a CSS media query. Returns the initial value until the browser checks it. */\nexport function useMediaQuery(query: string, initialValue = false) {\n  const [matches, setMatches] = useState(initialValue);\n\n  useEffect(() => {\n    const mediaQuery = window.matchMedia(query);\n\n    setMatches(mediaQuery.matches);\n\n    const listener = (event: MediaQueryListEvent) => {\n      setMatches(event.matches);\n    };\n\n    mediaQuery.addEventListener(\"change\", listener);\n\n    return () => mediaQuery.removeEventListener(\"change\", listener);\n  }, [query]);\n\n  return matches;\n}\n",
       "type": "registry:hook",
       "target": "@ui/swirski/hooks/use-media-query/useMediaQuery.ts"
     }
