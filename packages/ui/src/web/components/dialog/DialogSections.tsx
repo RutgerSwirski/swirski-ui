@@ -71,7 +71,7 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
     return (
       <Component
         ref={ref}
-        className={cn("font-anton text-4xl uppercase leading-none", className)}
+        className={cn("font-[family-name:var(--sw-font-heading)] text-4xl uppercase leading-none", className)}
         id={id}
         {...swirskiAttrs("dialog-title", { size, tone, variant })}
         {...props}

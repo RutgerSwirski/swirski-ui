@@ -59,7 +59,7 @@ export const CardBadge = forwardRef<HTMLSpanElement, CardBadgeProps>(
       <Component
         ref={ref}
         className={cn(
-          "absolute z-20 inline-flex w-fit max-w-[calc(100%-1.5rem)] -rotate-3 items-center border-2 border-black font-anton uppercase tracking-normal shadow-[2px_2px_0_#0B0B0C]",
+          "absolute z-20 inline-flex w-fit max-w-[calc(100%-1.5rem)] -rotate-3 items-center border-2 border-black font-[family-name:var(--sw-font-heading)] uppercase tracking-normal shadow-[2px_2px_0_#0B0B0C]",
           positionStyles[position],
           variant === "solid"
             ? toneStyles[tone]

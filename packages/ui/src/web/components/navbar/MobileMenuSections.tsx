@@ -75,7 +75,7 @@ export const MobileMenuTitle = forwardRef<
   return (
     <Component
       ref={ref}
-      className={cn("font-anton text-3xl uppercase leading-none", className)}
+      className={cn("font-[family-name:var(--sw-font-heading)] text-3xl uppercase leading-none", className)}
       {...swirskiAttrs("mobile-menu-title", { size, tone, variant })}
       {...props}
     />

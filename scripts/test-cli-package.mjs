@@ -66,7 +66,7 @@ try {
   run("add", "button", "--overwrite");
   assert.equal(readFileSync(button, "utf8"), original);
 
-  const dependencies = ["react", "react-dom", "@types/react", "@types/react-dom", "@floating-ui/dom", "clsx"];
+  const dependencies = ["react", "react-dom", "@types/react", "@types/react-dom", "@floating-ui/dom", "clsx", "tailwindcss"];
   execFileSync(npm, [
     "install", "--ignore-scripts", "--no-audit", "--no-fund",
     ...dependencies.map((name) => {
@@ -90,6 +90,15 @@ try {
     cwd: fixture,
     stdio: "inherit",
   });
+  const compiledStyles = join(fixture, "compiled.css");
+  execFileSync(process.execPath, [
+    join(uiModules, "postcss-cli/index.js"), join(output, "styles.css"),
+    "-o", compiledStyles, "--env", "production", "--config", join(uiModules, ".."),
+  ], { cwd: fixture, stdio: "inherit" });
+  const css = readFileSync(compiledStyles, "utf8");
+  assert.match(css, /@scope[^{}]*data-swirski-component/);
+  assert.match(css, /\.inline-flex\s*\{/);
+  assert.doesNotMatch(css, /@font-face|@tailwind utilities/);
   console.log("Packed CLI works outside the workspace and preserves consumer edits.");
 } finally {
   rmSync(fixture, { recursive: true, force: true });

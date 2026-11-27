@@ -1,11 +1,38 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) theme(inline);
 
-@import "@fontsource-variable/inter";
-@import "@fontsource/anton";
-@import "@fontsource/bangers";
+@source ".";
+@source not "./**/*.stories.tsx";
+@source not "./**/*.test.tsx";
 
-@source "./src/**/*.{ts,tsx}";
-@source "./dist/**/*.{js,mjs,cjs}";
+@layer utilities {
+  @scope (:is([data-swirski-component], :has(> [data-swirski-backdrop])):not([data-swirski-unscoped], [data-swirski-unscoped] *)) to ([data-swirski-unscoped]) {
+    @tailwind utilities source(none);
+  }
+}
+
+@layer base {
+  :where([data-swirski-component], [data-swirski-component] *, :has(> [data-swirski-backdrop]), [data-swirski-backdrop]):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    box-sizing: border-box;
+    border: 0 solid;
+  }
+
+  :where(button, input, select, textarea):where([data-swirski-component]):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  :where(:is(h1, h2, h3, h4, h5, h6, p, ol, ul)[data-swirski-component]):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    margin: 0;
+  }
+
+  :where(a[data-swirski-component]):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    color: inherit;
+    text-decoration: none;
+  }
+}
 
 :root,
 [data-swirski-color-scheme="light"] {
@@ -54,12 +81,6 @@
   background: var(--sw-color-paper);
   color: var(--sw-color-ink);
   font-family: var(--sw-font-body);
-}
-
-@theme inline {
-  --font-inter: "Inter Variable", "Inter", system-ui, sans-serif;
-  --font-anton: "Anton", sans-serif;
-  --font-bangers: "Bangers", cursive;
 }
 
 @keyframes swirski-pixel-bounce {

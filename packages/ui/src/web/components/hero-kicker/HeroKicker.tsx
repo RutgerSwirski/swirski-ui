@@ -48,7 +48,7 @@ export const HeroKicker = forwardRef<HTMLParagraphElement, HeroKickerProps>(
       <Component
         ref={ref}
         className={cn(
-          "mb-5 inline-block w-fit -rotate-3 border-3 border-black font-bangers uppercase tracking-wide",
+          "mb-5 inline-block w-fit -rotate-3 border-3 border-black font-[family-name:var(--sw-font-display)] uppercase tracking-wide",
           sizeStyles[size],
           toneStyles[tone],
           variant === "default" && "shadow-[3px_3px_0_#0B0B0C]",

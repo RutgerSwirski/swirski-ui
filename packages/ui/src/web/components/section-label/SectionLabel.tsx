@@ -45,7 +45,7 @@ export const SectionLabel = forwardRef<HTMLHeadingElement, SectionLabelProps>(
       <Component
         ref={ref}
         className={cn(
-          "w-fit -rotate-2 border-4 border-black font-bangers uppercase tracking-wide",
+          "w-fit -rotate-2 border-4 border-black font-[family-name:var(--sw-font-display)] uppercase tracking-wide",
           sizeStyles[size],
           toneStyles[tone],
           variant === "default" && "shadow-[4px_4px_0_#0B0B0C]",

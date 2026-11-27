@@ -11,10 +11,12 @@ import {
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { scopeComponentStyles } from "./scope-component-styles.mjs";
 
 const require = createRequire(import.meta.url);
 const packageDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(packageDir, "dist");
+const fontsPath = join(distDir, "fonts.css");
 const stylesPath = join(distDir, "styles.css");
 const nativeFontsDir = join(distDir, "native", "fonts");
 const webEntryPath = join(distDir, "index.js");
@@ -26,23 +28,19 @@ const binName = process.platform === "win32" ? "postcss.cmd" : "postcss";
 const localPostcssBin = join(packageDir, "node_modules", ".bin", binName);
 const postcssCommand = existsSync(localPostcssBin) ? localPostcssBin : binName;
 
-execFileSync(
-  postcssCommand,
-  [
-    "src/styles.css",
-    "-o",
-    "dist/styles.css",
-    "--env",
-    "production",
-    "--config",
-    ".",
-  ],
-  {
-    cwd: packageDir,
-    stdio: "inherit",
-    shell: process.platform === "win32",
-  },
-);
+for (const entry of ["styles", "reset", "fonts"]) {
+  execFileSync(
+    postcssCommand,
+    [`src/${entry}.css`, "-o", `dist/${entry}.css`, "--env", "production", "--config", "."],
+    {
+      cwd: packageDir,
+      stdio: "inherit",
+      shell: process.platform === "win32",
+    },
+  );
+}
+
+writeFileSync(stylesPath, scopeComponentStyles(readFileSync(stylesPath, "utf8")));
 
 const fontPackages = [
   { name: "@fontsource-variable/inter", outputDir: "inter" },
@@ -50,7 +48,7 @@ const fontPackages = [
   { name: "@fontsource/bangers", outputDir: "bangers" },
 ];
 
-let styles = readFileSync(stylesPath, "utf8");
+let styles = readFileSync(fontsPath, "utf8");
 
 for (const fontPackage of fontPackages) {
   const packageJsonPath = require.resolve(`${fontPackage.name}/package.json`);
@@ -82,7 +80,7 @@ for (const fontPackage of fontPackages) {
   });
 }
 
-writeFileSync(stylesPath, styles);
+writeFileSync(fontsPath, styles);
 
 const nativeFontFiles = [
   {

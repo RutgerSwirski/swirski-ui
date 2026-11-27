@@ -84,8 +84,30 @@ function ThemeProbe() {
   return <span ref={probe}>Theme probe</span>;
 }
 
+function IsolationProbe() {
+  const probe = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = probe.current;
+    if (!element) return;
+    const styles = getComputedStyle(element);
+    const heading = element.querySelector("h2");
+    if (
+      styles.display === "block" &&
+      styles.paddingTop === "0px" &&
+      heading && getComputedStyle(heading).fontWeight === "700" &&
+      getComputedStyle(document.body).marginTop === "8px" &&
+      document.fonts.size === 0
+    ) {
+      element.dataset.isolationVerified = "true";
+    }
+  }, []);
+  return <div ref={probe} className="grid p-6"><h2>Consumer heading</h2></div>;
+}
+
 export function ConsumerExample() {
   return (
+    <>
+    <IsolationProbe />
     <SwirskiProvider colorScheme="dark" theme={{ colorFocus: "#ff00ff" }}>
       <Dialog defaultOpen>
         <DialogContent>
@@ -99,5 +121,6 @@ export function ConsumerExample() {
         </DialogContent>
       </Dialog>
     </SwirskiProvider>
+    </>
   );
 }

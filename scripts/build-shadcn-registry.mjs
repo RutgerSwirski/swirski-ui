@@ -143,13 +143,11 @@ function createBaseItem() {
     dependencies: [
       "clsx",
       "@floating-ui/dom",
-      "@fontsource-variable/inter",
-      "@fontsource/anton",
-      "@fontsource/bangers",
+      "tailwindcss",
     ],
     files,
     docs:
-      'Import the generated `@ui/swirski/styles.css` once in your app entry, then wrap your app with `SwirskiProvider` when you want theme tokens.',
+      'Compile the generated `@ui/swirski/styles.css` with Tailwind CSS v4. It contains scoped component utilities and theme tokens. Reset and fonts are optional and owned by the application.',
     categories: ["swirski", "base", "theming"],
     meta: {
       swirskiSource: "packages/ui/src",

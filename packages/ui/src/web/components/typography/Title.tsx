@@ -59,7 +59,7 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(function Title(
     <Component
       ref={ref}
       className={cn(
-        variant === "default" && "font-anton uppercase tracking-normal",
+        variant === "default" && "font-[family-name:var(--sw-font-heading)] uppercase tracking-normal",
         sizeStyles[size ?? sizeForOrder(order)],
         toneStyles[tone],
         className,

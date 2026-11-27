@@ -48,6 +48,45 @@ Import the package styles once in your app:
 import "@swirski/ui/styles.css";
 ```
 
+Component styles include the Swirski theme tokens and scoped utilities. Your
+app can keep its own reset and fonts. To opt into the previous bundled look,
+load either optional entry:
+
+```tsx
+import "@swirski/ui/reset.css"; // Global Tailwind Preflight, if your app needs it.
+import "@swirski/ui/fonts.css"; // Inter, Anton and Bangers.
+import "@swirski/ui/styles.css";
+```
+
+**Upgrading from the bundled stylesheet:** add the optional reset and font
+imports above if you relied on Swirski to provide them. Compile app-owned
+Tailwind utilities in your app stylesheet. Load app CSS after the package CSS
+when you want same-specificity `className` utilities to override package styles.
+
+**Browser requirements:** the npm stylesheet uses standard selector guards
+without requiring native CSS `@scope`. The
+[Tailwind v4 browser baseline](https://tailwindcss.com/docs/compatibility#browser-support)
+is Chrome 111+, Firefox 128+, and Safari 16.4+. That is an upstream baseline,
+with Swirski's packed tests run on current Chromium, Firefox, and WebKit.
+Copied CLI and registry styles compiled directly from source also require
+[native CSS `@scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40scope#browser_compatibility).
+Use Chrome/Edge 118+, Firefox 146+, or Safari 26.4+ for that path. Safari
+17.4–18.x also supports `@scope`, but Safari 26.0–26.3 has known form-control
+gaps with scoped rules. Use the npm stylesheet where native support is missing
+or partial.
+
+Swirski utilities can match class names on content nested inside a Swirski
+component. Wrap third-party content in `<div data-swirski-unscoped>` to exclude
+that subtree from Swirski utilities and its scoped reset. Theme tokens and
+normally inherited properties still flow into the subtree. Keep Swirski
+components outside that boundary when they need the package styles.
+
+For Tailwind v3, disable its built-in Preflight with
+`corePlugins: { preflight: false }` and use `@swirski/ui/reset.css` if you still
+want a reset. V3 emits Preflight outside a cascade layer, where its global rules
+can override layered component styles such as button borders. Tailwind v4's
+layered Preflight works alongside the packaged CSS.
+
 Then import components:
 
 ```tsx
@@ -71,15 +110,8 @@ export function Example() {
 }
 ```
 
-If your app uses Tailwind CSS v4 and imports components from the package, make
-sure Tailwind scans the package output:
-
-```css
-@source "../node_modules/@swirski/ui/dist";
-```
-
-If you use the CLI to copy component source into your app, Tailwind will scan
-those copied files naturally.
+The npm stylesheet is precompiled. For a CLI or registry install, compile the
+copied stylesheet as its own Tailwind CSS v4 entry.
 
 ## Install in React Native
 
@@ -115,7 +147,8 @@ The CLI installs the registry snapshot bundled with its release. It keeps
 components and their shared files under `componentsPath`. With the default
 configuration, Button is at `src/components/ui/components/button` and the
 stylesheet is at `src/components/ui/styles.css`. Install the dependencies
-printed by the CLI and import the copied stylesheet once.
+printed by the CLI and compile the copied stylesheet with Tailwind CSS v4.
+Your application owns any global reset and font loading.
 
 Use `--dry-run` to preview changes. Existing edits are protected unless you
 pass `--overwrite`.
@@ -342,9 +375,12 @@ pnpm release:ui --publish --otp 123456
 ## Development
 
 Run `pnpm test:ui-consumers` to build and install the UI tarball into isolated
-Next.js App Router and plain React fixtures. Set `CHROMIUM_BIN` to a local
-Chromium or Chrome executable to also check the packed CSS and scoped dark theme
-in a browser.
+Next.js App Router and plain React fixtures. To run the browser checks used in CI:
+
+```bash
+pnpm exec playwright install chromium firefox webkit
+UI_BROWSERS=chromium,firefox,webkit pnpm test:ui-consumers
+```
 
 Install dependencies:
 
