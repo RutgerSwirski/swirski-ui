@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "icon-button",
+  "type": "registry:ui",
+  "title": "Icon Button",
+  "description": "Compact named icon action.",
+  "registryDependencies": [
+    "https://ui.swirski.dev/r/swirski-base.json",
+    "https://ui.swirski.dev/r/button.json"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/web/components/icon-button/IconButton.tsx",
+      "content": "import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from \"react\";\nimport { cn } from \"../../system\";\nimport { Button, type ButtonSize, type ButtonTone, type ButtonVariant } from \"../button\";\n\ntype IconButtonName =\n  | { \"aria-label\": string; \"aria-labelledby\"?: string }\n  | { \"aria-label\"?: string; \"aria-labelledby\": string };\n\nexport type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & IconButtonName & {\n  /** Decorative icon. Give the button a name with aria-label or aria-labelledby. */\n  children: ReactNode;\n  variant?: ButtonVariant;\n  size?: ButtonSize;\n  tone?: ButtonTone;\n  withShadow?: boolean;\n};\n\nconst widthStyles: Record<ButtonSize, string> = {\n  sm: \"w-10\",\n  md: \"w-12\",\n  lg: \"w-14\",\n};\n\n/** A compact native action button with an accessible name. */\nexport const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(\n  function IconButton({ children, className, size = \"md\", ...props }, ref) {\n    return (\n      <Button\n        ref={ref}\n        size={size}\n        className={cn(\"shrink-0 p-0!\", widthStyles[size], className)}\n        {...props}\n      >\n        <span aria-hidden=\"true\" className=\"inline-flex\">{children}</span>\n      </Button>\n    );\n  },\n);\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/icon-button/IconButton.tsx"
+    },
+    {
+      "path": "packages/ui/src/web/components/icon-button/index.ts",
+      "content": "export { IconButton, type IconButtonProps } from \"./IconButton\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/icon-button/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "buttons"
+  ],
+  "meta": {
+    "swirskiCategory": "buttons",
+    "swirskiSource": "packages/ui/src/components/icon-button"
+  }
+}

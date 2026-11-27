@@ -282,6 +282,33 @@ Props:
 - `...anchorProps`: `AnchorHTMLAttributes<HTMLAnchorElement>` - Forwarded when the component renders an anchor.
 - `...buttonProps`: `ButtonHTMLAttributes<HTMLButtonElement>` - Forwarded when the component renders a button.
 
+### IconButton
+
+A compact button for a named icon action.
+
+Category: Buttons
+Docs: https://ui.swirski.dev/components/icon-button
+Registry: https://ui.swirski.dev/r/icon-button.json
+Source: `packages/ui/src/components/icon-button`
+Copy dependencies: `button`
+
+Import:
+```tsx
+import { IconButton } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<IconButton aria-label="Next image" variant="outline">
+  →
+</IconButton>
+```
+
+Props:
+- `aria-label / aria-labelledby`: `string` required - Provide either an action label or the ID of visible text that names it.
+- `size`: `"sm" | "md" | "lg"` default "md" - Matches Button sizing.
+- `variant`: `"solid" | "outline" | "ghost"` default "solid" - Visual treatment.
+
 ## Cards
 
 ### Card
@@ -656,19 +683,24 @@ Copy dependencies: `use-portal-root`
 
 Import:
 ```tsx
-import { Select } from "@swirski/ui";
+import { Field, FieldHint, Label, Select } from "@swirski/ui";
 ```
 
 Usage:
 ```tsx
-<Select
-  placeholder="Pick a tone"
-  options={[
-    { value: "yellow", label: "Yellow" },
-    { value: "blue", label: "Blue" },
-    { value: "red", label: "Red" },
-  ]}
-/>
+<Field>
+  <Label htmlFor="tone">Tone</Label>
+  <Select
+    id="tone"
+    name="tone"
+    aria-describedby="tone-hint"
+    options={[
+      { value: "yellow", label: "Yellow" },
+      { value: "blue", label: "Blue" },
+    ]}
+  />
+  <FieldHint id="tone-hint">Choose an accent color.</FieldHint>
+</Field>
 ```
 
 Composition:
@@ -689,7 +721,8 @@ Props:
 - `onValueChange`: `(value: string) => void` - Called when a new option is selected.
 - `placeholder`: `string` default "Select an option" - Text shown when no option is selected.
 - `disabled`: `boolean` default false - Disables the trigger and prevents selection.
-- `name`: `string` - Adds a hidden input for native form submission.
+- `id`: `string` - ID of the focusable trigger. Use this as Label.htmlFor.
+- `name`: `string` - Submits the selected value when enabled. Form reset restores the uncontrolled default.
 - `triggerClassName`: `string` - Adds classes to the dropdown trigger.
 - `contentClassName`: `string` - Adds classes to the dropdown content panel.
 - `optionClassName`: `string` - Adds classes to each dropdown option.
@@ -1213,6 +1246,33 @@ Props:
 - `className`: `string` - Adds classes to the root grid.
 - `...elementProps`: `HTMLAttributes<HTMLElement>` - Forwarded to the root element.
 
+### Inline
+
+Horizontal alignment for actions, badges, and short groups.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/inline
+Registry: https://ui.swirski.dev/r/inline.json
+Source: `packages/ui/src/components/inline`
+
+Import:
+```tsx
+import { Inline } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Inline gap="sm">
+  <Button href="/projects">View projects</Button>
+  <Button href="/contact" variant="outline">Get in touch</Button>
+</Inline>
+```
+
+Props:
+- `gap`: `Layout gap` default "md" - Space between children.
+- `align`: `"start" | "center" | "end" | "stretch"` default "center" - Vertical alignment.
+- `wrap`: `boolean` default true - Wrap children when space runs out.
+
 ### Navbar
 
 Composable header primitives with a reusable hamburger menu for mobile navigation.
@@ -1354,6 +1414,32 @@ Usage:
 Props:
 - `orientation`: `"horizontal" | "vertical"` default "horizontal" - Divider direction.
 - `className`: `string` - Adds classes to the divider.
+
+### Stack
+
+Vertical spacing for form sections and content.
+
+Category: Layout
+Docs: https://ui.swirski.dev/components/stack
+Registry: https://ui.swirski.dev/r/stack.json
+Source: `packages/ui/src/components/stack`
+
+Import:
+```tsx
+import { Stack } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+<Stack gap="sm">
+  <Text weight="bold">Shipping address</Text>
+  <Text tone="muted">Tell us where to send your piece.</Text>
+</Stack>
+```
+
+Props:
+- `gap`: `Layout gap` default "md" - Space between children.
+- `align`: `"start" | "center" | "end" | "stretch"` default "stretch" - Horizontal alignment.
 
 ### Table
 

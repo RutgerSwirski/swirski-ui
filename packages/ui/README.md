@@ -74,8 +74,10 @@ or inside a prop value to see the available options.
   when the parent owns the selection.
 - **Overlays:** Start with a trigger and content. Use `defaultOpen` for initial
   state, or pair `open` with `onOpenChange` when the parent owns the state.
-- **Layout:** Use `className="flex flex-col gap-4"` for a vertical stack and
-  `className="flex flex-wrap items-center gap-3"` for an action row.
+- **Layout:** Use `Stack` for vertical sections and `Inline` for action rows
+  that wrap. Both accept the same `gap` scale.
+- **Icon actions:** Use `IconButton` with an accessible name, such as
+  `<IconButton aria-label="Next image">→</IconButton>`.
 
 An empty list can use the same typography and actions as the rest of the page:
 

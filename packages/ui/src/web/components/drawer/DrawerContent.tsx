@@ -42,7 +42,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     useModalOverlay({
       contentRef,
       onEscape: () => setOpen(false),
-      open,
+      open: open && portalRoot !== null,
     });
 
     if (!open || !portalRoot) {

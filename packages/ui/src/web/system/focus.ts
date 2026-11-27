@@ -2,7 +2,7 @@ const focusableSelector = [
   "a[href]",
   "button:not([disabled])",
   "textarea:not([disabled])",
-  "input:not([disabled])",
+  "input:not([disabled]):not([type='hidden'])",
   "select:not([disabled])",
   "[tabindex]:not([tabindex='-1'])",
 ].join(",");
@@ -10,7 +10,8 @@ const focusableSelector = [
 export function getFocusableElements(container: HTMLElement) {
   return Array.from(container.querySelectorAll<HTMLElement>(focusableSelector))
     .filter((element) => !element.hasAttribute("disabled"))
-    .filter((element) => element.getAttribute("aria-hidden") !== "true");
+    .filter((element) => element.tabIndex >= 0)
+    .filter((element) => !element.closest("[hidden], [inert], [aria-hidden='true']"));
 }
 
 export function focusInitialElement(container: HTMLElement) {

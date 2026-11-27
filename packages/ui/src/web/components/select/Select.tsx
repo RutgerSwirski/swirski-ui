@@ -46,6 +46,8 @@ export type SelectProps = {
   placeholder?: string;
   disabled?: boolean;
   name?: string;
+  /** ID of an associated form when the Select is rendered outside it. */
+  form?: string;
   selectedIndicator?: ReactNode;
   showSelectedIndicator?: boolean;
   triggerClassName?: string;
@@ -65,6 +67,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     placeholder = "Select an option",
     disabled = false,
     name,
+    form,
+    id,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
+    "aria-errormessage": ariaErrorMessage,
+    "aria-required": ariaRequired,
     selectedIndicator = "x",
     showSelectedIndicator = false,
     className,
@@ -79,15 +89,15 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   ref,
 ) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const typeaheadSearchRef = useRef("");
   const typeaheadTimeoutRef = useRef<number | null>(null);
   const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const [internalValue, setInternalValue] = useState(
-    defaultValue ?? options.find((option) => !option.disabled)?.value ?? "",
-  );
+  const initialValue = defaultValue ?? options.find((option) => !option.disabled)?.value ?? "";
+  const [internalValue, setInternalValue] = useState(initialValue);
   const contentStyle = useFloatingPosition({
     floatingRef: contentRef,
     matchReferenceWidth: true,
@@ -107,6 +117,22 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     [options, selectedValue],
   );
   const listboxId = `${generatedId}-listbox`;
+
+  useEffect(() => {
+    const owner = triggerRef.current?.form;
+    if (!owner) return;
+
+    const reset = (event: Event) => {
+      queueMicrotask(() => {
+        if (event.defaultPrevented) return;
+        setIsOpen(false);
+        if (value === undefined) setInternalValue(initialValue);
+      });
+    };
+
+    owner.addEventListener("reset", reset);
+    return () => owner.removeEventListener("reset", reset);
+  }, [form, initialValue, value]);
 
   useEffect(() => {
     return () => {
@@ -244,7 +270,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       return;
     }
 
-    if (event.key === "Escape") {
+    if (event.key === "Escape" && isOpen) {
+      event.preventDefault();
       clearTypeahead();
       setIsOpen(false);
       return;
@@ -281,9 +308,18 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       {...swirskiAttrs("select", { size, tone, variant })}
       {...props}
     >
-      {name && <input type="hidden" name={name} value={selectedValue} />}
+      {name && <input type="hidden" name={name} form={form} disabled={disabled} value={selectedValue} />}
 
       <button
+        ref={triggerRef}
+        id={id}
+        form={form}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        aria-invalid={ariaInvalid}
+        aria-errormessage={ariaErrorMessage}
+        aria-required={ariaRequired}
         aria-activedescendant={
           isOpen && highlightedIndex >= 0
             ? `${listboxId}-option-${highlightedIndex}`
