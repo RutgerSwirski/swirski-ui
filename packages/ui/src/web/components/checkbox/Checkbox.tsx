@@ -33,6 +33,12 @@ const toneStyles: Record<CheckboxTone, string> = {
   red: "peer-checked:bg-[var(--sw-color-red)]",
 };
 
+const checkToneStyles: Record<CheckboxTone, string> = {
+  yellow: "text-[color:var(--sw-color-on-yellow)]",
+  blue: "text-[color:var(--sw-color-on-blue)]",
+  red: "text-[color:var(--sw-color-on-red)]",
+};
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   function Checkbox(
     {
@@ -83,8 +89,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           />
           <span
             className={cn(
-              "relative hidden font-black leading-none text-black peer-checked:block",
+              "relative hidden font-black leading-none peer-checked:block",
               checkSizeStyles[size],
+              checkToneStyles[tone],
             )}
           >
             x
@@ -94,7 +101,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           <span className="grid gap-1">
             {label && <span className="font-black leading-5">{label}</span>}
             {description && (
-              <span className="text-sm font-bold leading-5 text-neutral-600">
+              <span className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
                 {description}
               </span>
             )}

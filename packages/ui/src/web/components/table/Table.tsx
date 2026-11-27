@@ -162,7 +162,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
       <td
         ref={ref}
         className={cn(
-          "font-bold text-black/70",
+          "font-bold text-[color:var(--sw-color-muted)]",
           cellSizeStyles[size],
           className,
         )}

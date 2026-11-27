@@ -27,8 +27,8 @@ const shadowStyles: Record<CardSize, string> = {
 const toneStyles: Record<CardTone, string> = {
   default: "bg-[var(--sw-color-paper)]",
   white: "bg-[var(--sw-color-surface)]",
-  yellow: "bg-[var(--sw-color-yellow)]",
-  blue: "bg-[var(--sw-color-blue)] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
@@ -36,6 +36,11 @@ const variantStyles: Record<CardVariant, string> = {
   elevated: "",
   flat: "shadow-none",
   outline: "bg-transparent shadow-none",
+};
+
+const outlineToneStyles: Partial<Record<CardTone, string>> = {
+  blue: "text-[color:var(--sw-color-blue-text)]",
+  yellow: "text-[color:var(--sw-color-yellow-text)]",
 };
 
 const interactiveStyles =
@@ -66,7 +71,7 @@ export const Card = forwardRef<HTMLElement, CardProps>(function Card(
       ref={ref}
       className={cn(
         base,
-        toneStyles[tone],
+        variant === "outline" ? outlineToneStyles[tone] : toneStyles[tone],
         variantStyles[variant],
         resolvedWithShadow && shadowStyles[size],
         interactive && interactiveStyles,

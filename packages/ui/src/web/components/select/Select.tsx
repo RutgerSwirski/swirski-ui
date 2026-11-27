@@ -378,13 +378,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         type="button"
         {...swirskiAttrs("select-trigger", { size, tone, variant })}
       >
-        <span id={valueLabelId} className={cn(!selectedOption && "text-black/50")}>
+        <span id={valueLabelId} className={cn(!selectedOption && "text-[color:var(--sw-color-muted)]")}>
           {triggerLabel}
         </span>
         <span
           aria-hidden="true"
           className={cn(
-            "grid size-6 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] leading-none transition",
+            "grid size-6 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none transition",
             isOpen && "rotate-180",
           )}
         >

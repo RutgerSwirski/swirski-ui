@@ -115,7 +115,7 @@ export const DialogDescription = forwardRef<
   return (
     <Component
       ref={ref}
-      className={cn("text-sm font-bold leading-6 text-black/65", className)}
+      className={cn("text-sm font-bold leading-6 text-[color:var(--sw-color-muted)]", className)}
       id={id}
       {...swirskiAttrs("dialog-description", { size, tone, variant })}
       {...props}

@@ -23,10 +23,10 @@ const sizeStyles: Record<HeroKickerSize, string> = {
 };
 
 const toneStyles: Record<HeroKickerTone, string> = {
-  yellow: "bg-[#FFD400] text-black",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
   white: "bg-white text-black",
-  blue: "bg-[#0057FF] text-white",
-  red: "bg-[#FF3131] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  red: "bg-[var(--sw-color-red)] text-[color:var(--sw-color-on-red)]",
 };
 
 export const HeroKicker = forwardRef<HTMLParagraphElement, HeroKickerProps>(

@@ -47,6 +47,13 @@ async function verifyBrowser(browser) {
     if (!stdout.includes('data-theme-verified="true"')) {
       throw new Error("The packed stylesheet or scoped dark portal theme did not reach the browser.");
     }
+    for (const scheme of ["light", "dark"]) {
+      if (!stdout.includes(`data-contrast-verified="${scheme}"`)) {
+        const failures = [...stdout.matchAll(/data-contrast-failure="([^"]*)"/g)];
+        throw new Error(`Packed ${scheme} theme contrast check failed: ${failures.map((match) => match[1]).join(", ")}`);
+      }
+    }
+    console.log("Verified 4.5:1 text contrast for representative tone variants in both themes.");
     console.log("Verified packed stylesheet and dark/custom theme inside a browser portal.");
   } finally {
     server.close();

@@ -108,7 +108,7 @@ export const MobileMenuClose = forwardRef<
     <Component
       ref={ref}
       className={cn(
-        "inline-flex size-11 shrink-0 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-xl font-black leading-none text-[var(--sw-color-ink)] shadow-[var(--sw-shadow-sm)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:hover:shadow-[var(--sw-shadow-sm)]",
+        "inline-flex size-11 shrink-0 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-xl font-black leading-none text-[color:var(--sw-color-on-yellow)] shadow-[var(--sw-shadow-sm)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:hover:shadow-[var(--sw-shadow-sm)]",
         focusVisibleStyles,
         disabledInteractiveStyles,
         variant === "compact" && "size-10 text-lg",

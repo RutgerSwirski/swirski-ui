@@ -65,6 +65,12 @@ const toneStyles: Record<RadioGroupTone, string> = {
   red: "peer-checked:bg-[var(--sw-color-red)]",
 };
 
+const dotToneStyles: Record<RadioGroupTone, string> = {
+  yellow: "bg-[var(--sw-color-on-yellow)]",
+  blue: "bg-[var(--sw-color-on-blue)]",
+  red: "bg-[var(--sw-color-on-red)]",
+};
+
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   function RadioGroup(
     {
@@ -137,7 +143,8 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
               />
               <span
                 className={cn(
-                  "relative hidden rounded-full bg-[var(--sw-color-ink)] peer-checked:block",
+                  "relative hidden rounded-full peer-checked:block",
+                  dotToneStyles[tone],
                   dotSizeStyles[size],
                 )}
               />
@@ -145,7 +152,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
             <span className="grid gap-1">
               <span className="font-black leading-5">{option.label}</span>
               {option.description && (
-                <span className="text-sm font-bold leading-5 text-neutral-600">
+                <span className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
                   {option.description}
                 </span>
               )}

@@ -70,29 +70,29 @@ const flatFeedbackStyles =
   "hover:-translate-y-0.5 hover:brightness-95 active:translate-y-0 active:scale-[0.98] disabled:hover:brightness-100";
 
 const toneStyles: Record<ButtonTone, string> = {
-  blue: "bg-[var(--sw-color-blue)] text-white",
-  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-black)]",
-  red: "bg-[var(--sw-color-red)] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  red: "bg-[var(--sw-color-red)] text-[color:var(--sw-color-on-red)]",
   white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
 const outlineToneStyles: Record<ButtonTone, string> = {
-  blue: "bg-[var(--sw-color-surface)] text-[var(--sw-color-blue)]",
-  yellow: "bg-[var(--sw-color-surface)] text-[var(--sw-color-black)]",
-  red: "bg-[var(--sw-color-surface)] text-[var(--sw-color-red)]",
+  blue: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-blue-text)]",
+  yellow: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-yellow-text)]",
+  red: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-red-text)]",
   white:
-    "bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]",
+    "bg-transparent text-[color:var(--sw-color-ink)] border-[color:var(--sw-color-ink)]",
   black: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 
 const ghostToneStyles: Record<ButtonTone, string> = {
-  blue: "border-transparent bg-transparent text-[var(--sw-color-blue)] shadow-none",
+  blue: "border-transparent bg-transparent text-[color:var(--sw-color-blue-text)] shadow-none",
   yellow:
-    "border-transparent bg-transparent text-[var(--sw-color-yellow)] shadow-none",
-  red: "border-transparent bg-transparent text-[var(--sw-color-red)] shadow-none",
+    "border-transparent bg-transparent text-[color:var(--sw-color-yellow-text)] shadow-none",
+  red: "border-transparent bg-transparent text-[color:var(--sw-color-red-text)] shadow-none",
   white:
-    "border-transparent bg-transparent text-[var(--sw-color-surface)] shadow-none",
+    "border-transparent bg-transparent text-[color:var(--sw-color-ink)] shadow-none",
   black:
     "border-transparent bg-transparent text-[var(--sw-color-ink)] shadow-none",
 };

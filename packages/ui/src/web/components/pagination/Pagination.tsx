@@ -97,8 +97,8 @@ const sizeStyles: Record<PaginationSize, string> = {
 };
 
 const activeToneStyles: Record<PaginationTone, string> = {
-  blue: "bg-[var(--sw-color-blue)] text-white",
-  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-black)]",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 

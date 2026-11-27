@@ -14,6 +14,12 @@ export type SwirskiThemeTokens = {
   colorBlue: string;
   colorYellow: string;
   colorRed: string;
+  colorOnBlue: string;
+  colorOnYellow: string;
+  colorOnRed: string;
+  colorBlueText: string;
+  colorYellowText: string;
+  colorRedText: string;
   colorWhite: string;
   colorBlack: string;
   colorShadow: string;
@@ -45,6 +51,12 @@ const defaultTokens: SwirskiThemeTokens = {
   colorBlue: "#0057FF",
   colorYellow: "#FFD400",
   colorRed: "#FF3131",
+  colorOnBlue: "#FFFFFF",
+  colorOnYellow: "#0B0B0C",
+  colorOnRed: "#0B0B0C",
+  colorBlueText: "#0046D1",
+  colorYellowText: "#735800",
+  colorRedText: "#A91C1C",
   colorWhite: "#FFFFFF",
   colorBlack: "#0B0B0C",
   colorShadow: "#0B0B0C",
@@ -63,6 +75,9 @@ const darkTokens: Partial<SwirskiThemeTokens> = {
   colorPaper: "#121212",
   colorSurface: "#1D1D1F",
   colorMuted: "rgba(247, 247, 242, 0.68)",
+  colorBlueText: "#82AAFF",
+  colorYellowText: "#FFD400",
+  colorRedText: "#FF7777",
   colorWhite: "#1D1D1F",
   colorBlack: "#F7F7F2",
   colorShadow: "#FFD400",
@@ -77,6 +92,12 @@ const tokenVariables: Record<keyof SwirskiThemeTokens, string> = {
   colorBlue: "--sw-color-blue",
   colorYellow: "--sw-color-yellow",
   colorRed: "--sw-color-red",
+  colorOnBlue: "--sw-color-on-blue",
+  colorOnYellow: "--sw-color-on-yellow",
+  colorOnRed: "--sw-color-on-red",
+  colorBlueText: "--sw-color-blue-text",
+  colorYellowText: "--sw-color-yellow-text",
+  colorRedText: "--sw-color-red-text",
   colorWhite: "--sw-color-white",
   colorBlack: "--sw-color-black",
   colorShadow: "--sw-color-shadow",

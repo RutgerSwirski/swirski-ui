@@ -74,11 +74,11 @@ export default function SelectContent({
               optionSizeStyles[size],
               isHighlighted &&
                 !option.disabled &&
-                "bg-[var(--sw-color-blue)] text-white",
-              isSelected && "bg-[var(--sw-color-blue)] text-white",
+                "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+              isSelected && "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
               option.disabled
                 ? "cursor-not-allowed text-black/35"
-                : "hover:bg-[var(--sw-color-blue)] hover:text-white",
+                : "hover:bg-[var(--sw-color-blue)] hover:text-[color:var(--sw-color-on-blue)]",
               optionClassName,
             )}
             id={`${listboxId}-option-${index}`}

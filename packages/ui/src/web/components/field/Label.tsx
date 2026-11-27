@@ -20,7 +20,7 @@ const sizeStyles: Record<LabelSize, string> = {
 const toneStyles: Record<LabelTone, string> = {
   default: "text-[var(--sw-color-ink)]",
   muted: "text-[var(--sw-color-muted)]",
-  danger: "text-[var(--sw-color-red)]",
+  danger: "text-[color:var(--sw-color-red-text)]",
 };
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>(function Label(

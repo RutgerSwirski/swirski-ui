@@ -184,7 +184,7 @@ export const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
     return (
       <Component
         ref={ref}
-        className={cn(tone === "muted" && "text-black/55", className)}
+        className={cn(tone === "muted" && "text-[color:var(--sw-color-muted)]", className)}
         aria-current="page"
         {...swirskiAttrs("breadcrumb-page", { size, tone, variant })}
         {...props}

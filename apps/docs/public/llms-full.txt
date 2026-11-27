@@ -1459,7 +1459,9 @@ Usage:
 ```tsx
 const theme = createSwirskiTheme({
   colorBlue: "#0047FF",
+  colorOnBlue: "#FFFFFF",
   colorYellow: "#FFE45C",
+  colorOnYellow: "#0B0B0C",
   shadowMd: "8px 8px 0 var(--sw-color-shadow)",
 });
 
@@ -1470,7 +1472,7 @@ const theme = createSwirskiTheme({
 
 Props:
 - `colorScheme`: `"light" | "dark"` default "light" - Selects the default light or dark token set.
-- `theme`: `SwirskiTheme` - Overrides any Swirski token or adds custom CSS variables.
+- `theme`: `SwirskiTheme` - Overrides tokens or adds custom CSS variables. Pair colorBlue, colorYellow and colorRed with their colorOn* foregrounds for filled controls. Use colorBlueText, colorYellowText and colorRedText for accents on neutral surfaces.
 - `createSwirskiTheme`: `(theme: SwirskiTheme) => SwirskiTheme` - Small helper for typed theme objects.
 - `useSwirskiTheme`: `() => SwirskiThemeTokens` - Reads the resolved theme inside React components.
 

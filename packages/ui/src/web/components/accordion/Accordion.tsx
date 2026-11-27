@@ -149,7 +149,7 @@ export const AccordionContent = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "border-t-4 border-black font-bold text-neutral-700",
+        "border-t-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-bold text-[color:var(--sw-color-muted)]",
         contentSizeStyles[size],
         className,
       )}
