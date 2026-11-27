@@ -4,6 +4,9 @@
   "type": "registry:item",
   "title": "Swirski Base",
   "description": "Shared Swirski UI system helpers, theme provider, CSS variables and base styles.",
+  "registryDependencies": [
+    "https://ui.swirski.dev/r/use-portal-root.json"
+  ],
   "dependencies": [
     "clsx",
     "@floating-ui/dom",
@@ -47,6 +50,18 @@
       "content": "export {\n  SwirskiProvider,\n  createSwirskiTheme,\n  swirskiDarkTheme,\n  swirskiDefaultTheme,\n  useSwirskiTheme,\n} from \"./SwirskiProvider\";\nexport type {\n  SwirskiColorScheme,\n  SwirskiProviderProps,\n  SwirskiTheme,\n  SwirskiThemeTokens,\n} from \"./SwirskiProvider\";\n",
       "type": "registry:lib",
       "target": "@ui/swirski/theme/index.ts"
+    },
+    {
+      "path": "packages/ui/src/shared/contracts/index.ts",
+      "content": "export * from \"./button\";\n",
+      "type": "registry:lib",
+      "target": "@ui/swirski/shared/contracts/index.ts"
+    },
+    {
+      "path": "packages/ui/src/shared/contracts/button.ts",
+      "content": "import type { ReactNode } from \"react\";\n\nexport type ButtonTone = \"blue\" | \"yellow\" | \"red\" | \"white\" | \"black\";\nexport type ButtonVariant = \"solid\" | \"outline\" | \"ghost\";\nexport type ButtonSize = \"sm\" | \"md\" | \"lg\";\n\nexport type SharedButtonProps = {\n  children?: ReactNode;\n  disabled?: boolean;\n  size?: ButtonSize;\n  tone?: ButtonTone;\n  variant?: ButtonVariant | ButtonTone;\n  withShadow?: boolean;\n  className?: string;\n};\n\nconst legacyToneVariants: ButtonTone[] = [\"blue\", \"yellow\", \"red\", \"white\", \"black\"];\n\nexport function resolveButtonStyleConfig(\n  props: Pick<SharedButtonProps, \"variant\" | \"tone\">,\n) {\n  if (props.variant && legacyToneVariants.includes(props.variant as ButtonTone)) {\n    return {\n      variant: \"solid\" as ButtonVariant,\n      tone: (props.tone ?? props.variant) as ButtonTone,\n    };\n  }\n\n  return {\n    variant: (props.variant ?? \"solid\") as ButtonVariant,\n    tone: props.tone ?? \"blue\",\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@ui/swirski/shared/contracts/button.ts"
     },
     {
       "path": "packages/ui/src/styles.css",

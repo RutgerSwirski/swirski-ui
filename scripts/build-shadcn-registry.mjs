@@ -112,10 +112,12 @@ function targetForSource(source) {
 function toRegistryFile(filePath, fallbackType) {
   const relativePath = path.relative(repoRoot, filePath);
   const type = fileTypeForSource(relativePath, fallbackType);
+  const content = readFileSync(filePath, "utf8");
 
   return {
     path: relativePath,
-    content: readFileSync(filePath, "utf8"),
+    // Registry targets omit the web directory but retain shared under swirski.
+    content: content.replaceAll('from "../../../shared/', 'from "../../shared/'),
     type,
     target: targetForSource(filePath),
   };
@@ -125,6 +127,8 @@ function createBaseItem() {
   const files = [
     ...walkFiles(resolveSourcePath("packages/ui/src/system")),
     ...walkFiles(resolveSourcePath("packages/ui/src/theme")),
+    path.join(repoRoot, "packages/ui/src/shared/contracts/index.ts"),
+    path.join(repoRoot, "packages/ui/src/shared/contracts/button.ts"),
     path.join(repoRoot, "packages/ui/src/styles.css"),
   ].map((filePath) => toRegistryFile(filePath, "registry:lib"));
 
@@ -135,6 +139,7 @@ function createBaseItem() {
     title: "Swirski Base",
     description:
       "Shared Swirski UI system helpers, theme provider, CSS variables and base styles.",
+    registryDependencies: [registryItemUrl("use-portal-root")],
     dependencies: [
       "clsx",
       "@floating-ui/dom",
