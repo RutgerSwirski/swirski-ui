@@ -1,7 +1,7 @@
 "use client";
 import { useOverlayLayer } from "../../system/overlay";
 
-import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -44,6 +44,9 @@ export type SelectProps = {
   defaultValue?: string;
   /** Called with the option value when the user selects an option. */
   onValueChange?: (value: string) => void;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   placeholder?: string;
   disabled?: boolean;
   name?: string;
@@ -67,6 +70,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     value,
     defaultValue,
     onValueChange,
+    open,
+    defaultOpen = false,
+    onOpenChange,
     placeholder = "Select an option",
     disabled = false,
     name,
@@ -81,6 +87,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     variant = "default",
     size = "md",
     tone = "default",
+    id,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
+    "aria-errormessage": ariaErrorMessage,
     ...props
   },
   ref,
@@ -93,7 +105,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   const typeaheadTimeoutRef = useRef<number | null>(null);
   const portalRoot = usePortalRoot();
   const generatedId = useId();
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const requestedOpen = open ?? internalOpen;
+  const isOpen = !disabled && requestedOpen;
+  const setIsOpen = useCallback((nextOpen: boolean) => {
+    if (nextOpen === requestedOpen) return;
+    if (open === undefined) setInternalOpen(nextOpen);
+    onOpenChange?.(nextOpen);
+  }, [onOpenChange, open, requestedOpen]);
   const [initialValue] = useState(
     defaultValue ?? options.find((option) => !option.disabled)?.value ?? "",
   );
@@ -117,7 +136,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       active = false;
       owner.removeEventListener("reset", handleReset);
     };
-  }, [form, initialValue, isControlled]);
+  }, [form, initialValue, isControlled, setIsOpen]);
   const contentStyle = useFloatingPosition({
     floatingRef: contentRef,
     matchReferenceWidth: true,
@@ -137,6 +156,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     [options, selectedValue],
   );
   const listboxId = `${generatedId}-listbox`;
+  const valueLabelId = `${generatedId}-value`;
+  const popupVisible = isOpen && Boolean(portalRoot);
+  const activeOption = options[highlightedIndex];
+  const triggerLabel = selectedOption ? optionText(selectedOption) : placeholder;
 
   useEffect(() => {
     return () => {
@@ -147,7 +170,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   }, []);
 
   useOverlayLayer({
-    open: isOpen,
+    open: popupVisible,
     rootRef,
     contentRef,
     onEscape: () => {
@@ -191,6 +214,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     }
 
     onValueChange?.(nextValue);
+    triggerRef.current?.focus();
     clearTypeahead();
     setIsOpen(false);
   }
@@ -270,12 +294,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       return;
     }
 
-    if (event.key === "Tab") {
-      clearTypeahead();
-      setIsOpen(false);
-      return;
-    }
-
     if (
       event.key.length === 1 &&
       !event.altKey &&
@@ -328,13 +346,21 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
 
       <button
         ref={triggerRef}
+        id={id ?? generatedId}
+        role="combobox"
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy ?? (id === undefined && !ariaLabel ? valueLabelId : undefined)}
+        aria-describedby={ariaDescribedBy}
+        aria-invalid={ariaInvalid}
+        aria-errormessage={ariaErrorMessage}
+        aria-required={required || undefined}
         aria-activedescendant={
-          isOpen && highlightedIndex >= 0
+          popupVisible && activeOption && !activeOption.disabled
             ? `${listboxId}-option-${highlightedIndex}`
             : undefined
         }
-        aria-controls={isOpen ? listboxId : undefined}
-        aria-expanded={isOpen}
+        aria-controls={popupVisible ? listboxId : undefined}
+        aria-expanded={popupVisible}
         aria-haspopup="listbox"
         className={cn(
           "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
@@ -347,13 +373,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
           triggerClassName,
         )}
         disabled={disabled}
-        onClick={() => setIsOpen((currentValue) => !currentValue)}
+        onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
         type="button"
         {...swirskiAttrs("select-trigger", { size, tone, variant })}
       >
-        <span className={cn(!selectedOption && "text-black/50")}>
-          {selectedOption ? optionText(selectedOption) : placeholder}
+        <span id={valueLabelId} className={cn(!selectedOption && "text-black/50")}>
+          {triggerLabel}
         </span>
         <span
           aria-hidden="true"
@@ -370,6 +396,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         portalRoot &&
         createPortal(
           <SelectContent
+            ariaLabel={ariaLabel}
+            ariaLabelledBy={ariaLabelledBy ?? (ariaLabel ? undefined : valueLabelId)}
             contentClassName={contentClassName}
             contentStyle={contentStyle}
             contentRef={contentRef}

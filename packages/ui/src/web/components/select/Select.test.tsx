@@ -10,6 +10,43 @@ const options = [
 ];
 
 describe("Select", () => {
+  it("associates a native label and field description with the combobox", async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <label htmlFor="tone">Tone</label>
+        <p id="tone-hint">Choose a color.</p>
+        <Select id="tone" aria-describedby="tone-hint" required options={options} />
+      </>,
+    );
+    const trigger = screen.getByRole("combobox", { name: "Tone" });
+    expect(trigger).toHaveAccessibleDescription("Choose a color.");
+    expect(trigger).toHaveAttribute("aria-required", "true");
+    await user.click(screen.getByText("Tone"));
+    expect(trigger).toHaveFocus();
+  });
+
+  it("requests controlled open changes and keeps focus on the named combobox", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    const { rerender } = render(
+      <Select aria-label="Tone" options={options} open={false} onOpenChange={onOpenChange} />,
+    );
+    const trigger = screen.getByRole("combobox", { name: "Tone" });
+    await user.click(trigger);
+    expect(onOpenChange).toHaveBeenLastCalledWith(true);
+    expect(screen.queryByRole("listbox")).toBeNull();
+    rerender(<Select aria-label="Tone" options={options} open onOpenChange={onOpenChange} />);
+    expect(screen.getByRole("listbox", { name: "Tone" })).toBeInTheDocument();
+    await user.keyboard("{ArrowDown}");
+    expect(trigger).toHaveFocus();
+    expect(document.getElementById(trigger.getAttribute("aria-activedescendant")!))
+      .toHaveTextContent("Blue");
+    await user.keyboard("{Escape}");
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+    expect(trigger).toHaveFocus();
+  });
+
   it("validates an empty required selection and omits disabled values", async () => {
     const user = userEvent.setup();
     const submit = vi.fn((event) => event.preventDefault());
@@ -23,7 +60,7 @@ describe("Select", () => {
     const form = screen.getByRole<HTMLFormElement>("form");
     await user.click(screen.getByRole("button", { name: "Save" }));
     expect(submit).not.toHaveBeenCalled();
-    const trigger = screen.getByRole("button", { name: "Select an option" });
+    const trigger = screen.getByRole("combobox", { name: "Select an option" });
     expect(trigger).toHaveFocus();
     await user.click(trigger);
     await user.click(screen.getByRole("option", { name: "Blue" }));
@@ -44,10 +81,10 @@ describe("Select", () => {
         <Select form="preferences" name="controlled" value="blue" options={options} />
       </>,
     );
-    await user.click(screen.getByRole("button", { name: "Select an option" }));
+    await user.click(screen.getByRole("combobox", { name: "Select an option" }));
     await user.click(screen.getByRole("option", { name: "Yellow" }));
     await user.click(screen.getByRole("button", { name: "Reset" }));
-    await waitFor(() => expect(screen.getByRole("button", { name: "Select an option" })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole("combobox", { name: "Select an option" })).toBeInTheDocument());
     expect(Array.from(new FormData(screen.getByRole<HTMLFormElement>("form"))))
       .toEqual([["tone", ""], ["controlled", "blue"]]);
     expect(change).toHaveBeenCalledOnce();
@@ -65,7 +102,7 @@ describe("Select", () => {
     }
 
     const { rerender } = render(<Example />);
-    const trigger = screen.getByRole("button", { name: "Yellow" });
+    const trigger = screen.getByRole("combobox", { name: "Yellow" });
     trigger.focus();
     await user.keyboard("{End}");
     const list = screen.getByRole("listbox");
@@ -90,7 +127,7 @@ describe("Select", () => {
       />,
     );
 
-    const trigger = screen.getByRole("button", { name: /yellow/i });
+    const trigger = screen.getByRole("combobox", { name: /yellow/i });
     expect(trigger).toHaveAttribute("aria-haspopup", "listbox");
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(trigger).not.toHaveAttribute("aria-controls");
@@ -112,7 +149,10 @@ describe("Select", () => {
     expect(within(listbox).getByRole("option", { name: "Red" }))
       .toHaveAttribute("aria-disabled", "true");
     expect(within(listbox).getByRole("option", { name: "Red" }))
-      .toBeDisabled();
+      .not.toHaveAttribute("tabindex");
+    await user.click(within(listbox).getByRole("option", { name: "Red" }));
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(trigger).toHaveFocus();
 
     await user.click(screen.getByRole("option", { name: "Blue" }));
 
@@ -133,7 +173,7 @@ describe("Select", () => {
       />,
     );
 
-    const trigger = screen.getByRole("button", { name: /yellow/i });
+    const trigger = screen.getByRole("combobox", { name: /yellow/i });
     trigger.focus();
 
     await user.keyboard("{ArrowDown}{Enter}");
@@ -141,7 +181,7 @@ describe("Select", () => {
     expect(onValueChange).toHaveBeenCalledWith("blue");
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /blue/i }));
+    await user.click(screen.getByRole("combobox", { name: /blue/i }));
     const listbox = await screen.findByRole("listbox");
     expect(trigger).toHaveAttribute(
       "aria-activedescendant",
@@ -160,7 +200,7 @@ describe("Select", () => {
 
     render(<Select disabled options={options} defaultValue="yellow" />);
 
-    const trigger = screen.getByRole("button", { name: /yellow/i });
+    const trigger = screen.getByRole("combobox", { name: /yellow/i });
 
     expect(trigger).toBeDisabled();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -183,7 +223,7 @@ describe("Select", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: /yellow/i }));
+    await user.click(screen.getByRole("combobox", { name: /yellow/i }));
 
     expect(screen.getByRole("option", { name: "Yellow" })).toHaveTextContent(
       /^Yellow$/,
@@ -202,7 +242,7 @@ describe("Select", () => {
       />,
     );
 
-    const trigger = screen.getByRole("button", { name: /yellow/i });
+    const trigger = screen.getByRole("combobox", { name: /yellow/i });
     trigger.focus();
 
     await user.keyboard("{End}");
@@ -229,6 +269,6 @@ describe("Select", () => {
 
     expect(onValueChange).toHaveBeenCalledWith("blue");
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /blue/i })).toHaveFocus();
+    expect(screen.getByRole("combobox", { name: /blue/i })).toHaveFocus();
   });
 });
