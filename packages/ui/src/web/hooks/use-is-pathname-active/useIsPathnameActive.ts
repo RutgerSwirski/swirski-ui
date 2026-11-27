@@ -30,6 +30,7 @@ function normalizePathname(pathname: string) {
   return normalizedPathname.replace(/\/+$/, "");
 }
 
+/** Match a URL pathname without React. Matches nested paths by default. */
 export function isPathnameActive(
   pathname: PathnameUrl,
   currentUrl: PathnameUrl,
@@ -48,6 +49,7 @@ export function isPathnameActive(
   );
 }
 
+/** Memoize pathname matching in React. Pass the current pathname from your router. */
 export function useIsPathnameActive(
   pathname: PathnameUrl,
   currentUrl: PathnameUrl,

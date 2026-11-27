@@ -2284,7 +2284,7 @@
           "type": "boolean",
           "required": false,
           "defaultValue": "false",
-          "description": "Generated from DialogProps.",
+          "description": "Initial uncontrolled open state. Defaults to false.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
         {
@@ -2304,7 +2304,7 @@
           "sourceType": "DialogProps",
           "type": "boolean",
           "required": false,
-          "description": "Generated from DialogProps.",
+          "description": "Controlled open state. Pair with onOpenChange.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
         {
@@ -5299,7 +5299,7 @@
           "sourceType": "SelectProps",
           "type": "string",
           "required": false,
-          "description": "Generated from SelectProps.",
+          "description": "Initial uncontrolled selection. Defaults to the first enabled option.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -5330,7 +5330,7 @@
           "sourceType": "SelectProps",
           "type": "((value: string) => void)",
           "required": false,
-          "description": "Generated from SelectProps.",
+          "description": "Called with the option value when the user selects an option.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -5425,7 +5425,7 @@
           "sourceType": "SelectProps",
           "type": "string",
           "required": false,
-          "description": "Generated from SelectProps.",
+          "description": "Controlled selected option value. Pair with onValueChange.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -6596,7 +6596,7 @@
           "sourceType": "TextProps",
           "type": "ElementType",
           "required": false,
-          "description": "Generated from TextProps.",
+          "description": "Element or component to render. Defaults to a paragraph.",
           "sourceFile": "packages/ui/src/web/components/typography/Text.tsx"
         },
         {
@@ -6607,7 +6607,7 @@
           "type": "boolean",
           "required": false,
           "defaultValue": "false",
-          "description": "Generated from TextProps.",
+          "description": "Apply Text styling to a single existing child element.",
           "sourceFile": "packages/ui/src/web/components/typography/Text.tsx"
         },
         {

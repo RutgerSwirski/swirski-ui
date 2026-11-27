@@ -18,6 +18,7 @@ function copyWithTextarea(value: string) {
   document.body.removeChild(textarea);
 }
 
+/** Copy text and expose temporary copied feedback. The default timeout is 1600 ms. */
 export function useClipboard({ timeout = 1600 }: UseClipboardOptions = {}) {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<Error | null>(null);

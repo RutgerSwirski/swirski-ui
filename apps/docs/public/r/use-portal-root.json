@@ -15,7 +15,7 @@
     },
     {
       "path": "packages/ui/src/web/hooks/use-portal-root/usePortalRoot.ts",
-      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\nexport function usePortalRoot() {\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\n\n  useEffect(() => {\n    setPortalRoot(document.body);\n  }, []);\n\n  return portalRoot;\n}\n",
+      "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\n/** Return document.body after mount for portals. Returns null during server rendering. */\nexport function usePortalRoot() {\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\n\n  useEffect(() => {\n    setPortalRoot(document.body);\n  }, []);\n\n  return portalRoot;\n}\n",
       "type": "registry:hook",
       "target": "@ui/swirski/hooks/use-portal-root/usePortalRoot.ts"
     }

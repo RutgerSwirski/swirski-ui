@@ -17,7 +17,7 @@
     },
     {
       "path": "packages/ui/src/web/hooks/use-reduced-motion/useReducedMotion.ts",
-      "content": "\"use client\";\n\nimport { useMediaQuery } from \"../use-media-query\";\n\nexport function useReducedMotion(initialValue = false) {\n  return useMediaQuery(\"(prefers-reduced-motion: reduce)\", initialValue);\n}\n",
+      "content": "\"use client\";\n\nimport { useMediaQuery } from \"../use-media-query\";\n\n/** Track the browser’s reduced-motion preference. Defaults to false before the first browser check. */\nexport function useReducedMotion(initialValue = false) {\n  return useMediaQuery(\"(prefers-reduced-motion: reduce)\", initialValue);\n}\n",
       "type": "registry:hook",
       "target": "@ui/swirski/hooks/use-reduced-motion/useReducedMotion.ts"
     }

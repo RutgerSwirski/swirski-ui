@@ -14,13 +14,13 @@ export type { HookDoc, PropDoc } from "../types";
 
 export const hookDocs: HookDoc[] = [
   useDisclosureHookDoc,
-  useControllableStateHookDoc,
-  useClickOutsideHookDoc,
-  useEscapeKeyHookDoc,
-  useIsPathnameActiveHookDoc,
-  useLocalStorageHookDoc,
   useMediaQueryHookDoc,
   useReducedMotionHookDoc,
   useClipboardHookDoc,
+  useLocalStorageHookDoc,
+  useIsPathnameActiveHookDoc,
+  useClickOutsideHookDoc,
+  useEscapeKeyHookDoc,
+  useControllableStateHookDoc,
   usePortalRootHookDoc,
 ];
