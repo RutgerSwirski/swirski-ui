@@ -5385,6 +5385,17 @@
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
+          "name": "Select.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
           "name": "Select.defaultValue",
           "prop": "defaultValue",
           "component": "Select",
@@ -5426,6 +5437,16 @@
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
+          "name": "Select.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
           "name": "Select.onValueChange",
           "prop": "onValueChange",
           "component": "Select",
@@ -5433,6 +5454,16 @@
           "type": "((value: string) => void)",
           "required": false,
           "description": "Called with the option value when the user selects an option.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
+          "name": "Select.open",
+          "prop": "open",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -5551,6 +5582,26 @@
           "defaultValue": "\"default\"",
           "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
+          "name": "SelectContent.ariaLabel",
+          "prop": "ariaLabel",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/web/components/select/SelectContent.tsx"
+        },
+        {
+          "name": "SelectContent.ariaLabelledBy",
+          "prop": "ariaLabelledBy",
+          "component": "SelectContent",
+          "sourceType": "SelectContentProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from SelectContentProps.",
+          "sourceFile": "packages/ui/src/web/components/select/SelectContent.tsx"
         },
         {
           "name": "SelectContent.contentClassName",

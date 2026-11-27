@@ -9,6 +9,8 @@ import type {
 import { optionSizeStyles, optionText } from "./select-utils";
 
 export type SelectContentProps = {
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
   contentClassName?: string;
   contentRef: Ref<HTMLDivElement>;
   contentStyle: CSSProperties;
@@ -27,6 +29,8 @@ export type SelectContentProps = {
 };
 
 export default function SelectContent({
+  ariaLabel,
+  ariaLabelledBy,
   contentClassName,
   contentRef,
   contentStyle,
@@ -45,6 +49,8 @@ export default function SelectContent({
 }: SelectContentProps) {
   return (
     <div
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       ref={contentRef}
       className={cn(
         "fixed z-[1000] max-h-64 min-w-50 overflow-y-auto border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] p-1 shadow-[7px_7px_0_var(--sw-color-shadow)]",
@@ -60,7 +66,7 @@ export default function SelectContent({
         const isHighlighted = index === highlightedIndex;
 
         return (
-          <button
+          <div
             aria-disabled={option.disabled}
             aria-selected={isSelected}
             className={cn(
@@ -75,17 +81,18 @@ export default function SelectContent({
                 : "hover:bg-[var(--sw-color-blue)] hover:text-white",
               optionClassName,
             )}
-            disabled={option.disabled}
             id={`${listboxId}-option-${index}`}
             key={option.value}
-            onClick={() => onOptionSelect(option.value)}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => {
+              if (!option.disabled) onOptionSelect(option.value);
+            }}
             onMouseEnter={() => {
               if (!option.disabled) {
                 onOptionHover(index);
               }
             }}
             role="option"
-            type="button"
             {...swirskiAttrs("select-option", { size, tone, variant })}
           >
             <span>{optionText(option)}</span>
@@ -93,7 +100,7 @@ export default function SelectContent({
             {showSelectedIndicator && isSelected && (
               <span aria-hidden="true">{selectedIndicator}</span>
             )}
-          </button>
+          </div>
         );
       })}
     </div>

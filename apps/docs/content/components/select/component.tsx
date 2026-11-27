@@ -16,6 +16,7 @@ export const selectComponentDoc: ComponentDoc = {
   category: "Forms",
   importCode: `import { Select } from "@swirski/ui";`,
   usageCode: `<Select
+  aria-label="Tone"
   placeholder="Pick a tone"
   options={[
     { value: "yellow", label: "Yellow" },
@@ -33,6 +34,7 @@ export const selectComponentDoc: ComponentDoc = {
   preview: (
     <div className="max-w-sm">
       <Select
+        aria-label="Tone"
         defaultValue="yellow"
         options={[
           { value: "yellow", label: "Yellow" },
@@ -70,6 +72,26 @@ export const selectComponentDoc: ComponentDoc = {
       type: "string",
       defaultValue: '"Select an option"',
       description: "Text shown when no option is selected.",
+    },
+    {
+      name: "id",
+      type: "string",
+      description: "ID of the focusable combobox. Use with a Label’s htmlFor.",
+    },
+    {
+      name: "open",
+      type: "boolean",
+      description: "Controlled popup state.",
+    },
+    {
+      name: "defaultOpen",
+      type: "boolean",
+      description: "Initial popup state when uncontrolled.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description: "Called when the component requests a popup state change.",
     },
     {
       name: "disabled",

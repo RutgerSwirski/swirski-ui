@@ -664,6 +664,7 @@ import { Select } from "@swirski/ui";
 Usage:
 ```tsx
 <Select
+  aria-label="Tone"
   placeholder="Pick a tone"
   options={[
     { value: "yellow", label: "Yellow" },
@@ -690,6 +691,10 @@ Props:
 - `defaultValue`: `string` - Initial selected option value when uncontrolled.
 - `onValueChange`: `(value: string) => void` - Called when a new option is selected.
 - `placeholder`: `string` default "Select an option" - Text shown when no option is selected.
+- `id`: `string` - ID of the focusable combobox. Use with a Label’s htmlFor.
+- `open`: `boolean` - Controlled popup state.
+- `defaultOpen`: `boolean` - Initial popup state when uncontrolled.
+- `onOpenChange`: `(open: boolean) => void` - Called when the component requests a popup state change.
 - `disabled`: `boolean` default false - Disables the trigger and omits its value from form submission.
 - `name`: `string` - Field name submitted with the owning form.
 - `form`: `string` - ID of the owning form when Select is rendered outside it.
