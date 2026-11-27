@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -74,7 +74,8 @@ describe("Navbar dropdown", () => {
     await user.keyboard("{ArrowDown}");
 
     const menu = await screen.findByRole("menu", { name: "More pages" });
-    expect(within(menu).getByRole("menuitem", { name: "System" }))
-      .toHaveFocus();
+    await waitFor(() =>
+      expect(within(menu).getByRole("menuitem", { name: "System" })).toHaveFocus(),
+    );
   });
 });
