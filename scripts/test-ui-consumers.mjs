@@ -47,6 +47,9 @@ async function verifyBrowser(browser) {
     if (!stdout.includes('data-theme-verified="true"')) {
       throw new Error("The packed stylesheet or scoped dark portal theme did not reach the browser.");
     }
+    if (!stdout.includes('data-isolation-verified="true"')) {
+      throw new Error("Component styles changed the consumer's document defaults or unscoped utilities.");
+    }
     for (const scheme of ["light", "dark"]) {
       if (!stdout.includes(`data-contrast-verified="${scheme}"`)) {
         const failures = [...stdout.matchAll(/data-contrast-failure="([^"]*)"/g)];
@@ -105,6 +108,12 @@ createRoot(document.getElementById("root")!).render(<><Title>Installed tarball</
 `);
   run(["install", "--no-audit", "--no-fund"]);
   execFileSync(process.execPath, ["-e", 'for (const font of ["anton", "bangers"]) require.resolve(`@swirski/ui/fonts/${font}-latin.woff2`)'], { cwd: fixture });
+  const consumerRequire = createRequire(join(fixture, "package.json"));
+  const css = (entry) => readFileSync(consumerRequire.resolve(`@swirski/ui/${entry}.css`), "utf8");
+  if (css("styles").includes("@font-face") || !css("fonts").includes("@font-face") ||
+      !css("reset").includes("box-sizing:border-box")) {
+    throw new Error("The component, font and reset CSS exports did not build separately.");
+  }
   run(["exec", "--", "next", "build"]);
   const page = readFileSync(join(fixture, ".next/server/app/index.html"), "utf8");
   const composedLink = page.match(/<a\b(?=[^>]*\bhref="\/about")[^>]*>/)?.[0];

@@ -110,7 +110,7 @@ export const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>(
       <ResolvedComponent
         ref={ref}
         className={cn(
-          "inline-flex shrink-0 items-center gap-3 font-anton text-2xl uppercase leading-none text-[var(--sw-color-ink)] no-underline",
+          "inline-flex shrink-0 items-center gap-3 font-[family-name:var(--sw-font-heading)] text-2xl uppercase leading-none text-[var(--sw-color-ink)] no-underline",
           variant === "compact" && "text-xl",
           className,
         )}

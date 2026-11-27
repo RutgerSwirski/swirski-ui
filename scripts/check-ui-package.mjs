@@ -39,6 +39,8 @@ const requiredFiles = [
   "dist/native/fonts/Inter_700Bold.ttf",
   "dist/native/fonts/Inter_900Black.ttf",
   "dist/styles.css",
+  "dist/reset.css",
+  "dist/fonts.css",
   "dist/fonts/anton/anton-latin-400-normal.woff2",
   "dist/fonts/bangers/bangers-latin-400-normal.woff2",
   "package.json",

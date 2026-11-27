@@ -26,7 +26,7 @@ export const AlertTitle = forwardRef<HTMLHeadingElement, AlertTitleProps>(
       <h3
         ref={ref}
         className={cn(
-          "font-anton uppercase leading-none",
+          "font-[family-name:var(--sw-font-heading)] uppercase leading-none",
           sizeStyles[size],
           className,
         )}

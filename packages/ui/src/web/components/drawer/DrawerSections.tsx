@@ -71,7 +71,7 @@ export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(
     return (
       <Component
         ref={ref}
-        className={cn("font-anton text-4xl uppercase leading-none", className)}
+        className={cn("font-[family-name:var(--sw-font-heading)] text-4xl uppercase leading-none", className)}
         id={id}
         {...swirskiAttrs("drawer-title", { size, tone, variant })}
         {...props}

@@ -48,6 +48,19 @@ Import the package styles once in your app:
 import "@swirski/ui/styles.css";
 ```
 
+Component styles include the Swirski theme tokens and scoped utilities. Your
+app can keep its own reset and fonts. To opt into the previous bundled look,
+load either optional entry:
+
+```tsx
+import "@swirski/ui/reset.css"; // Global Tailwind Preflight, if your app needs it.
+import "@swirski/ui/fonts.css"; // Inter, Anton and Bangers.
+import "@swirski/ui/styles.css";
+```
+
+The scoped stylesheet uses CSS `@scope`. If your app uses Tailwind utilities for
+its own markup, keep compiling those in the app stylesheet.
+
 Then import components:
 
 ```tsx
@@ -71,15 +84,8 @@ export function Example() {
 }
 ```
 
-If your app uses Tailwind CSS v4 and imports components from the package, make
-sure Tailwind scans the package output:
-
-```css
-@source "../node_modules/@swirski/ui/dist";
-```
-
-If you use the CLI to copy component source into your app, Tailwind will scan
-those copied files naturally.
+The npm stylesheet is precompiled. For a CLI or registry install, compile the
+copied stylesheet as its own Tailwind CSS v4 entry.
 
 ## Install in React Native
 
@@ -115,7 +121,8 @@ The CLI installs the registry snapshot bundled with its release. It keeps
 components and their shared files under `componentsPath`. With the default
 configuration, Button is at `src/components/ui/components/button` and the
 stylesheet is at `src/components/ui/styles.css`. Install the dependencies
-printed by the CLI and import the copied stylesheet once.
+printed by the CLI and compile the copied stylesheet with Tailwind CSS v4.
+Your application owns any global reset and font loading.
 
 Use `--dry-run` to preview changes. Existing edits are protected unless you
 pass `--overwrite`.

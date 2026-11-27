@@ -17,6 +17,8 @@
       "import": "./dist/native/index.js"
     },
     "./styles.css": "./dist/styles.css",
+    "./reset.css": "./dist/reset.css",
+    "./fonts.css": "./dist/fonts.css",
     "./fonts/anton-latin.woff2": "./dist/fonts/anton/anton-latin-400-normal.woff2",
     "./fonts/bangers-latin.woff2": "./dist/fonts/bangers/bangers-latin-400-normal.woff2"
   },
@@ -24,7 +26,7 @@
     "swirski-native": "./scripts/setup-native.mjs"
   },
   "sideEffects": [
-    "./dist/styles.css"
+    "./dist/*.css"
   ],
   "files": [
     "dist",

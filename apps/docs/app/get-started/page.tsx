@@ -68,7 +68,7 @@ const packageSteps = [
   },
   {
     title: "Import the styles once",
-    body: "In Next.js App Router, add this import to app/layout.tsx. In other React apps, put it in your app entry.",
+    body: "Import the scoped stylesheet in your app entry. Use reset.css for an optional global Tailwind reset and fonts.css for the bundled web fonts.",
     code: 'import "@swirski/ui/styles.css";',
   },
   {

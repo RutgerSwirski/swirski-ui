@@ -44,7 +44,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
       <Component
         ref={ref}
         className={cn(
-          "mt-3 font-anton uppercase tracking-normal",
+          "mt-3 font-[family-name:var(--sw-font-heading)] uppercase tracking-normal",
           sizeStyles[size],
           toneStyles[tone],
           variant === "default" && "group-hover:underline",

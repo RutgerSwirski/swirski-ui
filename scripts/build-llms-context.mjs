@@ -375,11 +375,9 @@ Import components from the package root:
 import { Button, Card, CardContent, Text, Title } from "@swirski/ui";
 \`\`\`
 
-Tailwind CSS v4 package consumers should make Tailwind scan the package output:
-
-\`\`\`css
-@source "../node_modules/@swirski/ui/dist";
-\`\`\`
+The npm stylesheet includes scoped component utilities. Global Tailwind Preflight
+and web fonts are opt-in via \`@swirski/ui/reset.css\` and \`@swirski/ui/fonts.css\`.
+Compile copied CLI or registry styles as a separate Tailwind CSS v4 entry.
 
 ### Swirski CLI
 
