@@ -1,4 +1,5 @@
 "use client";
+import { useOverlayLayer } from "../../system/overlay";
 
 import {
   ButtonHTMLAttributes,
@@ -7,7 +8,6 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useEffect,
   useId,
   useRef,
   useState,
@@ -88,36 +88,16 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       onOpenChange?.(nextOpen);
     }
 
-    useEffect(() => {
-      if (!currentOpen) {
-        return;
-      }
-
-      const handlePointerDown = (event: PointerEvent) => {
-        const target = event.target as Node;
-
-        if (
-          !rootRef.current?.contains(target) &&
-          !contentRef.current?.contains(target)
-        ) {
-          setOpen(false);
-        }
-      };
-
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-          setOpen(false);
-        }
-      };
-
-      window.addEventListener("pointerdown", handlePointerDown);
-      window.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        window.removeEventListener("pointerdown", handlePointerDown);
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    }, [currentOpen]);
+    useOverlayLayer({
+      open: currentOpen,
+      rootRef,
+      contentRef,
+      onEscape: () => {
+        rootRef.current?.querySelector<HTMLElement>(`[aria-controls="${contentId}"]`)?.focus();
+        setOpen(false);
+      },
+      onOutside: () => setOpen(false),
+    });
 
     return (
       <PopoverContext.Provider

@@ -1236,6 +1236,17 @@
           "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
         },
         {
+          "name": "disabled",
+          "prop": "disabled",
+          "component": "Button",
+          "sourceType": "ButtonProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from ButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
+        },
+        {
           "name": "href",
           "prop": "href",
           "component": "Button",
@@ -5271,6 +5282,16 @@
           "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
         },
         {
+          "name": "inputProps",
+          "prop": "inputProps",
+          "component": "RadioGroup",
+          "sourceType": "RadioGroupProps",
+          "type": "Omit<InputHTMLAttributes<HTMLInputElement>, 'color' | 'defaultChecked' | 'id' | 'onChange' | 'size' | 'type' | 'name' | 'value' | 'checked'>",
+          "required": false,
+          "description": "Generated from RadioGroupProps.",
+          "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
+        },
+        {
           "name": "name",
           "prop": "name",
           "component": "RadioGroup",
@@ -5385,6 +5406,16 @@
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
+          "name": "Select.form",
+          "prop": "form",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "string",
+          "required": false,
+          "description": "ID of the owning form when rendered outside it.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
           "name": "Select.name",
           "prop": "name",
           "component": "Select",
@@ -5433,6 +5464,17 @@
           "required": false,
           "defaultValue": "\"Select an option\"",
           "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
+          "name": "Select.required",
+          "prop": "required",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Block form submission when no option is selected.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {

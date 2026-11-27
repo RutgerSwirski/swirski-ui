@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Select } from "./Select";
@@ -10,6 +10,73 @@ const options = [
 ];
 
 describe("Select", () => {
+  it("validates an empty required selection and omits disabled values", async () => {
+    const user = userEvent.setup();
+    const submit = vi.fn((event) => event.preventDefault());
+    render(
+      <form aria-label="Preferences" onSubmit={submit}>
+        <Select required name="tone" defaultValue="" options={options} />
+        <Select disabled name="disabledTone" options={options} />
+        <button type="submit">Save</button>
+      </form>,
+    );
+    const form = screen.getByRole<HTMLFormElement>("form");
+    await user.click(screen.getByRole("button", { name: "Save" }));
+    expect(submit).not.toHaveBeenCalled();
+    const trigger = screen.getByRole("button", { name: "Select an option" });
+    expect(trigger).toHaveFocus();
+    await user.click(trigger);
+    await user.click(screen.getByRole("option", { name: "Blue" }));
+    await user.click(screen.getByRole("button", { name: "Save" }));
+    expect(submit).toHaveBeenCalledOnce();
+    expect(Array.from(new FormData(form))).toEqual([["tone", "blue"]]);
+  });
+
+  it("resets the uncontrolled value in an associated form and preserves the controlled value", async () => {
+    const user = userEvent.setup();
+    const change = vi.fn();
+    render(
+      <>
+        <form aria-label="Preferences" id="preferences">
+          <button type="reset">Reset</button>
+        </form>
+        <Select form="preferences" name="tone" defaultValue="" options={options} onValueChange={change} />
+        <Select form="preferences" name="controlled" value="blue" options={options} />
+      </>,
+    );
+    await user.click(screen.getByRole("button", { name: "Select an option" }));
+    await user.click(screen.getByRole("option", { name: "Yellow" }));
+    await user.click(screen.getByRole("button", { name: "Reset" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Select an option" })).toBeInTheDocument());
+    expect(Array.from(new FormData(screen.getByRole<HTMLFormElement>("form"))))
+      .toEqual([["tone", ""], ["controlled", "blue"]]);
+    expect(change).toHaveBeenCalledOnce();
+  });
+
+  it("keeps highlight valid as options shrink and closes on Tab", async () => {
+    const user = userEvent.setup();
+    function Example({ shrink = false }: { shrink?: boolean }) {
+      return (
+        <>
+          <Select options={shrink ? options.slice(0, 1) : options} />
+          <button type="button">Continue</button>
+        </>
+      );
+    }
+
+    const { rerender } = render(<Example />);
+    const trigger = screen.getByRole("button", { name: "Yellow" });
+    trigger.focus();
+    await user.keyboard("{End}");
+    const list = screen.getByRole("listbox");
+    expect(trigger).toHaveAttribute("aria-activedescendant", `${list.id}-option-1`);
+    rerender(<Example shrink />);
+    expect(trigger).toHaveAttribute("aria-activedescendant", `${list.id}-option-0`);
+    await user.tab();
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Continue" })).toHaveFocus();
+  });
+
   it("opens a listbox and selects an option with pointer input", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

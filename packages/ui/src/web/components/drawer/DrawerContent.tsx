@@ -42,7 +42,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     useModalOverlay({
       contentRef,
       onEscape: () => setOpen(false),
-      open,
+      open: open && Boolean(portalRoot),
     });
 
     if (!open || !portalRoot) {
@@ -51,11 +51,10 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
 
     return createPortal(
       <div className="fixed inset-0 z-50 bg-black/45">
-        <button
-          aria-label="Close drawer"
+        <div
+          aria-hidden="true"
+          data-swirski-backdrop=""
           className="absolute inset-0"
-          onClick={() => setOpen(false)}
-          type="button"
         />
         <div
           ref={composeRefs(contentRef, ref)}

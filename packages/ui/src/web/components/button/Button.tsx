@@ -1,9 +1,13 @@
 import {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
+  Children,
+  cloneElement,
   ElementType,
   ReactNode,
   forwardRef,
+  type MouseEvent,
+  type ReactElement,
 } from "react";
 
 import {
@@ -34,6 +38,7 @@ type ButtonBaseProps = {
   /** Button color. Defaults to blue unless a legacy color variant is supplied. */
   tone?: ButtonTone;
   withShadow?: boolean;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -110,6 +115,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
     size = "md",
     tone,
     withShadow = true,
+    disabled = false,
     className,
     type,
     ...props
@@ -124,6 +130,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
     baseStyles,
     focusVisibleStyles,
     disabledInteractiveStyles,
+    "aria-disabled:cursor-not-allowed aria-disabled:opacity-60",
     sizeStyles[size],
     normalizedVariant === "solid" && toneStyles[normalizedTone],
     normalizedVariant === "outline" && outlineToneStyles[normalizedTone],
@@ -136,17 +143,14 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
 
   const iconElement = icon ? <ButtonIcon icon={icon} /> : null;
 
-  const content = (
+  const content = (label: ReactNode) => (
     <>
       {iconSide === "left" && iconElement}
-      <span className="min-w-0 break-words">{children}</span>
+      <span className="min-w-0 break-words">{label}</span>
       {iconSide === "right" && iconElement}
     </>
   );
 
-  const Component = (
-    asChild ? Slot : (as ?? (href ? "a" : "button"))
-  ) as ElementType;
   const componentProps = {
     ...props,
     ...(href ? { href } : {}),
@@ -160,7 +164,43 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
     className: styles,
   };
 
-  return <Component {...componentProps}>{content}</Component>;
+  const blockActivation = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+  const disabledLinkProps = {
+    "aria-disabled": true,
+    tabIndex: -1,
+    onClickCapture: blockActivation,
+    onAuxClickCapture: blockActivation,
+  };
+
+  if (asChild) {
+    const child = Children.only(children) as ReactElement<ButtonHTMLAttributes<HTMLElement>>;
+    const nativeButton = child.type === "button";
+    const disabledProps = disabled
+      ? (nativeButton ? { disabled: true } : disabledLinkProps)
+      : undefined;
+    const slottedChild = iconElement || disabledProps
+      ? cloneElement(child, disabledProps, iconElement ? content(child.props.children) : child.props.children)
+      : child;
+    const typeProps = nativeButton
+      ? { type: type ?? "button", disabled: disabled || undefined }
+      : { type };
+
+    return (
+      <Slot {...componentProps} {...typeProps}>
+        {slottedChild}
+      </Slot>
+    );
+  }
+
+  const Component = (as ?? (href ? "a" : "button")) as ElementType;
+  const isLink = Component === "a" || Boolean(href);
+  const disabledProps = isLink
+    ? (disabled ? disabledLinkProps : undefined)
+    : { disabled: disabled || undefined };
+  return <Component {...componentProps} {...disabledProps}>{content(children)}</Component>;
 });
 
 Button.displayName = "Button";

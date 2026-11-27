@@ -1,4 +1,5 @@
 "use client";
+import { useOverlayLayer } from "../../system/overlay";
 
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
@@ -46,6 +47,10 @@ export type SelectProps = {
   placeholder?: string;
   disabled?: boolean;
   name?: string;
+  /** ID of the owning form when rendered outside it. */
+  form?: string;
+  /** Block form submission when no option is selected. */
+  required?: boolean;
   selectedIndicator?: ReactNode;
   showSelectedIndicator?: boolean;
   triggerClassName?: string;
@@ -65,6 +70,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     placeholder = "Select an option",
     disabled = false,
     name,
+    form,
+    required = false,
     selectedIndicator = "x",
     showSelectedIndicator = false,
     className,
@@ -79,15 +86,38 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   ref,
 ) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const formInputRef = useRef<HTMLInputElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const typeaheadSearchRef = useRef("");
   const typeaheadTimeoutRef = useRef<number | null>(null);
   const portalRoot = usePortalRoot();
   const generatedId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const [internalValue, setInternalValue] = useState(
+  const [initialValue] = useState(
     defaultValue ?? options.find((option) => !option.disabled)?.value ?? "",
   );
+  const [internalValue, setInternalValue] = useState(initialValue);
+  const isControlled = value !== undefined;
+
+  useEffect(() => {
+    const owner = formInputRef.current?.form;
+    if (!owner) return;
+
+    let active = true;
+    function handleReset(event: Event) {
+      queueMicrotask(() => {
+        if (!active || event.defaultPrevented) return;
+        if (!isControlled) setInternalValue(initialValue);
+        setIsOpen(false);
+      });
+    }
+    owner.addEventListener("reset", handleReset);
+    return () => {
+      active = false;
+      owner.removeEventListener("reset", handleReset);
+    };
+  }, [form, initialValue, isControlled]);
   const contentStyle = useFloatingPosition({
     floatingRef: contentRef,
     matchReferenceWidth: true,
@@ -116,28 +146,17 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     };
   }, []);
 
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target as Node;
-
-      if (
-        !rootRef.current?.contains(target) &&
-        !contentRef.current?.contains(target)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener("pointerdown", handlePointerDown);
-
-    return () => {
-      window.removeEventListener("pointerdown", handlePointerDown);
-    };
-  }, [isOpen]);
+  useOverlayLayer({
+    open: isOpen,
+    rootRef,
+    contentRef,
+    onEscape: () => {
+      clearTypeahead();
+      setIsOpen(false);
+      triggerRef.current?.focus();
+    },
+    onOutside: () => setIsOpen(false),
+  });
 
   useEffect(() => {
     if (!isOpen) {
@@ -145,7 +164,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     }
 
     setHighlightedIndex((currentIndex) => {
-      if (currentIndex >= 0 && !options[currentIndex]?.disabled) {
+      const highlighted = options[currentIndex];
+      if (highlighted && !highlighted.disabled) {
         return currentIndex;
       }
 
@@ -200,6 +220,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       return;
     }
 
+    if (event.key === "Tab") {
+      clearTypeahead();
+      setIsOpen(false);
+      return;
+    }
+
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
       setIsOpen(true);
@@ -244,7 +270,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       return;
     }
 
-    if (event.key === "Escape") {
+    if (event.key === "Tab") {
       clearTypeahead();
       setIsOpen(false);
       return;
@@ -281,9 +307,27 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       {...swirskiAttrs("select", { size, tone, variant })}
       {...props}
     >
-      {name && <input type="hidden" name={name} value={selectedValue} />}
+      <input
+        ref={formInputRef}
+        aria-hidden="true"
+        className="sr-only pointer-events-none"
+        disabled={disabled}
+        form={form}
+        name={name}
+        onChange={() => {}}
+        onInvalid={(event) => {
+          // Keep native submission blocking, but focus the visible control.
+          event.preventDefault();
+          triggerRef.current?.focus();
+        }}
+        required={required}
+        tabIndex={-1}
+        type={required ? "text" : "hidden"}
+        value={required && !selectedOption ? "" : selectedValue}
+      />
 
       <button
+        ref={triggerRef}
         aria-activedescendant={
           isOpen && highlightedIndex >= 0
             ? `${listboxId}-option-${highlightedIndex}`

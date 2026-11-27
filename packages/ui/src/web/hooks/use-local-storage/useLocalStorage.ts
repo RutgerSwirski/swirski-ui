@@ -1,6 +1,13 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export type UseLocalStorageOptions<T> = {
   serialize?: (value: T) => string;
@@ -16,34 +23,83 @@ export function useLocalStorage<T>(
   const serialize = options.serialize ?? JSON.stringify;
   const deserialize = options.deserialize ?? JSON.parse;
   const [value, setValue] = useState(defaultValue);
+  const defaultValueRef = useRef(defaultValue);
+  const deserializeRef = useRef(deserialize);
+  const serializeRef = useRef(serialize);
+  const valueRef = useRef(value);
+
+  defaultValueRef.current = defaultValue;
+  deserializeRef.current = deserialize;
+  serializeRef.current = serialize;
+  valueRef.current = value;
 
   useEffect(() => {
     try {
       const storedValue = window.localStorage.getItem(key);
 
-      if (storedValue !== null) {
-        setValue(deserialize(storedValue));
+      const nextValue =
+        storedValue === null
+          ? defaultValueRef.current
+          : deserializeRef.current(storedValue);
+      valueRef.current = nextValue;
+      setValue(nextValue);
+    } catch {
+      valueRef.current = defaultValueRef.current;
+      setValue(defaultValueRef.current);
+    }
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.storageArea !== window.localStorage || event.key !== key) {
+        return;
       }
-    } catch {
-      setValue(defaultValue);
-    }
-  }, [defaultValue, deserialize, key]);
 
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(key, serialize(value));
-    } catch {
-      // Ignore storage failures in private browsing and restricted contexts.
-    }
-  }, [key, serialize, value]);
+      try {
+        const nextValue =
+          event.newValue === null
+            ? defaultValueRef.current
+            : deserializeRef.current(event.newValue);
+        valueRef.current = nextValue;
+        setValue(nextValue);
+      } catch {
+        valueRef.current = defaultValueRef.current;
+        setValue(defaultValueRef.current);
+      }
+    };
 
-  function removeValue() {
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [key]);
+
+  const setStoredValue = useCallback<Dispatch<SetStateAction<T>>>(
+    (nextValue) => {
+      const resolvedValue =
+        typeof nextValue === "function"
+          ? (nextValue as (previousValue: T) => T)(valueRef.current)
+          : nextValue;
+
+      valueRef.current = resolvedValue;
+      setValue(resolvedValue);
+
+      try {
+        window.localStorage.setItem(
+          key,
+          serializeRef.current(resolvedValue),
+        );
+      } catch {
+        // Keep local React state usable when storage is unavailable.
+      }
+    },
+    [key],
+  );
+
+  const removeValue = useCallback(() => {
     try {
       window.localStorage.removeItem(key);
     } finally {
-      setValue(defaultValue);
+      valueRef.current = defaultValueRef.current;
+      setValue(defaultValueRef.current);
     }
-  }
+  }, [key]);
 
-  return [value, setValue, removeValue];
+  return [value, setStoredValue, removeValue];
 }

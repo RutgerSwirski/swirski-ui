@@ -111,8 +111,14 @@ pnpm exec swirski add button card dialog
 pnpm exec swirski add --all
 ```
 
-The CLI copies source folders from `registry/swirski.registry.json` into the
-configured `componentsPath`.
+The CLI installs the registry snapshot bundled with its release. It keeps
+components and their shared files under `componentsPath`. With the default
+configuration, Button is at `src/components/ui/components/button` and the
+stylesheet is at `src/components/ui/styles.css`. Install the dependencies
+printed by the CLI and import the copied stylesheet once.
+
+Use `--dry-run` to preview changes. Existing edits are protected unless you
+pass `--overwrite`.
 
 ## Install with shadcn
 
@@ -285,8 +291,7 @@ Generated config:
 
 ```json
 {
-  "componentsPath": "src/components/ui",
-  "stylePath": "src/styles.css"
+  "componentsPath": "src/components/ui"
 }
 ```
 

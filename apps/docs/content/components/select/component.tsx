@@ -75,12 +75,23 @@ export const selectComponentDoc: ComponentDoc = {
       name: "disabled",
       type: "boolean",
       defaultValue: "false",
-      description: "Disables the trigger and prevents selection.",
+      description: "Disables the trigger and omits its value from form submission.",
     },
     {
       name: "name",
       type: "string",
-      description: "Adds a hidden input for native form submission.",
+      description: "Field name submitted with the owning form.",
+    },
+    {
+      name: "form",
+      type: "string",
+      description: "ID of the owning form when Select is rendered outside it.",
+    },
+    {
+      name: "required",
+      type: "boolean",
+      defaultValue: "false",
+      description: 'Blocks submission when no option is selected. Set defaultValue="" to start with no selection.',
     },
     {
       name: "triggerClassName",

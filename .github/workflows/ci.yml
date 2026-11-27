@@ -82,6 +82,9 @@ jobs:
       - name: Check UI package tarball
         run: pnpm check:ui-package
 
+      - name: Check standalone CLI tarball
+        run: pnpm test:cli
+
   docs-build:
     runs-on: ubuntu-latest
 

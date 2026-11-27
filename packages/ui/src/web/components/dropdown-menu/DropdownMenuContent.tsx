@@ -46,8 +46,6 @@ export const DropdownMenuContent = forwardRef<
     focusIntentRef,
     open,
     rootRef,
-    setOpen,
-    triggerRef,
   } = useDropdownMenu();
   const portalRoot = usePortalRoot();
   const floatingStyle = useFloatingPosition({
@@ -106,11 +104,6 @@ export const DropdownMenuContent = forwardRef<
       return;
     }
 
-    if (event.key === "Escape") {
-      event.preventDefault();
-      setOpen(false);
-      triggerRef.current?.focus();
-    }
   }
 
   if (!open || !portalRoot) {
