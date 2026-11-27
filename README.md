@@ -336,6 +336,11 @@ pnpm release:ui --publish --otp 123456
 
 ## Development
 
+Run `pnpm test:ui-consumers` to build and install the UI tarball into isolated
+Next.js App Router and plain React fixtures. Set `CHROMIUM_BIN` to a local
+Chromium or Chrome executable to also check the packed CSS and scoped dark theme
+in a browser.
+
 Install dependencies:
 
 ```bash

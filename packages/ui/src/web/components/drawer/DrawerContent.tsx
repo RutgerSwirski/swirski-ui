@@ -60,9 +60,9 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
         <div
           ref={composeRefs(contentRef, ref)}
           className={cn(
-            "absolute border-4 border-black bg-white p-6 shadow-[12px_12px_0_#0B0B0C]",
+            "absolute border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-6 shadow-[12px_12px_0_var(--sw-color-shadow)]",
             drawerSideStyles[side],
-            variant === "compact" && "p-5 shadow-[8px_8px_0_#0B0B0C]",
+            variant === "compact" && "p-5 shadow-[8px_8px_0_var(--sw-color-shadow)]",
             className,
           )}
           role="dialog"

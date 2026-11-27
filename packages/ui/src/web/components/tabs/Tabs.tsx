@@ -111,8 +111,8 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       <Component
         ref={ref}
         className={cn(
-          "flex w-fit flex-wrap gap-2 border-4 border-black bg-white p-2 shadow-[6px_6px_0_#0B0B0C]",
-          variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
+          "flex w-fit flex-wrap gap-2 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] p-2",
+          variant === "compact" ? "shadow-[var(--sw-shadow-sm)]" : "shadow-[var(--sw-shadow-md)]",
           className,
         )}
         role="tablist"
@@ -230,8 +230,8 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
       <Component
         ref={ref}
         className={cn(
-          "border-4 border-black bg-white p-5 shadow-[6px_6px_0_#0B0B0C]",
-          variant === "compact" && "p-4 shadow-[3px_3px_0_#0B0B0C]",
+          "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)]",
+          variant === "compact" ? "p-4 shadow-[var(--sw-shadow-sm)]" : "p-5 shadow-[var(--sw-shadow-md)]",
           className,
         )}
         role="tabpanel"

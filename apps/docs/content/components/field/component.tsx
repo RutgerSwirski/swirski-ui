@@ -4,6 +4,7 @@ import {
   FieldHint,
   Grid,
   Input,
+  InputField,
   Label,
   Textarea,
 } from "@swirski/ui";
@@ -20,14 +21,13 @@ export const fieldComponentDoc: ComponentDoc = {
   FieldError,
   FieldHint,
   Input,
+  InputField,
   Label,
   Textarea,
 } from "@swirski/ui";`,
-  usageCode: `<Field>
-  <Label htmlFor="email">Email</Label>
-  <Input id="email" placeholder="studio@swirski.dev" />
-  <FieldHint>Use the address where clients can reach you.</FieldHint>
-</Field>`,
+  usageCode: `import { InputField } from "@swirski/ui";
+
+<InputField label="Email" name="email" type="email" hint="Use your work address." />`,
   compositionCode: `Field
 |-- Label
 |-- Input | Textarea | Select | Checkbox | RadioGroup
@@ -35,6 +35,7 @@ export const fieldComponentDoc: ComponentDoc = {
 \`-- FieldError`,
   preview: (
     <Grid className="max-w-md gap-6">
+      <InputField label="Work email" name="email" type="email" hint="Use your work address." />
       <Field>
         <Label htmlFor="docs-email">Email</Label>
         <Input id="docs-email" placeholder="studio@swirski.dev" />
@@ -51,6 +52,12 @@ export const fieldComponentDoc: ComponentDoc = {
     </Grid>
   ),
   props: [
+    {
+      name: "InputField.label",
+      type: "ReactNode",
+      required: true,
+      description: "Labels the native input. Optional hint and error props are linked automatically.",
+    },
     {
       name: "Field.className",
       type: "string",

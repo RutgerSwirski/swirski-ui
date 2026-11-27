@@ -40,7 +40,7 @@
     { "name": "toast", "category": "feedback", "description": "Toast provider and status messages.", "source": "packages/ui/src/components/toast", "dependencies": ["use-portal-root"] },
     { "name": "tooltip", "category": "interaction", "description": "Hover/focus label.", "source": "packages/ui/src/components/tooltip", "dependencies": ["use-portal-root"] },
     { "name": "typography", "category": "typography", "description": "Title and Text primitives.", "source": "packages/ui/src/components/typography" },
-    { "name": "swirski-provider", "category": "theming", "description": "Theme provider and token helpers.", "source": "packages/ui/src/theme" },
+    { "name": "swirski-provider", "category": "theming", "description": "Theme provider and token helpers.", "source": "packages/ui/src/theme", "dependencies": ["use-portal-root"] },
     { "name": "use-click-outside", "category": "hooks", "description": "Run a callback when pointer events happen outside an element.", "source": "packages/ui/src/hooks/use-click-outside" },
     { "name": "use-clipboard", "category": "hooks", "description": "Copy text and track copied state.", "source": "packages/ui/src/hooks/use-clipboard" },
     { "name": "use-controllable-state", "category": "hooks", "description": "Build controlled or uncontrolled component state.", "source": "packages/ui/src/hooks/use-controllable-state" },
@@ -49,7 +49,7 @@
     { "name": "use-is-pathname-active", "category": "hooks", "description": "Check whether a pathname matches the current URL path.", "source": "packages/ui/src/hooks/use-is-pathname-active" },
     { "name": "use-local-storage", "category": "hooks", "description": "Persist React state in localStorage.", "source": "packages/ui/src/hooks/use-local-storage" },
     { "name": "use-media-query", "category": "hooks", "description": "Track a CSS media query.", "source": "packages/ui/src/hooks/use-media-query" },
-    { "name": "use-portal-root", "category": "hooks", "description": "Return document.body after mount for portal rendering.", "source": "packages/ui/src/hooks/use-portal-root" },
+    { "name": "use-portal-root", "category": "hooks", "description": "Resolve the nearest theme provider’s portal host or fall back to document.body.", "source": "packages/ui/src/hooks/use-portal-root" },
     { "name": "use-reduced-motion", "category": "hooks", "description": "Read prefers-reduced-motion.", "source": "packages/ui/src/hooks/use-reduced-motion", "dependencies": ["use-media-query"] }
   ]
 }

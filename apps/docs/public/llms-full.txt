@@ -579,6 +579,7 @@ import {
   FieldError,
   FieldHint,
   Input,
+  InputField,
   Label,
   Textarea,
 } from "@swirski/ui";
@@ -586,11 +587,9 @@ import {
 
 Usage:
 ```tsx
-<Field>
-  <Label htmlFor="email">Email</Label>
-  <Input id="email" placeholder="studio@swirski.dev" />
-  <FieldHint>Use the address where clients can reach you.</FieldHint>
-</Field>
+import { InputField } from "@swirski/ui";
+
+<InputField label="Email" name="email" type="email" hint="Use your work address." />
 ```
 
 Composition:
@@ -603,6 +602,7 @@ Field
 ```
 
 Props:
+- `InputField.label`: `ReactNode` required - Labels the native input. Optional hint and error props are linked automatically.
 - `Field.className`: `string` - Adds classes to the field wrapper.
 - `Label.htmlFor`: `string` - Connects the label to an input or textarea id.
 - `Label.className`: `string` - Adds classes to the label.
@@ -1438,6 +1438,7 @@ Category: Theming
 Docs: https://ui.swirski.dev/components/swirski-provider
 Registry: https://ui.swirski.dev/r/swirski-provider.json
 Source: `packages/ui/src/theme`
+Copy dependencies: `use-portal-root`
 
 Import:
 ```tsx
@@ -1784,7 +1785,7 @@ Returns:
 
 ### usePortalRoot
 
-Returns the document body once the app has mounted so portal components can render safely.
+Returns the nearest SwirskiProvider portal host after mount, or the document body outside a provider.
 
 Category: Hooks
 Docs: https://ui.swirski.dev/hooks/use-portal-root
