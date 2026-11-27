@@ -17,6 +17,7 @@ import { lineGridPlayground } from "./line-grid/playground";
 import { diagonalLinesPlayground } from "./diagonal-lines/playground";
 import { cursorPlayground } from "./cursor/playground";
 import { swirskiProviderPlayground } from "./swirski-provider/playground";
+import { themeTogglePlayground } from "./theme-toggle/playground";
 import { dialogPlayground } from "./dialog/playground";
 import { popoverPlayground } from "./popover/playground";
 import { dropdownMenuPlayground } from "./dropdown-menu/playground";
@@ -62,6 +63,7 @@ export const playgroundDefinitions: Record<string, PlaygroundDefinition> = {
   "diagonal-lines": diagonalLinesPlayground,
   cursor: cursorPlayground,
   "swirski-provider": swirskiProviderPlayground,
+  "theme-toggle": themeTogglePlayground,
   dialog: dialogPlayground,
   popover: popoverPlayground,
   "dropdown-menu": dropdownMenuPlayground,
