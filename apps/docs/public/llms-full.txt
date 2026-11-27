@@ -965,6 +965,7 @@ Category: Interaction
 Docs: https://ui.swirski.dev/components/tabs
 Registry: https://ui.swirski.dev/r/tabs.json
 Source: `packages/ui/src/components/tabs`
+Copy dependencies: `use-controllable-state`
 
 Import:
 ```tsx
