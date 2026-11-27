@@ -2,7 +2,8 @@ import postcss from "postcss";
 import selectorParser from "postcss-selector-parser";
 
 const componentBoundary =
-  ":where([data-swirski-component], [data-swirski-component] *, :has(> [data-swirski-backdrop]), :has(> [data-swirski-backdrop]) *)";
+  ":where([data-swirski-component], [data-swirski-component] *, :has(> [data-swirski-backdrop]), :has(> [data-swirski-backdrop]) *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *))";
+const boundaryNodes = selectorParser().astSync(componentBoundary).first.nodes;
 const legacyPseudoElements = new Set([":before", ":after", ":first-line", ":first-letter"]);
 
 const scopeSelector = selectorParser((selectors) => {
@@ -15,9 +16,10 @@ const scopeSelector = selectorParser((selectors) => {
     const pseudoElement = nodes.slice(subjectStart).find((node) =>
       node.type === "pseudo" && (node.value.startsWith("::") || legacyPseudoElements.has(node.value)),
     );
-    const boundary = selectorParser().astSync(componentBoundary).first.first.clone();
-    if (pseudoElement) selector.insertBefore(pseudoElement, boundary);
-    else selector.append(boundary);
+    for (const node of boundaryNodes) {
+      if (pseudoElement) selector.insertBefore(pseudoElement, node.clone());
+      else selector.append(node.clone());
+    }
   });
 });
 

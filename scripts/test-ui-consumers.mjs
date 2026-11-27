@@ -26,6 +26,39 @@ function write(file, content) {
   writeFileSync(join(fixture, file), content);
 }
 
+function buildHostStyles() {
+  const input = join(fixture, "host.css");
+  write("host.css", '@tailwind base; @tailwind utilities;\n.host-button { border: 3px solid; }');
+  write("tailwind.config.cjs", `module.exports = {
+    content: [{ raw: 'grid p-6 px-host bg-primary text-primary-foreground' }],
+    corePlugins: { preflight: false },
+    theme: { extend: {
+      spacing: { 6: '23px', host: '41px' },
+      colors: { primary: '#663399', 'primary-foreground': '#ffffff' },
+    } },
+  };`);
+  execFileSync(process.execPath, [
+    join(fixture, "node_modules/tailwind-v3/lib/cli.js"),
+    "-i", input, "-o", join(fixture, "dist/host-v3.css"), "--minify",
+  ], { cwd: fixture, stdio: "inherit" });
+
+  write("host.css", `
+@import "tailwindcss" source(none);
+@source inline("grid p-6 px-host bg-primary text-primary-foreground");
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+}
+@theme { --spacing: 5px; --spacing-host: 41px; }
+:root { --primary: #663399; --primary-foreground: #fff; }
+.host-button { border: 3px solid; }
+`);
+  execFileSync(process.execPath, [
+    join(ui, "node_modules/postcss-cli/index.js"), input,
+    "-o", join(fixture, "dist/host-v4.css"), "--env", "production", "--config", ui,
+  ], { cwd: fixture, stdio: "inherit" });
+}
+
 async function verifyBrowsers(names) {
   const engines = { chromium, firefox, webkit };
   const contentTypes = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2" };
@@ -62,6 +95,37 @@ async function verifyBrowsers(names) {
           state: "attached",
           timeout: 8000,
         });
+        for (const [host, expectedPadding] of [["plain", "0px"], ["v3", "23px"], ["v4", "30px"]]) {
+          await page.goto(`${url}?host=${host}`);
+          await page.locator('[data-host="override"]').waitFor();
+          const actual = await page.evaluate(() => {
+            const style = (key) => getComputedStyle(document.querySelector(`[data-host="${key}"]`));
+            const inputBox = (key) => {
+              const css = style(key);
+              return [css.boxSizing, css.borderTopWidth, css.paddingLeft, css.fontFamily].join("|");
+            };
+            return {
+              outside: style("outside").paddingTop,
+              optOut: style("opt-out").paddingTop,
+              nested: style("nested").paddingTop,
+              modulePadding: style("override").paddingLeft,
+              componentBorder: style("override").borderTopWidth,
+              utilityPadding: style("utility-override").paddingLeft,
+              inputMatches: inputBox("outside-input") === inputBox("opt-out-input"),
+              hostSpacing: style("opt-out").getPropertyValue("--spacing").trim(),
+              hostBorder: style("button").borderTopWidth,
+              hostColor: style("button").backgroundColor,
+            };
+          });
+          if (actual.outside !== expectedPadding || actual.optOut !== expectedPadding ||
+              actual.modulePadding !== "37px" || actual.componentBorder !== "4px" ||
+              !actual.inputMatches || (host !== "plain" && actual.utilityPadding !== "41px") ||
+              (host === "v4" && actual.hostSpacing !== "5px") ||
+              (host === "plain" && actual.nested !== "24px") ||
+              (host !== "plain" && (actual.hostBorder !== "3px" || actual.hostColor !== "rgb(102, 51, 153)"))) {
+            throw new Error(`CSS coexistence failed for ${host}: ${JSON.stringify(actual)}`);
+          }
+        }
         console.log(`${name} ${browser.version()}: verified scoped CSS, portal theme, contrast, and opt-in reset and fonts.`);
       } catch (error) {
         throw new Error(`Packed stylesheet failed in ${name} ${browser.version()}`, { cause: error });
@@ -85,11 +149,15 @@ try {
       ...registryVersions,
       next: requireDocs("next/package.json").version,
       "@types/node": requireDocs("@types/node/package.json").version,
+      tailwindcss: requireUi("tailwindcss/package.json").version,
+      "tailwind-v3": "npm:tailwindcss@3.4.19",
       "@swirski/ui": `file:./${pack.filename}`,
     },
   }));
   mkdirSync(join(fixture, "app"));
-  copyFileSync(join(root, "scripts/fixtures/ui-consumer/ThemeProbe.tsx"), join(fixture, "ThemeProbe.tsx"));
+  for (const name of ["ThemeProbe.tsx", "CoexistenceProbe.tsx", "coexistence.module.css"]) {
+    copyFileSync(join(root, "scripts/fixtures/ui-consumer", name), join(fixture, name));
+  }
   write("app/layout.tsx", `import "@swirski/ui/styles.css";
 import type { ReactNode } from "react";
 export default function Layout({ children }: { children: ReactNode }) {
@@ -114,9 +182,26 @@ export default function Page() {
   write("main.tsx", `import "@swirski/ui/styles.css";
 import { Title } from "@swirski/ui";
 import { createRoot } from "react-dom/client";
+import { CoexistenceProbe } from "./CoexistenceProbe";
 import { ConsumerExample } from "./ThemeProbe";
 const root = document.getElementById("root")!;
 async function start() {
+  const host = new URLSearchParams(location.search).get("host");
+  if (host === "v3" || host === "v4") {
+    if (host === "v3") await import("@swirski/ui/reset.css");
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = "/host-" + host + ".css";
+    await new Promise<void>((resolve, reject) => {
+      style.onload = () => resolve();
+      style.onerror = reject;
+      document.head.append(style);
+    });
+  }
+  if (host) {
+    createRoot(root).render(<CoexistenceProbe />);
+    return;
+  }
   if (new URLSearchParams(location.search).has("optional-styles")) {
     await import("@swirski/ui/reset.css");
     if (getComputedStyle(document.body).marginTop !== "0px" || document.fonts.size !== 0) return;
@@ -148,7 +233,10 @@ void start();
   run(["exec", "--", "tsc", "--noEmit"]);
   run(["exec", "--", "vite", "build"]);
   const browsers = process.env.UI_BROWSERS ?? (process.env.CHROMIUM_BIN ? "chromium" : "");
-  if (browsers) await verifyBrowsers(browsers.split(",").map((name) => name.trim()));
+  if (browsers) {
+    buildHostStyles();
+    await verifyBrowsers(browsers.split(",").map((name) => name.trim()));
+  }
 } finally {
   rmSync(fixture, { recursive: true, force: true });
 }
