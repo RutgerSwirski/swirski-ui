@@ -1,7 +1,9 @@
 "use client";
 
 import {
-  Alert, Badge, Button, Dialog, DialogContent, DialogTitle, InputField, SwirskiProvider,
+  AccordionItem, AccordionTrigger, Alert, Badge, Button, Dialog, DialogContent,
+  DialogTitle, InputField, NavbarLink, SwirskiProvider, Table, TableBody, TableCell,
+  TableRow,
 } from "@swirski/ui";
 import { useEffect, useRef } from "react";
 
@@ -22,7 +24,9 @@ function ContrastProbe({ scheme }: { scheme: "light" | "dark" }) {
     const element = probe.current;
     if (!element) return;
     const surface = getComputedStyle(element).backgroundColor;
-    const controls = Array.from(element.querySelectorAll<HTMLElement>("[data-contrast]"));
+    const controls = Array.from(element.querySelectorAll<HTMLElement>(
+      '[data-contrast], [data-swirski-component="table-wrapper"], [data-swirski-component="accordion-item"]',
+    ));
     for (const control of controls) {
       const { color, backgroundColor } = getComputedStyle(control);
       const text = luminance(color);
@@ -47,6 +51,13 @@ function ContrastProbe({ scheme }: { scheme: "light" | "dark" }) {
           <Badge tone={tone} data-contrast="">Badge {tone}</Badge>
         </div>
       ))}
+      <NavbarLink href="#contrast" active data-contrast="">Active navigation</NavbarLink>
+      <AccordionItem>
+        <AccordionTrigger>Accordion label</AccordionTrigger>
+      </AccordionItem>
+      <Table>
+        <TableBody><TableRow><TableCell>Prop table</TableCell></TableRow></TableBody>
+      </Table>
     </div>
   );
 }

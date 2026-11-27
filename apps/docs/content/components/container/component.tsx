@@ -27,7 +27,7 @@ export const containerComponentDoc: ComponentDoc = {
   preview: (
     <Container
       size="sm"
-      className="border-2 border-dashed border-black bg-white py-4"
+      className="border-2 border-dashed border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] py-4"
     >
       <Text weight="black">Responsive content rail</Text>
       <Text size="sm" tone="muted">

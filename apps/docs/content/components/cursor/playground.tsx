@@ -32,7 +32,7 @@ export const cursorPlayground: PlaygroundDefinition = {
   ],
   render: (values) => (
     <CursorProvider
-      className="relative min-h-72 overflow-hidden border-4 border-black bg-[#F5F5F3] p-6"
+      className="relative min-h-72 overflow-hidden border-4 border-black bg-[var(--sw-color-paper)] p-6"
       cursor={textValue(values, "cursor") as CursorId}
       storageKey={false}
     >
@@ -54,7 +54,7 @@ export const cursorPlayground: PlaygroundDefinition = {
           </div>
           <div
             aria-busy="true"
-            className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] p-3 text-center font-black uppercase"
+            className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] text-[color:var(--sw-color-on-yellow)] p-3 text-center font-black uppercase"
           >
             Busy
           </div>
@@ -70,7 +70,7 @@ export const cursorPlayground: PlaygroundDefinition = {
     </CursorProvider>
   ),
   getCode: (values) => `<CursorProvider
-  className="relative min-h-72 overflow-hidden border-4 border-black bg-[#F5F5F3] p-6"
+  className="relative min-h-72 overflow-hidden border-4 border-black bg-[var(--sw-color-paper)] p-6"
   cursor=${jsxString(textValue(values, "cursor"))}
   storageKey={false}
 >
@@ -89,7 +89,7 @@ export const cursorPlayground: PlaygroundDefinition = {
       </div>
       <div
         aria-busy="true"
-        className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] p-3 text-center font-black uppercase"
+        className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] text-[color:var(--sw-color-on-yellow)] p-3 text-center font-black uppercase"
       >
         Busy
       </div>

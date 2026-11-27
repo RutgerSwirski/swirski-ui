@@ -86,7 +86,7 @@ export const navbarComponentDoc: ComponentDoc = {
             \`-- MobileMenuNav
                 \`-- MobileMenuLink`,
   preview: (
-    <Navbar className="w-full border-[length:var(--sw-border-width)] bg-white">
+    <Navbar className="w-full border-[length:var(--sw-border-width)] bg-[var(--sw-color-surface)]">
       <NavbarBrand href="/">Swirski UI</NavbarBrand>
       <NavbarNav aria-label="Main navigation">
         <NavbarLink href="/components" active>

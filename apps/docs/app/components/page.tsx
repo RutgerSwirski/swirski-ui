@@ -147,7 +147,7 @@ export default function ComponentsPage() {
                 </CardContent>
               </Card>
 
-              <Card interactive={false} tone="yellow" className="col-span-2 ">
+              <Card interactive={false} className="col-span-2 docs-accent-yellow">
                 <CardContent>
                   <Text weight="bold">Building in React Native?</Text>
                   <Button

@@ -81,8 +81,7 @@ const outlineToneStyles: Record<ButtonTone, string> = {
   blue: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-blue-text)]",
   yellow: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-yellow-text)]",
   red: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-red-text)]",
-  white:
-    "bg-transparent text-[color:var(--sw-color-ink)] border-[color:var(--sw-color-ink)]",
+  white: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-ink)]",
   black: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 

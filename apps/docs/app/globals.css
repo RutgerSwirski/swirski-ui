@@ -27,6 +27,8 @@
 .docs-accent-yellow {
   --sw-color-ink: var(--sw-color-on-yellow);
   --sw-color-muted: var(--sw-color-on-yellow);
+  --sw-color-paper: #f5f5f3;
+  --sw-color-surface: #fff;
   background-color: var(--sw-color-yellow);
   color: var(--sw-color-on-yellow);
 }
@@ -34,6 +36,8 @@
 .docs-accent-red {
   --sw-color-ink: var(--sw-color-on-red);
   --sw-color-muted: var(--sw-color-on-red);
+  --sw-color-paper: #f5f5f3;
+  --sw-color-surface: #fff;
   background-color: var(--sw-color-red);
   color: var(--sw-color-on-red);
 }
@@ -41,6 +45,8 @@
 .docs-accent-blue {
   --sw-color-ink: var(--sw-color-on-blue);
   --sw-color-muted: var(--sw-color-on-blue);
+  --sw-color-paper: #121212;
+  --sw-color-surface: #1d1d1f;
   background-color: var(--sw-color-blue);
   color: var(--sw-color-on-blue);
 }
@@ -48,6 +54,8 @@
 .docs-inverse {
   --sw-color-ink: #f5f5f3;
   --sw-color-muted: #d1d1d1;
+  --sw-color-paper: #121212;
+  --sw-color-surface: #1d1d1f;
   background-color: #0b0b0c;
   color: var(--sw-color-ink);
 }

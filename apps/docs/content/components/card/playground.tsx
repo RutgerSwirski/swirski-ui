@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardTitle,
-  Text,
 } from "@swirski/ui";
 import type { PlaygroundDefinition } from "../../types";
 import {
@@ -12,7 +11,7 @@ import {
   jsxText,
   textValue,
   booleanValue,
-  cardSurfaceClasses,
+  cardSurfaceTones,
 } from "../playground-utils";
 
 export const cardPlayground: PlaygroundDefinition = {
@@ -41,37 +40,38 @@ export const cardPlayground: PlaygroundDefinition = {
     const surface = textValue(
       values,
       "surface",
-    ) as keyof typeof cardSurfaceClasses;
+    ) as keyof typeof cardSurfaceTones;
 
     return (
       <Card
-        className={`max-w-sm ${cardSurfaceClasses[surface]} shadow-[8px_8px_0_#0B0B0C]`}
+        className="max-w-sm"
+        tone={cardSurfaceTones[surface]}
         interactive={booleanValue(values, "interactive")}
       >
         <CardContent>
           <CardTitle>{textValue(values, "title")}</CardTitle>
-          <Text className="mt-3" size="sm" tone="muted" weight="bold">
+          <p className="mt-3 text-sm font-bold">
             A framed content primitive with Swirski borders and shadows.
-          </Text>
+          </p>
         </CardContent>
       </Card>
     );
   },
   getCode: (values) => {
     const surface = textValue(values, "surface");
-    const surfaceClass =
-      cardSurfaceClasses[surface as keyof typeof cardSurfaceClasses];
+    const tone = cardSurfaceTones[surface as keyof typeof cardSurfaceTones];
     const interactive = booleanValue(values, "interactive");
 
     return `<Card
-  className=${jsxString(`max-w-sm ${surfaceClass} shadow-[8px_8px_0_#0B0B0C]`)}
+  className="max-w-sm"
+  tone=${jsxString(tone)}
   interactive={${interactive}}
 >
   <CardContent>
     <CardTitle>${jsxText(textValue(values, "title"))}</CardTitle>
-    <Text className="mt-3" size="sm" tone="muted" weight="bold">
+    <p className="mt-3 text-sm font-bold">
       A framed content primitive with Swirski borders and shadows.
-    </Text>
+    </p>
   </CardContent>
 </Card>`;
   },

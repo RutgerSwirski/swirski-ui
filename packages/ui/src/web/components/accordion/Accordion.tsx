@@ -65,8 +65,8 @@ export const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(
       <details
         ref={ref}
         className={cn(
-          "group border-4 border-black bg-white shadow-[5px_5px_0_#0B0B0C] transition open:bg-[#F5F5F3]",
-          variant === "compact" && "shadow-[3px_3px_0_#0B0B0C]",
+          "group border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[5px_5px_0_var(--sw-color-shadow)] transition open:bg-[var(--sw-color-paper)]",
+          variant === "compact" && "shadow-[3px_3px_0_var(--sw-color-shadow)]",
           className,
         )}
         {...swirskiAttrs("accordion-item", { size, tone, variant })}
@@ -116,7 +116,7 @@ export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(
         {...props}
       >
         <span>{children}</span>
-        <span className="grid size-7 shrink-0 place-items-center border-2 border-black bg-[#FFD400] leading-none transition group-open:rotate-45">
+        <span className="grid size-7 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none transition group-open:rotate-45">
           +
         </span>
       </summary>

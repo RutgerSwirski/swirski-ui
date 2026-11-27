@@ -292,7 +292,7 @@ export default function SystemPage() {
               </div>
 
               <div>
-                <pre className="overflow-x-auto border-4 border-docs-ink bg-docs-surface p-5 text-sm font-bold leading-relaxed shadow-[5px_5px_0_var(--sw-color-shadow)]">
+                <pre className="overflow-x-auto border-4 border-docs-ink docs-inverse p-5 text-sm font-bold leading-relaxed shadow-[5px_5px_0_var(--sw-color-shadow)]">
                   <code>{`const Comp = asChild ? Slot : "button";
 
 return (
