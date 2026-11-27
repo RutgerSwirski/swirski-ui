@@ -14,7 +14,7 @@ import {
 } from "@swirski/ui";
 import Link from "next/link";
 
-const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
+const cardStyles = ["bg-docs-surface", "docs-accent-yellow", "bg-docs-paper", "bg-docs-surface"];
 
 const componentOnlyDocs = componentDocs;
 
@@ -47,8 +47,8 @@ function slugify(value: string) {
 }
 export default function ComponentsPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#0057FF"
@@ -91,7 +91,7 @@ export default function ComponentsPage() {
               <Card
                 withShadow={false}
                 interactive={false}
-                className="bg-[#FFD400]"
+                className="docs-accent-yellow"
               >
                 <CardContent>
                   <Text
@@ -131,7 +131,7 @@ export default function ComponentsPage() {
               <Card
                 interactive={false}
                 withShadow={false}
-                className="col-span-2 bg-white"
+                className="col-span-2 bg-docs-surface"
               >
                 <CardContent>
                   <Text weight="bold">Missing a component?</Text>
@@ -172,7 +172,7 @@ export default function ComponentsPage() {
           className="lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]"
         >
           <aside className="min-w-0 lg:sticky lg:top-8 lg:self-start">
-            <Card interactive={false} className="min-w-0 bg-white">
+            <Card interactive={false} className="min-w-0 bg-docs-surface">
               <CardContent>
                 <Text className="mb-4 uppercase" tone="muted" weight="black">
                   Categories
@@ -201,7 +201,7 @@ export default function ComponentsPage() {
                 id={slugify(category)}
                 className="scroll-mt-8"
               >
-                <div className="mb-5 flex flex-wrap items-center justify-between gap-4 border-b-4 border-black pb-4">
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-4 border-b-4 border-docs-ink pb-4">
                   <Title order={2} size="h3">
                     {category}
                   </Title>
@@ -229,7 +229,7 @@ export default function ComponentsPage() {
                               </Badge>
 
                               <Text
-                                className="font-anton text-3xl leading-none text-black/25"
+                                className="font-anton text-3xl leading-none text-docs-muted opacity-60"
                                 component="span"
                               >
                                 {String(component.index + 1).padStart(2, "0")}

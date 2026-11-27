@@ -3,7 +3,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Anton, Bangers, Inter } from "next/font/google";
-import { CursorDock, CursorProvider, SwirskiProvider } from "@swirski/ui";
+import { CursorDock, CursorProvider } from "@swirski/ui";
+import { DocsTheme } from "../components/DocsTheme";
 import "./globals.css";
 
 const anton = Anton({
@@ -34,12 +35,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`${anton.variable} ${bangers.variable} ${inter.variable} font-inter`}
       >
-        <SwirskiProvider>
+        <DocsTheme>
           <CursorProvider>
             <CursorDock />
             {children}
           </CursorProvider>
-        </SwirskiProvider>
+        </DocsTheme>
       </body>
     </html>
   );

@@ -92,7 +92,7 @@ function NativeStepList() {
             <Text component="span" size="xl" weight="bold">
               {step.title}
             </Text>
-            <Text className="text-black/70" size="sm" weight="bold">
+            <Text className="text-docs-muted" size="sm" weight="bold">
               {step.body}
             </Text>
             <CodeBlock code={step.code} className="mt-1" />
@@ -105,8 +105,8 @@ function NativeStepList() {
 
 export default function NativePage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative overflow-hidden border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative overflow-hidden border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#0057FF"
@@ -144,7 +144,7 @@ export default function NativePage() {
 
             <Card
               interactive={false}
-              className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
+              className="docs-accent-yellow shadow-[8px_8px_0_var(--sw-color-shadow)]"
             >
               <CardContent className="p-6">
                 <Badge tone="black">Short version</Badge>
@@ -160,7 +160,7 @@ export default function NativePage() {
 
       <Grid as={Container} className="gap-14 py-16 md:py-20">
         <Grid as="section" gap="lg" className="md:grid-cols-1">
-          {/* <Card interactive={false} className="bg-white">
+          {/* <Card interactive={false} className="bg-docs-surface">
             <CardContent className="p-6">
               <Badge tone="yellow">Web</Badge>
               <Title className="mt-5" order={2} size="h3">
@@ -180,7 +180,7 @@ import { Button, Card, Title } from "@swirski/ui";`}
             </CardContent>
           </Card> */}
 
-          <Card interactive={false} className="bg-white">
+          <Card interactive={false} className="bg-docs-surface">
             <CardContent className="p-6">
               <Badge tone="blue">React Native</Badge>
               <Title className="mt-5" order={2} size="h3">
@@ -205,7 +205,7 @@ import { Button, Card, Title } from "@swirski/ui/native";`}
         <Grid
           as="section"
           gap="xl"
-          className="border-y-4 border-black py-14 lg:grid-cols-1"
+          className="border-y-4 border-docs-ink py-14 lg:grid-cols-1"
         >
           <div>
             <SectionLabel>Setup</SectionLabel>
@@ -219,7 +219,7 @@ import { Button, Card, Title } from "@swirski/ui/native";`}
             </Text>
           </div>
 
-          <Card interactive={false} className="bg-white">
+          <Card interactive={false} className="bg-docs-surface">
             <CardContent className="p-6">
               <NativeStepList />
             </CardContent>
@@ -254,7 +254,7 @@ import { Button, Card, Title } from "@swirski/ui/native";`}
                 <TableRow key={row.platform}>
                   <TableCell>{row.platform}</TableCell>
                   <TableCell>
-                    <code className="font-black text-[#0B0B0C]">
+                    <code className="font-black text-docs-ink">
                       {row.importPath}
                     </code>
                   </TableCell>
@@ -270,7 +270,7 @@ import { Button, Card, Title } from "@swirski/ui/native";`}
         <section>
           <Card
             interactive={false}
-            className="bg-[#0B0B0C]  shadow-[8px_8px_0_#FFD400]"
+            className="docs-inverse  shadow-[8px_8px_0_#FFD400]"
           >
             <CardContent className="p-6 md:p-8">
               <Grid gap="lg" className="lg:grid-cols-[1fr_auto] lg:items-end">

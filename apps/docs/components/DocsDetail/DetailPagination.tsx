@@ -18,7 +18,7 @@ export function DetailPagination({
       as="section"
       columns={1}
       gap="md"
-      className="border-t-4 border-black pt-8 sm:grid-cols-2 md:items-center"
+      className="border-t-4 border-docs-ink pt-8 sm:grid-cols-2 md:items-center"
     >
       <Button href={previousHref} tone="white" className="w-full text-xs sm:text-sm">
         Previous: {previousTitle}

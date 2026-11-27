@@ -740,10 +740,10 @@ const nativeComponentDocs: NativeComponentDoc[] = [
 ];
 
 const nativeCardStyles = [
-  "bg-white",
-  "bg-[#FFD400]",
-  "bg-[#F5F5F3]",
-  "bg-white",
+  "bg-docs-surface",
+  "docs-accent-yellow",
+  "bg-docs-paper",
+  "bg-docs-surface",
 ];
 
 function PropTable({ group }: { group: NativePropGroup }) {
@@ -770,7 +770,7 @@ function PropTable({ group }: { group: NativePropGroup }) {
             {group.props.map((prop) => (
               <TableRow key={`${group.title}-${prop.name}`}>
                 <TableCell>
-                  <code className="font-black text-[#0B0B0C]">
+                  <code className="font-black text-docs-ink">
                     {prop.name}
                   </code>
                 </TableCell>
@@ -852,12 +852,12 @@ function NativeComponentDetails({
             </div>
           ) : null}
 
-          <Card interactive={false} className="bg-[#F5F5F3]" withShadow={false}>
+          <Card interactive={false} className="bg-docs-paper" withShadow={false}>
             <CardContent className="p-5">
               <Text className="uppercase" size="xs" tone="muted" weight="black">
                 Notes
               </Text>
-              <ul className="mt-3 grid gap-2 pl-5 text-sm font-bold leading-6 text-black/70">
+              <ul className="mt-3 grid gap-2 pl-5 text-sm font-bold leading-6 text-docs-muted">
                 {component.notes.map((note) => (
                   <li key={note} className="list-square">
                     {note}
@@ -891,7 +891,7 @@ function NativeComponentDetails({
 export default function NativeComponentIndex() {
   return (
     <section id="native-components" className="scroll-mt-8">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-5 border-b-4 border-black pb-5">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-5 border-b-4 border-docs-ink pb-5">
         <div>
           <SectionLabel>Components</SectionLabel>
           <Title className="mt-6" order={2} size="h2">
@@ -925,7 +925,7 @@ export default function NativeComponentIndex() {
                       </Badge>
 
                       <Text
-                        className="font-anton text-3xl leading-none text-black/25"
+                        className="font-anton text-3xl leading-none text-docs-muted opacity-60"
                         component="span"
                       >
                         {String(index + 1).padStart(2, "0")}

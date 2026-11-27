@@ -171,7 +171,7 @@ function StepList({
               {title}
             </Text>
 
-            <Text className="text-black/70" size="sm" weight="bold">
+            <Text className="text-docs-muted" size="sm" weight="bold">
               {body}
             </Text>
 
@@ -203,7 +203,7 @@ function WorkflowSection({
 
   return (
     <section id={id} className="scroll-mt-8">
-      <Card interactive={false} className="h-full bg-white">
+      <Card interactive={false} className="h-full bg-docs-surface">
         <CardContent className="p-6">
           <Badge tone={badgeTone}>{label}</Badge>
 
@@ -226,8 +226,8 @@ function WorkflowSection({
 
 export default function GetStartedPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative overflow-hidden border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative overflow-hidden border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#0057FF"
@@ -264,7 +264,7 @@ export default function GetStartedPage() {
                 </Text>
               </div>
 
-              <Card interactive={false} className="bg-[#FFD400]">
+              <Card interactive={false} className="docs-accent-yellow">
                 <CardContent className="p-6">
                   <Badge tone="black">Short version</Badge>
                   <Text className="mt-5" weight="black">
@@ -281,7 +281,7 @@ export default function GetStartedPage() {
       <Container className="py-14 md:py-18">
         {/* <Grid gap="lg" className="md:grid-cols-1">
           {workflowCards.map((item) => (
-            <Card key={item.title} interactive={false} className="bg-white">
+            <Card key={item.title} interactive={false} className="bg-docs-surface">
               <CardContent className="flex h-full flex-col p-6">
                 <Badge tone={item.tone}>{item.label}</Badge>
                 <Title className="mt-5" order={2} size="h3">
@@ -321,7 +321,7 @@ export default function GetStartedPage() {
                   <Card
                     key={platform.label}
                     interactive={false}
-                    className="bg-white"
+                    className="bg-docs-surface"
                   >
                     <CardContent className="flex h-full flex-col p-6">
                       <Badge tone={platform.tone}>{platform.label}</Badge>
@@ -370,7 +370,7 @@ export default function GetStartedPage() {
         <section className="pt-14 md:pt-20">
           <Card
             interactive={false}
-            className="bg-[#0B0B0C] text-black shadow-[8px_8px_0_#FFD400]"
+            className="docs-inverse shadow-[8px_8px_0_#FFD400]"
           >
             <CardContent className="p-6 md:p-8">
               <Grid gap="lg" className="lg:grid-cols-[1fr_auto] lg:items-end">
@@ -382,7 +382,7 @@ export default function GetStartedPage() {
                     need ownership.
                   </Title>
 
-                  <Text className="mt-4 max-w-2xl text-black/75" weight="bold">
+                  <Text className="mt-4 max-w-2xl text-docs-muted" weight="bold">
                     Less technical users can treat Swirski like a normal UI
                     package. More technical users can copy components through
                     Swirski CLI or shadcn and edit the source directly.

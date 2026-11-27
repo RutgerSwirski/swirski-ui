@@ -25,7 +25,7 @@ function DocsSidebar({ items }: { items: BreakdownItem[] }) {
     <aside className="min-w-0 lg:sticky lg:top-8 lg:self-start">
       <Card
         interactive={false}
-        className="min-w-0 bg-white shadow-[7px_7px_0_#0B0B0C]"
+        className="min-w-0 bg-docs-surface shadow-[7px_7px_0_var(--sw-color-shadow)]"
       >
         <CardContent>
           <Text className="mb-4 uppercase" size="xs" tone="muted" weight="black">

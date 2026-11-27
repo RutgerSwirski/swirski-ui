@@ -67,8 +67,8 @@ const swirskiCommands = [
 
 export default function CliPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#0057FF"
@@ -107,7 +107,7 @@ export default function CliPage() {
 
             <Card
               interactive={false}
-              className="w-full max-w-sm bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C] md:w-80"
+              className="w-full max-w-sm docs-accent-yellow shadow-[8px_8px_0_var(--sw-color-shadow)] md:w-80"
             >
               <CardContent>
                 <Badge tone="black">Registry URL</Badge>
@@ -130,7 +130,7 @@ export default function CliPage() {
             <Card
               key={mode.title}
               interactive={false}
-              className="bg-white shadow-[7px_7px_0_#0B0B0C]"
+              className="bg-docs-surface shadow-[7px_7px_0_var(--sw-color-shadow)]"
             >
               <CardContent className="flex h-full flex-col">
                 <Badge tone={index === 2 ? "blue" : index === 1 ? "red" : "yellow"}>
@@ -153,7 +153,7 @@ export default function CliPage() {
         <Grid
           as="section"
           gap="xl"
-          className="border-y-4 border-black py-14 lg:grid-cols-[0.9fr_1.1fr]"
+          className="border-y-4 border-docs-ink py-14 lg:grid-cols-[0.9fr_1.1fr]"
         >
           <div>
             <SectionLabel>Package</SectionLabel>
@@ -206,7 +206,7 @@ export default function CliPage() {
               {swirskiCommands.map((item) => (
                 <TableRow key={item.command}>
                   <TableCell>
-                    <code className="font-black text-[#0B0B0C]">
+                    <code className="font-black text-docs-ink">
                       {item.command}
                     </code>
                   </TableCell>
@@ -220,7 +220,7 @@ export default function CliPage() {
         <Grid
           as="section"
           gap="xl"
-          className="border-y-4 border-black py-14 lg:grid-cols-[0.9fr_1.1fr]"
+          className="border-y-4 border-docs-ink py-14 lg:grid-cols-[0.9fr_1.1fr]"
         >
           <div>
             <SectionLabel>shadcn registry</SectionLabel>
@@ -278,7 +278,7 @@ export default function CliPage() {
 
         <Card
           interactive={false}
-          className="bg-[#0B0B0C] text-black shadow-[10px_10px_0_#FFD400]"
+          className="docs-inverse shadow-[10px_10px_0_#FFD400]"
         >
           <CardContent className="p-6 md:p-8">
             <Grid gap="lg" className="lg:grid-cols-[1fr_auto] lg:items-end">
@@ -288,7 +288,7 @@ export default function CliPage() {
                   Package for updates. CLI for ownership. shadcn for registry
                   access.
                 </Title>
-                <Text className="mt-4 max-w-2xl text-black/75" weight="bold">
+                <Text className="mt-4 max-w-2xl text-docs-muted" weight="bold">
                   These are three doors into the same Swirski design language.
                   The right one depends on whether you want imports, local
                   source, or shadcn-compatible registry installs.

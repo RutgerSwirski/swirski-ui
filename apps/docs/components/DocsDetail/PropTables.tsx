@@ -24,7 +24,7 @@ export function PropTable({ badgeLabel, rows }: PropTableProps) {
     <section id="props" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
         <div className="flex items-center gap-3">
-          <span className="h-5 w-5 border-4 border-black bg-[#FF3131]" />
+          <span className="h-5 w-5 border-4 border-docs-ink bg-[#FF3131]" />
           <Title order={2} size="h3">
             Props
           </Title>
@@ -46,7 +46,7 @@ export function PropTable({ badgeLabel, rows }: PropTableProps) {
           <TableBody>
             {rows.map((prop) => (
               <TableRow key={prop.name}>
-                <TableCell className="align-top text-[#0B0B0C]">
+                <TableCell className="align-top text-docs-ink">
                   <code className="font-black">{prop.name}</code>
                   {prop.required && (
                     <Badge className="ml-2" size="sm">
@@ -81,7 +81,7 @@ export function ReturnTable({ rows }: { rows?: PropDoc[] }) {
     <section id="returns" className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
         <div className="flex items-center gap-3">
-          <span className="h-5 w-5 border-4 border-black bg-[#0057FF]" />
+          <span className="h-5 w-5 border-4 border-docs-ink bg-[#0057FF]" />
           <Title order={2} size="h3">
             Returns
           </Title>
@@ -102,7 +102,7 @@ export function ReturnTable({ rows }: { rows?: PropDoc[] }) {
           <TableBody>
             {rows.map((value) => (
               <TableRow key={value.name}>
-                <TableCell className="align-top text-[#0B0B0C]">
+                <TableCell className="align-top text-docs-ink">
                   <code className="font-black">{value.name}</code>
                 </TableCell>
                 <TableCell className="align-top">

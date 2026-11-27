@@ -66,8 +66,8 @@ const recipes = [
 
 export default function HooksPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#FF3131"
@@ -106,7 +106,7 @@ export default function HooksPage() {
 
             <Card
               interactive={false}
-              className="w-full max-w-sm bg-[#FF3131] text-white shadow-[8px_8px_0_#0B0B0C] md:w-80"
+              className="w-full max-w-sm docs-accent-red shadow-[8px_8px_0_var(--sw-color-shadow)] md:w-80"
             >
               <CardContent>
                 <Badge tone="black">Hook entries</Badge>
@@ -150,7 +150,7 @@ export default function HooksPage() {
             <Card
               key={group.title}
               interactive={false}
-              className="bg-white shadow-[7px_7px_0_#0B0B0C]"
+              className="bg-docs-surface shadow-[7px_7px_0_var(--sw-color-shadow)]"
             >
               <CardContent>
                 <Badge
@@ -208,7 +208,7 @@ export default function HooksPage() {
                     <TableCell>
                       <Link
                         href={doc ? `/hooks/${doc.slug}` : "/hooks"}
-                        className="font-black text-[#0B0B0C] underline decoration-4 underline-offset-4"
+                        className="font-black text-docs-ink underline decoration-4 underline-offset-4"
                       >
                         {recipe.hook}
                       </Link>
@@ -224,7 +224,7 @@ export default function HooksPage() {
         <Grid
           as="section"
           gap="xl"
-          className="border-y-4 border-black py-14 lg:grid-cols-[0.8fr_1.2fr]"
+          className="border-y-4 border-docs-ink py-14 lg:grid-cols-[0.8fr_1.2fr]"
         >
           <div>
             <SectionLabel>Example</SectionLabel>
@@ -260,7 +260,7 @@ return (
               href={`/hooks/${hook.slug}`}
               className="group block min-w-0"
             >
-              <Card className="flex h-full min-h-48 flex-col bg-white">
+              <Card className="flex h-full min-h-48 flex-col bg-docs-surface">
                 <CardContent className="flex h-full flex-col">
                   <Badge tone="red">Hook</Badge>
                   <Title className="mt-5" order={3} size="h4">

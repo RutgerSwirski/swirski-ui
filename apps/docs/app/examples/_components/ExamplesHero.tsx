@@ -28,23 +28,23 @@ const systemPieces = [
 
 function styleCardClassName(index: number) {
   if (index === 0) {
-    return "bg-[#0057FF] text-white";
+    return "docs-accent-blue";
   }
 
   if (index === 1) {
-    return "bg-white";
+    return "bg-docs-surface";
   }
 
   if (index === 2) {
-    return "bg-[#FF3131] text-white";
+    return "docs-accent-red";
   }
 
-  return "bg-[#F5F5F3]";
+  return "bg-docs-paper";
 }
 
 export default function ExamplesHero() {
   return (
-    <div className="relative overflow-hidden border-b-4 border-black bg-white">
+    <div className="relative overflow-hidden border-b-4 border-docs-ink bg-docs-surface">
       <DotGrid
         className="inset-0"
         color="#0057FF"
@@ -108,7 +108,7 @@ export default function ExamplesHero() {
                   </Card>
                 ))}
               </Grid>
-              <div className="border-4 border-black bg-white p-4">
+              <div className="border-4 border-docs-ink bg-docs-surface p-4">
                 <Text className="uppercase" size="xs" tone="muted" weight="black">
                   System pieces
                 </Text>

@@ -22,6 +22,7 @@ import {
 } from "@swirski/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { DocsThemeToggle } from "./DocsTheme";
 
 type NavLinkItem = {
   href: string;
@@ -69,7 +70,7 @@ export default function NavBar() {
       <NavbarBrand as={Link} href="/">
         Swirski UI
       </NavbarBrand>
-      <NavbarNav aria-label="Main navigation">
+      <NavbarNav aria-label="Main navigation" className="md:hidden! lg:flex!">
         {navItems.map((item) => {
           if ("children" in item) {
             const active = item.children.some((childItem) =>
@@ -109,9 +110,10 @@ export default function NavBar() {
           );
         })}
       </NavbarNav>
-      <NavbarActions className="md:hidden">
+      <NavbarActions>
+        <DocsThemeToggle />
         <MobileMenu>
-          <MobileMenuTrigger />
+          <MobileMenuTrigger className="lg:hidden" />
           <MobileMenuContent>
             <MobileMenuHeader>
               <MobileMenuTitle>Menu</MobileMenuTitle>
