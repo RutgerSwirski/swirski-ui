@@ -313,7 +313,11 @@ pnpm release:ui major
 
 The release script creates a `release/swirski-ui-x.y.z` branch, bumps `packages/ui/package.json`, regenerates docs and registry artifacts, builds `packages/ui`, pushes the branch, and opens a PR.
 
-After the release PR is merged, publish and tag the package from an updated `main` checkout:
+When a release PR merges into `main`, GitHub Actions builds, checks, publishes, and tags the merged commit.
+
+For one-time setup, add a GitHub Actions trusted publisher in the npm settings for `@swirski/ui`. Use owner `RutgerSwirski`, repository `swirski-ui`, and workflow filename `publish-ui.yml`. Enable direct `npm publish` and leave the environment field empty.
+
+For manual recovery, publish and tag from an updated `main` checkout:
 
 ```bash
 git checkout main
