@@ -15,7 +15,7 @@
     },
     {
       "path": "packages/ui/src/web/hooks/use-portal-root/usePortalRoot.ts",
-      "content": "\"use client\";\n\nimport { createContext, useContext, useEffect, useState } from \"react\";\n\nexport const PortalRootContext = createContext<HTMLElement | null | undefined>(undefined);\n\n/** Return document.body after mount for portals. Returns null during server rendering. */\nexport function usePortalRoot() {\n  const scopedRoot = useContext(PortalRootContext);\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\n\n  useEffect(() => {\n    if (scopedRoot === undefined) setPortalRoot(document.body);\n  }, [scopedRoot]);\n\n  return scopedRoot === undefined ? portalRoot : scopedRoot;\n}\n",
+      "content": "\"use client\";\n\nimport { createContext, useContext, useEffect, useState } from \"react\";\n\nexport const PortalRootContext = createContext<HTMLElement | null | undefined>(undefined);\n\n/** Return the nearest provider’s portal host after mount, or document.body outside a provider. */\nexport function usePortalRoot() {\n  const scopedRoot = useContext(PortalRootContext);\n  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);\n\n  useEffect(() => {\n    if (scopedRoot === undefined) setPortalRoot(document.body);\n  }, [scopedRoot]);\n\n  return scopedRoot === undefined ? portalRoot : scopedRoot;\n}\n",
       "type": "registry:hook",
       "target": "@ui/swirski/hooks/use-portal-root/usePortalRoot.ts"
     }
