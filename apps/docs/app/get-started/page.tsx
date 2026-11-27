@@ -68,22 +68,26 @@ const packageSteps = [
   },
   {
     title: "Import the styles once",
-    body: "Add the stylesheet in your app entry, root layout, or global CSS setup.",
+    body: "In Next.js App Router, add this import to app/layout.tsx. In other React apps, put it in your app entry.",
     code: 'import "@swirski/ui/styles.css";',
   },
   {
     title: "Use components",
-    body: "Import the pieces you need and compose them like any other React component library.",
-    code: `import { Button, Card, CardContent, Title } from "@swirski/ui";
+    body: "Compose a hero with a heading, supporting copy, and an action. Button variant sets the treatment and tone sets the color.",
+    code: `import { Button, HeroActions, HeroKicker, HeroLead, HeroTitle } from "@swirski/ui";
 
 export default function Page() {
   return (
-    <Card>
-      <CardContent>
-        <Title order={2} size="h3">Build loud.</Title>
-        <Button>Start</Button>
-      </CardContent>
-    </Card>
+    <section>
+      <HeroKicker>Swirski Studio</HeroKicker>
+      <HeroTitle order={1}>Made to be worn</HeroTitle>
+      <HeroLead>One-off pieces and custom remakes.</HeroLead>
+      <HeroActions>
+        <Button href="/pieces" variant="outline" tone="blue">
+          Browse pieces
+        </Button>
+      </HeroActions>
+    </section>
   );
 }`,
   },

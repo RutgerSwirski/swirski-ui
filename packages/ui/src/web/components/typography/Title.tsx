@@ -10,8 +10,10 @@ export type TitleProps = {
   as?: ElementType;
   asChild?: boolean;
   children?: ReactNode;
+  /** Semantic heading level. Defaults to 1. */
   order?: TitleOrder;
   variant?: TitleVariant;
+  /** Visual size. Defaults to the size matching order, such as h2 for order={2}. */
   size?: TitleSize;
   tone?: TitleTone;
 } & HTMLAttributes<HTMLHeadingElement>;

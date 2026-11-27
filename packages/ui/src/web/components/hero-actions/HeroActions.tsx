@@ -8,7 +8,9 @@ export type HeroActionsTone = "default";
 export type HeroActionsProps = {
   asChild?: boolean;
   children?: ReactNode;
+  /** Layout variant for CSS targeting. Use size to change the built-in gap. */
   variant?: HeroActionsVariant;
+  /** Gap between actions. Defaults to md. */
   size?: HeroActionsSize;
   tone?: HeroActionsTone;
 } & HTMLAttributes<HTMLDivElement>;
