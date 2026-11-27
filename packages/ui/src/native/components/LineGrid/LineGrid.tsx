@@ -147,7 +147,9 @@ const styles = StyleSheet.create({
   },
   root: {
     ...StyleSheet.absoluteFillObject,
+    height: "100%",
     overflow: "hidden",
+    width: "100%",
   },
   verticalLine: {
     bottom: 0,

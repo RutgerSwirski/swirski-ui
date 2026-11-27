@@ -11,6 +11,7 @@ const uiSourceAbsolute = resolve(docsDir, uiSource);
 const uiStylesAbsolute = resolve(workspaceRoot, "packages/ui/dist/styles.css");
 
 const nextConfig: NextConfig = {
+  agentRules: false,
   transpilePackages: ["@swirski/ui"],
   turbopack: {
     root: workspaceRoot,

@@ -34,6 +34,14 @@ export * from "./web/components/field/index";
 
 export * from "./web/components/grid/index";
 
+export * from "./web/components/hero-actions/index";
+
+export * from "./web/components/hero-kicker/index";
+
+export * from "./web/components/hero-lead/index";
+
+export * from "./web/components/hero-title/index";
+
 export * from "./web/components/line-grid/index";
 
 export * from "./web/components/image-frame/index";
@@ -78,25 +86,3 @@ export * from "./web/hooks/index";
 export * from "./web/system/index";
 
 export * from "./web/theme/index";
-
-export { HeroActions } from "./web/components/hero-actions/HeroActions";
-export type {
-  HeroActionsProps,
-  HeroActionsSize,
-  HeroActionsTone,
-  HeroActionsVariant,
-} from "./web/components/hero-actions/HeroActions";
-
-export { HeroKicker } from "./web/components/hero-kicker/HeroKicker";
-export type {
-  HeroKickerProps,
-  HeroKickerSize,
-  HeroKickerTone,
-  HeroKickerVariant,
-} from "./web/components/hero-kicker/HeroKicker";
-
-export { HeroLead } from "./web/components/hero-lead/HeroLead";
-export type { HeroLeadProps } from "./web/components/hero-lead/HeroLead";
-
-export { HeroTitle } from "./web/components/hero-title/HeroTitle";
-export type { HeroTitleProps } from "./web/components/hero-title/HeroTitle";

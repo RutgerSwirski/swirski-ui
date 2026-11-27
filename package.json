@@ -8,7 +8,7 @@
     "storybook:native": "pnpm --filter @swirski/ui storybook:native",
     "build": "pnpm docs:metadata && pnpm llms:build && pnpm --filter docs build",
     "build:ui": "pnpm --filter @swirski/ui build",
-    "check:ui-package": "node scripts/check-ui-package.mjs",
+    "check:ui-package": "node scripts/check-component-structure.mjs && node scripts/check-ui-package.mjs",
     "create:component": "node scripts/create-component.mjs",
     "docs:metadata": "node scripts/build-docs-metadata.mjs",
     "dev:ui": "pnpm --filter @swirski/ui dev",
@@ -19,6 +19,6 @@
     "test:ui": "pnpm --filter @swirski/ui test",
     "install:docs": "pnpm --filter docs install",
     "artifacts:update": "pnpm docs:metadata && pnpm llms:build && pnpm registry:shadcn",
-    "test": "pnpm test:ui && pnpm build:ui pnpm build && pnpm --filter @swirski/ui build-storybook"
+    "test": "pnpm test:ui && pnpm build:ui && pnpm build && pnpm --filter @swirski/ui build-storybook"
   }
 }
