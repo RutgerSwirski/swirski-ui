@@ -122,7 +122,9 @@ export default function NavBar() {
         })}
       </NavbarNav>
       <NavbarActions>
-        <DocsThemeToggle />
+        <div className="hidden lg:block!">
+          <DocsThemeToggle />
+        </div>
         <MobileMenu open={mobileOpen} onOpenChange={setMobileOpen}>
           <div className="lg:hidden">
             <MobileMenuTrigger />
@@ -134,6 +136,9 @@ export default function NavBar() {
                 x
               </MobileMenuClose>
             </MobileMenuHeader>
+            <div className="shrink-0 px-1 pb-4">
+              <DocsThemeToggle />
+            </div>
             <MobileMenuNav aria-label="Mobile navigation">
               {navItems.map((item) =>
                 "children" in item ? (
