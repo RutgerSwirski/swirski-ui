@@ -690,8 +690,10 @@ Props:
 - `defaultValue`: `string` - Initial selected option value when uncontrolled.
 - `onValueChange`: `(value: string) => void` - Called when a new option is selected.
 - `placeholder`: `string` default "Select an option" - Text shown when no option is selected.
-- `disabled`: `boolean` default false - Disables the trigger and prevents selection.
-- `name`: `string` - Adds a hidden input for native form submission.
+- `disabled`: `boolean` default false - Disables the trigger and omits its value from form submission.
+- `name`: `string` - Field name submitted with the owning form.
+- `form`: `string` - ID of the owning form when Select is rendered outside it.
+- `required`: `boolean` default false - Blocks submission when no option is selected. Set defaultValue="" to start with no selection.
 - `triggerClassName`: `string` - Adds classes to the dropdown trigger.
 - `contentClassName`: `string` - Adds classes to the dropdown content panel.
 - `optionClassName`: `string` - Adds classes to each dropdown option.

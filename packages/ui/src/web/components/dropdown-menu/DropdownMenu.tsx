@@ -1,7 +1,8 @@
 "use client";
+import { useOverlayLayer } from "../../system/overlay";
 
 import type { HTMLAttributes } from "react";
-import { forwardRef, useEffect, useId, useRef, useState } from "react";
+import { forwardRef, useId, useRef, useState } from "react";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
 import { DropdownMenuContext } from "./DropdownMenuContext";
 import type {
@@ -48,36 +49,16 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     const focusIntentRef = useRef<DropdownMenuFocusIntent>(null);
     const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-      if (!open) {
-        return;
-      }
-
-      const handlePointerDown = (event: PointerEvent) => {
-        const target = event.target as Node;
-
-        if (
-          !rootRef.current?.contains(target) &&
-          !contentRef.current?.contains(target)
-        ) {
-          setOpen(false);
-        }
-      };
-
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-          setOpen(false);
-        }
-      };
-
-      window.addEventListener("pointerdown", handlePointerDown);
-      window.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        window.removeEventListener("pointerdown", handlePointerDown);
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    }, [open]);
+    useOverlayLayer({
+      open: open,
+      rootRef,
+      contentRef,
+      onEscape: () => {
+        setOpen(false);
+        triggerRef.current?.focus();
+      },
+      onOutside: () => setOpen(false),
+    });
 
     return (
       <DropdownMenuContext.Provider

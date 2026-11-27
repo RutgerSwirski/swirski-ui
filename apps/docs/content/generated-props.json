@@ -5406,6 +5406,16 @@
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
+          "name": "Select.form",
+          "prop": "form",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "string",
+          "required": false,
+          "description": "ID of the owning form when rendered outside it.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
           "name": "Select.name",
           "prop": "name",
           "component": "Select",
@@ -5454,6 +5464,17 @@
           "required": false,
           "defaultValue": "\"Select an option\"",
           "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
+          "name": "Select.required",
+          "prop": "required",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Block form submission when no option is selected.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {

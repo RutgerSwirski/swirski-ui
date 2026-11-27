@@ -9,8 +9,20 @@ const focusableSelector = [
 
 export function getFocusableElements(container: HTMLElement) {
   return Array.from(container.querySelectorAll<HTMLElement>(focusableSelector))
-    .filter((element) => !element.hasAttribute("disabled"))
-    .filter((element) => element.getAttribute("aria-hidden") !== "true");
+    .filter((element) =>
+      element.tabIndex >= 0 &&
+      !element.matches(":disabled, input[type=hidden]") &&
+      !element.closest("[hidden], [inert], [aria-hidden=true]") &&
+      getComputedStyle(element).visibility === "visible" &&
+      !hasDisplayNoneAncestor(element),
+    );
+}
+
+function hasDisplayNoneAncestor(element: HTMLElement) {
+  for (let ancestor: HTMLElement | null = element; ancestor; ancestor = ancestor.parentElement) {
+    if (getComputedStyle(ancestor).display === "none") return true;
+  }
+  return false;
 }
 
 export function focusInitialElement(container: HTMLElement) {
@@ -18,12 +30,16 @@ export function focusInitialElement(container: HTMLElement) {
   firstFocusable.focus();
 }
 
-export function trapFocus(container: HTMLElement, event: KeyboardEvent) {
+export function trapFocus(
+  container: HTMLElement,
+  event: KeyboardEvent,
+  portals: HTMLElement[] = [],
+) {
   if (event.key !== "Tab") {
     return;
   }
 
-  const focusableElements = getFocusableElements(container);
+  const focusableElements = [...new Set([container, ...portals].flatMap(getFocusableElements))];
 
   if (focusableElements.length === 0) {
     event.preventDefault();
@@ -34,14 +50,24 @@ export function trapFocus(container: HTMLElement, event: KeyboardEvent) {
   const firstElement = focusableElements[0];
   const lastElement = focusableElements[focusableElements.length - 1];
   const activeElement = document.activeElement;
+  const currentIndex = focusableElements.findIndex((element) => element === activeElement);
 
-  if (event.shiftKey && activeElement === firstElement) {
+  if (portals.length && currentIndex >= 0) {
+    const offset = event.shiftKey ? -1 : 1;
+    event.preventDefault();
+    focusableElements[(currentIndex + offset + focusableElements.length) % focusableElements.length].focus();
+    return;
+  }
+
+  const focusOutsideSequence = currentIndex < 0;
+
+  if (event.shiftKey && (activeElement === firstElement || focusOutsideSequence)) {
     event.preventDefault();
     lastElement.focus();
     return;
   }
 
-  if (!event.shiftKey && activeElement === lastElement) {
+  if (!event.shiftKey && (activeElement === lastElement || focusOutsideSequence)) {
     event.preventDefault();
     firstElement.focus();
   }

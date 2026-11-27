@@ -35,7 +35,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     useModalOverlay({
       contentRef,
       onEscape: () => setOpen(false),
-      open,
+      open: open && Boolean(portalRoot),
     });
 
     if (!open || !portalRoot) {
@@ -44,11 +44,10 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     return createPortal(
       <div className="fixed inset-0 z-50 grid place-items-center bg-black/45 p-4">
-        <button
-          aria-label="Close dialog"
+        <div
+          aria-hidden="true"
+          data-swirski-backdrop=""
           className="absolute inset-0"
-          onClick={() => setOpen(false)}
-          type="button"
         />
         <div
           ref={composeRefs(contentRef, ref)}
