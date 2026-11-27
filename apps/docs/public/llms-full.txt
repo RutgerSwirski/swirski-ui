@@ -643,6 +643,8 @@ Props:
 - `value`: `string` - Controlled selected value.
 - `defaultValue`: `string` - Initial selected value.
 - `onValueChange`: `(value: string) => void` - Called when the selected value changes.
+- `inputProps`: `InputHTMLAttributes<HTMLInputElement>` - Native attributes applied to every radio input, such as required, disabled, or form.
+- `id / aria-*`: `HTMLAttributes<HTMLDivElement>` - Group-level HTML and accessibility attributes applied to the radiogroup container.
 
 ### Select
 

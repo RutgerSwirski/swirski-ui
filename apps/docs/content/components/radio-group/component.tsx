@@ -61,5 +61,17 @@ export const radioGroupComponentDoc: ComponentDoc = {
       type: "(value: string) => void",
       description: "Called when the selected value changes.",
     },
+    {
+      name: "inputProps",
+      type: "InputHTMLAttributes<HTMLInputElement>",
+      description:
+        "Native attributes applied to every radio input, such as required, disabled, or form.",
+    },
+    {
+      name: "id / aria-*",
+      type: "HTMLAttributes<HTMLDivElement>",
+      description:
+        "Group-level HTML and accessibility attributes applied to the radiogroup container.",
+    },
   ],
 };

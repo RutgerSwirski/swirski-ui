@@ -1,6 +1,11 @@
 "use client";
 
-import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
+import {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+  forwardRef,
+} from "react";
 import { cn, swirskiAttrs } from "../../system";
 
 export type RadioGroupVariant = "default" | "card";
@@ -24,9 +29,21 @@ export type RadioGroupProps = {
   variant?: RadioGroupVariant;
   size?: RadioGroupSize;
   tone?: RadioGroupTone;
+  inputProps?: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    | "checked"
+    | "defaultChecked"
+    | "id"
+    | "name"
+    | "onChange"
+    | "type"
+    | "value"
+    | "size"
+    | "color"
+  >;
 } & Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  "type" | "value" | "defaultValue" | "onChange" | "size" | "color"
+  HTMLAttributes<HTMLDivElement>,
+  "children" | "defaultValue" | "onChange"
 > &
   Record<never, never>;
 
@@ -56,6 +73,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       value,
       defaultValue,
       onValueChange,
+      inputProps,
       className,
       variant = "default",
       size = "md",
@@ -64,10 +82,17 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     },
     ref,
   ) {
+    const {
+      className: inputClassName,
+      disabled: inputDisabled,
+      ...nativeInputProps
+    } = inputProps ?? {};
+
     return (
       <div
         ref={ref}
         className={cn("grid gap-3", className)}
+        {...props}
         role="radiogroup"
         {...swirskiAttrs("radio-group", { size, tone, variant })}
       >
@@ -91,18 +116,18 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
               )}
             >
               <input
-                className="peer sr-only"
+                className={cn("peer sr-only", inputClassName)}
                 defaultChecked={defaultValue === option.value}
                 checked={
                   value === undefined ? undefined : value === option.value
                 }
-                disabled={option.disabled}
+                disabled={option.disabled || inputDisabled}
                 name={name}
                 onChange={() => onValueChange?.(option.value)}
                 type="radio"
                 value={option.value}
                 {...swirskiAttrs("radio-group-input", { size, tone, variant })}
-                {...props}
+                {...nativeInputProps}
               />
               <span
                 className={cn(

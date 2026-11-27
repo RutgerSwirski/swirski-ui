@@ -5282,6 +5282,16 @@
           "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
         },
         {
+          "name": "inputProps",
+          "prop": "inputProps",
+          "component": "RadioGroup",
+          "sourceType": "RadioGroupProps",
+          "type": "Omit<InputHTMLAttributes<HTMLInputElement>, 'color' | 'defaultChecked' | 'onChange' | 'size' | 'type' | 'name' | 'value' | 'checked'>",
+          "required": false,
+          "description": "Generated from RadioGroupProps.",
+          "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
+        },
+        {
           "name": "name",
           "prop": "name",
           "component": "RadioGroup",
