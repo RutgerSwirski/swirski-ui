@@ -9,10 +9,12 @@
     "swirski-ui": "./src/index.js"
   },
   "files": [
-    "src"
+    "src",
+    "registry.json"
   ],
   "scripts": {
     "start": "node src/index.js",
-    "list": "node src/index.js list"
+    "list": "node src/index.js list",
+    "prepack": "node ../../scripts/build-shadcn-registry.mjs --cli-snapshot"
   }
 }

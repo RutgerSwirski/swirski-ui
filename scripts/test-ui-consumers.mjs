@@ -74,11 +74,13 @@ import type { ReactNode } from "react";
 export default function Layout({ children }: { children: ReactNode }) {
   return <html lang="en"><body>{children}</body></html>;
 }`);
-  write("app/page.tsx", `import { Dialog, DialogContent, DialogTitle, DialogTrigger, Title } from "@swirski/ui";
+  write("app/page.tsx", `import { Button, Dialog, DialogContent, DialogTitle, DialogTrigger, Title } from "@swirski/ui";
+import Link from "next/link";
 import { ConsumerExample } from "../ThemeProbe";
 export default function Page() {
   return <>
     <Title>Installed tarball</Title>
+    <Button asChild icon="arrow-up-right"><Link href="/about">About</Link></Button>
     <Dialog>
       <DialogTrigger>Open dialog</DialogTrigger>
       <DialogContent><DialogTitle>Imported from the server page</DialogTitle></DialogContent>
@@ -97,6 +99,11 @@ createRoot(document.getElementById("root")!).render(<><Title>Installed tarball</
   run(["install", "--no-audit", "--no-fund"]);
   execFileSync(process.execPath, ["-e", 'for (const font of ["anton", "bangers"]) require.resolve(`@swirski/ui/fonts/${font}-latin.woff2`)'], { cwd: fixture });
   run(["exec", "--", "next", "build"]);
+  const page = readFileSync(join(fixture, ".next/server/app/index.html"), "utf8");
+  const composedLink = page.match(/<a\b(?=[^>]*\bhref="\/about")[^>]*>/)?.[0];
+  if (!composedLink?.includes('data-swirski-component="button"')) {
+    throw new Error("The packed Button did not forward its attributes to Next.js Link.");
+  }
   run(["exec", "--", "tsc", "--noEmit"]);
   run(["exec", "--", "vite", "build"]);
   if (process.env.CHROMIUM_BIN) await verifyBrowser(process.env.CHROMIUM_BIN);

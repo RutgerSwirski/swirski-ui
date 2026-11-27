@@ -271,8 +271,7 @@ export default function CliPage() {
 
           <CodeBlock
             code={`{
-  "componentsPath": "src/components/ui",
-  "stylePath": "src/styles.css"
+  "componentsPath": "src/components/ui"
 }`}
           />
         </Grid>

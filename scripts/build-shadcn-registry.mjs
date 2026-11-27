@@ -20,7 +20,7 @@ const registryItemSchema = "https://ui.shadcn.com/schema/registry-item.json";
 const registrySchema = "https://ui.shadcn.com/schema/registry.json";
 const publicRegistryUrl = "https://ui.swirski.dev";
 
-const ignoredFilePatterns = [/\.stories\.tsx$/];
+const ignoredFilePatterns = [/\.(stories|test|spec)\.[cm]?[jt]sx?$/];
 
 function registryItemUrl(name) {
   return `${publicRegistryUrl}/r/${name}.json`;
@@ -203,6 +203,11 @@ function main() {
     homepage: publicRegistryUrl,
     items,
   };
+
+  if (process.argv.includes("--cli-snapshot")) {
+    writeJson(path.join(repoRoot, "packages/cli/registry.json"), registry);
+    return;
+  }
 
   rmSync(itemsOutputRoot, { force: true, recursive: true });
   rmSync(registryOutputPath, { force: true });

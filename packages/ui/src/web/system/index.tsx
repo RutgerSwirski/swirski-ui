@@ -1,8 +1,11 @@
 import {
   Children,
+  Fragment,
   cloneElement,
   forwardRef,
   isValidElement,
+  useMemo,
+  version,
   type CSSProperties,
   type HTMLAttributes,
   type ReactElement,
@@ -73,18 +76,21 @@ export function swirskiAttrs(
 // compose the refs so that refs and passed refs will work together
 export function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
   return (node: T | null) => {
-    refs.forEach((ref) => {
-      if (!ref) {
-        return;
-      }
-
-      if (typeof ref === "function") {
-        ref(node);
-        return;
-      }
-
-      ref.current = node;
+    const cleanups = refs.map((ref) => {
+      if (typeof ref === "function") return ref(node);
+      if (ref) ref.current = node;
     });
+
+    if (cleanups.some((cleanup) => typeof cleanup === "function")) {
+      return () => {
+        refs.forEach((ref, index) => {
+          const cleanup = cleanups[index];
+          if (typeof cleanup === "function") cleanup();
+          else if (typeof ref === "function") ref(null);
+          else if (ref) ref.current = null;
+        });
+      };
+    }
   };
 }
 
@@ -107,7 +113,9 @@ function mergeSlotProps(
         event: unknown,
       ) => {
         (childValue as (event: unknown) => void)(event);
-        (slotValue as (event: unknown) => void)(event);
+        if (!(event as { defaultPrevented?: boolean } | undefined)?.defaultPrevented) {
+          (slotValue as (event: unknown) => void)(event);
+        }
       }) as never;
     }
   }
@@ -141,16 +149,19 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(
   ({ children, ...props }, forwardedRef) => {
     const child = Children.only(children);
 
-    if (!isValidElement(child)) {
-      throw new Error("Swirski asChild expects a single valid React element.");
+    if (!isValidElement(child) || child.type === Fragment) {
+      throw new Error("Swirski asChild expects one element that can receive DOM props and a ref.");
     }
 
     const childElement = child as ReactElement<HTMLAttributes<HTMLElement>>;
-    const childRef = (childElement.props as { ref?: Ref<HTMLElement> }).ref;
+    const childRef = Number.parseInt(version, 10) >= 19
+      ? (childElement.props as { ref?: Ref<HTMLElement> }).ref
+      : (childElement as ReactElement & { ref?: Ref<HTMLElement> }).ref;
+    const ref = useMemo(() => composeRefs(forwardedRef, childRef), [forwardedRef, childRef]);
 
     return cloneElement(childElement, {
       ...mergeSlotProps(props, childElement.props),
-      ref: composeRefs(forwardedRef, childRef),
+      ref,
     } as HTMLAttributes<HTMLElement> & { ref: Ref<HTMLElement> });
   },
 );

@@ -35,3 +35,6 @@ next-env.d.ts
 
 # Vercel
 .vercel/
+
+# Generated CLI distribution snapshot
+/packages/cli/registry.json

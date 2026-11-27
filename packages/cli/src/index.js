@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync, copyFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, "../../..");
-const registryPath = path.join(repoRoot, "registry/swirski.registry.json");
+const packedRegistry = path.resolve(__dirname, "../registry.json");
+const workspaceRegistry = path.resolve(__dirname, "../../../apps/docs/public/registry.json");
 const defaultConfig = {
   componentsPath: "src/components/ui",
-  stylePath: "src/styles.css",
 };
 
 function readJson(filePath) {
@@ -58,45 +57,20 @@ function getConfig(cwd, args) {
 }
 
 function getRegistry() {
+  const registryPath = existsSync(packedRegistry) ? packedRegistry : workspaceRegistry;
   if (!existsSync(registryPath)) {
-    throw new Error(`Registry not found at ${registryPath}`);
+    throw new Error("Registry snapshot missing. In the workspace, run pnpm registry:shadcn.");
   }
 
   return readJson(registryPath);
 }
 
-function copyDirectory(source, destination, dryRun) {
-  const entries = readdirSync(source);
-
-  if (!dryRun) {
-    mkdirSync(destination, { recursive: true });
-  }
-
-  entries.forEach((entry) => {
-    if (entry.endsWith(".stories.tsx")) {
-      return;
-    }
-
-    const sourcePath = path.join(source, entry);
-    const destinationPath = path.join(destination, entry);
-    const stats = statSync(sourcePath);
-
-    if (stats.isDirectory()) {
-      copyDirectory(sourcePath, destinationPath, dryRun);
-      return;
-    }
-
-    if (!dryRun) {
-      copyFileSync(sourcePath, destinationPath);
-    }
-  });
-}
-
 function collectComponents(registry, names) {
   const componentMap = new Map(
-    registry.components.map((component) => [component.name, component]),
+    registry.items.map((component) => [component.name, component]),
   );
   const selected = new Map();
+  const visiting = new Set();
 
   function visit(name) {
     const component = componentMap.get(name);
@@ -109,7 +83,12 @@ function collectComponents(registry, names) {
       return;
     }
 
-    (component.dependencies ?? []).forEach(visit);
+    if (visiting.has(name)) throw new Error(`Cyclic registry dependency at "${name}".`);
+    visiting.add(name);
+    for (const dependency of component.registryDependencies ?? []) {
+      visit(path.posix.basename(new URL(dependency).pathname, ".json"));
+    }
+    visiting.delete(name);
     selected.set(name, component);
   }
 
@@ -124,7 +103,7 @@ function printHelp() {
 Usage:
   swirski init [--cwd path]
   swirski list
-  swirski add <component...> [--path src/components/ui] [--dry-run]
+  swirski add <component...> [--path src/components/ui] [--dry-run] [--overwrite]
 
 Examples:
   swirski init
@@ -145,16 +124,15 @@ function runInit(args) {
 
   writeJson(configPath, defaultConfig);
   console.log(`Created ${path.relative(cwd, configPath)}`);
-  console.log("Add @swirski/ui styles once in your app entry if you publish package CSS:");
-  console.log('  import "@swirski/ui/styles.css";');
+  console.log("Run swirski add to copy components and their shared source.");
 }
 
 function runList() {
   const registry = getRegistry();
 
-  console.log(`${registry.name} (${registry.components.length} components)`);
-  registry.components.forEach((component) => {
-    console.log(`- ${component.name.padEnd(16)} ${component.category}  ${component.description}`);
+  console.log(`${registry.name} (${registry.items.length} items)`);
+  registry.items.forEach((component) => {
+    console.log(`- ${component.name.padEnd(16)} ${component.description}`);
   });
 }
 
@@ -163,7 +141,7 @@ function runAdd(args) {
   const registry = getRegistry();
   const config = getConfig(cwd, args);
   const names = args.all
-    ? registry.components.map((component) => component.name)
+    ? registry.items.map((component) => component.name)
     : args._.slice(1);
 
   if (names.length === 0) {
@@ -173,17 +151,39 @@ function runAdd(args) {
   const components = collectComponents(registry, names);
   const destinationRoot = path.resolve(cwd, config.componentsPath);
 
-  components.forEach((component) => {
-    const source = path.resolve(repoRoot, component.source);
-    const destination = path.join(destinationRoot, component.name);
-
-    if (!existsSync(source)) {
-      throw new Error(`Source for "${component.name}" not found at ${source}`);
+  const files = new Map();
+  const dependencies = new Set();
+  for (const component of components) {
+    for (const dependency of component.dependencies ?? []) dependencies.add(dependency);
+    for (const file of component.files) {
+      if (/\.(test|spec)\.[cm]?[jt]sx?$/.test(file.target)) continue;
+      const prefix = "@ui/swirski/";
+      if (!file.target.startsWith(prefix)) throw new Error(`Unexpected registry target: ${file.target}`);
+      const destination = path.resolve(destinationRoot, file.target.slice(prefix.length));
+      if (!destination.startsWith(destinationRoot + path.sep)) {
+        throw new Error(`Invalid registry target: ${file.target}`);
+      }
+      files.set(destination, file.content);
     }
+  }
 
-    console.log(`${args["dry-run"] ? "Would add" : "Adding"} ${component.name} -> ${path.relative(cwd, destination)}`);
-    copyDirectory(source, destination, Boolean(args["dry-run"]));
-  });
+  const changes = [...files].filter(([file, content]) =>
+    !existsSync(file) || readFileSync(file, "utf8") !== content,
+  );
+  const conflicts = changes.filter(([file]) => existsSync(file));
+  if (conflicts.length && args.overwrite !== true && !args["dry-run"]) {
+    throw new Error(`Refusing to overwrite changed files: ${conflicts.map(([file]) => path.relative(cwd, file)).join(", ")}. Use --overwrite after reviewing.`);
+  }
+  for (const [file, content] of changes) {
+    console.log(`${args["dry-run"] ? "Would write" : "Writing"} ${path.relative(cwd, file)}`);
+    if (args["dry-run"]) continue;
+    mkdirSync(path.dirname(file), { recursive: true });
+    writeFileSync(file, content, { flag: args.overwrite === true ? "w" : "wx" });
+  }
+  if (!changes.length) console.log("All selected files are already up to date.");
+  if (dependencies.size) console.log(`Consumer dependencies: npm install ${[...dependencies].join(" ")}`);
+  const styles = path.join(destinationRoot, "styles.css");
+  if (files.has(styles)) console.log(`Import the copied stylesheet: ${path.relative(cwd, styles)}`);
 }
 
 async function main() {

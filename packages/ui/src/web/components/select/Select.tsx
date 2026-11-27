@@ -145,7 +145,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     }
 
     setHighlightedIndex((currentIndex) => {
-      if (currentIndex >= 0 && !options[currentIndex]?.disabled) {
+      const highlighted = options[currentIndex];
+      if (highlighted && !highlighted.disabled) {
         return currentIndex;
       }
 
@@ -197,6 +198,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
 
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
     if (disabled) {
+      return;
+    }
+
+    if (event.key === "Tab") {
+      clearTypeahead();
+      setIsOpen(false);
       return;
     }
 

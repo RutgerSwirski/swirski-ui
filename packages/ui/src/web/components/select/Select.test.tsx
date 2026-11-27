@@ -10,6 +10,30 @@ const options = [
 ];
 
 describe("Select", () => {
+  it("keeps highlight valid as options shrink and closes on Tab", async () => {
+    const user = userEvent.setup();
+    function Example({ shrink = false }: { shrink?: boolean }) {
+      return (
+        <>
+          <Select options={shrink ? options.slice(0, 1) : options} />
+          <button type="button">Continue</button>
+        </>
+      );
+    }
+
+    const { rerender } = render(<Example />);
+    const trigger = screen.getByRole("button", { name: "Yellow" });
+    trigger.focus();
+    await user.keyboard("{End}");
+    const list = screen.getByRole("listbox");
+    expect(trigger).toHaveAttribute("aria-activedescendant", `${list.id}-option-1`);
+    rerender(<Example shrink />);
+    expect(trigger).toHaveAttribute("aria-activedescendant", `${list.id}-option-0`);
+    await user.tab();
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Continue" })).toHaveFocus();
+  });
+
   it("opens a listbox and selects an option with pointer input", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

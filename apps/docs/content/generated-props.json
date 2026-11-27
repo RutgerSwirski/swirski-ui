@@ -1236,6 +1236,17 @@
           "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
         },
         {
+          "name": "disabled",
+          "prop": "disabled",
+          "component": "Button",
+          "sourceType": "ButtonProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from ButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
+        },
+        {
           "name": "href",
           "prop": "href",
           "component": "Button",
