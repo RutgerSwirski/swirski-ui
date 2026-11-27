@@ -13,7 +13,7 @@ export const tabsComponentDoc: ComponentDoc = {
   category: "Interaction",
   importCode: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";`,
   usageCode: `<Tabs defaultValue="preview">
-  <TabsList>
+  <TabsList aria-label="File views">
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>
   </TabsList>
@@ -26,7 +26,7 @@ export const tabsComponentDoc: ComponentDoc = {
 \`-- TabsContent`,
   preview: (
     <Tabs defaultValue="preview">
-      <TabsList>
+      <TabsList aria-label="File views">
         <TabsTrigger value="preview">Preview</TabsTrigger>
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
@@ -38,8 +38,7 @@ export const tabsComponentDoc: ComponentDoc = {
     {
       name: "defaultValue",
       type: "string",
-      required: true,
-      description: "Initial active tab value.",
+      description: "Initial active tab value. Supply this for uncontrolled tabs.",
     },
     {
       name: "value",
