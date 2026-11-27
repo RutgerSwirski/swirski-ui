@@ -4,7 +4,7 @@ import type {
   HTMLAttributes,
   KeyboardEvent as ReactKeyboardEvent,
 } from "react";
-import { forwardRef, useEffect } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
 import { useFloatingPosition } from "../../system/floating";
@@ -15,7 +15,7 @@ import type {
   DropdownMenuTone,
   DropdownMenuVariant,
 } from "./dropdown-menu-types";
-import { focusMenuItem, getCurrentMenuItemIndex } from "./dropdown-menu-utils";
+import { focusMatchingMenuItem, focusMenuItem, getCurrentMenuItemIndex } from "./dropdown-menu-utils";
 
 export type DropdownMenuContentProps = HTMLAttributes<HTMLDivElement> & {
   align?: "start" | "end";
@@ -46,7 +46,10 @@ export const DropdownMenuContent = forwardRef<
     focusIntentRef,
     open,
     rootRef,
+    setOpen,
+    triggerRef,
   } = useDropdownMenu();
+  const typeahead = useRef({ value: "", time: 0 });
   const portalRoot = usePortalRoot();
   const floatingStyle = useFloatingPosition({
     floatingRef: contentRef,
@@ -60,17 +63,31 @@ export const DropdownMenuContent = forwardRef<
       return;
     }
 
-    focusMenuItem(
-      contentRef.current,
-      focusIntentRef.current === "first" ? 0 : -1,
-    );
-    focusIntentRef.current = null;
-  }, [contentRef, focusIntentRef, open]);
+    // The parent registers the portal with the modal focus boundary after this effect.
+    const frame = window.requestAnimationFrame(() => {
+      if (!contentRef.current || !focusIntentRef.current) return;
+      focusMenuItem(contentRef.current, focusIntentRef.current === "first" ? 0 : -1);
+      focusIntentRef.current = null;
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [contentRef, focusIntentRef, open, portalRoot]);
+
+  useEffect(() => {
+    if (!open) typeahead.current = { value: "", time: 0 };
+  }, [open]);
 
   function handleKeyDown(event: ReactKeyboardEvent<HTMLDivElement>) {
     onKeyDown?.(event);
 
-    if (event.defaultPrevented || !contentRef.current) {
+    if (event.defaultPrevented || !contentRef.current ||
+        (event.target as Element).closest('[role="menu"]') !== contentRef.current) {
+      return;
+    }
+
+    if (event.key === "Tab") {
+      // Restart native sequential navigation at the trigger rather than the portal.
+      triggerRef.current?.focus();
+      setOpen(false);
       return;
     }
 
@@ -104,6 +121,15 @@ export const DropdownMenuContent = forwardRef<
       return;
     }
 
+    if (event.key.length === 1 && event.key !== " " && !event.altKey &&
+        !event.ctrlKey && !event.metaKey && !event.nativeEvent.isComposing) {
+      event.preventDefault();
+      const previous = typeahead.current;
+      const value = (event.timeStamp - previous.time < 700 ? previous.value : "") +
+        event.key.toLocaleLowerCase();
+      typeahead.current = { value, time: event.timeStamp };
+      focusMatchingMenuItem(contentRef.current, value);
+    }
   }
 
   if (!open || !portalRoot) {
@@ -119,6 +145,7 @@ export const DropdownMenuContent = forwardRef<
         className,
       )}
       id={contentId}
+      aria-labelledby={props["aria-label"] ? undefined : triggerRef.current?.id}
       onKeyDown={handleKeyDown}
       role="menu"
       {...swirskiAttrs("dropdown-menu-content", { size, tone, variant })}

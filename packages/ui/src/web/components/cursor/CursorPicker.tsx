@@ -3,6 +3,7 @@
 import { HTMLAttributes, forwardRef } from "react";
 import { cn, swirskiAttrs } from "../../system";
 import { useSwirskiCursor } from "./CursorProvider";
+import { getSwirskiCursor } from "./cursors";
 
 export type CursorPickerProps = {
   buttonTabIndex?: number;
@@ -20,6 +21,7 @@ export const CursorPicker = forwardRef<HTMLDivElement, CursorPickerProps>(
       className,
       label = "Cursor",
       showLabels = true,
+      onKeyDown,
       variant = "default",
       size = "md",
       tone = "default",
@@ -28,6 +30,7 @@ export const CursorPicker = forwardRef<HTMLDivElement, CursorPickerProps>(
     ref,
   ) {
     const { cursorId, cursors, setCursor } = useSwirskiCursor();
+    const selectedIndex = cursors.findIndex(({ id }) => id === cursorId);
 
     return (
       <div
@@ -38,10 +41,24 @@ export const CursorPicker = forwardRef<HTMLDivElement, CursorPickerProps>(
           className,
         )}
         role="radiogroup"
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (event.defaultPrevented) return;
+          const radios = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]'));
+          const index = radios.indexOf(event.target as HTMLButtonElement);
+          if (index < 0) return;
+          const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1
+            : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0;
+          if (!direction) return;
+          event.preventDefault();
+          const next = (index + direction + radios.length) % radios.length;
+          setCursor(cursors[next].id);
+          radios[next].focus();
+        }}
         {...swirskiAttrs("cursor-picker", { size, tone, variant })}
         {...props}
       >
-        {cursors.map((cursor) => {
+        {cursors.map((cursor, index) => {
           const isSelected = cursor.id === cursorId;
 
           return (
@@ -62,7 +79,7 @@ export const CursorPicker = forwardRef<HTMLDivElement, CursorPickerProps>(
               style={{
                 backgroundColor: isSelected ? cursor.swatch : undefined,
               }}
-              tabIndex={buttonTabIndex}
+              tabIndex={buttonTabIndex ?? (index === Math.max(selectedIndex, 0) ? 0 : -1)}
               title={cursor.description}
               type="button"
             >
@@ -75,10 +92,9 @@ export const CursorPicker = forwardRef<HTMLDivElement, CursorPickerProps>(
               {showLabels ? (
                 <span
                   className={cn(
-                    "pr-1 font-black uppercase leading-none tracking-normal",
-                    isSelected && cursor.id !== "bolt"
-                      ? "text-white"
-                      : "text-black",
+                    "pr-1 font-black uppercase leading-none tracking-normal text-black",
+                    isSelected && getSwirskiCursor(cursor.id)?.swatch !== cursor.swatch &&
+                      "bg-white px-1",
                   )}
                 >
                   {cursor.name}

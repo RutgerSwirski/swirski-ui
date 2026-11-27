@@ -116,7 +116,7 @@ export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(
         {...props}
       >
         <span>{children}</span>
-        <span className="grid size-7 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none transition group-open:rotate-45">
+        <span aria-hidden="true" className="grid size-7 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none transition group-open:rotate-45">
           +
         </span>
       </summary>

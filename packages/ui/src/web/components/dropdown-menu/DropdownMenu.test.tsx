@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -72,8 +72,9 @@ describe("DropdownMenu", () => {
     await user.keyboard("{Enter}");
 
     const menu = await screen.findByRole("menu");
-    expect(within(menu).getByRole("menuitem", { name: "Duplicate" }))
-      .toHaveFocus();
+    await waitFor(() =>
+      expect(within(menu).getByRole("menuitem", { name: "Duplicate" })).toHaveFocus(),
+    );
 
     await user.keyboard("{Escape}");
 
@@ -105,7 +106,7 @@ describe("DropdownMenu", () => {
       name: "Rename",
     });
 
-    expect(duplicateItem).toHaveFocus();
+    await waitFor(() => expect(duplicateItem).toHaveFocus());
     expect(archiveItem).toBeDisabled();
 
     await user.keyboard("{ArrowDown}");

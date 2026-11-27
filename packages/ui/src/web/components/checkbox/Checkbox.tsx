@@ -88,6 +88,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             )}
           />
           <span
+            aria-hidden="true"
             className={cn(
               "relative hidden font-black leading-none peer-checked:block",
               checkSizeStyles[size],

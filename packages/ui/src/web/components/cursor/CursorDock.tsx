@@ -26,6 +26,7 @@ export const CursorDock = forwardRef<HTMLDivElement, CursorDockProps>(
       tone = "default",
       onBlur,
       onFocus,
+      onKeyDown,
       onMouseEnter,
       onMouseLeave,
       ...props
@@ -61,11 +62,40 @@ export const CursorDock = forwardRef<HTMLDivElement, CursorDockProps>(
         }}
         onMouseLeave={(event) => {
           onMouseLeave?.(event);
-          setIsOpen(false);
+          if (!event.currentTarget.contains(event.currentTarget.ownerDocument.activeElement)) {
+            setIsOpen(false);
+          }
+        }}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (!event.defaultPrevented && event.key === "Escape" && isOpen) {
+            event.preventDefault();
+            event.currentTarget.querySelector<HTMLButtonElement>('[data-swirski-component="cursor-dock-trigger"]')?.focus();
+            setIsOpen(false);
+          }
         }}
         {...swirskiAttrs("cursor-dock", { size, tone, variant })}
         {...props}
       >
+        <button
+          aria-expanded={isOpen}
+          aria-label={label}
+          className={cn(
+            "order-last grid size-14 place-items-center border-4 border-black bg-[#FFD400] shadow-[5px_5px_0_#0B0B0C] transition-all duration-150",
+            "hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+            "focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#0057FF]",
+            side === "right" ? "border-r-0" : "border-l-0",
+          )}
+          onClick={() => setIsOpen((open) => !open)}
+          type="button"
+          {...swirskiAttrs("cursor-dock-trigger", { size, tone, variant })}
+        >
+          <span
+            aria-hidden="true"
+            className="block size-8 bg-contain bg-center bg-no-repeat"
+            style={{ backgroundImage: `url("${cursor.preview}")` }}
+          />
+        </button>
         <div
           aria-hidden={!isOpen}
           className={cn(
@@ -92,26 +122,6 @@ export const CursorDock = forwardRef<HTMLDivElement, CursorDockProps>(
             showLabels
           />
         </div>
-
-        <button
-          aria-expanded={isOpen}
-          aria-label={label}
-          className={cn(
-            "grid size-14 place-items-center border-4 border-black bg-[#FFD400] shadow-[5px_5px_0_#0B0B0C] transition-all duration-150",
-            "hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
-            "focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#0057FF]",
-            side === "right" ? "border-r-0" : "border-l-0",
-          )}
-          onClick={() => setIsOpen((open) => !open)}
-          type="button"
-          {...swirskiAttrs("cursor-dock-trigger", { size, tone, variant })}
-        >
-          <span
-            aria-hidden="true"
-            className="block size-8 bg-contain bg-center bg-no-repeat"
-            style={{ backgroundImage: `url("${cursor.preview}")` }}
-          />
-        </button>
       </div>
     );
   },

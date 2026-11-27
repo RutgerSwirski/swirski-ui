@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, firefox, webkit } from "playwright";
+import { verifyInteractions } from "./verify-ui-interactions.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const ui = join(root, "packages/ui");
@@ -127,6 +128,8 @@ async function verifyBrowsers(names) {
           }
         }
         console.log(`${name} ${browser.version()}: verified scoped CSS, portal theme, contrast, and opt-in reset and fonts.`);
+        await verifyInteractions(browser, url, name);
+        console.log(`${name}: interaction and axe checks passed.`);
       } catch (error) {
         throw new Error(`Packed stylesheet failed in ${name} ${browser.version()}`, { cause: error });
       } finally {
@@ -155,7 +158,7 @@ try {
     },
   }));
   mkdirSync(join(fixture, "app"));
-  for (const name of ["ThemeProbe.tsx", "CoexistenceProbe.tsx", "coexistence.module.css"]) {
+  for (const name of ["ThemeProbe.tsx", "CoexistenceProbe.tsx", "coexistence.module.css", "InteractionProbe.tsx"]) {
     copyFileSync(join(root, "scripts/fixtures/ui-consumer", name), join(fixture, name));
   }
   write("app/layout.tsx", `import "@swirski/ui/styles.css";
@@ -177,15 +180,21 @@ export default function Page() {
     <ConsumerExample />
   </>;
 }`);
-  write("index.html", '<!doctype html><html lang="en"><body><div id="root"></div><script type="module" src="/main.tsx"></script></body></html>');
+  write("index.html", '<!doctype html><html lang="en"><head><title>Swirski UI consumer</title></head><body><div id="root"></div><script type="module" src="/main.tsx"></script></body></html>');
   write("vite.config.ts", 'export default { oxc: { jsx: { runtime: "automatic" } } };');
   write("main.tsx", `import "@swirski/ui/styles.css";
 import { Title } from "@swirski/ui";
 import { createRoot } from "react-dom/client";
 import { CoexistenceProbe } from "./CoexistenceProbe";
+import { InteractionProbe } from "./InteractionProbe";
 import { ConsumerExample } from "./ThemeProbe";
 const root = document.getElementById("root")!;
 async function start() {
+  const interactions = new URLSearchParams(location.search).get("interactions");
+  if (interactions !== null) {
+    createRoot(root).render(<InteractionProbe initiallyOpen={interactions === "initial"} siblings={interactions === "siblings"} />);
+    return;
+  }
   const host = new URLSearchParams(location.search).get("host");
   if (host === "v3" || host === "v4") {
     if (host === "v3") await import("@swirski/ui/reset.css");
