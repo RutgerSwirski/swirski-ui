@@ -136,10 +136,10 @@ export default function NavBar() {
                 x
               </MobileMenuClose>
             </MobileMenuHeader>
-            <div className="shrink-0 px-1 pb-4">
-              <DocsThemeToggle />
+            <div className="shrink-0 pt-2 pb-5">
+              <DocsThemeToggle mobile />
             </div>
-            <MobileMenuNav aria-label="Mobile navigation">
+            <MobileMenuNav aria-label="Mobile navigation" className="min-h-0 overflow-y-auto px-1">
               {navItems.map((item) =>
                 "children" in item ? (
                   <div

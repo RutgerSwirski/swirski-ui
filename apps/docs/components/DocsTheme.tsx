@@ -42,7 +42,7 @@ export function DocsTheme({ children }: { children: ReactNode }) {
   );
 }
 
-export function DocsThemeToggle() {
+export function DocsThemeToggle({ mobile = false }: { mobile?: boolean }) {
   const theme = useContext(DocsThemeContext);
   if (!theme) return null;
 
@@ -50,8 +50,9 @@ export function DocsThemeToggle() {
     <ThemeToggle
       colorScheme={theme.scheme}
       onColorSchemeChange={theme.setScheme}
-      size="sm"
-      className="whitespace-nowrap text-xs"
+      size={mobile ? "md" : "sm"}
+      variant={mobile ? "card" : "default"}
+      className={mobile ? "min-h-16 w-full! px-4 text-sm" : "whitespace-nowrap text-xs"}
     />
   );
 }
