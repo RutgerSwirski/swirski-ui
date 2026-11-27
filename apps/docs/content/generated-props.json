@@ -3250,6 +3250,7 @@
         "packages/ui/src/web/components/field/FieldError.tsx",
         "packages/ui/src/web/components/field/FieldHint.tsx",
         "packages/ui/src/web/components/field/Input.tsx",
+        "packages/ui/src/web/components/field/InputField.tsx",
         "packages/ui/src/web/components/field/Label.tsx",
         "packages/ui/src/web/components/field/Textarea.tsx"
       ],
@@ -3396,6 +3397,76 @@
           "defaultValue": "\"default\"",
           "description": "Generated from InputProps.",
           "sourceFile": "packages/ui/src/web/components/field/Input.tsx"
+        },
+        {
+          "name": "InputField.error",
+          "prop": "error",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Generated from InputFieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
+        },
+        {
+          "name": "InputField.fieldClassName",
+          "prop": "fieldClassName",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from InputFieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
+        },
+        {
+          "name": "InputField.hint",
+          "prop": "hint",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Generated from InputFieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
+        },
+        {
+          "name": "InputField.label",
+          "prop": "label",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Generated from InputFieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
+        },
+        {
+          "name": "InputField.size",
+          "prop": "size",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Visual input height and padding. Defaults to md.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
+        },
+        {
+          "name": "InputField.tone",
+          "prop": "tone",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "'default' | 'danger'",
+          "required": false,
+          "description": "Border treatment. Use danger for error styling and aria-invalid for validation semantics.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
+        },
+        {
+          "name": "InputField.variant",
+          "prop": "variant",
+          "component": "InputField",
+          "sourceType": "InputFieldProps",
+          "type": "'default' | 'filled'",
+          "required": false,
+          "description": "Generated from InputFieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/InputField.tsx"
         },
         {
           "name": "Label.size",

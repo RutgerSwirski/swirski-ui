@@ -53,9 +53,9 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         <div
           ref={composeRefs(contentRef, ref)}
           className={cn(
-            "relative z-10 w-full border-4 border-black bg-white shadow-[12px_12px_0_#0B0B0C]",
+            "relative z-10 w-full border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] shadow-[12px_12px_0_var(--sw-color-shadow)]",
             dialogContentSizeStyles[size],
-            variant === "compact" && "shadow-[8px_8px_0_#0B0B0C]",
+            variant === "compact" && "shadow-[8px_8px_0_var(--sw-color-shadow)]",
             className,
           )}
           role="dialog"

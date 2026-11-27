@@ -17,6 +17,7 @@
     "registry:shadcn": "node scripts/build-shadcn-registry.mjs",
     "release:ui": "node scripts/release-ui.mjs",
     "test:ui": "pnpm --filter @swirski/ui test",
+    "test:ui-consumers": "pnpm build:ui && node scripts/test-ui-consumers.mjs",
     "install:docs": "pnpm --filter docs install",
     "artifacts:update": "pnpm docs:metadata && pnpm llms:build && pnpm registry:shadcn",
     "test": "pnpm test:ui && pnpm build:ui && pnpm build && pnpm --filter @swirski/ui build-storybook"

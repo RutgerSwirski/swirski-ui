@@ -121,8 +121,8 @@ export const DropdownMenuContent = forwardRef<
     <div
       ref={composeRefs(contentRef, ref)}
       className={cn(
-        "fixed z-[1000] min-w-48 border-4 border-black bg-white p-1 shadow-[8px_8px_0_#0B0B0C]",
-        variant === "compact" && "shadow-[4px_4px_0_#0B0B0C]",
+        "fixed z-[1000] min-w-48 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-1 shadow-[8px_8px_0_var(--sw-color-shadow)]",
+        variant === "compact" && "shadow-[4px_4px_0_var(--sw-color-shadow)]",
         className,
       )}
       id={contentId}

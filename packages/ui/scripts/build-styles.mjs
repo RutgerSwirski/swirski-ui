@@ -17,6 +17,10 @@ const packageDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(packageDir, "dist");
 const stylesPath = join(distDir, "styles.css");
 const nativeFontsDir = join(distDir, "native", "fonts");
+const webEntryPath = join(distDir, "index.js");
+
+// Bundling flattens the per-component client directives into one web entry.
+writeFileSync(webEntryPath, '"use client";\n' + readFileSync(webEntryPath, "utf8"));
 
 const binName = process.platform === "win32" ? "postcss.cmd" : "postcss";
 const localPostcssBin = join(packageDir, "node_modules", ".bin", binName);

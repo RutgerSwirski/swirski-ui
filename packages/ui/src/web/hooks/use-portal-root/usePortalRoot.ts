@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-/** Return document.body after mount for portals. Returns null during server rendering. */
+export const PortalRootContext = createContext<HTMLElement | null | undefined>(undefined);
+
+/** Return the nearest provider’s portal host after mount, or document.body outside a provider. */
 export function usePortalRoot() {
+  const scopedRoot = useContext(PortalRootContext);
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setPortalRoot(document.body);
-  }, []);
+    if (scopedRoot === undefined) setPortalRoot(document.body);
+  }, [scopedRoot]);
 
-  return portalRoot;
+  return scopedRoot === undefined ? portalRoot : scopedRoot;
 }

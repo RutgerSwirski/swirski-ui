@@ -5,7 +5,7 @@ export const usePortalRootHookDoc: HookDoc = {
   slug: "use-portal-root",
   title: "usePortalRoot",
   description:
-    "Returns the document body once the app has mounted so portal components can render safely.",
+    "Returns the nearest SwirskiProvider portal host after mount, or the document body outside a provider.",
   category: "Hooks",
   importCode: `import { usePortalRoot } from "@swirski/ui";`,
   usageCode: `const portalRoot = usePortalRoot();`,

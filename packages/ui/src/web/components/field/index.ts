@@ -2,6 +2,7 @@ export { Field } from "./Field";
 export { FieldError } from "./FieldError";
 export { FieldHint } from "./FieldHint";
 export { Input } from "./Input";
+export { InputField, type InputFieldProps } from "./InputField";
 export { Label } from "./Label";
 export { Textarea } from "./Textarea";
 export type { FieldProps, FieldSize, FieldTone, FieldVariant } from "./Field";

@@ -1,7 +1,8 @@
 "use client";
 
-import { CSSProperties, HTMLAttributes, ReactNode, createContext, useContext } from "react";
+import { CSSProperties, HTMLAttributes, ReactNode, createContext, useContext, useState } from "react";
 import clsx from "clsx";
+import { PortalRootContext } from "../hooks/use-portal-root/usePortalRoot";
 
 export type SwirskiColorScheme = "light" | "dark";
 
@@ -134,6 +135,7 @@ export function SwirskiProvider({
   ...props
 }: SwirskiProviderProps) {
   const resolvedTheme = resolveTheme(colorScheme, theme);
+  const [portalRoot, setPortalRoot] = useState<HTMLDivElement | null>(null);
 
   return (
     <SwirskiThemeContext.Provider value={resolvedTheme}>
@@ -146,7 +148,10 @@ export function SwirskiProvider({
         style={{ ...themeToStyle(resolvedTheme, theme), ...style }}
         {...props}
       >
-        {children}
+        <PortalRootContext.Provider value={portalRoot}>
+          {children}
+          <div ref={setPortalRoot} style={{ display: "contents" }} />
+        </PortalRootContext.Provider>
       </div>
     </SwirskiThemeContext.Provider>
   );

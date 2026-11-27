@@ -14,9 +14,30 @@ import "@swirski/ui/styles.css";
 import { Button, Card, Text, Title } from "@swirski/ui";
 ```
 
-In Next.js App Router, put the stylesheet import in `app/layout.tsx`. Import
-components from `@swirski/ui` in the pages or components that use them.
+Import the stylesheet once in your app entry or Next.js App Router's
+`app/layout.tsx`. It includes
+the compiled component styles, Tailwind’s global reset, and bundled Inter,
+Anton, and Bangers fonts. The web entry exposes a React client boundary, so
+Next.js App Router pages can render components imported directly from it.
+Keep event handlers and other interactive logic in a client component.
 
+For custom font loading, the Latin display fonts have public asset paths:
+
+- `@swirski/ui/fonts/anton-latin.woff2`
+- `@swirski/ui/fonts/bangers-latin.woff2`
+
+`SwirskiProvider` is optional. Use it to set a color scheme or override tokens
+for a subtree. Overlays opened inside it inherit that subtree’s theme.
+
+For a native input with its label and descriptions already linked:
+
+```tsx
+import { InputField } from "@swirski/ui";
+
+<InputField label="Email" name="email" type="email" hint="Use your work address." />;
+```
+
+Use `Field`, `Label`, and individual controls when you need custom composition.
 ## Compose a hero
 
 ```tsx

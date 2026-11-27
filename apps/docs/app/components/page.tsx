@@ -18,19 +18,27 @@ const cardStyles = ["bg-white", "bg-[#FFD400]", "bg-[#F5F5F3]", "bg-white"];
 
 const componentOnlyDocs = componentDocs;
 
-const categories = Array.from(
-  new Set(componentOnlyDocs.map((component) => component.category)),
-);
-
 const componentsWithIndex = componentOnlyDocs.map((component, index) => ({
   ...component,
   index,
 }));
 
+const categories = ["Foundations", "Forms", "Navigation", "Overlays", "Feedback", "Swirski patterns"] as const;
+const navigation = new Set(["navbar", "breadcrumb", "pagination", "tabs"]);
+const patterns = new Set(["cursor", "image-frame", "section-label"]);
+
+function usageGroup(component: ComponentDoc) {
+  if (navigation.has(component.slug)) return "Navigation";
+  if (patterns.has(component.slug) || component.category === "Backgrounds") return "Swirski patterns";
+  if (component.category === "Interaction") return "Overlays";
+  if (component.category === "Forms" || component.category === "Feedback") return component.category;
+  return "Foundations";
+}
+
 const componentsByCategory = categories.map((category) => ({
   category,
   components: componentsWithIndex.filter(
-    (component) => component.category === category,
+    (component) => usageGroup(component) === category,
   ),
 }));
 
