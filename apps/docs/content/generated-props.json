@@ -3729,6 +3729,124 @@
         }
       ]
     },
+    "icon-button": {
+      "files": [
+        "packages/ui/src/web/components/icon-button/IconButton.tsx"
+      ],
+      "props": [
+        {
+          "name": "aria-label",
+          "prop": "aria-label",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "string",
+          "required": false,
+          "description": "Defines a string value that labels the current element.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        },
+        {
+          "name": "aria-labelledby",
+          "prop": "aria-labelledby",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "string",
+          "required": false,
+          "description": "Identifies the element (or elements) that labels the current element.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        },
+        {
+          "name": "children",
+          "prop": "children",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Decorative icon. Give the button a name with aria-label or aria-labelledby.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        },
+        {
+          "name": "size",
+          "prop": "size",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Generated from IconButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        },
+        {
+          "name": "tone",
+          "prop": "tone",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "'blue' | 'yellow' | 'red' | 'white' | 'black'",
+          "required": false,
+          "description": "Generated from IconButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        },
+        {
+          "name": "variant",
+          "prop": "variant",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "'solid' | 'outline' | 'ghost'",
+          "required": false,
+          "description": "Generated from IconButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        },
+        {
+          "name": "withShadow",
+          "prop": "withShadow",
+          "component": "IconButton",
+          "sourceType": "IconButtonProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from IconButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/icon-button/IconButton.tsx"
+        }
+      ]
+    },
+    "inline": {
+      "files": [
+        "packages/ui/src/web/components/inline/Inline.tsx"
+      ],
+      "props": [
+        {
+          "name": "align",
+          "prop": "align",
+          "component": "Inline",
+          "sourceType": "InlineProps",
+          "type": "'center' | 'start' | 'end' | 'stretch'",
+          "required": false,
+          "defaultValue": "\"center\"",
+          "description": "Vertical alignment. Defaults to center.",
+          "sourceFile": "packages/ui/src/web/components/inline/Inline.tsx"
+        },
+        {
+          "name": "gap",
+          "prop": "gap",
+          "component": "Inline",
+          "sourceType": "InlineProps",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'none' | 'xs' | '2xl'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Space between children. Defaults to md.",
+          "sourceFile": "packages/ui/src/web/components/inline/Inline.tsx"
+        },
+        {
+          "name": "wrap",
+          "prop": "wrap",
+          "component": "Inline",
+          "sourceType": "InlineProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "true",
+          "description": "Allow children to wrap. Defaults to true.",
+          "sourceFile": "packages/ui/src/web/components/inline/Inline.tsx"
+        }
+      ]
+    },
     "line-grid": {
       "files": [
         "packages/ui/src/web/components/line-grid/LineGrid.tsx"
@@ -5385,6 +5503,16 @@
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
+          "name": "Select.form",
+          "prop": "form",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "string",
+          "required": false,
+          "description": "ID of an associated form when the Select is rendered outside it.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
           "name": "Select.name",
           "prop": "name",
           "component": "Select",
@@ -5931,6 +6059,35 @@
           "defaultValue": "\"default\"",
           "description": "Generated from SwitchProps.",
           "sourceFile": "packages/ui/src/web/components/switch/Switch.tsx"
+        }
+      ]
+    },
+    "stack": {
+      "files": [
+        "packages/ui/src/web/components/stack/Stack.tsx"
+      ],
+      "props": [
+        {
+          "name": "align",
+          "prop": "align",
+          "component": "Stack",
+          "sourceType": "StackProps",
+          "type": "'center' | 'start' | 'end' | 'stretch'",
+          "required": false,
+          "defaultValue": "\"stretch\"",
+          "description": "Horizontal alignment. Defaults to stretch.",
+          "sourceFile": "packages/ui/src/web/components/stack/Stack.tsx"
+        },
+        {
+          "name": "gap",
+          "prop": "gap",
+          "component": "Stack",
+          "sourceType": "StackProps",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'none' | 'xs' | '2xl'",
+          "required": false,
+          "defaultValue": "\"md\"",
+          "description": "Space between children. Defaults to md.",
+          "sourceFile": "packages/ui/src/web/components/stack/Stack.tsx"
         }
       ]
     },

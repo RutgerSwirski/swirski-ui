@@ -35,7 +35,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     useModalOverlay({
       contentRef,
       onEscape: () => setOpen(false),
-      open,
+      open: open && portalRoot !== null,
     });
 
     if (!open || !portalRoot) {

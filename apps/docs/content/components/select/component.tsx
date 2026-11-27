@@ -14,15 +14,20 @@ export const selectComponentDoc: ComponentDoc = {
   description:
     "A custom dropdown picker for option sets, playground controls and compact forms.",
   category: "Forms",
-  importCode: `import { Select } from "@swirski/ui";`,
-  usageCode: `<Select
-  placeholder="Pick a tone"
-  options={[
-    { value: "yellow", label: "Yellow" },
-    { value: "blue", label: "Blue" },
-    { value: "red", label: "Red" },
-  ]}
-/>`,
+  importCode: `import { Field, FieldHint, Label, Select } from "@swirski/ui";`,
+  usageCode: `<Field>
+  <Label htmlFor="tone">Tone</Label>
+  <Select
+    id="tone"
+    name="tone"
+    aria-describedby="tone-hint"
+    options={[
+      { value: "yellow", label: "Yellow" },
+      { value: "blue", label: "Blue" },
+    ]}
+  />
+  <FieldHint id="tone-hint">Choose an accent color.</FieldHint>
+</Field>`,
   compositionCode: `Field
 |-- Label
 |-- Select
@@ -78,9 +83,14 @@ export const selectComponentDoc: ComponentDoc = {
       description: "Disables the trigger and prevents selection.",
     },
     {
+      name: "id",
+      type: "string",
+      description: "ID of the focusable trigger. Use this as Label.htmlFor.",
+    },
+    {
       name: "name",
       type: "string",
-      description: "Adds a hidden input for native form submission.",
+      description: "Submits the selected value when enabled. Form reset restores the uncontrolled default.",
     },
     {
       name: "triggerClassName",

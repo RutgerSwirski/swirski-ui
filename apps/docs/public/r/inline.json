@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "inline",
+  "type": "registry:ui",
+  "title": "Inline",
+  "description": "Horizontal layout with spacing and wrapping.",
+  "registryDependencies": [
+    "https://ui.swirski.dev/r/swirski-base.json"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/web/components/inline/Inline.tsx",
+      "content": "import { forwardRef, type HTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\nimport { layoutAlignStyles, layoutGapStyles } from \"../../system/layout\";\n\nexport type InlineProps = HTMLAttributes<HTMLDivElement> & {\n  /** Space between children. Defaults to md. */\n  gap?: keyof typeof layoutGapStyles;\n  /** Vertical alignment. Defaults to center. */\n  align?: keyof typeof layoutAlignStyles;\n  /** Allow children to wrap. Defaults to true. */\n  wrap?: boolean;\n};\n\n/** Arrange actions or other content horizontally. */\nexport const Inline = forwardRef<HTMLDivElement, InlineProps>(\n  function Inline({ gap = \"md\", align = \"center\", wrap = true, className, ...props }, ref) {\n    return (\n      <div\n        ref={ref}\n        className={cn(\n          \"flex\",\n          wrap ? \"flex-wrap\" : \"flex-nowrap\",\n          layoutGapStyles[gap],\n          layoutAlignStyles[align],\n          className,\n        )}\n        {...swirskiAttrs(\"inline\")}\n        {...props}\n      />\n    );\n  },\n);\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/inline/Inline.tsx"
+    },
+    {
+      "path": "packages/ui/src/web/components/inline/index.ts",
+      "content": "export { Inline, type InlineProps } from \"./Inline\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/inline/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "layout"
+  ],
+  "meta": {
+    "swirskiCategory": "layout",
+    "swirskiSource": "packages/ui/src/components/inline"
+  }
+}

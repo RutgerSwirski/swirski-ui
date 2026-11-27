@@ -44,10 +44,14 @@ async function verifyBrowser(browser) {
       "--headless", "--disable-gpu", "--dump-dom", "--virtual-time-budget=5000",
       `http://127.0.0.1:${server.address().port}/`,
     ], { timeout: 30000 });
+    const probe = stdout.match(/<html[^>]*>/)?.[0] ?? "";
     if (!stdout.includes('data-theme-verified="true"')) {
-      throw new Error("The packed stylesheet or scoped dark portal theme did not reach the browser.");
+      throw new Error(`The packed stylesheet or scoped dark portal theme did not reach the browser. ${probe}`);
     }
-    console.log("Verified packed stylesheet and dark/custom theme inside a browser portal.");
+    if (!stdout.includes('data-interaction-verified="true"')) {
+      throw new Error(`Escape or focus restoration failed in the nested overlay browser check. ${probe}`);
+    }
+    console.log("Verified packed styles, scoped theme, and nested Escape and focus behavior in Chromium.");
   } finally {
     server.close();
   }
@@ -92,7 +96,7 @@ export default function Page() {
 import { Title } from "@swirski/ui";
 import { createRoot } from "react-dom/client";
 import { ConsumerExample } from "./ThemeProbe";
-createRoot(document.getElementById("root")!).render(<><Title>Installed tarball</Title><ConsumerExample /></>);
+createRoot(document.getElementById("root")!).render(<><Title>Installed tarball</Title><ConsumerExample verifyInteractions /></>);
 `);
   run(["install", "--no-audit", "--no-fund"]);
   execFileSync(process.execPath, ["-e", 'for (const font of ["anton", "bangers"]) require.resolve(`@swirski/ui/fonts/${font}-latin.woff2`)'], { cwd: fixture });

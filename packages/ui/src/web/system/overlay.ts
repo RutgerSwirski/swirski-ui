@@ -5,6 +5,7 @@ import { focusInitialElement, trapFocus as trapFocusWithin } from "./focus";
 
 let bodyScrollLockCount = 0;
 let originalBodyOverflow = "";
+const modalStack: symbol[] = [];
 
 function lockBodyScroll() {
   if (bodyScrollLockCount === 0) {
@@ -54,19 +55,25 @@ export function useModalOverlay({
       return;
     }
 
+    const modal = Symbol();
+    modalStack.push(modal);
+    const isTopmost = () => modalStack[modalStack.length - 1] === modal;
     const previouslyFocusedElement =
       document.activeElement as HTMLElement | null;
     const releaseScrollLock = lockScroll ? lockBodyScroll() : undefined;
     const animationFrame = autoFocus
       ? window.requestAnimationFrame(() => {
-          if (contentRef.current) {
+          if (isTopmost() && contentRef.current) {
             focusInitialElement(contentRef.current);
           }
         })
       : undefined;
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || !isTopmost()) return;
+
       if (event.key === "Escape") {
+        event.preventDefault();
         onEscapeRef.current();
         return;
       }
@@ -79,6 +86,8 @@ export function useModalOverlay({
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      const wasTopmost = isTopmost();
+      modalStack.splice(modalStack.indexOf(modal), 1);
       if (animationFrame !== undefined) {
         window.cancelAnimationFrame(animationFrame);
       }
@@ -88,6 +97,7 @@ export function useModalOverlay({
 
       if (
         restoreFocus &&
+        wasTopmost &&
         previouslyFocusedElement &&
         document.contains(previouslyFocusedElement)
       ) {

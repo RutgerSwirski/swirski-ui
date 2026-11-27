@@ -33,6 +33,8 @@ export * from "./web/components/dropdown-menu/index";
 export * from "./web/components/field/index";
 
 export * from "./web/components/grid/index";
+export * from "./web/components/inline/index";
+export * from "./web/components/icon-button/index";
 
 export * from "./web/components/hero-actions/index";
 
@@ -65,6 +67,7 @@ export * from "./web/components/select/index";
 export * from "./web/components/separator/index";
 
 export * from "./web/components/skeleton/index";
+export * from "./web/components/stack/index";
 
 export * from "./web/components/slider/index";
 

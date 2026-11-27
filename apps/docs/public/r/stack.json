@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stack",
+  "type": "registry:ui",
+  "title": "Stack",
+  "description": "Vertical layout with shared spacing.",
+  "registryDependencies": [
+    "https://ui.swirski.dev/r/swirski-base.json"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/web/components/stack/Stack.tsx",
+      "content": "import { forwardRef, type HTMLAttributes } from \"react\";\nimport { cn, swirskiAttrs } from \"../../system\";\nimport { layoutAlignStyles, layoutGapStyles } from \"../../system/layout\";\n\nexport type StackProps = HTMLAttributes<HTMLDivElement> & {\n  /** Space between children. Defaults to md. */\n  gap?: keyof typeof layoutGapStyles;\n  /** Horizontal alignment. Defaults to stretch. */\n  align?: keyof typeof layoutAlignStyles;\n};\n\n/** Arrange children vertically with consistent spacing. */\nexport const Stack = forwardRef<HTMLDivElement, StackProps>(\n  function Stack({ gap = \"md\", align = \"stretch\", className, ...props }, ref) {\n    return (\n      <div\n        ref={ref}\n        className={cn(\"flex flex-col\", layoutGapStyles[gap], layoutAlignStyles[align], className)}\n        {...swirskiAttrs(\"stack\")}\n        {...props}\n      />\n    );\n  },\n);\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/stack/Stack.tsx"
+    },
+    {
+      "path": "packages/ui/src/web/components/stack/index.ts",
+      "content": "export { Stack, type StackProps } from \"./Stack\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/stack/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "layout"
+  ],
+  "meta": {
+    "swirskiCategory": "layout",
+    "swirskiSource": "packages/ui/src/components/stack"
+  }
+}

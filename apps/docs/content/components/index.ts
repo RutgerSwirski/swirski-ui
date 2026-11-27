@@ -2,6 +2,9 @@ import type { ComponentDoc } from "../types";
 import { badgeComponentDoc } from "./badge/component";
 import { alertComponentDoc } from "./alert/component";
 import { buttonComponentDoc } from "./button/component";
+import { iconButtonComponentDoc } from "./icon-button/component";
+import { inlineComponentDoc } from "./inline/component";
+import { stackComponentDoc } from "./stack/component";
 import { cursorComponentDoc } from "./cursor/component";
 import { fieldComponentDoc } from "./field/component";
 import { selectComponentDoc } from "./select/component";
@@ -44,6 +47,7 @@ export const componentDocs: ComponentDoc[] = [
   badgeComponentDoc,
   alertComponentDoc,
   buttonComponentDoc,
+  iconButtonComponentDoc,
   cursorComponentDoc,
   fieldComponentDoc,
   selectComponentDoc,
@@ -63,6 +67,8 @@ export const componentDocs: ComponentDoc[] = [
   appShellComponentDoc,
   containerComponentDoc,
   gridComponentDoc,
+  stackComponentDoc,
+  inlineComponentDoc,
   toastComponentDoc,
   progressComponentDoc,
   loaderComponentDoc,
