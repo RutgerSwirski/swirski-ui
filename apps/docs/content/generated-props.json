@@ -6953,6 +6953,104 @@
         }
       ]
     },
+    "theme-toggle": {
+      "files": [
+        "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+      ],
+      "props": [
+        {
+          "name": "colorScheme",
+          "prop": "colorScheme",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "'light' | 'dark'",
+          "required": true,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "containerClassName",
+          "prop": "containerClassName",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "description",
+          "prop": "description",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "inputClassName",
+          "prop": "inputClassName",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "label",
+          "prop": "label",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "ReactNode",
+          "required": false,
+          "defaultValue": "\"Dark mode\"",
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "onColorSchemeChange",
+          "prop": "onColorSchemeChange",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "(colorScheme: SwirskiColorScheme) => void",
+          "required": true,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "size",
+          "prop": "size",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "tone",
+          "prop": "tone",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "'blue' | 'yellow' | 'red'",
+          "required": false,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        },
+        {
+          "name": "variant",
+          "prop": "variant",
+          "component": "ThemeToggle",
+          "sourceType": "ThemeToggleProps",
+          "type": "'default' | 'card'",
+          "required": false,
+          "description": "Generated from ThemeToggleProps.",
+          "sourceFile": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx"
+        }
+      ]
+    },
     "use-click-outside": {
       "files": [
         "packages/ui/src/web/hooks/use-click-outside/useClickOutside.ts"

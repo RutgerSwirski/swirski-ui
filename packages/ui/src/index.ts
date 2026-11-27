@@ -74,6 +74,9 @@ export * from "./web/components/table/index";
 
 export * from "./web/components/tabs/index";
 
+export { ThemeToggle } from "./web/components/theme-toggle/index";
+export type { ThemeToggleProps } from "./web/components/theme-toggle/index";
+
 export * from "./web/components/toast/index";
 
 export * from "./web/components/tooltip/index";
