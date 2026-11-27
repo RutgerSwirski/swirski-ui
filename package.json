@@ -24,6 +24,7 @@
     "test": "pnpm test:ui && pnpm build:ui && pnpm build && pnpm --filter @swirski/ui build-storybook"
   },
   "devDependencies": {
+    "axe-core": "4.14.1",
     "playwright": "1.60.0"
   }
 }

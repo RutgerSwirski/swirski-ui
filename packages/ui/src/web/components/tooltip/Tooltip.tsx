@@ -3,15 +3,20 @@
 import {
   HTMLAttributes,
   ReactNode,
+  cloneElement,
+  Fragment,
+  isValidElement,
   forwardRef,
-  useCallback,
+  useEffect,
+  useMemo,
   useId,
   useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { Slot, cn, swirskiAttrs } from "../../system";
+import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
 import { useFloatingPosition } from "../../system/floating";
+import { useOverlayLayer } from "../../system/overlay";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 
 export type TooltipVariant = "default";
@@ -62,7 +67,24 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
     const portalRoot = usePortalRoot();
     const [hovered, setHovered] = useState(false);
     const [focused, setFocused] = useState(false);
-    const open = hovered || focused;
+    const [dismissed, setDismissed] = useState(false);
+    const leaveTimer = useRef<number | undefined>(undefined);
+    const open = Boolean(portalRoot) && !dismissed && (hovered || focused);
+    useOverlayLayer({
+      open,
+      contentRef: tooltipRef,
+      rootRef: triggerRef,
+      onEscape: () => {
+        setHovered(false);
+        setDismissed(true);
+      },
+    });
+    useEffect(() => () => window.clearTimeout(leaveTimer.current), []);
+
+    function leaveHover() {
+      window.clearTimeout(leaveTimer.current);
+      leaveTimer.current = window.setTimeout(() => setHovered(false), 180);
+    }
     const tooltipStyle = useFloatingPosition({
       floatingRef: tooltipRef,
       open,
@@ -70,38 +92,31 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
       referenceRef: triggerRef,
     });
     const describedBy =
-      [props["aria-describedby"], open ? tooltipId : undefined]
+      [props["aria-describedby"], tooltipId]
         .filter(Boolean)
         .join(" ") || undefined;
 
-    const setTriggerRef = useCallback(
-      (node: HTMLElement | null) => {
-        triggerRef.current = node;
-
-        if (typeof ref === "function") {
-          ref(node as HTMLSpanElement | null);
-          return;
-        }
-
-        if (ref) {
-          ref.current = node as HTMLSpanElement | null;
-        }
-      },
-      [ref],
-    );
+    const setTriggerRef = useMemo(() => composeRefs(triggerRef, ref), [ref]);
+    const child = !asChild && isValidElement<HTMLAttributes<HTMLElement>>(children) && children.type !== Fragment
+      ? cloneElement(children, {
+          "aria-describedby": [children.props["aria-describedby"], describedBy].filter(Boolean).join(" "),
+        })
+      : children;
 
     const tooltipContent =
-      open &&
       portalRoot &&
       createPortal(
         <span
           ref={tooltipRef}
           className={cn(
-            "pointer-events-none fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] border-4 border-black font-black uppercase",
+            "fixed z-[1000] w-max max-w-[calc(100vw-1.5rem)] border-4 border-black font-black uppercase",
             sizeStyles[size],
             toneStyles[tone],
           )}
           id={tooltipId}
+          hidden={!open}
+          onPointerEnter={() => window.clearTimeout(leaveTimer.current)}
+          onPointerLeave={leaveHover}
           role="tooltip"
           style={tooltipStyle}
           {...swirskiAttrs("tooltip-content", { size, tone, variant })}
@@ -118,27 +133,35 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
           className={cn("group relative inline-flex", className)}
           {...swirskiAttrs("tooltip", { size, tone, variant })}
           {...props}
-          aria-describedby={describedBy}
+          aria-describedby={child === children ? describedBy : undefined}
           onBlur={(event) => {
             onBlur?.(event);
-            setFocused(false);
+            if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
           }}
           onFocus={(event) => {
             onFocus?.(event);
-            setFocused(true);
+            if (!event.defaultPrevented) {
+              setDismissed(false);
+              setFocused(true);
+            }
           }}
           onPointerEnter={(event) => {
             onPointerEnter?.(event);
-            setHovered(true);
+            if (!event.defaultPrevented && event.pointerType !== "touch") {
+              window.clearTimeout(leaveTimer.current);
+              setDismissed(false);
+              setHovered(true);
+            }
           }}
           onPointerLeave={(event) => {
             onPointerLeave?.(event);
-            setHovered(false);
+            leaveHover();
           }}
         >
-          {children}
+          {child}
         </Component>
         {tooltipContent}
+        {!portalRoot && <span id={tooltipId} hidden>{content}</span>}
       </>
     );
   },

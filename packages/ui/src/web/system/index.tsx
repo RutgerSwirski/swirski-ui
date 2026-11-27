@@ -52,7 +52,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const focusVisibleStyles =
-  "focus-visible:outline focus-visible:outline-[length:var(--sw-border-width)] focus-visible:outline-offset-2 focus-visible:outline-[var(--sw-color-focus)]";
+  "focus-visible:outline focus-visible:outline-[length:var(--sw-border-width)] focus-visible:outline-offset-2 focus-visible:outline-[var(--sw-color-focus)] forced-colors:focus-visible:outline-solid";
 
 export const disabledInteractiveStyles =
   "disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:active:translate-x-0 disabled:active:translate-y-0 disabled:active:scale-100";

@@ -61,6 +61,7 @@ export const DropdownMenuTrigger = forwardRef<
         onClick?.(event);
 
         if (!event.defaultPrevented) {
+          if (!open) focusIntentRef.current = "first";
           setOpen(!open);
         }
       }}
@@ -89,6 +90,7 @@ export const DropdownMenuTrigger = forwardRef<
         }
       }}
       type={asChild ? undefined : "button"}
+      id={`${contentId}-trigger`}
       aria-controls={open ? contentId : undefined}
       aria-expanded={open}
       aria-haspopup="menu"

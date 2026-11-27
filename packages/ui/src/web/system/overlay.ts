@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, type RefObject } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, type RefObject } from "react";
 import { focusInitialElement, trapFocus as trapFocusWithin } from "./focus";
 
 type LayerOptions = {
@@ -12,7 +12,8 @@ type LayerOptions = {
   modal?: boolean;
 };
 
-const layers: LayerOptions[] = [];
+export const OverlayParentContext = createContext<RefObject<HTMLElement | null> | null>(null);
+const layers: Array<LayerOptions & { parent: RefObject<HTMLElement | null> | null }> = [];
 const hiddenBackground = new Set<Element>();
 
 function getTopModalIndex() {
@@ -48,6 +49,7 @@ function updateBackground() {
 }
 
 export function useOverlayLayer(options: LayerOptions) {
+  const parent = useContext(OverlayParentContext);
   const latest = useRef(options);
   useEffect(() => {
     latest.current = options;
@@ -57,9 +59,10 @@ export function useOverlayLayer(options: LayerOptions) {
   useEffect(() => {
     if (!open) return;
 
-    const layer = { ...latest.current, contentRef, rootRef, modal };
+    const layer = { ...latest.current, contentRef, rootRef, modal, parent };
     // A child initially open in the same commit registers before its parent.
     const childIndex = layers.findIndex((entry) =>
+      entry.parent === contentRef ||
       contentRef.current?.contains(entry.rootRef?.current ?? entry.contentRef.current),
     );
     layers.splice(childIndex < 0 ? layers.length : childIndex, 0, layer);
@@ -85,7 +88,7 @@ export function useOverlayLayer(options: LayerOptions) {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("pointerdown", onPointerDown);
     };
-  }, [open, contentRef, rootRef, modal]);
+  }, [open, contentRef, rootRef, modal, parent]);
 }
 
 let bodyScrollLockCount = 0;
@@ -197,12 +200,17 @@ export function useModalOverlay({
       document.removeEventListener("focusin", handleFocus);
       observer.disconnect();
 
+      if (!restoreFocus) return;
+      const activeModal = layers[getTopModalIndex()]?.contentRef.current;
       if (
-        restoreFocus &&
         previouslyFocusedElement &&
-        document.contains(previouslyFocusedElement)
+        document.contains(previouslyFocusedElement) &&
+        !previouslyFocusedElement.closest("[inert]") &&
+        (!activeModal || previouslyFocusedElement !== document.body)
       ) {
         previouslyFocusedElement.focus();
+      } else if (activeModal && !activeModal.contains(document.activeElement)) {
+        focusInitialElement(activeModal);
       }
     };
   }, [autoFocus, contentRef, lockScroll, open, restoreFocus, trapFocus]);

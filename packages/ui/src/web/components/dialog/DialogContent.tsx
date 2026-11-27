@@ -4,7 +4,7 @@ import type { HTMLAttributes } from "react";
 import { forwardRef, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
-import { useModalOverlay } from "../../system/overlay";
+import { OverlayParentContext, useModalOverlay } from "../../system/overlay";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 import { useDialog } from "./DialogContext";
 import type { DialogSize, DialogTone, DialogVariant } from "./dialog-types";
@@ -65,7 +65,9 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           {...swirskiAttrs("dialog-content", { size, tone, variant })}
           {...props}
         >
-          {children}
+          <OverlayParentContext.Provider value={contentRef}>
+            {children}
+          </OverlayParentContext.Provider>
         </div>
       </div>,
       portalRoot,

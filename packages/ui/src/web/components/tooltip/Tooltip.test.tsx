@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { Tooltip } from "./Tooltip";
@@ -23,8 +23,8 @@ describe("Tooltip", () => {
     expect(trigger).toHaveAccessibleDescription("Helpful context");
 
     await user.unhover(trigger);
-    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
-    expect(trigger).not.toHaveAttribute("aria-describedby");
+    await waitFor(() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument());
+    expect(trigger).toHaveAttribute("aria-describedby", tooltip.id);
 
     await user.tab();
     expect(trigger).toHaveFocus();
@@ -49,7 +49,7 @@ describe("Tooltip", () => {
 
     const trigger = screen.getByRole("button", { name: "Info" });
 
-    expect(trigger).toHaveAccessibleDescription("Visible note");
+    expect(trigger).toHaveAccessibleDescription("Visible note Helpful context");
 
     await user.tab();
 
@@ -67,7 +67,18 @@ describe("Tooltip", () => {
 
     expect(screen.getByRole("button", { name: "Next" })).toHaveFocus();
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
-    expect(trigger).toHaveAttribute("aria-describedby", "external-note");
-    expect(trigger).toHaveAccessibleDescription("Visible note");
+    expect(trigger).toHaveAccessibleDescription("Visible note Helpful context");
+  });
+
+  it("describes a wrapped button before focus and dismisses on Escape without moving focus", async () => {
+    const user = userEvent.setup();
+    render(<Tooltip content="Extra context"><button>Info</button></Tooltip>);
+    const trigger = screen.getByRole("button", { name: "Info" });
+    expect(trigger).toHaveAccessibleDescription("Extra context");
+    await user.tab();
+    expect(await screen.findByRole("tooltip")).toBeVisible();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
   });
 });

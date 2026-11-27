@@ -12,10 +12,31 @@ export const itemSizeStyles: Record<DropdownMenuSize, string> = {
   lg: "min-h-12 px-4 py-3 text-sm",
 };
 
-function getEnabledMenuItems(content: HTMLElement) {
+export function getEnabledMenuItems(content: HTMLElement) {
   return Array.from(content.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+    .filter((item) => item.closest('[role="menu"]') === content)
     .filter((item) => !item.hasAttribute("disabled"))
     .filter((item) => item.getAttribute("aria-disabled") !== "true");
+}
+
+export function focusMatchingMenuItem(content: HTMLElement, search: string) {
+  const items = getEnabledMenuItems(content);
+  const current = items.indexOf(content.ownerDocument.activeElement as HTMLElement);
+  const characters = Array.from(search);
+  const query = characters.every((character) => character === characters[0])
+    ? characters[0]
+    : search;
+  const start = query.length === 1 ? current + 1 : Math.max(current, 0);
+  for (let offset = 0; offset < items.length; offset += 1) {
+    const item = items[(start + offset) % items.length];
+    const referencedLabel = item.getAttribute("aria-labelledby")?.split(/\s+/)
+      .map((id) => item.ownerDocument.getElementById(id)?.textContent ?? "").join(" ").trim();
+    const label = referencedLabel || item.getAttribute("aria-label") || item.textContent || "";
+    if (label.trim().toLocaleLowerCase().startsWith(query)) {
+      item.focus();
+      break;
+    }
+  }
 }
 
 export function getCurrentMenuItemIndex(content: HTMLElement) {

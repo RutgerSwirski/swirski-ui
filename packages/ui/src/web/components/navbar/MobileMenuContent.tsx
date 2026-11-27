@@ -4,7 +4,7 @@ import type { HTMLAttributes } from "react";
 import { forwardRef, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
-import { useModalOverlay } from "../../system/overlay";
+import { OverlayParentContext, useModalOverlay } from "../../system/overlay";
 import { usePortalRoot } from "../../hooks/use-portal-root/usePortalRoot";
 import type { NavbarSize, NavbarTone, NavbarVariant } from "./Navbar";
 import { useMobileMenu } from "./MobileMenuContext";
@@ -53,6 +53,7 @@ export const MobileMenuContent = forwardRef<
         className="absolute inset-0"
       />
       <div
+        aria-label="Navigation menu"
         aria-modal="true"
         ref={composeRefs(contentRef, ref)}
         tabIndex={-1}
@@ -67,7 +68,9 @@ export const MobileMenuContent = forwardRef<
         {...swirskiAttrs("mobile-menu-content", { size, tone, variant })}
         {...props}
       >
-        {children}
+        <OverlayParentContext.Provider value={contentRef}>
+          {children}
+        </OverlayParentContext.Provider>
       </div>
     </div>,
     portalRoot,
