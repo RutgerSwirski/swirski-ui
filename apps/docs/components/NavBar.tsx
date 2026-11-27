@@ -22,6 +22,7 @@ import {
 } from "@swirski/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { DocsThemeToggle } from "./DocsTheme";
 
 type NavLinkItem = {
@@ -64,6 +65,16 @@ const navItems: NavItem[] = [
 
 export default function NavBar() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMobileOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   return (
     <Navbar>
@@ -112,8 +123,10 @@ export default function NavBar() {
       </NavbarNav>
       <NavbarActions>
         <DocsThemeToggle />
-        <MobileMenu>
-          <MobileMenuTrigger className="lg:hidden" />
+        <MobileMenu open={mobileOpen} onOpenChange={setMobileOpen}>
+          <div className="lg:hidden">
+            <MobileMenuTrigger />
+          </div>
           <MobileMenuContent>
             <MobileMenuHeader>
               <MobileMenuTitle>Menu</MobileMenuTitle>
