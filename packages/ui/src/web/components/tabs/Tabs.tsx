@@ -3,12 +3,12 @@
 import {
   ButtonHTMLAttributes,
   HTMLAttributes,
-  ReactNode,
   createContext,
   forwardRef,
   useContext,
-  useState,
+  useId,
 } from "react";
+import { useControllableState } from "../../hooks/use-controllable-state";
 import {
   Slot,
   cn,
@@ -22,20 +22,27 @@ export type TabsSize = "sm" | "md" | "lg";
 export type TabsTone = "blue" | "yellow" | "black";
 
 type TabsContextValue = {
+  id: string;
   value: string;
   setValue: (value: string) => void;
 };
 
 const TabsContext = createContext<TabsContextValue | null>(null);
 
-export type TabsProps = {
-  value?: string;
-  defaultValue: string;
+type TabsSelection =
+  | { value: string; defaultValue?: string }
+  | { value?: string; defaultValue: string };
+
+export type TabsProps = TabsSelection & {
   onValueChange?: (value: string) => void;
   variant?: TabsVariant;
   size?: TabsSize;
   tone?: TabsTone;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<HTMLAttributes<HTMLDivElement>, "defaultValue">;
+
+function partId(id: string, part: "tab" | "panel", value: string) {
+  return `${id}-${part}-${encodeURIComponent(value)}`;
+}
 
 function useTabs() {
   const context = useContext(TabsContext);
@@ -60,20 +67,15 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
   },
   ref,
 ) {
-  const [internalValue, setInternalValue] = useState(defaultValue);
-  const isControlled = value !== undefined;
-  const currentValue = value ?? internalValue;
-
-  function setValue(nextValue: string) {
-    if (!isControlled) {
-      setInternalValue(nextValue);
-    }
-
-    onValueChange?.(nextValue);
-  }
+  const id = useId();
+  const [currentValue, setValue] = useControllableState({
+    value,
+    defaultValue: defaultValue ?? "",
+    onChange: onValueChange,
+  });
 
   return (
-    <TabsContext.Provider value={{ value: currentValue, setValue }}>
+    <TabsContext.Provider value={{ id, value: currentValue, setValue }}>
       <div
         ref={ref}
         className={cn("grid gap-4", className)}
@@ -101,6 +103,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       variant = "default",
       size = "md",
       tone = "blue",
+      onKeyDown,
       ...props
     },
     ref,
@@ -116,6 +119,44 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
           className,
         )}
         role="tablist"
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (event.defaultPrevented) return;
+
+          const list = event.currentTarget;
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const current = target.closest('[role="tab"]');
+          if (!current || current.closest('[role="tablist"]') !== list) return;
+
+          const tabs = Array.from(list.querySelectorAll<HTMLElement>('[role="tab"]'))
+            .filter(
+              (tab) => tab.closest('[role="tablist"]') === list &&
+                !tab.matches(':disabled, [aria-disabled="true"]'),
+            );
+          const index = tabs.findIndex((tab) => tab === current);
+          if (index < 0) return;
+
+          let nextIndex: number;
+          if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = tabs.length - 1;
+          } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            const rtl = getComputedStyle(list).direction === "rtl";
+            const step = (event.key === "ArrowRight" ? 1 : -1) * (rtl ? -1 : 1);
+            nextIndex = (index + step + tabs.length) % tabs.length;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          const next = tabs[nextIndex];
+          if (next !== current) {
+            next.focus();
+            next.click();
+          }
+        }}
         {...swirskiAttrs("tabs-list", { size, tone, variant })}
         {...props}
       />
@@ -155,18 +196,27 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
       size = "md",
       tone = "blue",
       onClick,
+      disabled,
       ...props
     },
     ref,
   ) {
     const tabs = useTabs();
     const isSelected = tabs.value === value;
+    const isDisabled =
+      disabled || props["aria-disabled"] === true ||
+      props["aria-disabled"] === "true";
     const Component = asChild ? Slot : "button";
 
     return (
       <Component
         ref={ref}
+        id={partId(tabs.id, "tab", value)}
+        aria-controls={partId(tabs.id, "panel", value)}
         aria-selected={isSelected}
+        aria-disabled={isDisabled || undefined}
+        disabled={asChild ? undefined : disabled}
+        tabIndex={isSelected && !isDisabled ? 0 : -1}
         className={cn(
           "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase outline-none transition-all duration-150 active:scale-[0.98]",
           focusVisibleStyles,
@@ -179,6 +229,10 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
           className,
         )}
         onClick={(event) => {
+          if (isDisabled) {
+            event.preventDefault();
+            return;
+          }
           onClick?.(event);
 
           if (!event.defaultPrevented) {
@@ -219,9 +273,11 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
     ref,
   ) {
     const tabs = useTabs();
+    const id = props.id ?? partId(tabs.id, "panel", value);
+    const labelledBy = props["aria-labelledby"] ?? partId(tabs.id, "tab", value);
 
     if (tabs.value !== value) {
-      return null;
+      return <div id={id} role="tabpanel" aria-labelledby={labelledBy} hidden />;
     }
 
     const Component = asChild ? Slot : "div";
@@ -235,6 +291,9 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
           className,
         )}
         role="tabpanel"
+        id={id}
+        aria-labelledby={labelledBy}
+        tabIndex={0}
         {...swirskiAttrs("tabs-content", { size, tone, variant })}
         {...props}
       />

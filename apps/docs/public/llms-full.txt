@@ -974,7 +974,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";
 Usage:
 ```tsx
 <Tabs defaultValue="preview">
-  <TabsList>
+  <TabsList aria-label="File views">
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>
   </TabsList>
@@ -992,7 +992,7 @@ Tabs
 ```
 
 Props:
-- `defaultValue`: `string` required - Initial active tab value.
+- `defaultValue`: `string` - Initial active tab value. Supply this for uncontrolled tabs.
 - `value`: `string` - Controlled active tab value.
 - `onValueChange`: `(value: string) => void` - Called when a tab is selected.
 - `TabsTrigger.value`: `string` required - Value this trigger activates.

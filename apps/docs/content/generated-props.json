@@ -6088,8 +6088,8 @@
           "prop": "defaultValue",
           "component": "Tabs",
           "sourceType": "TabsProps",
-          "type": "string | (string & readonly string[])",
-          "required": true,
+          "type": "string",
+          "required": false,
           "description": "Generated from TabsProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
