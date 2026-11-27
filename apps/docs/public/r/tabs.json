@@ -5,7 +5,8 @@
   "title": "Tabs",
   "description": "Tabbed section primitive.",
   "registryDependencies": [
-    "https://ui.swirski.dev/r/swirski-base.json"
+    "https://ui.swirski.dev/r/swirski-base.json",
+    "https://ui.swirski.dev/r/use-controllable-state.json"
   ],
   "dependencies": [
     "clsx"
