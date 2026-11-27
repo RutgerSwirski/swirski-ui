@@ -36,7 +36,7 @@
     { "name": "slider", "category": "forms", "description": "Native range input.", "source": "packages/ui/src/components/slider" },
     { "name": "switch", "category": "forms", "description": "Native switch control.", "source": "packages/ui/src/components/switch" },
     { "name": "table", "category": "layout", "description": "Base data table.", "source": "packages/ui/src/components/table" },
-    { "name": "tabs", "category": "interaction", "description": "Tabbed section primitive.", "source": "packages/ui/src/components/tabs" },
+    { "name": "tabs", "category": "interaction", "description": "Tabbed section primitive.", "source": "packages/ui/src/components/tabs", "dependencies": ["use-controllable-state"] },
     { "name": "toast", "category": "feedback", "description": "Toast provider and status messages.", "source": "packages/ui/src/components/toast", "dependencies": ["use-portal-root"] },
     { "name": "tooltip", "category": "interaction", "description": "Hover/focus label.", "source": "packages/ui/src/components/tooltip", "dependencies": ["use-portal-root"] },
     { "name": "typography", "category": "typography", "description": "Title and Text primitives.", "source": "packages/ui/src/components/typography" },

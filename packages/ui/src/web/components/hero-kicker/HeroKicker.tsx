@@ -8,8 +8,11 @@ export type HeroKickerTone = "yellow" | "white" | "blue" | "red";
 export type HeroKickerProps = {
   asChild?: boolean;
   children?: ReactNode;
+  /** Badge treatment. Use flat to remove the shadow. */
   variant?: HeroKickerVariant;
+  /** Label size and padding. Defaults to md. */
   size?: HeroKickerSize;
+  /** Badge color. Defaults to yellow. */
   tone?: HeroKickerTone;
 } & HTMLAttributes<HTMLParagraphElement>;
 

@@ -19,7 +19,9 @@ export const DialogContext = createContext<DialogContextValue | null>(null);
 
 export type DialogProps = {
   children: ReactNode;
+  /** Controlled open state. Pair with onOpenChange. */
   open?: boolean;
+  /** Initial uncontrolled open state. Defaults to false. */
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   variant?: DialogVariant;

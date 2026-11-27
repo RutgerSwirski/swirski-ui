@@ -28,8 +28,10 @@ type ButtonBaseProps = {
   children?: ReactNode;
   icon?: "arrow-up-right" | "github";
   iconSide?: "left" | "right";
+  /** Visual treatment. Defaults to solid. Color values here are legacy aliases. */
   variant?: ButtonVariant | ButtonTone;
   size?: ButtonSize;
+  /** Button color. Defaults to blue unless a legacy color variant is supplied. */
   tone?: ButtonTone;
   withShadow?: boolean;
   className?: string;

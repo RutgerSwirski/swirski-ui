@@ -7,7 +7,9 @@ export type InputTone = "default" | "danger";
 
 export type InputProps = {
   variant?: InputVariant;
+  /** Visual input height and padding. Defaults to md. */
   size?: InputSize;
+  /** Border treatment. Use danger for error styling and aria-invalid for validation semantics. */
   tone?: InputTone;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "color">;
 

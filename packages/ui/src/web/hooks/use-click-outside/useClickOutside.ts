@@ -7,6 +7,7 @@ export type UseClickOutsideOptions = {
   events?: Array<"mousedown" | "pointerdown" | "touchstart">;
 };
 
+/** Call a handler for pointer events outside the referenced element. */
 export function useClickOutside<T extends HTMLElement>(
   ref: RefObject<T | null>,
   handler: (event: Event) => void,

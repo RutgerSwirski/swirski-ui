@@ -77,7 +77,7 @@ export const typographyComponentDoc: ComponentDoc = {
       name: "Text.component",
       type: '"p" | "span" | "div"',
       defaultValue: '"p"',
-      description: "Chooses the rendered text element.",
+      description: "Legacy element selector. Use Text.as in new code.",
     },
     {
       name: "Text.size",
@@ -106,7 +106,7 @@ export const typographyComponentDoc: ComponentDoc = {
     {
       name: "Text.as",
       type: "ElementType",
-      description: "Custom text element or component.",
+      description: "Chooses the rendered element or component. Renders a paragraph by default.",
     },
     {
       name: "Text.asChild",

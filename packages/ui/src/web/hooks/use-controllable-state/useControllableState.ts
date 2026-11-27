@@ -8,6 +8,7 @@ export type UseControllableStateProps<T> = {
   onChange?: (value: T) => void;
 };
 
+/** Build a component that accepts either a controlled value or an uncontrolled default. */
 export function useControllableState<T>({
   value,
   defaultValue,

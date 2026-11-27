@@ -7,6 +7,7 @@ export type UseEscapeKeyOptions = {
   target?: Document | HTMLElement | Window | null;
 };
 
+/** Call a handler on Escape. Listens on the document by default. */
 export function useEscapeKey(
   handler: (event: KeyboardEvent) => void,
   options: UseEscapeKeyOptions = {},

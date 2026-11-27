@@ -37,8 +37,11 @@ export type {
 
 export type SelectProps = {
   options: SelectOption[];
+  /** Controlled selected option value. Pair with onValueChange. */
   value?: string;
+  /** Initial uncontrolled selection. Defaults to the first enabled option. */
   defaultValue?: string;
+  /** Called with the option value when the user selects an option. */
   onValueChange?: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;

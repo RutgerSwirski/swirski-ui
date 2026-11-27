@@ -7,6 +7,7 @@ export type UseLocalStorageOptions<T> = {
   deserialize?: (value: string) => T;
 };
 
+/** Persist a value in browser storage. Returns the value, setter, and reset action. */
 export function useLocalStorage<T>(
   key: string,
   defaultValue: T,

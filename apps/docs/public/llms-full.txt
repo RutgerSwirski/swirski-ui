@@ -965,6 +965,7 @@ Category: Interaction
 Docs: https://ui.swirski.dev/components/tabs
 Registry: https://ui.swirski.dev/r/tabs.json
 Source: `packages/ui/src/components/tabs`
+Copy dependencies: `use-controllable-state`
 
 Import:
 ```tsx
@@ -974,7 +975,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";
 Usage:
 ```tsx
 <Tabs defaultValue="preview">
-  <TabsList>
+  <TabsList aria-label="File views">
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>
   </TabsList>
@@ -992,7 +993,7 @@ Tabs
 ```
 
 Props:
-- `defaultValue`: `string` required - Initial active tab value.
+- `defaultValue`: `string` - Initial active tab value. Supply this for uncontrolled tabs.
 - `value`: `string` - Controlled active tab value.
 - `onValueChange`: `(value: string) => void` - Called when a tab is selected.
 - `TabsTrigger.value`: `string` required - Value this trigger activates.
@@ -1523,12 +1524,12 @@ Props:
 - `Title.as`: `ElementType` - Custom heading element or component.
 - `Title.asChild`: `boolean` default false - Renders the child as the root element.
 - `Text.children`: `ReactNode` required - Text content.
-- `Text.component`: `"p" | "span" | "div"` default "p" - Chooses the rendered text element.
+- `Text.component`: `"p" | "span" | "div"` default "p" - Legacy element selector. Use Text.as in new code.
 - `Text.size`: `"xs" | "sm" | "md" | "lg" | "xl" | "2xl"` default "md" - Applies the standard text scale.
 - `Text.variant`: `"default" | "lead" | "caption"` default "default" - Applies the standard text role treatment.
 - `Text.tone`: `"default" | "muted" | "subtle" | "inverted"` default "default" - Applies the standard text color treatment.
 - `Text.weight`: `"regular" | "medium" | "bold" | "black"` default "regular" - Applies the text weight.
-- `Text.as`: `ElementType` - Custom text element or component.
+- `Text.as`: `ElementType` - Chooses the rendered element or component. Renders a paragraph by default.
 - `Text.asChild`: `boolean` default false - Renders the child as the root element.
 
 ## Hooks
