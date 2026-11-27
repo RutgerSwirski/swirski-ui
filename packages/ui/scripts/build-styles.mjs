@@ -11,11 +11,13 @@ import {
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { scopeComponentStyles } from "./scope-component-styles.mjs";
 
 const require = createRequire(import.meta.url);
 const packageDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const distDir = join(packageDir, "dist");
 const fontsPath = join(distDir, "fonts.css");
+const stylesPath = join(distDir, "styles.css");
 const nativeFontsDir = join(distDir, "native", "fonts");
 const webEntryPath = join(distDir, "index.js");
 
@@ -37,6 +39,8 @@ for (const entry of ["styles", "reset", "fonts"]) {
     },
   );
 }
+
+writeFileSync(stylesPath, scopeComponentStyles(readFileSync(stylesPath, "utf8")));
 
 const fontPackages = [
   { name: "@fontsource-variable/inter", outputDir: "inter" },

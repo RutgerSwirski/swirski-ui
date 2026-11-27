@@ -22,5 +22,8 @@
     "install:docs": "pnpm --filter docs install",
     "artifacts:update": "pnpm docs:metadata && pnpm llms:build && pnpm registry:shadcn",
     "test": "pnpm test:ui && pnpm build:ui && pnpm build && pnpm --filter @swirski/ui build-storybook"
+  },
+  "devDependencies": {
+    "playwright": "1.60.0"
   }
 }

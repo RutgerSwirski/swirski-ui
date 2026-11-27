@@ -117,9 +117,10 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
       - run: pnpm test:ui-consumers
         env:
-          CHROMIUM_BIN: google-chrome
+          UI_BROWSERS: chromium,firefox,webkit
 
   storybook-build:
     runs-on: ubuntu-latest

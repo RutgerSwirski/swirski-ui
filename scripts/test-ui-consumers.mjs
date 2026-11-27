@@ -1,11 +1,11 @@
-import { execFile, execFileSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { createServer } from "node:http";
 import { createRequire } from "node:module";
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { promisify } from "node:util";
+import { chromium, firefox, webkit } from "playwright";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const ui = join(root, "packages/ui");
@@ -26,8 +26,9 @@ function write(file, content) {
   writeFileSync(join(fixture, file), content);
 }
 
-async function verifyBrowser(browser) {
-  const contentTypes = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css" };
+async function verifyBrowsers(names) {
+  const engines = { chromium, firefox, webkit };
+  const contentTypes = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2" };
   const server = createServer((request, response) => {
     const path = new URL(request.url, "http://localhost").pathname;
     const file = join(fixture, "dist", path === "/" ? "index.html" : path);
@@ -40,24 +41,34 @@ async function verifyBrowser(browser) {
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   try {
-    const { stdout } = await promisify(execFile)(browser, [
-      "--headless", "--disable-gpu", "--dump-dom", "--virtual-time-budget=5000",
-      `http://127.0.0.1:${server.address().port}/`,
-    ], { timeout: 30000 });
-    if (!stdout.includes('data-theme-verified="true"')) {
-      throw new Error("The packed stylesheet or scoped dark portal theme did not reach the browser.");
-    }
-    if (!stdout.includes('data-isolation-verified="true"')) {
-      throw new Error("Component styles changed the consumer's document defaults or unscoped utilities.");
-    }
-    for (const scheme of ["light", "dark"]) {
-      if (!stdout.includes(`data-contrast-verified="${scheme}"`)) {
-        const failures = [...stdout.matchAll(/data-contrast-failure="([^"]*)"/g)];
-        throw new Error(`Packed ${scheme} theme contrast check failed: ${failures.map((match) => match[1]).join(", ")}`);
+    const url = `http://127.0.0.1:${server.address().port}/`;
+    for (const name of names) {
+      if (!Object.hasOwn(engines, name)) throw new Error(`Unknown browser: ${name}`);
+      const browser = await engines[name].launch({
+        executablePath: name === "chromium" ? process.env.CHROMIUM_BIN : undefined,
+        // Exercise the built selector fallback even on a Firefox with native @scope.
+        firefoxUserPrefs: name === "firefox" ? { "layout.css.scope.enabled": false } : undefined,
+      });
+      try {
+        const page = await browser.newPage();
+        await page.goto(url);
+        await page.waitForFunction(() =>
+          document.querySelector('[data-theme-verified="true"]') &&
+          document.querySelector('[data-isolation-verified="true"]') &&
+          document.querySelector('[data-contrast-verified="light"]') &&
+          document.querySelector('[data-contrast-verified="dark"]'), undefined, { timeout: 8000 });
+        await page.goto(`${url}?optional-styles`);
+        await page.locator('[data-optional-styles-verified="true"]').waitFor({
+          state: "attached",
+          timeout: 8000,
+        });
+        console.log(`${name} ${browser.version()}: verified scoped CSS, portal theme, contrast, and opt-in reset and fonts.`);
+      } catch (error) {
+        throw new Error(`Packed stylesheet failed in ${name} ${browser.version()}`, { cause: error });
+      } finally {
+        await browser.close();
       }
     }
-    console.log("Verified 4.5:1 text contrast for representative tone variants in both themes.");
-    console.log("Verified packed stylesheet and dark/custom theme inside a browser portal.");
   } finally {
     server.close();
   }
@@ -104,13 +115,27 @@ export default function Page() {
 import { Title } from "@swirski/ui";
 import { createRoot } from "react-dom/client";
 import { ConsumerExample } from "./ThemeProbe";
-createRoot(document.getElementById("root")!).render(<><Title>Installed tarball</Title><ConsumerExample /></>);
+const root = document.getElementById("root")!;
+async function start() {
+  if (new URLSearchParams(location.search).has("optional-styles")) {
+    await import("@swirski/ui/reset.css");
+    if (getComputedStyle(document.body).marginTop !== "0px" || document.fonts.size !== 0) return;
+    await import("@swirski/ui/fonts.css");
+    const fonts = await document.fonts.load("16px Anton", "A");
+    if (fonts.length > 0 && fonts.every((font) => font.status === "loaded")) {
+      root.dataset.optionalStylesVerified = "true";
+    }
+    return;
+  }
+  createRoot(root).render(<><Title>Installed tarball</Title><ConsumerExample /></>);
+}
+void start();
 `);
   run(["install", "--no-audit", "--no-fund"]);
   execFileSync(process.execPath, ["-e", 'for (const font of ["anton", "bangers"]) require.resolve(`@swirski/ui/fonts/${font}-latin.woff2`)'], { cwd: fixture });
   const consumerRequire = createRequire(join(fixture, "package.json"));
   const css = (entry) => readFileSync(consumerRequire.resolve(`@swirski/ui/${entry}.css`), "utf8");
-  if (css("styles").includes("@font-face") || !css("fonts").includes("@font-face") ||
+  if (/@font-face|@scope\b/.test(css("styles")) || !css("fonts").includes("@font-face") ||
       !css("reset").includes("box-sizing:border-box")) {
     throw new Error("The component, font and reset CSS exports did not build separately.");
   }
@@ -122,7 +147,8 @@ createRoot(document.getElementById("root")!).render(<><Title>Installed tarball</
   }
   run(["exec", "--", "tsc", "--noEmit"]);
   run(["exec", "--", "vite", "build"]);
-  if (process.env.CHROMIUM_BIN) await verifyBrowser(process.env.CHROMIUM_BIN);
+  const browsers = process.env.UI_BROWSERS ?? (process.env.CHROMIUM_BIN ? "chromium" : "");
+  if (browsers) await verifyBrowsers(browsers.split(",").map((name) => name.trim()));
 } finally {
   rmSync(fixture, { recursive: true, force: true });
 }
