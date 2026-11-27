@@ -374,6 +374,39 @@ pnpm release:ui --publish --otp 123456
 
 ## Development
 
+### React compatibility
+
+The web package supports React and React DOM 18 or 19. Use matching React and
+React DOM releases and install types for the same major when using TypeScript.
+CI installs the actual UI tarball into separate temporary applications:
+
+| Installed React and React DOM | React / React DOM types | Next.js App Router fixture |
+| --- | --- | --- |
+| 18.3.1 | 18.3.32 / 18.3.7 | 14.2.35 |
+| 19.3.1 | 19.3.3 / 19.3.0 | 16.4.6 |
+
+Both rows check strict TypeScript declarations, Node server rendering,
+Vite client rendering and hydration, and development StrictMode. The Next.js
+checks build and hydrate the App Router fixture in production mode. Next.js may
+bundle its own React runtime for the App Router; the fixture logs that runtime
+separately. Next.js 14 is a compatibility fixture for existing React 18 apps.
+Check the [Next.js support policy](https://nextjs.org/support-policy) when
+choosing a framework version for production.
+
+Web components use the React 18 hook surface. Slot uses the element ref on
+React 18 and reads ref from props on React 19. Composed callback cleanup works
+with both React 18's null detach and React 19's returned cleanup. Modal focus
+uses a layout effect in the browser and avoids the server layout-effect warning.
+
+```bash
+pnpm build:ui
+pnpm exec playwright install chromium
+pnpm test:react-compatibility        # both React releases
+pnpm test:react-compatibility 18     # only React 18
+```
+
+### Consumer and browser tests
+
 Run `pnpm test:ui-consumers` to build and install the UI tarball into isolated
 Next.js App Router and plain React fixtures. To run the browser checks used in CI:
 

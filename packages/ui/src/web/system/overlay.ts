@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, type RefObject } from "react";
 import { focusInitialElement, trapFocus as trapFocusWithin } from "./focus";
 
+const useBrowserLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 type LayerOptions = {
   open: boolean;
   contentRef: RefObject<HTMLElement | null>;
@@ -132,7 +134,7 @@ export function useModalOverlay({
   trapFocus = true,
 }: UseModalOverlayOptions) {
   const previousFocus = useRef<HTMLElement | null>(null);
-  useLayoutEffect(() => {
+  useBrowserLayoutEffect(() => {
     if (open) previousFocus.current = document.activeElement as HTMLElement | null;
   }, [open]);
 
