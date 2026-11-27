@@ -35,11 +35,11 @@ export function booleanValue(values: PlaygroundValues, key: string) {
   return Boolean(values[key]);
 }
 
-export const cardSurfaceClasses = {
-  cream: "bg-[#F5F5F3]",
-  white: "bg-white",
-  yellow: "bg-[#FFD400]",
-};
+export const cardSurfaceTones = {
+  cream: "default",
+  white: "white",
+  yellow: "yellow",
+} as const;
 
 export const gridColumnOptions = ["1", "2", "3", "4", "6"] as const;
 export const gridGapOptions = ["xs", "sm", "md", "lg", "xl"] as const;

@@ -13,25 +13,25 @@ export type AlertProps = {
 } & HTMLAttributes<HTMLDivElement>;
 
 const toneStyles: Record<AlertTone, string> = {
-  blue: "bg-[var(--sw-color-blue)] text-white",
-  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]",
-  red: "bg-[var(--sw-color-red)] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  red: "bg-[var(--sw-color-red)] text-[color:var(--sw-color-on-red)]",
   white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 
 const outlineToneStyles: Record<AlertTone, string> = {
-  blue: "bg-[var(--sw-color-surface)] text-[var(--sw-color-blue)]",
+  blue: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-blue-text)]",
   yellow: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
-  red: "bg-[var(--sw-color-surface)] text-[var(--sw-color-red)]",
+  red: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-red-text)]",
   white:
-    "bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]",
+    "bg-transparent text-[color:var(--sw-color-ink)] border-[color:var(--sw-color-ink)]",
 };
 
 const softToneStyles: Record<AlertTone, string> = {
   blue: "bg-[var(--sw-color-blue)]/10 text-[var(--sw-color-ink)]",
   yellow: "bg-[var(--sw-color-yellow)]/30 text-[var(--sw-color-ink)]",
   red: "bg-[var(--sw-color-red)]/10 text-[var(--sw-color-ink)]",
-  white: "bg-[var(--sw-color-surface)]/20 text-[var(--sw-color-surface)]",
+  white: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-ink)]",
 };
 
 const sizeStyles: Record<AlertSize, string> = {

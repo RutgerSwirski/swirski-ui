@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Container, Grid } from "@swirski/ui";
+import { Container, Grid, SwirskiProvider } from "@swirski/ui";
 
 import CommerceExample from "./_components/CommerceExample";
 import ExamplesHero from "./_components/ExamplesHero";
@@ -13,14 +13,16 @@ export const metadata: Metadata = {
 
 export default function ExamplesPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
       <ExamplesHero />
 
-      <Grid as={Container} className="gap-20 py-16 md:gap-24 md:py-20">
-        <SaasExample />
-        <PortfolioExample />
-        <CommerceExample />
-      </Grid>
+      <SwirskiProvider colorScheme="light">
+        <Grid as={Container} className="gap-20 py-16 md:gap-24 md:py-20">
+          <SaasExample />
+          <PortfolioExample />
+          <CommerceExample />
+        </Grid>
+      </SwirskiProvider>
     </main>
   );
 }

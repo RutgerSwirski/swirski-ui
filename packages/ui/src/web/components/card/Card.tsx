@@ -16,7 +16,7 @@ export type CardProps = {
 } & HTMLAttributes<HTMLElement>;
 
 const base =
-  "group relative min-w-0 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-[var(--sw-color-ink)]";
+  "group relative min-w-0 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)]";
 
 const shadowStyles: Record<CardSize, string> = {
   sm: "shadow-[4px_4px_0_var(--sw-color-shadow)]",
@@ -25,10 +25,10 @@ const shadowStyles: Record<CardSize, string> = {
 };
 
 const toneStyles: Record<CardTone, string> = {
-  default: "bg-[var(--sw-color-paper)]",
-  white: "bg-[var(--sw-color-surface)]",
-  yellow: "bg-[var(--sw-color-yellow)]",
-  blue: "bg-[var(--sw-color-blue)] text-white",
+  default: "bg-[var(--sw-color-paper)] text-[color:var(--sw-color-ink)]",
+  white: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-ink)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
@@ -36,6 +36,11 @@ const variantStyles: Record<CardVariant, string> = {
   elevated: "",
   flat: "shadow-none",
   outline: "bg-transparent shadow-none",
+};
+
+const outlineToneStyles: Partial<Record<CardTone, string>> = {
+  blue: "text-[color:var(--sw-color-blue-text)]",
+  yellow: "text-[color:var(--sw-color-yellow-text)]",
 };
 
 const interactiveStyles =
@@ -66,7 +71,9 @@ export const Card = forwardRef<HTMLElement, CardProps>(function Card(
       ref={ref}
       className={cn(
         base,
-        toneStyles[tone],
+        variant === "outline"
+          ? outlineToneStyles[tone] ?? "text-[color:var(--sw-color-ink)]"
+          : toneStyles[tone],
         variantStyles[variant],
         resolvedWithShadow && shadowStyles[size],
         interactive && interactiveStyles,

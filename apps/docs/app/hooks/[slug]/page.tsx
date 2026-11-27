@@ -51,7 +51,7 @@ export default async function HookPage({ params }: Props) {
   const nextHook = hookDocs[(hookIndex + 1) % hookDocs.length];
 
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
       <DetailHeaderFrame accentColor="#FF3131">
         <Container className="relative z-10">
           <NavBar />
@@ -65,7 +65,7 @@ export default async function HookPage({ params }: Props) {
             index={hookIndex}
             metaLabel="Hook"
             title={hook.title}
-            toneClassName="bg-[#FF3131] text-white"
+            toneClassName="docs-accent-red"
           />
         </Container>
       </DetailHeaderFrame>

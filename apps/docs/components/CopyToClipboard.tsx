@@ -70,7 +70,7 @@ export default function CopyToClipboard({
         <button
           aria-label={copied ? copiedLabel : label}
           aria-live="polite"
-          className="grid size-11 place-items-center border-4 border-black bg-[#FFD400] text-black shadow-[4px_4px_0_#0B0B0C] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+          className="grid size-11 place-items-center border-4 border-docs-ink bg-[#FFD400] text-black shadow-[4px_4px_0_var(--sw-color-shadow)] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
           onClick={handleCopy}
           type="button"
         >

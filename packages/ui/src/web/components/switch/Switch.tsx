@@ -92,7 +92,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         <span className="grid gap-1">
           {label && <span className="font-black leading-5">{label}</span>}
           {description && (
-            <span className="text-sm font-bold leading-5 text-neutral-600">
+            <span className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
               {description}
             </span>
           )}

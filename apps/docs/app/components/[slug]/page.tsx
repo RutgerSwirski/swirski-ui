@@ -23,14 +23,14 @@ type Props = {
 
 const categoryStyles: Record<ComponentDoc["category"], string> = {
   Typography: "bg-[#FFD400] text-black",
-  Layout: "bg-white text-black",
+  Layout: "bg-docs-surface text-docs-ink",
   Cards: "bg-[#0057FF] text-white",
-  Buttons: "bg-[#FF3131] text-white",
+  Buttons: "docs-accent-red",
   Disclosure: "bg-[#FFD400] text-black",
   Feedback: "bg-[#0B0B0C] text-white",
-  Forms: "bg-white text-black",
-  Hooks: "bg-[#FF3131] text-white",
-  Media: "bg-[#F5F5F3] text-black",
+  Forms: "bg-docs-surface text-docs-ink",
+  Hooks: "docs-accent-red",
+  Media: "bg-docs-paper text-docs-ink",
   Theming: "bg-[#0057FF] text-white",
   Interaction: "bg-[#FFD400] text-black",
   Backgrounds: "bg-[#0B0B0C] text-white",
@@ -95,7 +95,7 @@ export default async function ComponentPage({ params }: Props) {
   const { generatedCount, rows } = getComponentPropRows(component);
 
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
       <DetailHeaderFrame accentColor="#0057FF">
         <Container className="relative z-10">
           <NavBar />

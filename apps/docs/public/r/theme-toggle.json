@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-toggle",
+  "type": "registry:ui",
+  "title": "Theme Toggle",
+  "description": "Controlled light and dark mode switch.",
+  "registryDependencies": [
+    "https://ui.swirski.dev/r/switch.json",
+    "https://ui.swirski.dev/r/swirski-provider.json"
+  ],
+  "dependencies": [
+    "clsx"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/web/components/theme-toggle/ThemeToggle.tsx",
+      "content": "\"use client\";\n\nimport { forwardRef } from \"react\";\nimport { swirskiAttrs } from \"../../system\";\nimport type { SwirskiColorScheme } from \"../../theme\";\nimport { Switch } from \"../switch\";\nimport type { SwitchProps } from \"../switch\";\n\nexport type ThemeToggleProps = Omit<\n  SwitchProps,\n  \"checked\" | \"defaultChecked\" | \"onChange\"\n> & {\n  colorScheme: SwirskiColorScheme;\n  onColorSchemeChange: (colorScheme: SwirskiColorScheme) => void;\n};\n\nexport const ThemeToggle = forwardRef<HTMLInputElement, ThemeToggleProps>(\n  function ThemeToggle(\n    { colorScheme, onColorSchemeChange, label = \"Dark mode\", ...props },\n    ref,\n  ) {\n    return (\n      <Switch\n        {...swirskiAttrs(\"theme-toggle\", {\n          size: props.size ?? \"md\",\n          tone: props.tone ?? \"blue\",\n          variant: props.variant ?? \"default\",\n        })}\n        {...props}\n        ref={ref}\n        label={label}\n        checked={colorScheme === \"dark\"}\n        onChange={(event) =>\n          onColorSchemeChange(event.currentTarget.checked ? \"dark\" : \"light\")\n        }\n      />\n    );\n  },\n);\n\nThemeToggle.displayName = \"ThemeToggle\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/theme-toggle/ThemeToggle.tsx"
+    },
+    {
+      "path": "packages/ui/src/web/components/theme-toggle/index.ts",
+      "content": "export { ThemeToggle } from \"./ThemeToggle\";\nexport type { ThemeToggleProps } from \"./ThemeToggle\";\n",
+      "type": "registry:ui",
+      "target": "@ui/swirski/components/theme-toggle/index.ts"
+    }
+  ],
+  "categories": [
+    "swirski",
+    "theming"
+  ],
+  "meta": {
+    "swirskiCategory": "theming",
+    "swirskiSource": "packages/ui/src/components/theme-toggle"
+  }
+}

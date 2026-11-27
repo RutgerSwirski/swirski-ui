@@ -37,12 +37,12 @@ function navbarLinkStyles({
   variant: NavbarVariant;
 }) {
   return cn(
-    "inline-flex min-h-11 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-2 text-sm font-black uppercase text-[var(--sw-color-ink)] no-underline outline-none transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--sw-color-yellow)] active:translate-y-0 active:scale-[0.98] disabled:hover:bg-[var(--sw-color-surface)]",
+    "inline-flex min-h-11 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-2 text-sm font-black uppercase no-underline outline-none transition-all duration-150 hover:-translate-y-0.5 hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] active:translate-y-0 active:scale-[0.98] disabled:hover:bg-[var(--sw-color-surface)]",
     focusVisibleStyles,
     disabledInteractiveStyles,
     active
-      ? "bg-[var(--sw-color-yellow)] shadow-[var(--sw-shadow-sm)]"
-      : "bg-[var(--sw-color-surface)]",
+      ? "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] shadow-[var(--sw-shadow-sm)]"
+      : "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-ink)]",
     variant === "compact" && "min-h-10 px-3 py-1.5 text-xs",
   );
 }

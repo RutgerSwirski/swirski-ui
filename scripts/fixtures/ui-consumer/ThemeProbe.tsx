@@ -1,9 +1,66 @@
 "use client";
 
 import {
-  Dialog, DialogContent, DialogTitle, InputField, SwirskiProvider,
+  AccordionItem, AccordionTrigger, Alert, Badge, Button, Dialog, DialogContent,
+  DialogTitle, InputField, NavbarLink, SwirskiProvider, Table, TableBody, TableCell,
+  TableRow,
 } from "@swirski/ui";
 import { useEffect, useRef } from "react";
+
+function luminance(color: string) {
+  const channels = color.match(/\d+(?:\.\d+)?/g)?.slice(0, 3).map(Number);
+  if (!channels || channels.length !== 3) throw new Error(`Unexpected color: ${color}`);
+  const linear = channels.map((channel) => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+}
+
+function ContrastProbe({ scheme }: { scheme: "light" | "dark" }) {
+  const probe = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = probe.current;
+    if (!element) return;
+    const surface = getComputedStyle(element).backgroundColor;
+    const controls = Array.from(element.querySelectorAll<HTMLElement>(
+      '[data-contrast], [data-swirski-component="table-wrapper"], [data-swirski-component="accordion-item"]',
+    ));
+    for (const control of controls) {
+      const { color, backgroundColor } = getComputedStyle(control);
+      const text = luminance(color);
+      const background = luminance(backgroundColor === "rgba(0, 0, 0, 0)" ? surface : backgroundColor);
+      const ratio = (Math.max(text, background) + 0.05) / (Math.min(text, background) + 0.05);
+      if (ratio < 4.5) {
+        element.dataset.contrastFailure = `${control.textContent}: ${ratio.toFixed(2)}:1`;
+        return;
+      }
+    }
+    if (controls.length > 0) element.dataset.contrastVerified = scheme;
+  }, [scheme]);
+
+  return (
+    <div ref={probe} style={{ backgroundColor: "var(--sw-color-paper)" }}>
+      {(["blue", "yellow", "red"] as const).map((tone) => (
+        <div key={tone}>
+          <Button tone={tone} data-contrast="">Filled {tone}</Button>
+          <Button tone={tone} variant="outline" data-contrast="">Outline {tone}</Button>
+          <Button tone={tone} variant="ghost" data-contrast="">Ghost {tone}</Button>
+          <Alert tone={tone} data-contrast="">Alert {tone}</Alert>
+          <Badge tone={tone} data-contrast="">Badge {tone}</Badge>
+        </div>
+      ))}
+      <NavbarLink href="#contrast" active data-contrast="">Active navigation</NavbarLink>
+      <AccordionItem>
+        <AccordionTrigger>Accordion label</AccordionTrigger>
+      </AccordionItem>
+      <Table>
+        <TableBody><TableRow><TableCell>Prop table</TableCell></TableRow></TableBody>
+      </Table>
+    </div>
+  );
+}
 
 function ThemeProbe() {
   const probe = useRef<HTMLSpanElement>(null);
@@ -35,6 +92,10 @@ export function ConsumerExample() {
           <DialogTitle>Consumer smoke test</DialogTitle>
           <InputField label="Email" type="email" hint="Use your work address." />
           <ThemeProbe />
+          <ContrastProbe scheme="dark" />
+          <SwirskiProvider colorScheme="light">
+            <ContrastProbe scheme="light" />
+          </SwirskiProvider>
         </DialogContent>
       </Dialog>
     </SwirskiProvider>

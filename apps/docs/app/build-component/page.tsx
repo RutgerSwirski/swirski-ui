@@ -114,8 +114,8 @@ pnpm build`;
 
 export default function BuildComponentPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative overflow-hidden border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative overflow-hidden border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#0057FF"
@@ -153,7 +153,7 @@ export default function BuildComponentPage() {
             {/* <Card interactive={false} className="bg-[#FFD400]">
               <CardContent>
                 <Badge tone="black">Command</Badge>
-                <code className="mt-5 block break-words border-4 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_#0B0B0C] sm:text-base">
+                <code className="mt-5 block break-words border-4 border-docs-ink bg-docs-surface px-4 py-3 text-sm font-black shadow-[4px_4px_0_var(--sw-color-shadow)] sm:text-base">
                   pnpm create:component empty-state
                 </code>
               </CardContent>
@@ -186,7 +186,7 @@ export default function BuildComponentPage() {
       </Grid>
 
       <Container className="pb-14 md:pb-20">
-        <Card interactive={false} className="bg-white">
+        <Card interactive={false} className="bg-docs-surface">
           <CardContent>
             <Grid gap="xl" className="lg:grid-cols-[0.8fr_1.2fr]">
               <div>
@@ -220,7 +220,7 @@ export default function BuildComponentPage() {
       <Grid
         as={Container}
         gap="xl"
-        className="border-y-4 border-black py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]"
+        className="border-y-4 border-docs-ink py-14 md:py-20 lg:grid-cols-[0.8fr_1.2fr]"
       >
         <div>
           <SectionLabel>Step 2</SectionLabel>
@@ -247,7 +247,7 @@ export default function BuildComponentPage() {
             </CardContent>
           </Card>
 
-          <Card interactive={false} className="bg-white">
+          <Card interactive={false} className="bg-docs-surface">
             <CardContent>
               <Badge tone="red">Documentation</Badge>
               <Title className="mt-5" order={2} size="h3">
@@ -263,7 +263,7 @@ export default function BuildComponentPage() {
             </CardContent>
           </Card>
 
-          <Card interactive={false} className="bg-white">
+          <Card interactive={false} className="bg-docs-surface">
             <CardContent>
               <Badge tone="blue">Playground</Badge>
               <Title className="mt-5" order={2} size="h3">

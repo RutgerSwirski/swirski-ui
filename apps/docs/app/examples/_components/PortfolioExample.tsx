@@ -44,7 +44,7 @@ export default function PortfolioExample() {
               <Title className="mt-6 text-current" order={3} size="h1">
                 Rhea Juno
               </Title>
-              <Text className="mt-5 max-w-md text-white/75" size="lg" weight="bold">
+              <Text className="mt-5 max-w-md" tone="inverted" size="lg" weight="bold">
                 Product identities, art-directed web systems and launch pages
                 for teams with strong opinions.
               </Text>

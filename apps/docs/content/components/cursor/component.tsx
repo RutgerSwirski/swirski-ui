@@ -38,12 +38,12 @@ export const cursorComponentDoc: ComponentDoc = {
         </div>
         <div
           aria-busy="true"
-          className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] p-3 text-center font-black uppercase"
+          className="grid min-h-20 place-items-center border-4 border-black bg-[#FFD400] text-[color:var(--sw-color-on-yellow)] p-3 text-center font-black uppercase"
         >
           Busy
         </div>
         <div
-          className="grid min-h-20 place-items-center border-4 border-black bg-white p-3 text-center font-black uppercase"
+          className="grid min-h-20 place-items-center border-4 border-black bg-[var(--sw-color-surface)] p-3 text-center font-black uppercase"
           data-cursor="crosshair"
         >
           Target

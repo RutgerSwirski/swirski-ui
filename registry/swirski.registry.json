@@ -41,6 +41,7 @@
     { "name": "tooltip", "category": "interaction", "description": "Hover/focus label.", "source": "packages/ui/src/components/tooltip", "dependencies": ["use-portal-root"] },
     { "name": "typography", "category": "typography", "description": "Title and Text primitives.", "source": "packages/ui/src/components/typography" },
     { "name": "swirski-provider", "category": "theming", "description": "Theme provider and token helpers.", "source": "packages/ui/src/theme", "dependencies": ["use-portal-root"] },
+    { "name": "theme-toggle", "category": "theming", "description": "Controlled light and dark mode switch.", "source": "packages/ui/src/components/theme-toggle", "dependencies": ["switch", "swirski-provider"] },
     { "name": "use-click-outside", "category": "hooks", "description": "Run a callback when pointer events happen outside an element.", "source": "packages/ui/src/hooks/use-click-outside" },
     { "name": "use-clipboard", "category": "hooks", "description": "Copy text and track copied state.", "source": "packages/ui/src/hooks/use-clipboard" },
     { "name": "use-controllable-state", "category": "hooks", "description": "Build controlled or uncontrolled component state.", "source": "packages/ui/src/hooks/use-controllable-state" },

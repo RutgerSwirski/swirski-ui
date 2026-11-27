@@ -46,7 +46,7 @@ export function DetailHero({
 
       <Grid gap="sm" className="w-full max-w-sm sm:max-w-sm lg:max-w-none">
         <div
-          className={`border-4 border-black p-4 shadow-[6px_6px_0_#0B0B0C] ${toneClassName}`}
+          className={`border-4 border-docs-ink p-4 shadow-[6px_6px_0_var(--sw-color-shadow)] ${toneClassName}`}
         >
           <Text
             className="uppercase text-current opacity-80"
@@ -82,7 +82,7 @@ export function DetailHeaderFrame({
   children: ReactNode;
 }) {
   return (
-    <div className="relative border-b-4 border-black bg-white">
+    <div className="relative border-b-4 border-docs-ink bg-docs-surface">
       <DotGrid
         className="inset-0"
         color={accentColor}

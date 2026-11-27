@@ -12,6 +12,7 @@ import { cardComponentDoc } from "./card/component";
 import { sectionLabelComponentDoc } from "./section-label/component";
 import { typographyComponentDoc } from "./typography/component";
 import { swirskiProviderComponentDoc } from "./swirski-provider/component";
+import { themeToggleComponentDoc } from "./theme-toggle/component";
 import { dialogComponentDoc } from "./dialog/component";
 import { popoverComponentDoc } from "./popover/component";
 import { dropdownMenuComponentDoc } from "./dropdown-menu/component";
@@ -54,6 +55,7 @@ export const componentDocs: ComponentDoc[] = [
   sectionLabelComponentDoc,
   typographyComponentDoc,
   swirskiProviderComponentDoc,
+  themeToggleComponentDoc,
   dialogComponentDoc,
   popoverComponentDoc,
   dropdownMenuComponentDoc,

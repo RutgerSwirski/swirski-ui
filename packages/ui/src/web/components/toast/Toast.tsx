@@ -32,9 +32,9 @@ type ToastContextValue = {
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 const toneStyles: Record<ToastTone, string> = {
-  blue: "bg-[#0057FF] text-white",
-  yellow: "bg-[#FFD400] text-black",
-  red: "bg-[#FF3131] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  red: "bg-[var(--sw-color-red)] text-[color:var(--sw-color-on-red)]",
   white: "bg-white text-black",
 };
 

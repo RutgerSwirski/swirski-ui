@@ -71,7 +71,7 @@ export default function SaasExample() {
                 >
                   Swirski Accounts
                 </Text>
-                <Text className="text-white/65" size="xs" weight="bold">
+                <Text tone="inverted" size="xs" weight="bold">
                   Enterprise
                 </Text>
               </div>
@@ -95,7 +95,7 @@ export default function SaasExample() {
 
             <Separator className="my-6 bg-white" />
 
-            <Text className="text-white/70" size="sm" weight="bold">
+            <Text tone="inverted" size="sm" weight="bold">
               Renewal target
             </Text>
             <Title className="mt-2 text-current" order={3} size="h3">

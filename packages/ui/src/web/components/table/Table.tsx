@@ -32,7 +32,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   return (
     <div
       className={cn(
-        "w-full min-w-0 max-w-full overflow-x-auto border-4 border-black bg-white shadow-[5px_5px_0_#0B0B0C] sm:shadow-[8px_8px_0_#0B0B0C]",
+        "w-full min-w-0 max-w-full overflow-x-auto border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[5px_5px_0_var(--sw-color-shadow)] sm:shadow-[8px_8px_0_var(--sw-color-shadow)]",
         wrapperClassName,
       )}
       {...swirskiAttrs("table-wrapper", { size, tone, variant })}
@@ -107,7 +107,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
     return (
       <tr
         ref={ref}
-        className={cn("border-b-4 border-black last:border-b-0", className)}
+        className={cn("border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] last:border-b-0", className)}
         {...swirskiAttrs("table-row", { size, tone, variant })}
         {...props}
       />
@@ -162,7 +162,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
       <td
         ref={ref}
         className={cn(
-          "font-bold text-black/70",
+          "font-bold text-[color:var(--sw-color-muted)]",
           cellSizeStyles[size],
           className,
         )}

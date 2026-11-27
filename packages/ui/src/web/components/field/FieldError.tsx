@@ -17,7 +17,7 @@ const sizeStyles: Record<FieldErrorSize, string> = {
 };
 
 const toneStyles: Record<FieldErrorTone, string> = {
-  danger: "text-[var(--sw-color-red)]",
+  danger: "text-[color:var(--sw-color-red-text)]",
   default: "text-[var(--sw-color-ink)]",
 };
 

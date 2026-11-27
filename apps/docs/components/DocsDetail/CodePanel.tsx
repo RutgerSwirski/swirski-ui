@@ -13,7 +13,7 @@ export function CodePanel({
   return (
     <section id={title.toLowerCase()} className="min-w-0 scroll-mt-8">
       <div className="mb-4 flex items-center gap-3">
-        <span className={`h-5 w-5 border-4 border-black ${accent}`} />
+        <span className={`h-5 w-5 border-4 border-docs-ink ${accent}`} />
         <Title order={2} size="h3">
           {title}
         </Title>

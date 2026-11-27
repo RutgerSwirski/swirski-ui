@@ -87,8 +87,8 @@ const showcaseComponents = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#0057FF"
@@ -200,7 +200,7 @@ export default function HomePage() {
               <Card
                 key={item.title}
                 interactive={false}
-                className="bg-white shadow-[7px_7px_0_#0B0B0C]"
+                className="bg-docs-surface shadow-[7px_7px_0_var(--sw-color-shadow)]"
               >
                 <CardContent>
                   <Badge className="mb-6" tone="red">
@@ -239,7 +239,7 @@ export default function HomePage() {
                 <Card
                   key={component.name}
                   interactive
-                  className="h-full min-h-52 bg-white shadow-[5px_5px_0_#0B0B0C]"
+                  className="h-full min-h-52 bg-docs-surface shadow-[5px_5px_0_var(--sw-color-shadow)]"
                 >
                   <CardContent className="p-4">
                     <Badge tone="yellow">Component</Badge>
@@ -270,7 +270,7 @@ export default function HomePage() {
         <section className="pt-16 md:pt-20">
           <Card
             interactive={false}
-            className="bg-[#FFD400] shadow-[8px_8px_0_#0B0B0C]"
+            className="docs-accent-yellow shadow-[8px_8px_0_var(--sw-color-shadow)]"
           >
             <CardContent className="p-6 md:p-8">
               <Grid gap="lg">

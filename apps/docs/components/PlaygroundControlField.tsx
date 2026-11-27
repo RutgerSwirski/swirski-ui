@@ -108,7 +108,7 @@ export default function PlaygroundControlField({
   }
 
   return (
-    <Field className="border-4 border-black bg-white p-3 shadow-[4px_4px_0_#0B0B0C]">
+    <Field className="border-4 border-docs-ink bg-docs-surface p-3 shadow-[4px_4px_0_var(--sw-color-shadow)]">
       <Checkbox
         label={
           <Text component="span" size="xs" weight="black" className="uppercase">

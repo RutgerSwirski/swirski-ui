@@ -24,9 +24,9 @@ const sizeStyles: Record<AvatarSize, string> = {
 };
 
 const toneStyles: Record<AvatarTone, string> = {
-  yellow: "bg-[#FFD400] text-black",
-  blue: "bg-[#0057FF] text-white",
-  red: "bg-[#FF3131] text-white",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  red: "bg-[var(--sw-color-red)] text-[color:var(--sw-color-on-red)]",
   white: "bg-white text-black",
   black: "bg-[#0B0B0C] text-white",
 };

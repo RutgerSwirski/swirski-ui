@@ -33,12 +33,15 @@ try {
   run("init");
   assert.match(run("add", "button", "tabs", "dialog", "--dry-run"), /Would write/);
   assert(!existsSync(output));
-  assert.match(run("add", "button", "tabs", "dialog"), /Consumer dependencies: npm install/);
+  assert.match(run("add", "button", "tabs", "dialog", "theme-toggle"), /Consumer dependencies: npm install/);
 
   for (const file of [
     "components/button/Button.tsx",
     "components/tabs/Tabs.tsx",
     "components/dialog/DialogContent.tsx",
+    "components/theme-toggle/ThemeToggle.tsx",
+    "components/switch/Switch.tsx",
+    "theme/SwirskiProvider.tsx",
     "shared/contracts/button.ts",
     "hooks/use-controllable-state/index.ts",
     "hooks/use-portal-root/usePortalRoot.ts",

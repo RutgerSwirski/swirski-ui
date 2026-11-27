@@ -63,7 +63,7 @@ export const navbarPlayground: PlaygroundDefinition = {
     },
   ],
   render: (values) => (
-    <Navbar className="w-full border-[length:var(--sw-border-width)] bg-white">
+    <Navbar className="w-full border-[length:var(--sw-border-width)] bg-[var(--sw-color-surface)]">
       <NavbarBrand href="#preview">{textValue(values, "brand")}</NavbarBrand>
       <NavbarNav aria-label="Playground navigation">
         {primaryItems.map((item) => (

@@ -16,7 +16,9 @@ export const swirskiProviderComponentDoc: ComponentDoc = {
   importCode: `import { SwirskiProvider, createSwirskiTheme } from "@swirski/ui";`,
   usageCode: `const theme = createSwirskiTheme({
   colorBlue: "#0047FF",
+  colorOnBlue: "#FFFFFF",
   colorYellow: "#FFE45C",
+  colorOnYellow: "#0B0B0C",
   shadowMd: "8px 8px 0 var(--sw-color-shadow)",
 });
 
@@ -53,7 +55,7 @@ export const swirskiProviderComponentDoc: ComponentDoc = {
       name: "theme",
       type: "SwirskiTheme",
       description:
-        "Overrides any Swirski token or adds custom CSS variables.",
+        "Overrides tokens or adds custom CSS variables. Pair colorBlue, colorYellow and colorRed with their colorOn* foregrounds for filled controls. Use colorBlueText, colorYellowText and colorRedText for accents on neutral surfaces.",
     },
     {
       name: "createSwirskiTheme",

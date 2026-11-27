@@ -97,8 +97,8 @@ const workflowItems = [
 
 export default function SystemPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F3] text-[#0B0B0C]">
-      <div className="relative overflow-hidden border-b-4 border-black bg-white">
+    <main className="min-h-screen bg-docs-paper text-docs-ink">
+      <div className="relative overflow-hidden border-b-4 border-docs-ink bg-docs-surface">
         <DotGrid
           className="inset-0"
           color="#FF3131"
@@ -137,7 +137,7 @@ export default function SystemPage() {
 
             <Card
               interactive={false}
-              className="w-full max-w-sm bg-[#FF3131]  shadow-[8px_8px_0_#0B0B0C] md:w-80"
+              className="w-full max-w-sm docs-accent-red  shadow-[8px_8px_0_var(--sw-color-shadow)] md:w-80"
             >
               <CardContent>
                 <Badge tone="black">Core file</Badge>
@@ -176,7 +176,7 @@ export default function SystemPage() {
               <Card
                 key={item.title}
                 interactive={false}
-                className="bg-white shadow-[5px_5px_0_#0B0B0C]"
+                className="bg-docs-surface shadow-[5px_5px_0_var(--sw-color-shadow)]"
               >
                 <CardContent>
                   <Badge
@@ -187,7 +187,7 @@ export default function SystemPage() {
                   <Text className="mt-4" tone="muted" weight="bold">
                     {item.body}
                   </Text>
-                  <pre className="mt-4 overflow-x-auto border-4 border-black bg-[#0B0B0C] p-4 text-sm font-bold text-[#F5F5F3]">
+                  <pre className="mt-4 overflow-x-auto border-4 border-docs-ink bg-[#0B0B0C] p-4 text-sm font-bold text-[#F5F5F3]">
                     <code>{item.code}</code>
                   </pre>
                 </CardContent>
@@ -219,7 +219,7 @@ export default function SystemPage() {
               <Card
                 key={principle}
                 interactive={false}
-                className="bg-white shadow-[5px_5px_0_#0B0B0C]"
+                className="bg-docs-surface shadow-[5px_5px_0_var(--sw-color-shadow)]"
               >
                 <CardContent>
                   <Text weight="black">{principle}</Text>
@@ -244,7 +244,7 @@ export default function SystemPage() {
             <Card
               key={item.title}
               interactive={false}
-              className="overflow-hidden bg-white shadow-[6px_6px_0_#0B0B0C]"
+              className="overflow-hidden bg-docs-surface shadow-[6px_6px_0_var(--sw-color-shadow)]"
             >
               <CardContent>
                 <Grid gap="lg" className="lg:grid-cols-[0.8fr_1.2fr]">
@@ -260,7 +260,7 @@ export default function SystemPage() {
                     </Text>
                   </div>
 
-                  <pre className="overflow-x-auto border-4 border-black bg-[#0B0B0C] p-5 text-sm font-bold leading-relaxed text-[#F5F5F3] shadow-[4px_4px_0_#FF3131]">
+                  <pre className="overflow-x-auto border-4 border-docs-ink bg-[#0B0B0C] p-5 text-sm font-bold leading-relaxed text-[#F5F5F3] shadow-[4px_4px_0_#FF3131]">
                     <code>{item.code}</code>
                   </pre>
                 </Grid>
@@ -273,7 +273,7 @@ export default function SystemPage() {
       <Container className="pb-20">
         <Card
           interactive={false}
-          className="bg-[#FFD600] shadow-[8px_8px_0_#0B0B0C]"
+          className="docs-accent-yellow shadow-[8px_8px_0_var(--sw-color-shadow)]"
         >
           <CardContent>
             <Grid gap="xl" className="lg:grid-cols-[0.8fr_1.2fr]">
@@ -292,7 +292,7 @@ export default function SystemPage() {
               </div>
 
               <div>
-                <pre className="overflow-x-auto border-4 border-black bg-white p-5 text-sm font-bold leading-relaxed shadow-[5px_5px_0_#0B0B0C]">
+                <pre className="overflow-x-auto border-4 border-docs-ink docs-inverse p-5 text-sm font-bold leading-relaxed shadow-[5px_5px_0_var(--sw-color-shadow)]">
                   <code>{`const Comp = asChild ? Slot : "button";
 
 return (

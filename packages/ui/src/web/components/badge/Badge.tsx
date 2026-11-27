@@ -15,26 +15,26 @@ export type BadgeProps = {
 } & Omit<HTMLAttributes<HTMLSpanElement>, "color">;
 
 const toneStyles: Record<BadgeTone, string> = {
-  blue: "bg-[var(--sw-color-blue)] text-white",
-  yellow: "bg-[var(--sw-color-yellow)] text-[var(--sw-color-ink)]",
-  red: "bg-[var(--sw-color-red)] text-white",
+  blue: "bg-[var(--sw-color-blue)] text-[color:var(--sw-color-on-blue)]",
+  yellow: "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)]",
+  red: "bg-[var(--sw-color-red)] text-[color:var(--sw-color-on-red)]",
   white: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
 const outlineToneStyles: Record<BadgeTone, string> = {
-  blue: "bg-[var(--sw-color-surface)] text-[var(--sw-color-blue)]",
+  blue: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-blue-text)]",
   yellow: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
-  red: "bg-[var(--sw-color-surface)] text-[var(--sw-color-red)]",
+  red: "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-red-text)]",
   white:
-    "bg-transparent text-[var(--sw-color-surface)] border-[color:var(--sw-color-surface)]",
+    "bg-transparent text-[color:var(--sw-color-ink)] border-[color:var(--sw-color-ink)]",
   black: "bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
 };
 
 const softToneStyles: Record<BadgeTone, string> = {
-  blue: "bg-[var(--sw-color-blue)]/15 text-[var(--sw-color-blue)]",
+  blue: "bg-[var(--sw-color-blue)]/15 text-[color:var(--sw-color-blue-text)]",
   yellow: "bg-[var(--sw-color-yellow)]/35 text-[var(--sw-color-ink)]",
-  red: "bg-[var(--sw-color-red)]/15 text-[var(--sw-color-red)]",
+  red: "bg-[var(--sw-color-red)]/15 text-[color:var(--sw-color-red-text)]",
   white: "bg-[var(--sw-color-surface)]/25 text-[var(--sw-color-surface)]",
   black: "bg-[var(--sw-color-ink)]/10 text-[var(--sw-color-ink)]",
 };

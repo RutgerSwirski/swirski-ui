@@ -22,6 +22,8 @@ import {
 } from "@swirski/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { DocsThemeToggle } from "./DocsTheme";
 
 type NavLinkItem = {
   href: string;
@@ -63,13 +65,23 @@ const navItems: NavItem[] = [
 
 export default function NavBar() {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMobileOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   return (
     <Navbar>
       <NavbarBrand as={Link} href="/">
         Swirski UI
       </NavbarBrand>
-      <NavbarNav aria-label="Main navigation">
+      <NavbarNav aria-label="Main navigation" className="md:hidden! lg:flex!">
         {navItems.map((item) => {
           if ("children" in item) {
             const active = item.children.some((childItem) =>
@@ -109,9 +121,14 @@ export default function NavBar() {
           );
         })}
       </NavbarNav>
-      <NavbarActions className="md:hidden">
-        <MobileMenu>
-          <MobileMenuTrigger />
+      <NavbarActions>
+        <div className="hidden lg:block!">
+          <DocsThemeToggle />
+        </div>
+        <MobileMenu open={mobileOpen} onOpenChange={setMobileOpen}>
+          <div className="lg:hidden">
+            <MobileMenuTrigger />
+          </div>
           <MobileMenuContent>
             <MobileMenuHeader>
               <MobileMenuTitle>Menu</MobileMenuTitle>
@@ -119,7 +136,7 @@ export default function NavBar() {
                 x
               </MobileMenuClose>
             </MobileMenuHeader>
-            <MobileMenuNav aria-label="Mobile navigation">
+            <MobileMenuNav aria-label="Mobile navigation" className="min-h-0 flex-1 auto-rows-max overflow-y-auto px-1">
               {navItems.map((item) =>
                 "children" in item ? (
                   <div
@@ -152,6 +169,9 @@ export default function NavBar() {
                 ),
               )}
             </MobileMenuNav>
+            <div className="shrink-0 pt-4">
+              <DocsThemeToggle mobile />
+            </div>
           </MobileMenuContent>
         </MobileMenu>
       </NavbarActions>

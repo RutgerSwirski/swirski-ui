@@ -1459,7 +1459,9 @@ Usage:
 ```tsx
 const theme = createSwirskiTheme({
   colorBlue: "#0047FF",
+  colorOnBlue: "#FFFFFF",
   colorYellow: "#FFE45C",
+  colorOnYellow: "#0B0B0C",
   shadowMd: "8px 8px 0 var(--sw-color-shadow)",
 });
 
@@ -1470,9 +1472,44 @@ const theme = createSwirskiTheme({
 
 Props:
 - `colorScheme`: `"light" | "dark"` default "light" - Selects the default light or dark token set.
-- `theme`: `SwirskiTheme` - Overrides any Swirski token or adds custom CSS variables.
+- `theme`: `SwirskiTheme` - Overrides tokens or adds custom CSS variables. Pair colorBlue, colorYellow and colorRed with their colorOn* foregrounds for filled controls. Use colorBlueText, colorYellowText and colorRedText for accents on neutral surfaces.
 - `createSwirskiTheme`: `(theme: SwirskiTheme) => SwirskiTheme` - Small helper for typed theme objects.
 - `useSwirskiTheme`: `() => SwirskiThemeTokens` - Reads the resolved theme inside React components.
+
+### ThemeToggle
+
+Switch between light and dark mode by sharing state with SwirskiProvider.
+
+Category: Theming
+Docs: https://ui.swirski.dev/components/theme-toggle
+Registry: https://ui.swirski.dev/r/theme-toggle.json
+Source: `packages/ui/src/components/theme-toggle`
+Copy dependencies: `switch`, `swirski-provider`
+
+Import:
+```tsx
+import { useState } from "react";
+import { SwirskiProvider, ThemeToggle, type SwirskiColorScheme } from "@swirski/ui";
+```
+
+Usage:
+```tsx
+function ThemedApp() {
+  const [scheme, setScheme] = useState<SwirskiColorScheme>("light");
+
+  return (
+    <SwirskiProvider colorScheme={scheme}>
+      <ThemeToggle colorScheme={scheme} onColorSchemeChange={setScheme} />
+      <App />
+    </SwirskiProvider>
+  );
+}
+```
+
+Props:
+- `colorScheme`: `"light" | "dark"` required - The current application color scheme.
+- `onColorSchemeChange`: `(colorScheme: SwirskiColorScheme) => void` required - Requests a scheme change. Keep the scheme in app state to share it with the provider and persist it if needed.
+- `label`: `ReactNode` default "Dark mode" - The visible and accessible switch label.
 
 ## Typography
 
