@@ -26,7 +26,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       <div
         ref={ref}
         className={cn(
-          "animate-pulse border-4 border-black bg-neutral-200 shadow-[4px_4px_0_#0B0B0C]",
+          "sw-motion-loop animate-pulse border-4 border-black bg-neutral-200 shadow-[4px_4px_0_#0B0B0C]",
           variant === "text" && "h-4",
           sizeStyles[size],
           className,

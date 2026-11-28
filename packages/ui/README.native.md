@@ -170,3 +170,15 @@ configureSwirskiNativeFonts({
 If React Native Web looks different from native iOS or Android, make sure the
 web app imports `@swirski/ui/styles.css` and the native app registers the same
 font files.
+
+## Motion preferences
+
+`NativeButton` and `NativeCard` follow the device’s Reduce Motion setting,
+including changes while the app is open. They use immediate opacity and
+shadow feedback when motion is reduced. Normal motion uses the existing
+native press springs. Pass `reduceMotion` to either component to request
+static feedback independently of the device setting.
+
+```tsx
+<NativeButton reduceMotion onPress={save}>Save</NativeButton>
+```

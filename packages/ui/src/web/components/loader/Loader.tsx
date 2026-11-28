@@ -83,7 +83,7 @@ function PixelDot({ delay = "0ms", accent = false }) {
   return (
     <span
       className={cn(
-        "relative block size-[var(--sw-loader-pixel)] animate-[swirski-pixel-bounce_720ms_steps(2,end)_infinite]",
+        "relative block size-[var(--sw-loader-pixel)] sw-motion-loop animate-[swirski-pixel-bounce_720ms_steps(2,end)_infinite]",
         "[animation-delay:var(--sw-loader-delay)]",
         accent ? "bg-[var(--sw-loader-accent)]" : "bg-[var(--sw-loader-main)]",
       )}
@@ -115,7 +115,7 @@ function PixelBar({ delay = "0ms", height = "100%", accent = false }) {
   return (
     <span
       className={cn(
-        "relative block w-[var(--sw-loader-bar-w)] animate-[swirski-pixel-bars_820ms_steps(3,end)_infinite]",
+        "relative block w-[var(--sw-loader-bar-w)] sw-motion-loop animate-[swirski-pixel-bars_820ms_steps(3,end)_infinite]",
         accent ? "bg-[var(--sw-loader-accent)]" : "bg-[var(--sw-loader-main)]",
       )}
       style={
@@ -164,7 +164,7 @@ function PixelBlocksLoader({ size }: { size: LoaderSize }) {
           <span
             key={index}
             className={cn(
-              "relative block size-[var(--sw-loader-pixel)] animate-[swirski-pixel-flicker_900ms_steps(2,end)_infinite]",
+              "relative block size-[var(--sw-loader-pixel)] sw-motion-loop animate-[swirski-pixel-flicker_900ms_steps(2,end)_infinite]",
               isAccent
                 ? "bg-[var(--sw-loader-accent)]"
                 : "bg-[var(--sw-loader-main)]",
@@ -190,7 +190,7 @@ function PixelScanLoader({ size }: { size: LoaderSize }) {
     >
       <span className="absolute inset-1 bg-[repeating-linear-gradient(90deg,var(--sw-loader-main)_0_8px,var(--sw-loader-accent)_8px_16px,transparent_16px_20px)] opacity-30" />
 
-      <span className="absolute left-1 top-1 h-[calc(100%-0.5rem)] w-3 animate-[swirski-pixel-scan_900ms_steps(6,end)_infinite] border-2 border-black bg-[var(--sw-loader-main)] shadow-[3px_0_0_var(--sw-loader-shadow)]" />
+      <span className="absolute left-1 top-1 h-[calc(100%-0.5rem)] w-3 sw-motion-loop animate-[swirski-pixel-scan_900ms_steps(6,end)_infinite] border-2 border-black bg-[var(--sw-loader-main)] shadow-[3px_0_0_var(--sw-loader-shadow)]" />
 
       <span className="absolute bottom-1 left-1 right-1 h-1 bg-black" />
     </span>
@@ -227,7 +227,7 @@ export const Loader = forwardRef<HTMLSpanElement, LoaderProps>(function Loader(
       {variant === "pixel-blocks" && <PixelBlocksLoader size={size} />}
       {variant === "pixel-scan" && <PixelScanLoader size={size} />}
 
-      <span className="sr-only">{label}</span>
+      <span className="sr-only sw-motion-loading-label">{label}</span>
     </span>
   );
 });

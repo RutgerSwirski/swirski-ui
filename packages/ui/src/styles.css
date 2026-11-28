@@ -129,10 +129,68 @@
   }
 }
 
+/* Target only marked library surfaces and internal parts. */
+:root {
+  --sw-motion-fast: 150ms;
+  --sw-motion-standard: 200ms;
+}
+
+:where([data-swirski-reduce-motion], [data-swirski-reduce-motion] *):is(.sw-motion-transition, .sw-motion-shift):where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+  transition: none;
+}
+
+:where([data-swirski-reduce-motion], [data-swirski-reduce-motion] *).sw-motion-shift:where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+  translate: none;
+  scale: none;
+}
+
+:where([data-swirski-reduce-motion], [data-swirski-reduce-motion] *).sw-motion-shift:active:not(:disabled, [aria-disabled="true"]):where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+  filter: brightness(0.94);
+}
+
+:where([data-swirski-reduce-motion], [data-swirski-reduce-motion] *).sw-motion-loop:where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+  animation: none;
+}
+
+:where([data-swirski-reduce-motion], [data-swirski-reduce-motion] *).sw-motion-loading-label:where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  margin-inline-start: 0.5em;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  [data-swirski-component="loader"] *,
-  [data-swirski-component="loader"] {
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
+  :is(.sw-motion-transition, .sw-motion-shift):where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    transition: none;
+  }
+
+  .sw-motion-shift:where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    translate: none;
+    scale: none;
+  }
+
+  .sw-motion-shift:active:not(:disabled, [aria-disabled="true"]):where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    filter: brightness(0.94);
+  }
+
+  .sw-motion-loop:where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    animation: none;
+  }
+
+  .sw-motion-loading-label:where([data-swirski-component], [data-swirski-component] *):not(:where([data-swirski-unscoped], [data-swirski-unscoped] *)) {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    margin-inline-start: 0.5em;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 }

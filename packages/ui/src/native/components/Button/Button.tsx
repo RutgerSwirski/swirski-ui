@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import type {
   GestureResponderEvent,
@@ -12,12 +12,15 @@ import { Animated, Pressable, Text } from "react-native";
 import { resolveButtonStyleConfig, type SharedButtonProps } from "../../../shared/contracts";
 import { swirskiColors, swirskiRadii, swirskiSpacing, swirskiTypography } from "../../../shared/tokens";
 import { nativeFontFamilies } from "../../system/fonts";
+import { usePressMotion } from "../../system/press-motion";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const pressSpring = { damping: 14, mass: 0.7, stiffness: 520 };
 
 export type NativeButtonProps = SharedButtonProps &
   Omit<PressableProps, "children" | "style"> & {
     children?: ReactNode;
+    reduceMotion?: boolean;
     style?: PressableProps["style"];
     textStyle?: StyleProp<TextStyle>;
   };
@@ -138,12 +141,13 @@ export function NativeButton({
   accessibilityLabel,
   onPressIn,
   onPressOut,
+  reduceMotion,
   style,
   textStyle: textStyleProp,
   ...props
 }: NativeButtonProps) {
-  const pressProgress = useRef(new Animated.Value(0)).current;
   const [isPressed, setIsPressed] = useState(false);
+  const { progress: pressProgress, animate, reduced } = usePressMotion(!disabled, pressSpring, reduceMotion);
   const { containerStyle, textStyle } = getButtonStyles({
     disabled,
     size,
@@ -192,35 +196,18 @@ export function NativeButton({
   );
 
   useEffect(() => {
-    if (disabled) {
-      setIsPressed(false);
-      pressProgress.setValue(0);
-    }
-  }, [disabled, pressProgress]);
-
-  const runPressAnimation = (toValue: number) => {
-    if (disabled) {
-      return;
-    }
-
-    Animated.spring(pressProgress, {
-      damping: 14,
-      mass: 0.7,
-      stiffness: 520,
-      toValue,
-      useNativeDriver: true,
-    }).start();
-  };
+    if (disabled) setIsPressed(false);
+  }, [disabled]);
 
   const handlePressIn = (event: GestureResponderEvent) => {
     setIsPressed(true);
-    runPressAnimation(1);
+    animate(1);
     onPressIn?.(event);
   };
 
   const handlePressOut = (event: GestureResponderEvent) => {
     setIsPressed(false);
-    runPressAnimation(0);
+    animate(0);
     onPressOut?.(event);
   };
 
@@ -240,7 +227,8 @@ export function NativeButton({
       onPressOut={handlePressOut}
       style={[
         containerStyle,
-        animatedFeedbackStyle,
+        !reduced && animatedFeedbackStyle,
+        reduced && isPressed && !disabled && { opacity: 0.88 },
         isPressed && usesShadowFeedback
           ? {
               elevation: 0,

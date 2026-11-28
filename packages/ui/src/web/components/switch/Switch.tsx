@@ -62,7 +62,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     >
       <span
         className={cn(
-          "relative inline-flex shrink-0 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[4px_4px_0_var(--sw-color-shadow)] transition group-active:translate-x-0.5 group-active:translate-y-0.5 group-active:shadow-none",
+          "relative inline-flex shrink-0 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[4px_4px_0_var(--sw-color-shadow)] sw-motion-shift transition duration-[var(--sw-motion-fast,150ms)] group-active:translate-x-0.5 group-active:translate-y-0.5 group-active:shadow-none",
           trackSizeStyles[size],
         )}
       >
@@ -77,13 +77,13 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         />
         <span
           className={cn(
-            "absolute inset-0 bg-[var(--sw-color-surface)] transition peer-focus-visible:shadow-[0_0_0_3px_var(--sw-color-focus)]",
+            "absolute inset-0 bg-[var(--sw-color-surface)] sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] peer-focus-visible:shadow-[0_0_0_3px_var(--sw-color-focus)]",
             toneStyles[tone],
           )}
         />
         <span
           className={cn(
-            "relative ml-1 border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] transition peer-checked:bg-[var(--sw-color-surface)]",
+            "relative ml-1 border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] peer-checked:bg-[var(--sw-color-surface)]",
             thumbSizeStyles[size],
           )}
         />

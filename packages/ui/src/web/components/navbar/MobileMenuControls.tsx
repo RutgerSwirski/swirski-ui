@@ -48,7 +48,7 @@ export const MobileMenuTrigger = forwardRef<
       aria-expanded={open}
       aria-label={children ? ariaLabel : (ariaLabel ?? label)}
       className={cn(
-        "inline-grid size-12 place-items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] shadow-[var(--sw-shadow-sm)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:hover:shadow-[var(--sw-shadow-sm)]",
+        "inline-grid size-12 place-items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] shadow-[var(--sw-shadow-sm)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:hover:shadow-[var(--sw-shadow-sm)]",
         focusVisibleStyles,
         disabledInteractiveStyles,
         variant === "compact" && "size-10",
@@ -108,7 +108,7 @@ export const MobileMenuClose = forwardRef<
     <Component
       ref={ref}
       className={cn(
-        "inline-flex size-11 shrink-0 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-xl font-black leading-none text-[color:var(--sw-color-on-yellow)] shadow-[var(--sw-shadow-sm)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:hover:shadow-[var(--sw-shadow-sm)]",
+        "inline-flex size-11 shrink-0 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-xl font-black leading-none text-[color:var(--sw-color-on-yellow)] shadow-[var(--sw-shadow-sm)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:hover:shadow-[var(--sw-shadow-sm)]",
         focusVisibleStyles,
         disabledInteractiveStyles,
         variant === "compact" && "size-10 text-lg",

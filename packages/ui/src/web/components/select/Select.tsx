@@ -363,7 +363,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         aria-expanded={popupVisible}
         aria-haspopup="listbox"
         className={cn(
-          "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+          "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
           focusVisibleStyles,
           disabledInteractiveStyles,
           variant === "default"
@@ -384,7 +384,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         <span
           aria-hidden="true"
           className={cn(
-            "grid size-6 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none transition",
+            "grid size-6 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)]",
             isOpen && "rotate-180",
           )}
         >

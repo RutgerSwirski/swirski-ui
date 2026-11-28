@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, firefox, webkit } from "playwright";
+import { verifyMotion } from "./verify-ui-motion.mjs";
 import { verifyInteractions } from "./verify-ui-interactions.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -129,7 +130,8 @@ async function verifyBrowsers(names) {
         }
         console.log(`${name} ${browser.version()}: verified scoped CSS, portal theme, contrast, and opt-in reset and fonts.`);
         await verifyInteractions(browser, url, name);
-        console.log(`${name}: interaction and axe checks passed.`);
+        await verifyMotion(browser, url);
+        console.log(`${name}: interaction, axe, and motion checks passed.`);
       } catch (error) {
         throw new Error(`Packed stylesheet failed in ${name} ${browser.version()}`, { cause: error });
       } finally {

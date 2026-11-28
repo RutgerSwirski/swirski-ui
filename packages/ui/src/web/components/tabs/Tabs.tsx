@@ -218,7 +218,7 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         disabled={asChild ? undefined : disabled}
         tabIndex={isSelected && !isDisabled ? 0 : -1}
         className={cn(
-          "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase outline-none transition-transform duration-150 active:scale-[0.98]",
+          "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase outline-none sw-motion-shift transition-transform duration-[var(--sw-motion-fast,150ms)] active:scale-[0.98]",
           focusVisibleStyles,
           disabledInteractiveStyles,
           triggerSizeStyles[size],

@@ -19,12 +19,12 @@ export const cursorVariableNames = [
 ] as const;
 
 export const cursorSelectorStyles = `
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  [data-swirski-cursor] {
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] {
     cursor: var(--swirski-cursor);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     a,
     button,
     summary,
@@ -43,7 +43,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-pointer);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     input:not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="reset"]):not([type="submit"]),
     textarea,
     [contenteditable="true"],
@@ -53,7 +53,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-text);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="zoom-in"],
     [data-swirski-cursor-zoom="in"],
     .cursor-zoom-in
@@ -61,7 +61,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-zoom-in);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="zoom-out"],
     [data-swirski-cursor-zoom="out"],
     .cursor-zoom-out
@@ -69,7 +69,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-zoom-out);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="grab"],
     [data-cursor="pan"],
     [data-swirski-cursor-pan="true"],
@@ -79,13 +79,13 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-grab);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="grabbing"],
     [data-cursor="panning"],
     [data-swirski-cursor-panning="true"],
     .cursor-grabbing
   ),
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="grab"],
     [data-cursor="pan"],
     [data-swirski-cursor-pan="true"],
@@ -95,7 +95,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-grabbing);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="move"],
     .cursor-all-scroll,
     .cursor-move
@@ -103,7 +103,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-move);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="resize"],
     [data-cursor$="-resize"],
     [data-resize-handle],
@@ -118,7 +118,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-resize);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="copy"],
     [data-cursor="alias"],
     .cursor-alias,
@@ -127,7 +127,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-copy);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="crosshair"],
     [data-cursor="cell"],
     .cursor-cell,
@@ -136,14 +136,14 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-crosshair);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="help"],
     .cursor-help
   ) {
     cursor: var(--swirski-cursor-help);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [aria-busy="true"],
     [data-busy="true"],
     [data-cursor="progress"],
@@ -153,21 +153,21 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-progress);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="wait"],
     .cursor-wait
   ) {
     cursor: var(--swirski-cursor-wait);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="not-allowed"],
     .cursor-not-allowed
   ) {
     cursor: var(--swirski-cursor-not-allowed);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     [data-cursor="active"],
     [data-swirski-cursor-state="active"],
     .cursor-active
@@ -175,7 +175,7 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-active);
   }
 
-  [data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor] :is(
     a,
     button,
     summary,
@@ -195,17 +195,17 @@ export const cursorSelectorStyles = `
     cursor: var(--swirski-cursor-active);
   }
 
-  [data-swirski-cursor][data-swirski-cursor-pressed-state="active"],
-  [data-swirski-cursor][data-swirski-cursor-pressed-state="active"] * {
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor-pressed-state="active"],
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor-pressed-state="active"] * {
     cursor: var(--swirski-cursor-active);
   }
 
-  [data-swirski-cursor][data-swirski-cursor-pressed-state="grabbing"],
-  [data-swirski-cursor][data-swirski-cursor-pressed-state="grabbing"] * {
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor-pressed-state="grabbing"],
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor-pressed-state="grabbing"] * {
     cursor: var(--swirski-cursor-grabbing);
   }
 
-  [data-swirski-cursor][data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor] :is(
     :disabled,
     [aria-disabled="true"],
     [data-cursor="disabled"],
@@ -214,7 +214,7 @@ export const cursorSelectorStyles = `
     [disabled],
     .cursor-disabled
   ),
-  [data-swirski-cursor][data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor] :is(
     :disabled,
     [aria-disabled="true"],
     [data-cursor="disabled"],
@@ -223,7 +223,7 @@ export const cursorSelectorStyles = `
     [disabled],
     .cursor-disabled
   ):is(:hover, :active),
-  [data-swirski-cursor][data-swirski-cursor] :is(
+  :where(:root:not([data-swirski-reduce-motion])) [data-swirski-cursor][data-swirski-cursor] :is(
     :disabled,
     [aria-disabled="true"],
     [data-cursor="disabled"],

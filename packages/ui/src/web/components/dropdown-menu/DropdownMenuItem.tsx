@@ -39,7 +39,7 @@ export const DropdownMenuItem = forwardRef<
   const Component = asChild ? Slot : "button";
 
   const baseStyles =
-    "block w-full text-left font-black uppercase transition hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] focus-visible:bg-[var(--sw-color-yellow)] focus-visible:text-[color:var(--sw-color-on-yellow)] focus-visible:outline-none forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid disabled:cursor-not-allowed disabled:text-black/35 disabled:hover:bg-transparent";
+    "block w-full text-left font-black uppercase sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] focus-visible:bg-[var(--sw-color-yellow)] focus-visible:text-[color:var(--sw-color-on-yellow)] focus-visible:outline-none forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid disabled:cursor-not-allowed disabled:text-black/35 disabled:hover:bg-transparent";
 
   return (
     <Component
