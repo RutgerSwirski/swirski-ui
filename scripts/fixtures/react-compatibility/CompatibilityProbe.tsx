@@ -89,7 +89,6 @@ export function CompatibilityProbe() {
   );
 }
 
-
 // These examples are checked against the declarations from the packed package.
 function verifyPolymorphicRefs() {
   const anchor = (element: HTMLAnchorElement | null) => { void element; };

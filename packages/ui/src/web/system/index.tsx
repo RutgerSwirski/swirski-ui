@@ -59,7 +59,9 @@ export type PolymorphicComponent<Props, DefaultElement extends HTMLElement> = {
       & ("as" extends keyof Props ? { as?: As } : { as?: never })
       & ("asChild" extends keyof Props ? { asChild?: Slotted } : { asChild?: never })
       & { ref?: Ref<
-        true extends Slotted ? HTMLElement : As extends ElementType ? ComponentRef<As> : DefaultElement
+        true extends Slotted ? HTMLElement
+          : [As] extends [undefined] ? DefaultElement
+          : As extends ElementType ? ComponentRef<As> : DefaultElement
       > },
   ): ReactNode;
   displayName?: string;
