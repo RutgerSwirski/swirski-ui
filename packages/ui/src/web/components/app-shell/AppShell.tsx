@@ -1,4 +1,7 @@
-import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+"use client";
+
+import { ElementType, HTMLAttributes, ReactNode, createContext, forwardRef, useContext } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type AppShellVariant = "default" | "compact";
@@ -35,6 +38,24 @@ const shellToneStyles: Record<AppShellTone, string> = {
   black: "bg-[var(--sw-color-ink)] text-[var(--sw-color-surface)]",
 };
 
+type AppShellStyle = Required<Pick<AppShellBaseProps, "size" | "tone" | "variant">>;
+
+const AppShellContext = createContext<AppShellStyle | null>(null);
+
+const defaultStyle: AppShellStyle = { size: "md", tone: "default", variant: "default" };
+
+function useAppShellStyle({ size, tone, variant }: Partial<AppShellStyle>) {
+  const shell = useContext(AppShellContext);
+  return {
+    size: size ?? (variant === "compact" ? "sm" : shell?.size) ?? defaultStyle.size,
+    tone: tone ?? shell?.tone ?? defaultStyle.tone,
+    variant: variant ?? shell?.variant ?? defaultStyle.variant,
+    ownsSpacing: !shell || size !== undefined || variant !== undefined,
+  };
+}
+
+const regionToneStyles = { ...shellToneStyles, default: shellToneStyles.white };
+
 export const AppShell = forwardRef<HTMLElement, AppShellProps>(
   function AppShell(
     {
@@ -42,33 +63,34 @@ export const AppShell = forwardRef<HTMLElement, AppShellProps>(
       children,
       className,
       variant = "default",
-      size = "md",
+      size: sizeProp,
       tone = "default",
       ...props
     },
     ref,
   ) {
+    const size = sizeProp ?? (variant === "compact" ? "sm" : "md");
     const Component = (asChild ? Slot : "div") as ElementType;
 
     return (
-      <Component
-        ref={ref}
-        className={cn(
-          "flex min-h-screen w-full min-w-0",
-          shellSizeStyles[size],
-          shellToneStyles[tone],
-          variant === "compact" &&
-            "[--sw-app-shell-content-padding:1rem] [--sw-app-shell-navbar-height:4rem]",
-          className,
-        )}
-        {...swirskiAttrs("app-shell", { size, tone, variant })}
-        {...props}
-      >
-        {children}
-      </Component>
+      <AppShellContext.Provider value={{ size, tone, variant }}>
+        <Component
+          ref={ref}
+          className={cn(
+            "flex min-h-screen w-full min-w-0",
+            shellSizeStyles[size],
+            shellToneStyles[tone],
+            className,
+          )}
+          {...swirskiAttrs("app-shell", { size, tone, variant })}
+          {...props}
+        >
+          {children}
+        </Component>
+      </AppShellContext.Provider>
     );
   },
-);
+) as unknown as PolymorphicComponent<AppShellProps, HTMLElement>;
 
 AppShell.displayName = "AppShell";
 
@@ -104,23 +126,25 @@ export const AppShellSidebar = forwardRef<HTMLElement, AppShellSidebarProps>(
       collapseBelow = "md",
       side = "left",
       sticky = true,
-      variant = "default",
-      size = "md",
-      tone = "default",
-      width = "md",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
+      width: widthProp,
       ...props
     },
     ref,
   ) {
+    const { size, tone, variant } = useAppShellStyle({ size: sizeProp, tone: toneProp, variant: variantProp });
     const Component = (asChild ? Slot : "aside") as ElementType;
 
     return (
       <Component
         ref={ref}
         className={cn(
-          "min-h-screen shrink-0 flex-col border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
+          "min-h-screen shrink-0 flex-col border-[color:var(--sw-color-ink)]",
+          regionToneStyles[tone],
           sidebarCollapseStyles[collapseBelow],
-          sidebarWidthStyles[width],
+          sidebarWidthStyles[widthProp ?? size],
           side === "left" && "border-r-[length:var(--sw-border-width)]",
           side === "right" &&
             "order-last border-l-[length:var(--sw-border-width)]",
@@ -136,7 +160,7 @@ export const AppShellSidebar = forwardRef<HTMLElement, AppShellSidebarProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<AppShellSidebarProps, HTMLElement>;
 
 AppShellSidebar.displayName = "AppShellSidebar";
 
@@ -148,27 +172,35 @@ export const AppShellBody = forwardRef<HTMLElement, AppShellBodyProps>(
       asChild = false,
       children,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const { size, tone, variant, ownsSpacing } = useAppShellStyle({ size: sizeProp, tone: toneProp, variant: variantProp });
     const Component = (asChild ? Slot : "div") as ElementType;
 
     return (
-      <Component
-        ref={ref}
-        className={cn("flex min-h-screen min-w-0 flex-1 flex-col", className)}
-        {...swirskiAttrs("app-shell-body", { size, tone, variant })}
-        {...props}
-      >
-        {children}
-      </Component>
+      <AppShellContext.Provider value={{ size, tone, variant }}>
+        <Component
+          ref={ref}
+          className={cn(
+            "flex min-h-screen min-w-0 flex-1 flex-col",
+            ownsSpacing && shellSizeStyles[size],
+            toneProp !== undefined && shellToneStyles[tone],
+            className,
+          )}
+          {...swirskiAttrs("app-shell-body", { size, tone, variant })}
+          {...props}
+        >
+          {children}
+        </Component>
+      </AppShellContext.Provider>
     );
   },
-);
+) as unknown as PolymorphicComponent<AppShellBodyProps, HTMLElement>;
 
 AppShellBody.displayName = "AppShellBody";
 
@@ -184,20 +216,23 @@ export const AppShellNavbar = forwardRef<HTMLElement, AppShellNavbarProps>(
       children,
       className,
       sticky = true,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const { size, tone, variant, ownsSpacing } = useAppShellStyle({ size: sizeProp, tone: toneProp, variant: variantProp });
     const Component = (asChild ? Slot : "header") as ElementType;
 
     return (
       <Component
         ref={ref}
         className={cn(
-          "z-20 flex min-h-[var(--sw-app-shell-navbar-height)] shrink-0 items-center gap-4 border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] px-[var(--sw-app-shell-content-padding)] text-[var(--sw-color-ink)]",
+          "z-20 flex min-h-[var(--sw-app-shell-navbar-height)] shrink-0 items-center gap-4 border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-[var(--sw-app-shell-content-padding)]",
+          regionToneStyles[tone],
+          ownsSpacing && shellSizeStyles[size],
           sticky && "sticky top-0",
           variant === "compact" && "text-sm",
           className,
@@ -209,7 +244,7 @@ export const AppShellNavbar = forwardRef<HTMLElement, AppShellNavbarProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<AppShellNavbarProps, HTMLElement>;
 
 AppShellNavbar.displayName = "AppShellNavbar";
 
@@ -221,13 +256,14 @@ export const AppShellMain = forwardRef<HTMLElement, AppShellMainProps>(
       asChild = false,
       children,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const { size, tone, variant, ownsSpacing } = useAppShellStyle({ size: sizeProp, tone: toneProp, variant: variantProp });
     const Component = (asChild ? Slot : "main") as ElementType;
 
     return (
@@ -235,7 +271,8 @@ export const AppShellMain = forwardRef<HTMLElement, AppShellMainProps>(
         ref={ref}
         className={cn(
           "min-w-0 flex-1 px-[var(--sw-app-shell-content-padding)] py-[var(--sw-app-shell-content-padding)]",
-          variant === "compact" && "py-4",
+          ownsSpacing && shellSizeStyles[size],
+          toneProp !== undefined && shellToneStyles[tone],
           className,
         )}
         {...swirskiAttrs("app-shell-main", { size, tone, variant })}
@@ -245,11 +282,17 @@ export const AppShellMain = forwardRef<HTMLElement, AppShellMainProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<AppShellMainProps, HTMLElement>;
 
 AppShellMain.displayName = "AppShellMain";
 
-export type AppShellContentProps = AppShellBaseProps & {
+export type AppShellContentProps = Omit<AppShellBaseProps, "size" | "tone" | "variant"> & {
+  /** @deprecated Use width or style to set content dimensions. */
+  size?: AppShellSize;
+  /** @deprecated Style the content with className or style. */
+  tone?: AppShellTone;
+  /** @deprecated Style the content with className or style. */
+  variant?: AppShellVariant;
   /** Maximum width for readable application content. */
   width?: AppShellContentWidth;
 } & HTMLAttributes<HTMLElement>;
@@ -268,14 +311,15 @@ export const AppShellContent = forwardRef<HTMLElement, AppShellContentProps>(
       asChild = false,
       children,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       width = "lg",
       ...props
     },
     ref,
   ) {
+    const { size, tone, variant } = useAppShellStyle({ size: sizeProp, tone: toneProp, variant: variantProp });
     const Component = (asChild ? Slot : "div") as ElementType;
 
     return (
@@ -293,6 +337,6 @@ export const AppShellContent = forwardRef<HTMLElement, AppShellContentProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<AppShellContentProps, HTMLElement>;
 
 AppShellContent.displayName = "AppShellContent";

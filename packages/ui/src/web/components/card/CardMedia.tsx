@@ -1,4 +1,5 @@
 import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardMediaVariant = "default" | "flush";
@@ -8,6 +9,7 @@ export type CardMediaProps = {
   asChild?: boolean;
   children?: ReactNode;
   variant?: CardMediaVariant;
+  /** @deprecated Use aspect or style for media dimensions. This prop only sets a data attribute. */
   size?: CardMediaSize;
   aspect?: string; // "4/3", "4/5"
 } & Omit<HTMLAttributes<HTMLDivElement>, "color">;
@@ -44,6 +46,6 @@ export const CardMedia = forwardRef<HTMLDivElement, CardMediaProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<CardMediaProps, HTMLDivElement>;
 
 CardMedia.displayName = "CardMedia";

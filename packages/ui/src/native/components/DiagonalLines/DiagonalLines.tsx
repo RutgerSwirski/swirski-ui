@@ -27,8 +27,11 @@ export type NativeDiagonalLinesProps = Omit<ViewProps, "children" | "style"> & {
   accentColor?: string;
   accentEvery?: number;
   accentThickness?: number;
+  /** @deprecated This has no effect on built-in styling. Use style to customize. */
   variant?: NativeDiagonalLinesVariant;
+  /** @deprecated This has no effect on built-in styling. Use style to customize. */
   size?: NativeDiagonalLinesSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NativeDiagonalLinesTone;
   style?: StyleProp<ViewStyle>;
 };

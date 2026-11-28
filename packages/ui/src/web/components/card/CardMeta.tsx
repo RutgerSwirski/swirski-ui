@@ -1,4 +1,8 @@
-import { HTMLAttributes, ReactNode, forwardRef } from "react";
+"use client";
+
+import { HTMLAttributes, ReactNode, forwardRef, useContext } from "react";
+import { CardSizeContext } from "./CardSizeContext";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardMetaSize = "sm" | "md";
@@ -8,6 +12,7 @@ export type CardMetaVariant = "default" | "plain";
 export type CardMetaProps = {
   asChild?: boolean;
   children?: ReactNode;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: CardMetaVariant;
   size?: CardMetaSize;
   tone?: CardMetaTone;
@@ -31,12 +36,14 @@ export const CardMeta = forwardRef<HTMLDivElement, CardMetaProps>(
       children,
       className,
       variant = "default",
-      size = "sm",
+      size: sizeProp,
       tone = "default",
       ...props
     },
     ref,
   ) {
+    const inheritedSize = useContext(CardSizeContext);
+    const size = sizeProp ?? (inheritedSize === "lg" ? "md" : inheritedSize) ?? "sm";
     const Component = asChild ? Slot : "div";
 
     return (
@@ -55,6 +62,6 @@ export const CardMeta = forwardRef<HTMLDivElement, CardMetaProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<CardMetaProps, HTMLDivElement>;
 
 CardMeta.displayName = "CardMeta";

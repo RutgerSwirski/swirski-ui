@@ -182,3 +182,7 @@ static feedback independently of the device setting.
 ```tsx
 <NativeButton reduceMotion onPress={save}>Save</NativeButton>
 ```
+
+
+`NativeButton` forwards a ref to its underlying React Native `Pressable`.
+Use `React.ComponentRef<typeof Pressable>` for an object or callback ref.

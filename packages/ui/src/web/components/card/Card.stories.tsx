@@ -113,3 +113,14 @@ export const DevProjectCard: Story = {
     </Card>
   ),
 };
+
+export const InheritedSize: Story = {
+  render: () => (
+    <Card size="lg" interactive={false}>
+      <CardContent>
+        <CardTitle>Inherits large size</CardTitle>
+        <CardMeta size="sm">Explicit small override</CardMeta>
+      </CardContent>
+    </Card>
+  ),
+};

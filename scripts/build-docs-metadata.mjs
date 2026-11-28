@@ -145,7 +145,8 @@ function collectBindingDefaults(bindingPattern, sourceFile) {
 
   for (const element of bindingPattern.elements) {
     if (ts.isIdentifier(element.name) && element.initializer) {
-      defaults[element.name.text] = element.initializer.getText(sourceFile);
+      const key = element.propertyName?.getText(sourceFile) ?? element.name.text;
+      defaults[key] = element.initializer.getText(sourceFile);
     }
   }
 
@@ -175,21 +176,25 @@ function collectDefaults(sourceFile) {
 
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
       const componentName = node.name.text;
+      let initializer = node.initializer;
+      while (ts.isAsExpression(initializer) || ts.isSatisfiesExpression(initializer)) {
+        initializer = initializer.expression;
+      }
 
       if (
-        ts.isArrowFunction(node.initializer) ||
-        ts.isFunctionExpression(node.initializer)
+        ts.isArrowFunction(initializer) ||
+        ts.isFunctionExpression(initializer)
       ) {
         collectFunctionDefaults(
           componentName,
-          node.initializer,
+          initializer,
           sourceFile,
           defaultsByComponent,
         );
       }
 
-      if (ts.isCallExpression(node.initializer)) {
-        for (const argument of node.initializer.arguments) {
+      if (ts.isCallExpression(initializer)) {
+        for (const argument of initializer.arguments) {
           if (ts.isFunctionExpression(argument) || ts.isArrowFunction(argument)) {
             collectFunctionDefaults(
               componentName,
@@ -281,7 +286,11 @@ function unionTypeString(type) {
 }
 
 function propDescription(symbol, checker) {
-  return ts.displayPartsToString(symbol.getDocumentationComment(checker));
+  const description = ts.displayPartsToString(symbol.getDocumentationComment(checker));
+  const deprecation = symbol.getJsDocTags(checker).find((tag) => tag.name === "deprecated");
+  if (!deprecation) return description;
+  const guidance = ts.displayPartsToString(deprecation.text);
+  return [description, "Deprecated.", guidance].filter(Boolean).join(" ");
 }
 
 function propTypeString(symbol, declaration, checker) {

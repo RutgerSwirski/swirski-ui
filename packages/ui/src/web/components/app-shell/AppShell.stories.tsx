@@ -147,3 +147,16 @@ export const CompactRightSidebar: Story = {
     </AppShell>
   ),
 };
+
+export const InheritedRegionStyles: Story = {
+  args: { children: null },
+  render: () => (
+    <AppShell size="lg" tone="black">
+      <AppShellSidebar collapseBelow="never">Inherits large, dark chrome</AppShellSidebar>
+      <AppShellBody variant="compact">
+        <AppShellNavbar tone="white">Compact density with light chrome</AppShellNavbar>
+        <AppShellMain>Inherits compact spacing</AppShellMain>
+      </AppShellBody>
+    </AppShell>
+  ),
+};

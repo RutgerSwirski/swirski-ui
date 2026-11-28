@@ -2,9 +2,12 @@
 
 import type { MutableRefObject, RefObject } from "react";
 import { createContext, useContext } from "react";
-import type { DropdownMenuFocusIntent } from "./dropdown-menu-types";
+import type { DropdownMenuFocusIntent, DropdownMenuSize, DropdownMenuTone, DropdownMenuVariant } from "./dropdown-menu-types";
 
 export type DropdownMenuContextValue = {
+  variant: DropdownMenuVariant;
+  size: DropdownMenuSize;
+  tone: DropdownMenuTone;
   open: boolean;
   setOpen: (open: boolean) => void;
   rootRef: RefObject<HTMLDivElement | null>;
@@ -16,6 +19,10 @@ export type DropdownMenuContextValue = {
 
 export const DropdownMenuContext =
   createContext<DropdownMenuContextValue | null>(null);
+
+export function useDropdownMenuStyles() {
+  return useContext(DropdownMenuContext);
+}
 
 export function useDropdownMenu() {
   const context = useContext(DropdownMenuContext);

@@ -44,3 +44,10 @@ export const Outline: Story = {
     variant: "outline",
   },
 };
+
+export const Loading: Story = {
+  args: {
+    children: "Saving changes",
+    loading: true,
+  },
+};

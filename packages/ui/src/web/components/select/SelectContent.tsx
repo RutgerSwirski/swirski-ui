@@ -24,7 +24,9 @@ export type SelectContentProps = {
   selectedValue: string;
   showSelectedIndicator: boolean;
   size: SelectSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone: SelectTone;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant: SelectVariant;
 };
 
@@ -58,6 +60,7 @@ export default function SelectContent({
       )}
       id={listboxId}
       role="listbox"
+      data-state="open"
       {...swirskiAttrs("select-content", { size, tone, variant })}
       style={contentStyle}
     >

@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type HeroActionsVariant = "default" | "compact";
@@ -9,9 +10,11 @@ export type HeroActionsProps = {
   asChild?: boolean;
   children?: ReactNode;
   /** Layout variant for CSS targeting. Use size to change the built-in gap. */
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: HeroActionsVariant;
   /** Gap between actions. Defaults to md. */
   size?: HeroActionsSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: HeroActionsTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -51,6 +54,6 @@ export const HeroActions = forwardRef<HTMLDivElement, HeroActionsProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<HeroActionsProps, HTMLDivElement>;
 
 HeroActions.displayName = "HeroActions";

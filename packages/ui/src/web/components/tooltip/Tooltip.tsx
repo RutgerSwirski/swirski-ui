@@ -14,6 +14,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, composeRefs, swirskiAttrs } from "../../system";
 import { useFloatingPosition } from "../../system/floating";
 import { useOverlayLayer } from "../../system/overlay";
@@ -27,6 +28,7 @@ export type TooltipProps = {
   asChild?: boolean;
   children: ReactNode;
   content: ReactNode;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: TooltipVariant;
   size?: TooltipSize;
   tone?: TooltipTone;
@@ -165,6 +167,6 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
       </>
     );
   },
-);
+) as unknown as PolymorphicComponent<TooltipProps, HTMLSpanElement>;
 
 Tooltip.displayName = "Tooltip";

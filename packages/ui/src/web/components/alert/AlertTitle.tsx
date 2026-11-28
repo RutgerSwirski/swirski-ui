@@ -6,8 +6,10 @@ export type AlertTitleSize = "sm" | "md" | "lg";
 export type AlertTitleTone = "default";
 
 export type AlertTitleProps = {
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: AlertTitleVariant;
   size?: AlertTitleSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: AlertTitleTone;
 } & HTMLAttributes<HTMLHeadingElement>;
 

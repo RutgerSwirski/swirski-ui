@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type HeroKickerVariant = "default" | "flat";
@@ -61,6 +62,6 @@ export const HeroKicker = forwardRef<HTMLParagraphElement, HeroKickerProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<HeroKickerProps, HTMLParagraphElement>;
 
 HeroKicker.displayName = "HeroKicker";

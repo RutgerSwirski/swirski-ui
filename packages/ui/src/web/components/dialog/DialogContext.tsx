@@ -1,10 +1,14 @@
 "use client";
 
+import { useControllableState } from "../../hooks/use-controllable-state/useControllableState";
 import type { ReactNode } from "react";
-import { createContext, useCallback, useContext, useId, useState } from "react";
+import { createContext, useContext, useId, useState } from "react";
 import type { DialogSize, DialogTone, DialogVariant } from "./dialog-types";
 
 type DialogContextValue = {
+  variant: DialogVariant;
+  size: DialogSize;
+  tone: DialogTone;
   open: boolean;
   setOpen: (open: boolean) => void;
   titleId: string;
@@ -26,8 +30,13 @@ export type DialogProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: DialogVariant;
   size?: DialogSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DialogTone;
 };
+
+export function useDialogStyles() {
+  return useContext(DialogContext);
+}
 
 export function useDialog() {
   const context = useContext(DialogContext);
@@ -44,30 +53,24 @@ export function Dialog({
   open,
   defaultOpen = false,
   onOpenChange,
-  variant: _variant = "default",
-  size: _size = "md",
-  tone: _tone = "default",
+  variant = "default",
+  size = "md",
+  tone = "default",
 }: DialogProps) {
   const titleId = useId();
   const descriptionId = useId();
-  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [currentOpen, setOpen] = useControllableState({
+    value: open,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
   const [labelledById, setLabelledById] = useState<string | undefined>();
   const [describedById, setDescribedById] = useState<string | undefined>();
-  const isControlled = open !== undefined;
-  const currentOpen = open ?? internalOpen;
-
-  const setOpen = useCallback((nextOpen: boolean) => {
-    if (!isControlled) {
-      setInternalOpen(nextOpen);
-    }
-
-    onOpenChange?.(nextOpen);
-  }, [isControlled, onOpenChange]);
 
   return (
     <DialogContext.Provider
       value={{
-        open: currentOpen,
+        open: currentOpen, variant, size, tone,
         setOpen,
         titleId,
         descriptionId,

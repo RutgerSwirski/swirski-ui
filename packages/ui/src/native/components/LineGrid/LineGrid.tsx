@@ -33,8 +33,11 @@ export type NativeLineGridProps = Omit<ViewProps, "children" | "style"> & {
   accentColor?: string;
   accentEvery?: number;
   accentThickness?: number;
+  /** @deprecated This has no effect on built-in styling. Use style to customize. */
   variant?: NativeLineGridVariant;
+  /** @deprecated This has no effect on built-in styling. Use style to customize. */
   size?: NativeLineGridSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NativeLineGridTone;
   style?: StyleProp<ViewStyle>;
 };

@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardBadgeTone = "white" | "yellow" | "blue" | "red" | "black";
@@ -74,6 +75,6 @@ export const CardBadge = forwardRef<HTMLSpanElement, CardBadgeProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<CardBadgeProps, HTMLSpanElement>;
 
 CardBadge.displayName = "CardBadge";

@@ -1,4 +1,8 @@
-import { HTMLAttributes, ReactNode, forwardRef } from "react";
+"use client";
+
+import { HTMLAttributes, ReactNode, forwardRef, useContext } from "react";
+import { CardSizeContext } from "./CardSizeContext";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardTitleSize = "sm" | "md" | "lg";
@@ -32,12 +36,14 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
       children,
       className,
       variant = "default",
-      size = "md",
+      size: sizeProp,
       tone = "default",
       ...props
     },
     ref,
   ) {
+    const inheritedSize = useContext(CardSizeContext);
+    const size = sizeProp ?? inheritedSize ?? "md";
     const Component = asChild ? Slot : "h3";
 
     return (
@@ -57,6 +63,6 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<CardTitleProps, HTMLHeadingElement>;
 
 CardTitle.displayName = "CardTitle";

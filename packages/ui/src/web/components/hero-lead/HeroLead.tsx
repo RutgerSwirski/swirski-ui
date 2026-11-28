@@ -1,4 +1,5 @@
 import { forwardRef, type ReactNode } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { cn, swirskiAttrs } from "../../system";
 import { Text } from "../typography";
 import type { TextProps, TextSize, TextTone, TextWeight } from "../typography";
@@ -41,6 +42,6 @@ export const HeroLead = forwardRef<HTMLElement, HeroLeadProps>(
       </Text>
     );
   },
-);
+) as unknown as PolymorphicComponent<HeroLeadProps, HTMLElement>;
 
 HeroLead.displayName = "HeroLead";

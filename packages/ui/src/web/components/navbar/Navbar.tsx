@@ -5,7 +5,9 @@ import {
   ButtonHTMLAttributes,
   ElementType,
   HTMLAttributes,
+  createContext,
   forwardRef,
+  useContext,
 } from "react";
 import {
   DropdownMenu,
@@ -16,6 +18,7 @@ import {
   type DropdownMenuProps,
 } from "../dropdown-menu/DropdownMenu";
 import { useDropdownMenu } from "../dropdown-menu/DropdownMenuContext";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -29,21 +32,36 @@ export type NavbarVariant = "default" | "compact";
 export type NavbarSize = "sm" | "md" | "lg";
 export type NavbarTone = "default";
 
+const NavbarStyles = createContext<{
+  variant: NavbarVariant;
+  size: NavbarSize;
+  tone: NavbarTone;
+} | null>(null);
+
+export function useNavbarStyles() {
+  return useContext(NavbarStyles);
+}
+
 function navbarLinkStyles({
   active,
   variant,
+  size,
 }: {
   active: boolean;
   variant: NavbarVariant;
+  size: NavbarSize;
 }) {
   return cn(
-    "inline-flex min-h-11 items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-2 text-sm font-black uppercase no-underline outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:-translate-y-0.5 hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] active:translate-y-0 active:scale-[0.98] disabled:hover:bg-[var(--sw-color-surface)]",
+    "inline-flex items-center justify-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase no-underline outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:-translate-y-0.5 hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] active:translate-y-0 active:scale-[0.98] disabled:hover:bg-[var(--sw-color-surface)]",
     focusVisibleStyles,
     disabledInteractiveStyles,
     active
       ? "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] shadow-[var(--sw-shadow-sm)]"
       : "bg-[var(--sw-color-surface)] text-[color:var(--sw-color-ink)]",
-    variant === "compact" && "min-h-10 px-3 py-1.5 text-xs",
+    variant === "compact" ? "min-h-10" : "min-h-11",
+    size === "sm" || (size === "md" && variant === "compact")
+      ? "px-3 py-1.5 text-xs"
+      : size === "lg" ? "px-5 py-2.5 text-base" : "px-4 py-2 text-sm",
   );
 }
 
@@ -51,6 +69,7 @@ export type NavbarProps = {
   asChild?: boolean;
   variant?: NavbarVariant;
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -68,18 +87,20 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(function Navbar(
   const Component = asChild ? Slot : "header";
 
   return (
-    <Component
-      ref={ref}
-      className={cn(
-        "flex min-h-20 items-center justify-between gap-4 border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-4 text-[var(--sw-color-ink)] sm:px-6",
-        variant === "compact" && "min-h-16 py-3",
-        className,
-      )}
-      {...swirskiAttrs("navbar", { size, tone, variant })}
-      {...props}
-    />
+    <NavbarStyles.Provider value={{ variant, size, tone }}>
+      <Component
+        ref={ref}
+        className={cn(
+          "flex min-h-20 items-center justify-between gap-4 border-b-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-4 text-[var(--sw-color-ink)] sm:px-6",
+          variant === "compact" && "min-h-16 py-3",
+          className,
+        )}
+        {...swirskiAttrs("navbar", { size, tone, variant })}
+        {...props}
+      />
+    </NavbarStyles.Provider>
   );
-});
+}) as unknown as PolymorphicComponent<NavbarProps, HTMLElement>;
 
 Navbar.displayName = "Navbar";
 
@@ -87,7 +108,9 @@ export type NavbarBrandProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   as?: ElementType;
   asChild?: boolean;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -97,13 +120,17 @@ export const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>(
       as: Component = "a",
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useNavbarStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const ResolvedComponent = (asChild ? Slot : Component) as ElementType;
 
     return (
@@ -119,14 +146,17 @@ export const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarBrandProps, HTMLAnchorElement>;
 
 NavbarBrand.displayName = "NavbarBrand";
 
 export type NavbarNavProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -135,13 +165,17 @@ export const NavbarNav = forwardRef<HTMLElement, NavbarNavProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useNavbarStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "nav";
 
     return (
@@ -153,7 +187,7 @@ export const NavbarNav = forwardRef<HTMLElement, NavbarNavProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarNavProps, HTMLElement>;
 
 NavbarNav.displayName = "NavbarNav";
 
@@ -163,6 +197,7 @@ export type NavbarLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   asChild?: boolean;
   variant?: NavbarVariant;
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -173,19 +208,23 @@ export const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>(
       as: Component = "a",
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useNavbarStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const ResolvedComponent = (asChild ? Slot : Component) as ElementType;
 
     return (
       <ResolvedComponent
         ref={ref}
-        className={cn(navbarLinkStyles({ active, variant }), className)}
+        className={cn(navbarLinkStyles({ active, variant, size }), className)}
         aria-current={active ? "page" : props["aria-current"]}
         {...swirskiAttrs("navbar-link", { size, tone, variant })}
         data-active={active ? "" : undefined}
@@ -193,7 +232,7 @@ export const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarLinkProps, HTMLAnchorElement>;
 
 NavbarLink.displayName = "NavbarLink";
 
@@ -205,9 +244,13 @@ export type NavbarDropdownProps = DropdownMenuProps & {
 
 export const NavbarDropdown = forwardRef<HTMLDivElement, NavbarDropdownProps>(
   function NavbarDropdown(
-    { className, variant = "default", size = "md", tone = "default", ...props },
+    { className, variant: variantProp, size: sizeProp, tone: toneProp, ...props },
     ref,
   ) {
+    const styles = useNavbarStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     return (
       <DropdownMenu
         ref={ref}
@@ -230,6 +273,7 @@ export type NavbarDropdownTriggerProps =
     asChild?: boolean;
     variant?: NavbarVariant;
     size?: NavbarSize;
+    /** @deprecated Omit this prop. The component uses the only supported value by default. */
     tone?: NavbarTone;
   };
 
@@ -242,28 +286,37 @@ export const NavbarDropdownTrigger = forwardRef<
     asChild = false,
     children,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
+    disabled,
     onClick,
     onKeyDown,
     ...props
   },
   ref,
 ) {
-  const { contentId, focusIntentRef, open, setOpen, triggerRef } =
-    useDropdownMenu();
+  const styles = useDropdownMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+  const { contentId, focusIntentRef, open, setOpen, triggerRef } = styles;
+  const isDisabled = disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
   const Component = asChild ? Slot : "button";
 
   return (
     <Component
       ref={composeRefs(triggerRef, ref)}
       className={cn(
-        navbarLinkStyles({ active, variant }),
+        navbarLinkStyles({ active, variant, size }),
         "cursor-pointer gap-2",
         className,
       )}
       onClick={(event) => {
+        if (isDisabled) {
+          event.preventDefault();
+          return;
+        }
         onClick?.(event);
 
         if (!event.defaultPrevented) {
@@ -272,6 +325,10 @@ export const NavbarDropdownTrigger = forwardRef<
         }
       }}
       onKeyDown={(event) => {
+        if (isDisabled) {
+          event.preventDefault();
+          return;
+        }
         onKeyDown?.(event);
 
         if (event.defaultPrevented) {
@@ -300,9 +357,13 @@ export const NavbarDropdownTrigger = forwardRef<
       aria-controls={open ? contentId : undefined}
       aria-expanded={open}
       aria-haspopup="menu"
+      data-state={open ? "open" : "closed"}
       {...swirskiAttrs("navbar-dropdown-trigger", { size, tone, variant })}
       data-active={active ? "" : undefined}
       {...props}
+      disabled={asChild ? undefined : disabled}
+      aria-disabled={isDisabled || undefined}
+      tabIndex={asChild && isDisabled ? -1 : props.tabIndex}
     >
       {asChild ? (
         children
@@ -317,7 +378,7 @@ export const NavbarDropdownTrigger = forwardRef<
       )}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<NavbarDropdownTriggerProps, HTMLButtonElement>;
 
 NavbarDropdownTrigger.displayName = "NavbarDropdownTrigger";
 
@@ -331,9 +392,13 @@ export const NavbarDropdownContent = forwardRef<
   HTMLDivElement,
   NavbarDropdownContentProps
 >(function NavbarDropdownContent(
-  { className, variant = "default", size = "md", tone = "default", ...props },
+  { className, variant: variantProp, size: sizeProp, tone: toneProp, ...props },
   ref,
 ) {
+  const styles = useDropdownMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   return (
     <DropdownMenuContent
       ref={ref}
@@ -359,9 +424,13 @@ export const NavbarDropdownItem = forwardRef<
   HTMLButtonElement,
   NavbarDropdownItemProps
 >(function NavbarDropdownItem(
-  { variant = "default", size = "md", tone = "default", ...props },
+  { variant: variantProp, size: sizeProp, tone: toneProp, ...props },
   ref,
 ) {
+  const styles = useDropdownMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   return (
     <DropdownMenuItem
       ref={ref}
@@ -372,7 +441,7 @@ export const NavbarDropdownItem = forwardRef<
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<NavbarDropdownItemProps, HTMLButtonElement>;
 
 NavbarDropdownItem.displayName = "NavbarDropdownItem";
 
@@ -383,6 +452,7 @@ export type NavbarDropdownLinkProps =
     asChild?: boolean;
     variant?: NavbarVariant;
     size?: NavbarSize;
+    /** @deprecated Omit this prop. The component uses the only supported value by default. */
     tone?: NavbarTone;
   };
 
@@ -395,13 +465,17 @@ export const NavbarDropdownLink = forwardRef<
     as: Component = "a",
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
+  const styles = useDropdownMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   const ResolvedComponent = (asChild ? Slot : Component) as ElementType;
 
   return (
@@ -422,14 +496,17 @@ export const NavbarDropdownLink = forwardRef<
       />
     </DropdownMenuItem>
   );
-});
+}) as unknown as PolymorphicComponent<NavbarDropdownLinkProps, HTMLAnchorElement>;
 
 NavbarDropdownLink.displayName = "NavbarDropdownLink";
 
 export type NavbarActionsProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -438,13 +515,17 @@ export const NavbarActions = forwardRef<HTMLDivElement, NavbarActionsProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useNavbarStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "div";
 
     return (
@@ -459,6 +540,6 @@ export const NavbarActions = forwardRef<HTMLDivElement, NavbarActionsProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarActionsProps, HTMLDivElement>;
 
 NavbarActions.displayName = "NavbarActions";

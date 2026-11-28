@@ -4,6 +4,7 @@ import {
   ReactNode,
   forwardRef,
 } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type AvatarVariant = "square" | "rounded";
@@ -58,13 +59,16 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<AvatarProps, HTMLDivElement>;
 
 Avatar.displayName = "Avatar";
 
 export type AvatarImageProps = {
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: "default";
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: AvatarSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: AvatarTone;
 } & ImgHTMLAttributes<HTMLImageElement>;
 
@@ -97,8 +101,11 @@ AvatarImage.displayName = "AvatarImage";
 export type AvatarFallbackProps = {
   asChild?: boolean;
   children?: ReactNode;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: "default";
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: AvatarSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: AvatarTone;
 } & HTMLAttributes<HTMLSpanElement>;
 
@@ -128,6 +135,6 @@ export const AvatarFallback = forwardRef<HTMLSpanElement, AvatarFallbackProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<AvatarFallbackProps, HTMLSpanElement>;
 
 AvatarFallback.displayName = "AvatarFallback";

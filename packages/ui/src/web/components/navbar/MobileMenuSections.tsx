@@ -6,15 +6,20 @@ import type {
   HTMLAttributes,
   MouseEvent,
 } from "react";
+import { useMobileMenuStyles } from "./MobileMenuContext";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 import type { NavbarSize, NavbarTone, NavbarVariant } from "./Navbar";
 import { useMobileMenu } from "./MobileMenuContext";
 
 export type MobileMenuHeaderProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -25,13 +30,17 @@ export const MobileMenuHeader = forwardRef<
   {
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
+  const styles = useMobileMenuStyles();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   const Component = asChild ? Slot : "div";
 
   return (
@@ -45,14 +54,17 @@ export const MobileMenuHeader = forwardRef<
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuHeaderProps, HTMLDivElement>;
 
 MobileMenuHeader.displayName = "MobileMenuHeader";
 
 export type MobileMenuTitleProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLHeadingElement>;
 
@@ -63,13 +75,17 @@ export const MobileMenuTitle = forwardRef<
   {
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
+  const styles = useMobileMenuStyles();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   const Component = asChild ? Slot : "h2";
 
   return (
@@ -80,14 +96,17 @@ export const MobileMenuTitle = forwardRef<
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuTitleProps, HTMLHeadingElement>;
 
 MobileMenuTitle.displayName = "MobileMenuTitle";
 
 export type MobileMenuNavProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -96,13 +115,17 @@ export const MobileMenuNav = forwardRef<HTMLElement, MobileMenuNavProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useMobileMenuStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "nav";
 
     return (
@@ -114,7 +137,7 @@ export const MobileMenuNav = forwardRef<HTMLElement, MobileMenuNavProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<MobileMenuNavProps, HTMLElement>;
 
 MobileMenuNav.displayName = "MobileMenuNav";
 
@@ -124,7 +147,9 @@ export type MobileMenuLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   asChild?: boolean;
   closeOnSelect?: boolean;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -139,14 +164,19 @@ export const MobileMenuLink = forwardRef<
     className,
     closeOnSelect = true,
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { setOpen } = styles;
   const ResolvedComponent = (asChild ? Slot : Component) as ElementType;
 
   return (
@@ -174,6 +204,6 @@ export const MobileMenuLink = forwardRef<
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuLinkProps, HTMLAnchorElement>;
 
 MobileMenuLink.displayName = "MobileMenuLink";

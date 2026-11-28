@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type ImageFrameVariant = "default" | "plain";
@@ -10,6 +11,7 @@ export type ImageFrameProps = {
   children?: ReactNode;
   caption?: ReactNode;
   variant?: ImageFrameVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: ImageFrameSize;
   tone?: ImageFrameTone;
 } & HTMLAttributes<HTMLDivElement>;
@@ -62,6 +64,6 @@ export const ImageFrame = forwardRef<HTMLDivElement, ImageFrameProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<ImageFrameProps, HTMLDivElement>;
 
 ImageFrame.displayName = "ImageFrame";

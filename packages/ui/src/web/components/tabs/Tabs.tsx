@@ -9,6 +9,7 @@ import {
   useId,
 } from "react";
 import { useControllableState } from "../../hooks/use-controllable-state";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -23,6 +24,9 @@ export type TabsTone = "blue" | "yellow" | "black";
 
 type TabsContextValue = {
   id: string;
+  variant: TabsVariant;
+  size: TabsSize;
+  tone: TabsTone;
   value: string;
   setValue: (value: string) => void;
 };
@@ -75,7 +79,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
   });
 
   return (
-    <TabsContext.Provider value={{ id, value: currentValue, setValue }}>
+    <TabsContext.Provider value={{ id, value: currentValue, setValue, variant, size, tone }}>
       <div
         ref={ref}
         className={cn("grid gap-4", className)}
@@ -91,7 +95,9 @@ Tabs.displayName = "Tabs";
 export type TabsListProps = {
   asChild?: boolean;
   variant?: TabsVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TabsSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TabsTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -100,14 +106,18 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "blue",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       onKeyDown,
       ...props
     },
     ref,
   ) {
+    const tabs = useContext(TabsContext);
+    const variant = variantProp ?? tabs?.variant ?? "default";
+    const size = sizeProp ?? tabs?.size ?? "md";
+    const tone = toneProp ?? tabs?.tone ?? "blue";
     const Component = asChild ? Slot : "div";
 
     return (
@@ -162,7 +172,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<TabsListProps, HTMLDivElement>;
 
 TabsList.displayName = "TabsList";
 
@@ -192,9 +202,9 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
       asChild = false,
       value,
       className,
-      variant = "default",
-      size = "md",
-      tone = "blue",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       onClick,
       disabled,
       ...props
@@ -202,6 +212,9 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     ref,
   ) {
     const tabs = useTabs();
+    const variant = variantProp ?? tabs.variant;
+    const size = sizeProp ?? tabs.size;
+    const tone = toneProp ?? tabs.tone;
     const isSelected = tabs.value === value;
     const isDisabled =
       disabled || props["aria-disabled"] === true ||
@@ -214,7 +227,6 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         id={partId(tabs.id, "tab", value)}
         aria-controls={partId(tabs.id, "panel", value)}
         aria-selected={isSelected}
-        aria-disabled={isDisabled || undefined}
         disabled={asChild ? undefined : disabled}
         tabIndex={isSelected && !isDisabled ? 0 : -1}
         className={cn(
@@ -242,12 +254,14 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         role="tab"
         type={asChild ? undefined : "button"}
         {...swirskiAttrs("tabs-trigger", { size, tone, variant })}
+        data-state={isSelected ? "active" : "inactive"}
         data-active={isSelected ? "" : undefined}
         {...props}
+        aria-disabled={isDisabled || undefined}
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<TabsTriggerProps, HTMLButtonElement>;
 
 TabsTrigger.displayName = "TabsTrigger";
 
@@ -255,7 +269,9 @@ export type TabsContentProps = HTMLAttributes<HTMLDivElement> & {
   asChild?: boolean;
   value: string;
   variant?: TabsVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TabsSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TabsTone;
 };
 
@@ -265,19 +281,22 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
       asChild = false,
       value,
       className,
-      variant = "default",
-      size = "md",
-      tone = "blue",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
     const tabs = useTabs();
+    const variant = variantProp ?? tabs.variant;
+    const size = sizeProp ?? tabs.size;
+    const tone = toneProp ?? tabs.tone;
     const id = props.id ?? partId(tabs.id, "panel", value);
     const labelledBy = props["aria-labelledby"] ?? partId(tabs.id, "tab", value);
 
     if (tabs.value !== value) {
-      return <div id={id} role="tabpanel" aria-labelledby={labelledBy} hidden />;
+      return <div id={id} role="tabpanel" aria-labelledby={labelledBy} data-state="inactive" hidden />;
     }
 
     const Component = asChild ? Slot : "div";
@@ -294,11 +313,12 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
         id={id}
         aria-labelledby={labelledBy}
         tabIndex={0}
+        data-state="active"
         {...swirskiAttrs("tabs-content", { size, tone, variant })}
         {...props}
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<TabsContentProps, HTMLDivElement>;
 
 TabsContent.displayName = "TabsContent";

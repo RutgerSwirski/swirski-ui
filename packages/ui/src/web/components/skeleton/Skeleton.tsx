@@ -8,6 +8,7 @@ export type SkeletonTone = "default" | "muted";
 export type SkeletonProps = {
   variant?: SkeletonVariant;
   size?: SkeletonSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: SkeletonTone;
 } & HTMLAttributes<HTMLDivElement>;
 

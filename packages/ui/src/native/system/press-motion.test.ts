@@ -3,9 +3,13 @@ import { AccessibilityInfo, Animated } from "react-native";
 import { beforeEach, expect, it, vi } from "vitest";
 import { usePressMotion } from "./press-motion";
 
+const { addEventListener } = vi.hoisted(() => ({
+  addEventListener: vi.fn<(event: string, listener: (reduced: boolean) => void) => { remove: () => void }>(),
+}));
+
 vi.mock("react-native", () => ({
   AccessibilityInfo: {
-    addEventListener: vi.fn(),
+    addEventListener,
     isReduceMotionEnabled: vi.fn(),
   },
   Animated: {
@@ -24,9 +28,9 @@ const remove = vi.fn();
 
 beforeEach(() => {
   vi.clearAllMocks();
-  vi.mocked(AccessibilityInfo.addEventListener).mockImplementation((event, listener) => {
+  addEventListener.mockImplementation((event, listener) => {
     expect(event).toBe("reduceMotionChanged");
-    changePreference = listener as typeof changePreference;
+    changePreference = listener;
     return { remove };
   });
   vi.mocked(AccessibilityInfo.isReduceMotionEnabled).mockImplementation(

@@ -6,8 +6,10 @@ export type AlertDescriptionSize = "sm" | "md" | "lg";
 export type AlertDescriptionTone = "default";
 
 export type AlertDescriptionProps = {
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: AlertDescriptionVariant;
   size?: AlertDescriptionSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: AlertDescriptionTone;
 } & HTMLAttributes<HTMLParagraphElement>;
 

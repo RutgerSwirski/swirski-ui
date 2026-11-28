@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -16,7 +17,9 @@ export type MobileMenuTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   label?: string;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -30,15 +33,20 @@ export const MobileMenuTrigger = forwardRef<
     className,
     label = "Open navigation menu",
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     "aria-label": ariaLabel,
     ...props
   },
   ref,
 ) {
-  const { contentId, open, setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { contentId, open, setOpen } = styles;
   const Component = asChild ? Slot : "button";
 
   return (
@@ -62,6 +70,7 @@ export const MobileMenuTrigger = forwardRef<
         }
       }}
       type={asChild ? undefined : "button"}
+      data-state={open ? "open" : "closed"}
       {...swirskiAttrs("mobile-menu-trigger", { size, tone, variant })}
       {...props}
     >
@@ -74,14 +83,16 @@ export const MobileMenuTrigger = forwardRef<
       )}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuTriggerProps, HTMLButtonElement>;
 
 MobileMenuTrigger.displayName = "MobileMenuTrigger";
 
 export type MobileMenuCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -94,14 +105,19 @@ export const MobileMenuClose = forwardRef<
     children = "Close",
     className,
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { setOpen } = styles;
   const Component = asChild ? Slot : "button";
 
   return (
@@ -128,6 +144,6 @@ export const MobileMenuClose = forwardRef<
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuCloseProps, HTMLButtonElement>;
 
 MobileMenuClose.displayName = "MobileMenuClose";

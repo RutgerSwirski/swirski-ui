@@ -1,4 +1,5 @@
 import { HTMLAttributes, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type AlertTone = "blue" | "yellow" | "red" | "white";
@@ -73,6 +74,6 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<AlertProps, HTMLDivElement>;
 
 Alert.displayName = "Alert";
