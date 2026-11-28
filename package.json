@@ -19,6 +19,7 @@
     "test:ui": "pnpm --filter @swirski/ui test",
     "test:cli": "node scripts/test-cli-package.mjs",
     "test:ui-consumers": "pnpm build:ui && node scripts/test-ui-consumers.mjs",
+    "test:react-compatibility": "node scripts/test-react-compatibility.mjs",
     "install:docs": "pnpm --filter docs install",
     "artifacts:update": "pnpm docs:metadata && pnpm llms:build && pnpm registry:shadcn",
     "test": "pnpm test:ui && pnpm build:ui && pnpm build && pnpm --filter @swirski/ui build-storybook"

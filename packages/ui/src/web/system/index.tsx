@@ -74,15 +74,25 @@ export function swirskiAttrs(
   };
 }
 // compose the refs so that refs and passed refs will work together
+const supportsRefCleanup = Number.parseInt(version, 10) >= 19;
+
 export function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
+  let legacyCleanup: (() => void) | undefined;
   return (node: T | null) => {
+    if (node === null && legacyCleanup) {
+      const cleanup = legacyCleanup;
+      legacyCleanup = undefined;
+      cleanup();
+      return;
+    }
+
     const cleanups = refs.map((ref) => {
       if (typeof ref === "function") return ref(node);
       if (ref) ref.current = node;
     });
 
-    if (cleanups.some((cleanup) => typeof cleanup === "function")) {
-      return () => {
+    if (node !== null && cleanups.some((cleanup) => typeof cleanup === "function")) {
+      const cleanupRefs = () => {
         refs.forEach((ref, index) => {
           const cleanup = cleanups[index];
           if (typeof cleanup === "function") cleanup();
@@ -90,6 +100,9 @@ export function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
           else if (ref) ref.current = null;
         });
       };
+      if (supportsRefCleanup) return cleanupRefs;
+      // React 18 detaches with null and warns if the callback returns a cleanup.
+      legacyCleanup = cleanupRefs;
     }
   };
 }
@@ -154,7 +167,7 @@ export const Slot = forwardRef<HTMLElement, SlotProps>(
     }
 
     const childElement = child as ReactElement<HTMLAttributes<HTMLElement>>;
-    const childRef = Number.parseInt(version, 10) >= 19
+    const childRef = supportsRefCleanup
       ? (childElement.props as { ref?: Ref<HTMLElement> }).ref
       : (childElement as ReactElement & { ref?: Ref<HTMLElement> }).ref;
     const ref = useMemo(() => composeRefs(forwardedRef, childRef), [forwardedRef, childRef]);
