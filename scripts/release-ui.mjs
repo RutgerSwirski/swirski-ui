@@ -130,8 +130,7 @@ function prepareReleasePr() {
     });
   }
 
-  console.log(`Release PR prepared for @swirski/ui@${nextVersion}. Publish after the PR is merged with:`);
-  console.log("  pnpm release:ui --publish");
+  console.log(`Release PR prepared for @swirski/ui@${nextVersion}. GitHub Actions publishes after the PR merges.`);
 }
 
 function publishCurrentVersion() {
@@ -291,11 +290,7 @@ function openReleasePr({ baseBranch, releaseBranch, currentVersion, nextVersion 
   const body = [
     `Release @swirski/ui ${currentVersion} -> ${nextVersion}.`,
     "",
-    "After this PR merges, publish and tag the package from main:",
-    "",
-    "```bash",
-    "pnpm release:ui --publish",
-    "```",
+    "GitHub Actions publishes and tags the package after this PR merges.",
   ].join("\n");
 
   run("gh", ["pr", "create", "--base", baseBranch, "--head", releaseBranch, "--title", title, "--body", body]);
