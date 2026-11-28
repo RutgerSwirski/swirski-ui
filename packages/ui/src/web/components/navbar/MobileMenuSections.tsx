@@ -153,7 +153,7 @@ export const MobileMenuLink = forwardRef<
     <ResolvedComponent
       ref={ref}
       className={cn(
-        "flex min-h-14 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-3 text-lg font-black uppercase no-underline outline-none transition hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)]",
+        "flex min-h-14 items-center border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] px-4 py-3 text-lg font-black uppercase no-underline outline-none sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)]",
         focusVisibleStyles,
         active
           ? "bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] shadow-[var(--sw-shadow-sm)]"

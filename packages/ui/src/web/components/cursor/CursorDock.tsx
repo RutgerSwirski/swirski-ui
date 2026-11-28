@@ -81,7 +81,7 @@ export const CursorDock = forwardRef<HTMLDivElement, CursorDockProps>(
           aria-expanded={isOpen}
           aria-label={label}
           className={cn(
-            "order-last grid size-14 place-items-center border-4 border-black bg-[#FFD400] shadow-[5px_5px_0_#0B0B0C] transition-all duration-150",
+            "order-last grid size-14 place-items-center border-4 border-black bg-[#FFD400] shadow-[5px_5px_0_#0B0B0C] sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)]",
             "hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
             "focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#0057FF]",
             side === "right" ? "border-r-0" : "border-l-0",
@@ -99,7 +99,7 @@ export const CursorDock = forwardRef<HTMLDivElement, CursorDockProps>(
         <div
           aria-hidden={!isOpen}
           className={cn(
-            "overflow-hidden transition-[max-width,opacity,transform] duration-200 ease-out",
+            "overflow-hidden sw-motion-shift transition-[max-width,opacity,transform] duration-[var(--sw-motion-standard,200ms)] ease-out",
             isOpen
               ? "max-w-[calc(100vw-5rem)] opacity-100"
               : "max-w-0 opacity-0",

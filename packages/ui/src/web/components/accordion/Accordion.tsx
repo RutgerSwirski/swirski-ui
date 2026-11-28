@@ -65,7 +65,7 @@ export const AccordionItem = forwardRef<HTMLDetailsElement, AccordionItemProps>(
       <details
         ref={ref}
         className={cn(
-          "group border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[5px_5px_0_var(--sw-color-shadow)] transition open:bg-[var(--sw-color-paper)]",
+          "group border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[5px_5px_0_var(--sw-color-shadow)] sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] open:bg-[var(--sw-color-paper)]",
           variant === "compact" && "shadow-[3px_3px_0_var(--sw-color-shadow)]",
           className,
         )}
@@ -116,7 +116,7 @@ export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(
         {...props}
       >
         <span>{children}</span>
-        <span aria-hidden="true" className="grid size-7 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none transition group-open:rotate-45">
+        <span aria-hidden="true" className="grid size-7 shrink-0 place-items-center border-2 border-[color:var(--sw-color-ink)] bg-[var(--sw-color-yellow)] text-[color:var(--sw-color-on-yellow)] leading-none sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] group-open:rotate-45">
           +
         </span>
       </summary>

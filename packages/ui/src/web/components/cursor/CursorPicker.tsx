@@ -66,7 +66,7 @@ export const CursorPicker = forwardRef<HTMLDivElement, CursorPickerProps>(
               aria-checked={isSelected}
               aria-label={cursor.name}
               className={cn(
-                "group relative flex min-h-14 min-w-14 items-center gap-2 border-4 border-black bg-white px-3 py-2 text-left transition-all duration-150",
+                "group relative flex min-h-14 min-w-14 items-center gap-2 border-4 border-black bg-white px-3 py-2 text-left sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)]",
                 "hover:-translate-y-1 hover:shadow-[5px_5px_0_#0B0B0C]",
                 "focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#0057FF]",
                 isSelected

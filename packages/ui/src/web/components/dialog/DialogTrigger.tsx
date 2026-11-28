@@ -41,7 +41,7 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
       <Component
         ref={ref}
         className={cn(
-          "inline-flex border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-blue)] font-black uppercase text-[color:var(--sw-color-on-blue)] shadow-[5px_5px_0_var(--sw-color-shadow)] outline-none transition-all duration-150 hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2 disabled:hover:shadow-[5px_5px_0_var(--sw-color-shadow)]",
+          "inline-flex border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-blue)] font-black uppercase text-[color:var(--sw-color-on-blue)] shadow-[5px_5px_0_var(--sw-color-shadow)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2 disabled:hover:shadow-[5px_5px_0_var(--sw-color-shadow)]",
           focusVisibleStyles,
           disabledInteractiveStyles,
           dialogButtonSizeStyles[size],

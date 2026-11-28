@@ -44,7 +44,7 @@ const outlineToneStyles: Partial<Record<CardTone, string>> = {
 };
 
 const interactiveStyles =
-  "transition-all duration-150 hover:-translate-y-2 active:translate-y-2";
+  "sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:-translate-y-2 active:translate-y-2";
 
 const interactiveShadowStyles =
   "hover:shadow-[12px_12px_0_var(--sw-color-shadow)] active:shadow-[4px_4px_0_var(--sw-color-shadow)]";

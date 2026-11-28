@@ -70,7 +70,7 @@ export default function SelectContent({
             aria-disabled={option.disabled}
             aria-selected={isSelected}
             className={cn(
-              "flex w-full items-center justify-between gap-3 text-left font-black uppercase transition",
+              "flex w-full items-center justify-between gap-3 text-left font-black uppercase sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)]",
               optionSizeStyles[size],
               isHighlighted &&
                 !option.disabled &&

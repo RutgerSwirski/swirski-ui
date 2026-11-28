@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import type { ComponentRef, ReactNode } from "react";
 import type {
   GestureResponderEvent,
@@ -8,9 +8,11 @@ import type {
 import { Animated, Pressable } from "react-native";
 
 import { swirskiColors } from "../../../shared/tokens";
+import { usePressMotion } from "../../system/press-motion";
 import { NativeCardProvider, type NativeCardResolvedTextTone } from "./CardContext";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const pressSpring = { damping: 16, mass: 0.8, stiffness: 420 };
 
 export type NativeCardVariant = "elevated" | "flat" | "outline";
 export type NativeCardSize = "sm" | "md" | "lg";
@@ -18,6 +20,7 @@ export type NativeCardTone = "default" | "white" | "yellow" | "blue" | "black";
 
 export type NativeCardProps = Omit<PressableProps, "children" | "style"> & {
   children?: ReactNode;
+  reduceMotion?: boolean;
   interactive?: boolean;
   withShadow?: boolean;
   variant?: NativeCardVariant;
@@ -72,6 +75,7 @@ export const NativeCard = forwardRef<
     onPress,
     onPressIn,
     onPressOut,
+    reduceMotion,
     size = "md",
     style,
     tone = "default",
@@ -81,10 +85,10 @@ export const NativeCard = forwardRef<
   },
   ref,
 ) {
-  const pressProgress = useRef(new Animated.Value(0)).current;
   const [isPressed, setIsPressed] = useState(false);
   const resolvedWithShadow = withShadow ?? variant === "elevated";
-  const canPressAnimate = interactive && !disabled;
+  const canShowPressFeedback = interactive && !disabled;
+  const { progress: pressProgress, animate, reduced } = usePressMotion(canShowPressFeedback, pressSpring, reduceMotion);
   const shadowOffset = shadowOffsets[size];
   const textTone = textToneForCard(tone);
   const animatedFeedbackStyle = useMemo(
@@ -108,35 +112,18 @@ export const NativeCard = forwardRef<
   );
 
   useEffect(() => {
-    if (disabled) {
-      setIsPressed(false);
-      pressProgress.setValue(0);
-    }
-  }, [disabled, pressProgress]);
-
-  const runPressAnimation = (toValue: number) => {
-    if (!canPressAnimate) {
-      return;
-    }
-
-    Animated.spring(pressProgress, {
-      damping: 16,
-      mass: 0.8,
-      stiffness: 420,
-      toValue,
-      useNativeDriver: true,
-    }).start();
-  };
+    if (!canShowPressFeedback) setIsPressed(false);
+  }, [canShowPressFeedback]);
 
   const handlePressIn = (event: GestureResponderEvent) => {
     setIsPressed(true);
-    runPressAnimation(1);
+    animate(1);
     onPressIn?.(event);
   };
 
   const handlePressOut = (event: GestureResponderEvent) => {
     setIsPressed(false);
-    runPressAnimation(0);
+    animate(0);
     onPressOut?.(event);
   };
 
@@ -167,8 +154,9 @@ export const NativeCard = forwardRef<
           toneStyles[tone],
           variantStyles[variant],
           resolvedWithShadow ? shadowStyle(shadowOffset) : undefined,
-          canPressAnimate ? animatedFeedbackStyle : undefined,
-          isPressed && canPressAnimate && resolvedWithShadow
+          canShowPressFeedback && !reduced && animatedFeedbackStyle,
+          canShowPressFeedback && reduced && isPressed && { opacity: 0.88 },
+          isPressed && canShowPressFeedback && resolvedWithShadow
             ? shadowStyle(Math.min(4, shadowOffset))
             : undefined,
           typeof style === "function" ? style(pressableState) : style,

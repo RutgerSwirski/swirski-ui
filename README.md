@@ -405,6 +405,35 @@ pnpm test:react-compatibility        # both React releases
 pnpm test:react-compatibility 18     # only React 18
 ```
 
+### Motion preferences
+
+Swirski UI follows `prefers-reduced-motion` as it changes. In reduced mode,
+built-in transitions settle immediately, decorative hover and press movement
+is removed, and loaders and skeletons stop looping. Loaders show their
+`label` beside the static graphic. Focus indicators, shadows, press feedback,
+and state cues such as the switch thumb and expanded indicator remain visible.
+The optional CursorProvider falls back to the browser’s cursor. Static design
+details such as tilted badges and floating panel positioning are preserved.
+
+Set `data-swirski-reduce-motion` on `<html>` to opt the whole app into reduced
+motion, including body portals and custom cursors. For individual sections,
+the same attribute reduces CSS motion in that subtree. Place it above the local
+SwirskiProvider to include that provider’s portal host. The attribute can be
+added or removed at runtime. The OS preference still applies when the
+attribute is absent.
+
+Customize normal transition timing with `--sw-motion-fast` (150ms) and
+`--sw-motion-standard` (200ms) on the document or a subtree. These tokens drive
+Swirski’s built-in transitions. The reduced-mode rules target library-owned
+motion classes, so consumer animations need their own preference handling.
+Use the exported `useReducedMotion()` hook to read the OS preference in
+application JavaScript.
+
+The audit covered press and hover movement, control state transitions, cursor
+selection and dock effects, loader keyframes, skeleton pulse, and React Native
+Button and Card springs. Overlay focus scheduling, tooltip delays, and toast
+timeouts are interaction timing and continue to run in both modes.
+
 ### Consumer and browser tests
 
 Run `pnpm test:ui-consumers` to build and install the UI tarball into isolated

@@ -120,7 +120,7 @@ export const PaginationButton = forwardRef<
     <button
       ref={ref}
       className={cn(
-        "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase shadow-[var(--sw-shadow-sm)] outline-none transition-all duration-150 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-black/40 disabled:hover:shadow-[var(--sw-shadow-sm)]",
+        "border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] font-black uppercase shadow-[var(--sw-shadow-sm)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-black/40 disabled:hover:shadow-[var(--sw-shadow-sm)]",
         focusVisibleStyles,
         disabledInteractiveStyles,
         sizeStyles[size],

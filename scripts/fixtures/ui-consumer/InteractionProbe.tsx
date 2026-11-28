@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import {
-  Accordion, AccordionItem, AccordionTrigger, AccordionContent, Button,
+  Accordion, AccordionItem, AccordionTrigger, AccordionContent, Button, Card,
   Checkbox, CursorPicker, CursorProvider, Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger,
   Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger,
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
-  InputField, Popover, PopoverContent, PopoverTrigger, RadioGroup, Select,
+  InputField, Loader, Skeleton, Popover, PopoverContent, PopoverTrigger, RadioGroup, Select,
   MobileMenu, MobileMenuClose, MobileMenuContent, MobileMenuTrigger,
   Slider, SwirskiProvider, Switch, Tabs, TabsContent, TabsList, TabsTrigger,
   ThemeToggle, Tooltip,
@@ -110,7 +110,18 @@ export function InteractionProbe({ initiallyOpen = false, siblings = false }) {
         <InputField label="Email" />
         <CursorProvider>
           <CursorPicker />
+          <Button data-motion-demo>Motion demo</Button>
         </CursorProvider>
+        <div data-motion-fixture>
+          <Card>
+            <span data-consumer-motion style={{ transition: "opacity 1s" }}>Consumer content</span>
+          </Card>
+          <Loader label="Loading dots" />
+          <Loader variant="pixel-bars" label="Loading bars" />
+          <Loader variant="pixel-blocks" label="Loading blocks" />
+          <Loader variant="pixel-scan" label="Loading scan" />
+          <Skeleton />
+        </div>
       </main>
     </SwirskiProvider>
   );
