@@ -17,6 +17,7 @@ export const radioGroupComponentDoc: ComponentDoc = {
 />`,
   preview: (
     <RadioGroup
+      aria-label="Colour treatment"
       name="docs-tone"
       defaultValue="blue"
       options={[
@@ -34,6 +35,11 @@ export const radioGroupComponentDoc: ComponentDoc = {
     />
   ),
   props: [
+    {
+      name: "required / disabled / form",
+      type: "boolean / boolean / string",
+      description: "Apply native validation, disabled behaviour, and form ownership to the radios.",
+    },
     {
       name: "name",
       type: "string",

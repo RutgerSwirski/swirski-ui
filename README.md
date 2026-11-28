@@ -405,6 +405,11 @@ pnpm test:react-compatibility        # both React releases
 pnpm test:react-compatibility 18     # only React 18
 ```
 
+### Forms
+
+See the [form guide](docs/forms.md) for native form submission, shared Field
+accessibility, validation, and React Hook Form with Zod.
+
 ### Component APIs
 
 See the [component API contracts](docs/component-api-contracts.md) for styling

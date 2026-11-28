@@ -1,4 +1,7 @@
+"use client";
+
 import { InputHTMLAttributes, forwardRef } from "react";
+import { useFieldControl } from "../../system/field";
 import { cn, swirskiAttrs } from "../../system";
 
 export type SliderVariant = "default";
@@ -25,16 +28,19 @@ const toneStyles: Record<SliderTone, string> = {
 };
 
 export const Slider = forwardRef<HTMLInputElement, SliderProps>(function Slider(
-  { className, variant = "default", size = "md", tone = "blue", ...props },
+  { className, variant = "default", size: sizeProp, tone = "blue", ...props },
   ref,
 ) {
+  const { size: inheritedSize, readOnly: _readOnly, required: _required, ...field } = useFieldControl(props);
+  const size = sizeProp ?? inheritedSize ?? "md";
   return (
     <input
       ref={ref}
-      className={cn("w-full", sizeStyles[size], toneStyles[tone], className)}
+      className={cn("w-full disabled:cursor-not-allowed disabled:opacity-60 aria-invalid:outline-2 aria-invalid:outline-[color:var(--sw-color-red)]", sizeStyles[size], toneStyles[tone], className)}
       type="range"
       {...swirskiAttrs("slider", { size, tone, variant })}
       {...props}
+      {...field}
     />
   );
 });

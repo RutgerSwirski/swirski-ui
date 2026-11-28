@@ -26,7 +26,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       .join(" ");
 
     return (
-      <Field className={fieldClassName}>
+      <Field className={fieldClassName} controlId={inputId} size={props.size}>
         <Label htmlFor={inputId}>{label}</Label>
         <Input
           {...props}
@@ -34,7 +34,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           id={inputId}
           tone={tone ?? (errorId ? "danger" : undefined)}
           aria-describedby={describedBy || undefined}
-          aria-invalid={errorId ? true : props["aria-invalid"]}
+          aria-invalid={props["aria-invalid"] ?? (errorId ? true : undefined)}
         />
         {hintId && <FieldHint id={hintId}>{hint}</FieldHint>}
         {errorId && <FieldError id={errorId}>{error}</FieldError>}

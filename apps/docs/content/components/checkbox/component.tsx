@@ -21,6 +21,16 @@ export const checkboxComponentDoc: ComponentDoc = {
   ),
   props: [
     {
+      name: "indeterminate",
+      type: "boolean",
+      description: "Controls the native mixed state. Checked still determines submission.",
+    },
+    {
+      name: "defaultIndeterminate",
+      type: "boolean",
+      description: "Sets the initial mixed state and restores it on form reset.",
+    },
+    {
       name: "label",
       type: "ReactNode",
       description: "Visible label rendered beside the checkbox.",

@@ -1,11 +1,11 @@
 import {
   Field,
   FieldError,
-  FieldHint,
+  FieldDescription,
+  FieldLabel,
   Grid,
   Input,
   InputField,
-  Label,
   Textarea,
 } from "@swirski/ui";
 import type { ComponentDoc } from "../../types";
@@ -14,37 +14,38 @@ export const fieldComponentDoc: ComponentDoc = {
   slug: "field",
   title: "Field",
   description:
-    "A form field set with label, input, textarea and hint primitives built from native elements.",
+    "A shared field that connects labels, descriptions, errors and native form controls.",
   category: "Forms",
   importCode: `import {
   Field,
   FieldError,
-  FieldHint,
+  FieldDescription,
+  FieldLabel,
   Input,
   InputField,
-  Label,
   Textarea,
 } from "@swirski/ui";`,
-  usageCode: `import { InputField } from "@swirski/ui";
-
-<InputField label="Email" name="email" type="email" hint="Use your work address." />`,
+  usageCode: `<Field required>
+  <FieldLabel>Email address</FieldLabel>
+  <Input name="email" type="email" />
+  <FieldDescription>Use your work address.</FieldDescription>
+</Field>`,
   compositionCode: `Field
-|-- Label
+|-- FieldLabel
 |-- Input | Textarea | Select | Checkbox | RadioGroup
-|-- FieldHint
+|-- FieldDescription
 \`-- FieldError`,
   preview: (
     <Grid className="max-w-md gap-6">
       <InputField label="Work email" name="email" type="email" hint="Use your work address." />
       <Field>
-        <Label htmlFor="docs-email">Email</Label>
-        <Input id="docs-email" placeholder="studio@swirski.dev" />
-        <FieldHint>Use the address where clients can reach you.</FieldHint>
+        <FieldLabel>Email</FieldLabel>
+        <Input placeholder="studio@swirski.dev" />
+        <FieldDescription>Use the address where clients can reach you.</FieldDescription>
       </Field>
       <Field>
-        <Label htmlFor="docs-message">Message</Label>
+        <FieldLabel>Message</FieldLabel>
         <Textarea
-          id="docs-message"
           placeholder="Tell us what you are building."
         />
         <FieldError>This is where validation feedback can sit.</FieldError>
@@ -66,7 +67,7 @@ export const fieldComponentDoc: ComponentDoc = {
     {
       name: "Label.htmlFor",
       type: "string",
-      description: "Connects the label to an input or textarea id.",
+      description: "Overrides the automatic label association when needed.",
     },
     {
       name: "Label.className",

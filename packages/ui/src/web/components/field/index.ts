@@ -26,3 +26,8 @@ export type {
   TextareaTone,
   TextareaVariant,
 } from "./Textarea";
+
+export { Label as FieldLabel } from "./Label";
+export { FieldHint as FieldDescription } from "./FieldHint";
+export type { LabelProps as FieldLabelProps } from "./Label";
+export type { FieldHintProps as FieldDescriptionProps } from "./FieldHint";

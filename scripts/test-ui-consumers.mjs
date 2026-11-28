@@ -7,6 +7,7 @@ import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, firefox, webkit } from "playwright";
 import { verifyMotion } from "./verify-ui-motion.mjs";
+import { verifyForms } from "./verify-ui-forms.mjs";
 import { verifyInteractions } from "./verify-ui-interactions.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -131,7 +132,8 @@ async function verifyBrowsers(names) {
         console.log(`${name} ${browser.version()}: verified scoped CSS, portal theme, contrast, and opt-in reset and fonts.`);
         await verifyInteractions(browser, url, name);
         await verifyMotion(browser, url);
-        console.log(`${name}: interaction, axe, and motion checks passed.`);
+        await verifyForms(browser, url);
+        console.log(`${name}: interaction, axe, motion, and form checks passed.`);
       } catch (error) {
         throw new Error(`Packed stylesheet failed in ${name} ${browser.version()}`, { cause: error });
       } finally {
@@ -155,12 +157,15 @@ try {
       next: requireDocs("next/package.json").version,
       "@types/node": requireDocs("@types/node/package.json").version,
       tailwindcss: requireUi("tailwindcss/package.json").version,
+      "react-hook-form": "7.92.0",
+      "@hookform/resolvers": "7.0.9",
+      zod: "4.6.7",
       "tailwind-v3": "npm:tailwindcss@3.4.19",
       "@swirski/ui": `file:./${pack.filename}`,
     },
   }));
   mkdirSync(join(fixture, "app"));
-  for (const name of ["ThemeProbe.tsx", "CoexistenceProbe.tsx", "coexistence.module.css", "InteractionProbe.tsx"]) {
+  for (const name of ["ThemeProbe.tsx", "CoexistenceProbe.tsx", "coexistence.module.css", "InteractionProbe.tsx", "FormProbe.tsx"]) {
     copyFileSync(join(root, "scripts/fixtures/ui-consumer", name), join(fixture, name));
   }
   write("app/layout.tsx", `import "@swirski/ui/styles.css";
@@ -189,9 +194,14 @@ import { Title } from "@swirski/ui";
 import { createRoot } from "react-dom/client";
 import { CoexistenceProbe } from "./CoexistenceProbe";
 import { InteractionProbe } from "./InteractionProbe";
+import { FormProbe } from "./FormProbe";
 import { ConsumerExample } from "./ThemeProbe";
 const root = document.getElementById("root")!;
 async function start() {
+  if (new URLSearchParams(location.search).has("forms")) {
+    createRoot(root).render(<FormProbe />);
+    return;
+  }
   const interactions = new URLSearchParams(location.search).get("interactions");
   if (interactions !== null) {
     createRoot(root).render(<InteractionProbe initiallyOpen={interactions === "initial"} siblings={interactions === "siblings"} />);

@@ -1,4 +1,7 @@
-import { LabelHTMLAttributes, forwardRef } from "react";
+"use client";
+
+import { LabelHTMLAttributes, forwardRef, useContext, useId } from "react";
+import { FieldContext, useFieldPart } from "../../system/field";
 import { cn, swirskiAttrs } from "../../system";
 
 export type LabelVariant = "default" | "plain";
@@ -24,12 +27,19 @@ const toneStyles: Record<LabelTone, string> = {
 };
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>(function Label(
-  { className, variant = "default", size = "md", tone = "default", ...props },
+  { className, children, id, htmlFor, variant = "default", size: sizeProp, tone = "default", ...props },
   ref,
 ) {
+  const field = useContext(FieldContext);
+  const generatedId = useId();
+  const partId = id ?? (field ? generatedId : undefined);
+  useFieldPart("label", partId);
+  const size = sizeProp ?? field?.size ?? "md";
   return (
     <label
       ref={ref}
+      id={partId}
+      htmlFor={htmlFor ?? (field?.labelable === false ? undefined : field?.explicitControlId ?? field?.controlId)}
       className={cn(
         variant === "default" && "font-black uppercase tracking-wide",
         sizeStyles[size],
@@ -38,7 +48,10 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(function Label(
       )}
       {...swirskiAttrs("label", { size, tone, variant })}
       {...props}
-    />
+    >
+      {children}
+      {field?.required && <span aria-hidden="true" className="ml-1 text-[color:var(--sw-color-red-text)]">*</span>}
+    </label>
   );
 });
 

@@ -1,4 +1,7 @@
-import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
+"use client";
+
+import { InputHTMLAttributes, ReactNode, forwardRef, useId } from "react";
+import { useFieldControl } from "../../system/field";
 import { cn, swirskiAttrs } from "../../system";
 
 export type SwitchVariant = "default" | "card";
@@ -40,14 +43,19 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
     className,
     containerClassName,
     inputClassName,
-    disabled,
     variant = "default",
-    size = "md",
+    size: sizeProp,
     tone = "blue",
     ...props
   },
   ref,
 ) {
+  const { size: inheritedSize, readOnly: _readOnly, ...field } = useFieldControl(props, "composite");
+  const size = sizeProp ?? inheritedSize ?? "md";
+  const { disabled } = field;
+  const descriptionId = useId();
+  const labelId = useId();
+  const describedBy = [field["aria-describedby"], description ? descriptionId : undefined].filter(Boolean).join(" ") || undefined;
   return (
     <label
       className={cn(
@@ -71,14 +79,17 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
           role="switch"
           ref={ref}
           className={cn("peer sr-only", inputClassName)}
-          disabled={disabled}
           {...swirskiAttrs("switch-input", { size, tone, variant })}
           {...props}
+          {...field}
+          aria-labelledby={field["aria-labelledby"] ?? (label && !props["aria-label"] ? labelId : undefined)}
+          aria-describedby={describedBy}
         />
         <span
           className={cn(
             "absolute inset-0 bg-[var(--sw-color-surface)] sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] peer-focus-visible:shadow-[0_0_0_3px_var(--sw-color-focus)]",
             toneStyles[tone],
+            "peer-aria-invalid:outline-2 peer-aria-invalid:outline-[color:var(--sw-color-red)]",
           )}
         />
         <span
@@ -90,9 +101,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
       </span>
       {(label || description) && (
         <span className="grid gap-1">
-          {label && <span className="font-black leading-5">{label}</span>}
+          {label && <span id={labelId} className="font-black leading-5">{label}</span>}
           {description && (
-            <span className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
+            <span id={descriptionId} className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
               {description}
             </span>
           )}
