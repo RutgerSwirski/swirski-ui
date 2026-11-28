@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState, version } from "react";
 import {
   Button, Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger,
-  Select, SwirskiProvider, ThemeToggle, Tooltip,
+  Field, FieldDescription, FieldLabel, Input, Select, SwirskiProvider, ThemeToggle, Tooltip,
 } from "@swirski/ui";
 
 export function CompatibilityProbe() {
@@ -50,8 +50,11 @@ export function CompatibilityProbe() {
     <SwirskiProvider colorScheme="light">
       <main data-ready={effectRuns > 0} data-react-version={version} data-effect-runs={effectRuns}>
         <h1>React compatibility</h1>
-        <label htmlFor={id}>Hydration field</label>
-        <input id={id} />
+        <Field required controlId={id}>
+          <FieldLabel>Hydration field</FieldLabel>
+          <Input name="hydrated" />
+          <FieldDescription>Hydrated field description</FieldDescription>
+        </Field>
         <output data-hydration-id="">{id}</output>
         {showLink && (
           <>

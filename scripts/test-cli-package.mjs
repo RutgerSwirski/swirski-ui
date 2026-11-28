@@ -33,7 +33,7 @@ try {
   run("init");
   assert.match(run("add", "button", "tabs", "dialog", "--dry-run"), /Would write/);
   assert(!existsSync(output));
-  assert.match(run("add", "button", "tabs", "dialog", "theme-toggle"), /Consumer dependencies: npm install/);
+  assert.match(run("add", "button", "tabs", "dialog", "theme-toggle", "field", "checkbox", "radio-group", "select", "slider"), /Consumer dependencies: npm install/);
 
   for (const file of [
     "components/button/Button.tsx",

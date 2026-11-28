@@ -94,6 +94,11 @@ async function verify(browser, url, { major, expectedVersion, hydrated, strictRe
     const id = await field.getAttribute("id");
     if (hydrated) assert.equal(id, serverId);
     assert.ok(id);
+    await page.waitForFunction(() => {
+      const field = document.querySelector('input[name="hydrated"]');
+      return field?.required && field.labels?.[0]?.textContent?.includes("Hydration field")
+        && document.getElementById(field.getAttribute("aria-describedby"))?.textContent === "Hydrated field description";
+    });
     const button = (name) => page.getByRole("button", { name, exact: true });
     const link = page.getByRole("link", { name: "Composed link" });
     assert.equal(await link.getAttribute("data-swirski-component"), "button");

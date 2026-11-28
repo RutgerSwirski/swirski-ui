@@ -1698,6 +1698,17 @@
           "sourceFile": "packages/ui/src/web/components/checkbox/Checkbox.tsx"
         },
         {
+          "name": "defaultIndeterminate",
+          "prop": "defaultIndeterminate",
+          "component": "Checkbox",
+          "sourceType": "CheckboxProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Initial and reset mixed state for uncontrolled checkboxes.",
+          "sourceFile": "packages/ui/src/web/components/checkbox/Checkbox.tsx"
+        },
+        {
           "name": "description",
           "prop": "description",
           "component": "Checkbox",
@@ -1705,6 +1716,16 @@
           "type": "ReactNode",
           "required": false,
           "description": "Generated from CheckboxProps.",
+          "sourceFile": "packages/ui/src/web/components/checkbox/Checkbox.tsx"
+        },
+        {
+          "name": "indeterminate",
+          "prop": "indeterminate",
+          "component": "Checkbox",
+          "sourceType": "CheckboxProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Controlled native mixed state. It does not change the submitted checked value.",
           "sourceFile": "packages/ui/src/web/components/checkbox/Checkbox.tsx"
         },
         {
@@ -1734,7 +1755,6 @@
           "sourceType": "CheckboxProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from CheckboxProps.",
           "sourceFile": "packages/ui/src/web/components/checkbox/Checkbox.tsx"
         },
@@ -3267,6 +3287,56 @@
           "sourceFile": "packages/ui/src/web/components/field/Field.tsx"
         },
         {
+          "name": "Field.controlId",
+          "prop": "controlId",
+          "component": "Field",
+          "sourceType": "FieldProps",
+          "type": "string",
+          "required": false,
+          "description": "Set the shared control ID when it needs to match a pre-existing ID.",
+          "sourceFile": "packages/ui/src/web/components/field/Field.tsx"
+        },
+        {
+          "name": "Field.disabled",
+          "prop": "disabled",
+          "component": "Field",
+          "sourceType": "FieldProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from FieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/Field.tsx"
+        },
+        {
+          "name": "Field.invalid",
+          "prop": "invalid",
+          "component": "Field",
+          "sourceType": "FieldProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from FieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/Field.tsx"
+        },
+        {
+          "name": "Field.readOnly",
+          "prop": "readOnly",
+          "component": "Field",
+          "sourceType": "FieldProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from FieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/Field.tsx"
+        },
+        {
+          "name": "Field.required",
+          "prop": "required",
+          "component": "Field",
+          "sourceType": "FieldProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from FieldProps.",
+          "sourceFile": "packages/ui/src/web/components/field/Field.tsx"
+        },
+        {
           "name": "Field.size",
           "prop": "size",
           "component": "Field",
@@ -3306,7 +3376,6 @@
           "sourceType": "FieldErrorProps",
           "type": "'sm' | 'md'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from FieldErrorProps.",
           "sourceFile": "packages/ui/src/web/components/field/FieldError.tsx"
         },
@@ -3339,7 +3408,6 @@
           "sourceType": "FieldHintProps",
           "type": "'sm' | 'md'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from FieldHintProps.",
           "sourceFile": "packages/ui/src/web/components/field/FieldHint.tsx"
         },
@@ -3372,7 +3440,6 @@
           "sourceType": "InputProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Visual input height and padding. Defaults to md.",
           "sourceFile": "packages/ui/src/web/components/field/Input.tsx"
         },
@@ -3383,7 +3450,6 @@
           "sourceType": "InputProps",
           "type": "'default' | 'danger'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Border treatment. Use danger for error styling and aria-invalid for validation semantics.",
           "sourceFile": "packages/ui/src/web/components/field/Input.tsx"
         },
@@ -3475,7 +3541,6 @@
           "sourceType": "LabelProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from LabelProps.",
           "sourceFile": "packages/ui/src/web/components/field/Label.tsx"
         },
@@ -3508,7 +3573,6 @@
           "sourceType": "TextareaProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from TextareaProps.",
           "sourceFile": "packages/ui/src/web/components/field/Textarea.tsx"
         },
@@ -3519,7 +3583,6 @@
           "sourceType": "TextareaProps",
           "type": "'default' | 'danger'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from TextareaProps.",
           "sourceFile": "packages/ui/src/web/components/field/Textarea.tsx"
         },
@@ -5251,6 +5314,26 @@
           "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
         },
         {
+          "name": "disabled",
+          "prop": "disabled",
+          "component": "RadioGroup",
+          "sourceType": "RadioGroupProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from RadioGroupProps.",
+          "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
+        },
+        {
+          "name": "form",
+          "prop": "form",
+          "component": "RadioGroup",
+          "sourceType": "RadioGroupProps",
+          "type": "string",
+          "required": false,
+          "description": "Generated from RadioGroupProps.",
+          "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
+        },
+        {
           "name": "inputProps",
           "prop": "inputProps",
           "component": "RadioGroup",
@@ -5291,13 +5374,22 @@
           "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
         },
         {
+          "name": "required",
+          "prop": "required",
+          "component": "RadioGroup",
+          "sourceType": "RadioGroupProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from RadioGroupProps.",
+          "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
+        },
+        {
           "name": "size",
           "prop": "size",
           "component": "RadioGroup",
           "sourceType": "RadioGroupProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from RadioGroupProps.",
           "sourceFile": "packages/ui/src/web/components/radio-group/RadioGroup.tsx"
         },
@@ -5381,7 +5473,6 @@
           "sourceType": "SelectProps",
           "type": "boolean",
           "required": false,
-          "defaultValue": "false",
           "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
@@ -5473,7 +5564,6 @@
           "sourceType": "SelectProps",
           "type": "boolean",
           "required": false,
-          "defaultValue": "false",
           "description": "Block form submission when no option is selected.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
@@ -5506,7 +5596,6 @@
           "sourceType": "SelectProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from SelectProps.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
@@ -5529,6 +5618,16 @@
           "type": "string",
           "required": false,
           "description": "Generated from SelectProps.",
+          "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
+        },
+        {
+          "name": "Select.triggerRef",
+          "prop": "triggerRef",
+          "component": "Select",
+          "sourceType": "SelectProps",
+          "type": "Ref<HTMLButtonElement>",
+          "required": false,
+          "description": "Ref for focus and form-library registration on the visible combobox.",
           "sourceFile": "packages/ui/src/web/components/select/Select.tsx"
         },
         {
@@ -5888,7 +5987,6 @@
           "sourceType": "SliderProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from SliderProps.",
           "sourceFile": "packages/ui/src/web/components/slider/Slider.tsx"
         },
@@ -5968,7 +6066,6 @@
           "sourceType": "SwitchProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from SwitchProps.",
           "sourceFile": "packages/ui/src/web/components/switch/Switch.tsx"
         },

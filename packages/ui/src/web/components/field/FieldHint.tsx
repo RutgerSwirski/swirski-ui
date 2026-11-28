@@ -1,4 +1,7 @@
-import { HTMLAttributes, forwardRef } from "react";
+"use client";
+
+import { HTMLAttributes, forwardRef, useContext, useId } from "react";
+import { FieldContext, useFieldPart } from "../../system/field";
 import { cn, swirskiAttrs } from "../../system";
 
 export type FieldHintVariant = "default" | "plain";
@@ -23,12 +26,18 @@ const toneStyles: Record<FieldHintTone, string> = {
 
 export const FieldHint = forwardRef<HTMLParagraphElement, FieldHintProps>(
   function FieldHint(
-    { className, variant = "default", size = "md", tone = "muted", ...props },
+    { className, id, variant = "default", size: sizeProp, tone = "muted", ...props },
     ref,
   ) {
+    const field = useContext(FieldContext);
+    const generatedId = useId();
+    const partId = id ?? (field ? generatedId : undefined);
+    useFieldPart("description", partId);
+    const size = sizeProp ?? (field?.size === "sm" ? "sm" : "md");
     return (
       <p
         ref={ref}
+        id={partId}
         className={cn(
           variant === "default" && "font-bold",
           sizeStyles[size],

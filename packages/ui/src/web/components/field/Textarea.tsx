@@ -1,4 +1,7 @@
+"use client";
+
 import { forwardRef, TextareaHTMLAttributes } from "react";
+import { useFieldControl } from "../../system/field";
 import { cn, swirskiAttrs } from "../../system";
 
 export type TextareaVariant = "default" | "filled";
@@ -24,14 +27,18 @@ const toneStyles: Record<TextareaTone, string> = {
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { className, variant = "default", size = "md", tone = "default", ...props },
+    { className, variant = "default", size: sizeProp, tone: toneProp, ...props },
     ref,
   ) => {
+    const { size: inheritedSize, readOnly, ...field } = useFieldControl(props);
+    const size = sizeProp ?? inheritedSize ?? "md";
+    const invalid = field["aria-invalid"] !== undefined && field["aria-invalid"] !== false && field["aria-invalid"] !== "false";
+    const tone = toneProp ?? (invalid ? "danger" : "default");
     return (
       <textarea
         ref={ref}
         className={cn(
-          "w-full resize-y border-[length:var(--sw-border-width)] font-bold text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] placeholder:text-[color:var(--sw-color-muted)] hover:shadow-[6px_6px_0_var(--sw-color-shadow)] focus:-translate-y-0.5 focus:shadow-[6px_6px_0_var(--sw-color-focus)] focus:hover:shadow-[6px_6px_0_var(--sw-color-focus)] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+          "w-full resize-y border-[length:var(--sw-border-width)] font-bold text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] placeholder:text-[color:var(--sw-color-muted)] hover:shadow-[6px_6px_0_var(--sw-color-shadow)] focus:-translate-y-0.5 focus:shadow-[6px_6px_0_var(--sw-color-focus)] focus:hover:shadow-[6px_6px_0_var(--sw-color-focus)] disabled:cursor-not-allowed disabled:bg-[var(--sw-color-paper)] disabled:text-[color:var(--sw-color-muted)] read-only:bg-[var(--sw-color-paper)] disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
           variant === "default"
             ? "bg-[var(--sw-color-surface)]"
             : "bg-[var(--sw-color-paper)]",
@@ -41,6 +48,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
         {...swirskiAttrs("textarea", { size, tone, variant })}
         {...props}
+          {...field}
+          readOnly={readOnly}
       />
     );
   },

@@ -1,8 +1,9 @@
 "use client";
+import { useFieldControl } from "../../system/field";
 import { useOverlayLayer } from "../../system/overlay";
 
 import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import type { HTMLAttributes, KeyboardEvent, ReactNode, Ref } from "react";
 import { createPortal } from "react-dom";
 import {
   cn,
@@ -57,6 +58,8 @@ export type SelectProps = {
   selectedIndicator?: ReactNode;
   showSelectedIndicator?: boolean;
   triggerClassName?: string;
+  /** Ref for focus and form-library registration on the visible combobox. */
+  triggerRef?: Ref<HTMLButtonElement>;
   contentClassName?: string;
   optionClassName?: string;
   variant?: SelectVariant;
@@ -75,32 +78,47 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
     defaultOpen = false,
     onOpenChange,
     placeholder = "Select an option",
-    disabled = false,
+    disabled: disabledProp,
     name,
     form,
-    required = false,
+    required: requiredProp,
     selectedIndicator = "x",
     showSelectedIndicator = false,
     className,
     triggerClassName,
+    triggerRef: externalTriggerRef,
     contentClassName,
     optionClassName,
     variant = "default",
-    size = "md",
+    size: sizeProp,
     tone = "default",
-    id,
+    id: idProp,
     "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    "aria-describedby": ariaDescribedBy,
-    "aria-invalid": ariaInvalid,
+    "aria-labelledby": ariaLabelledByProp,
+    "aria-describedby": ariaDescribedByProp,
+    "aria-invalid": ariaInvalidProp,
     "aria-errormessage": ariaErrorMessage,
     ...props
   },
   ref,
 ) {
+  const field = useFieldControl({
+    id: idProp,
+    disabled: disabledProp,
+    required: requiredProp,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledByProp,
+    "aria-describedby": ariaDescribedByProp,
+    "aria-invalid": ariaInvalidProp,
+  }, "composite");
+  const { id, disabled, required, "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy, "aria-invalid": ariaInvalid } = field;
+  const size = sizeProp ?? field.size ?? "md";
+  const invalid = ariaInvalid !== undefined && ariaInvalid !== false && ariaInvalid !== "false";
   const rootRef = useRef<HTMLDivElement>(null);
   const formInputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerMergedRef = useMemo(() => composeRefs(triggerRef, externalTriggerRef), [externalTriggerRef]);
   const contentRef = useRef<HTMLDivElement>(null);
   const typeaheadSearchRef = useRef("");
   const typeaheadTimeoutRef = useRef<number | null>(null);
@@ -346,7 +364,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
       />
 
       <button
-        ref={triggerRef}
+        ref={triggerMergedRef}
         id={id ?? generatedId}
         role="combobox"
         aria-label={ariaLabel}
@@ -364,7 +382,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         aria-expanded={popupVisible}
         aria-haspopup="listbox"
         className={cn(
-          "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+          "flex w-full items-center justify-between gap-3 border-[length:var(--sw-border-width)] text-left font-black uppercase text-[var(--sw-color-ink)] shadow-[4px_4px_0_var(--sw-color-shadow)] outline-none sw-motion-shift transition-all duration-[var(--sw-motion-fast,150ms)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--sw-color-shadow)] active:translate-x-1 active:translate-y-1 disabled:bg-[var(--sw-color-paper)] disabled:text-[color:var(--sw-color-muted)] disabled:hover:shadow-[4px_4px_0_var(--sw-color-shadow)]",
+          invalid ? "border-[color:var(--sw-color-red)]" : "border-[color:var(--sw-color-ink)]",
           focusVisibleStyles,
           disabledInteractiveStyles,
           variant === "default"

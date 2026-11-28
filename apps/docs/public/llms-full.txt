@@ -555,6 +555,8 @@ Usage:
 ```
 
 Props:
+- `indeterminate`: `boolean` - Controls the native mixed state. Checked still determines submission.
+- `defaultIndeterminate`: `boolean` - Sets the initial mixed state and restores it on form reset.
 - `label`: `ReactNode` - Visible label rendered beside the checkbox.
 - `description`: `ReactNode` - Optional supporting text below the label.
 - `containerClassName`: `string` - Adds classes to the root label wrapper.
@@ -564,7 +566,7 @@ Props:
 
 ### Field
 
-A form field set with label, input, textarea and hint primitives built from native elements.
+A shared field that connects labels, descriptions, errors and native form controls.
 
 Category: Forms
 Docs: https://ui.swirski.dev/components/field
@@ -576,34 +578,36 @@ Import:
 import {
   Field,
   FieldError,
-  FieldHint,
+  FieldDescription,
+  FieldLabel,
   Input,
   InputField,
-  Label,
   Textarea,
 } from "@swirski/ui";
 ```
 
 Usage:
 ```tsx
-import { InputField } from "@swirski/ui";
-
-<InputField label="Email" name="email" type="email" hint="Use your work address." />
+<Field required>
+  <FieldLabel>Email address</FieldLabel>
+  <Input name="email" type="email" />
+  <FieldDescription>Use your work address.</FieldDescription>
+</Field>
 ```
 
 Composition:
 ```txt
 Field
-|-- Label
+|-- FieldLabel
 |-- Input | Textarea | Select | Checkbox | RadioGroup
-|-- FieldHint
+|-- FieldDescription
 `-- FieldError
 ```
 
 Props:
 - `InputField.label`: `ReactNode` required - Labels the native input. Optional hint and error props are linked automatically.
 - `Field.className`: `string` - Adds classes to the field wrapper.
-- `Label.htmlFor`: `string` - Connects the label to an input or textarea id.
+- `Label.htmlFor`: `string` - Overrides the automatic label association when needed.
 - `Label.className`: `string` - Adds classes to the label.
 - `Input`: `InputHTMLAttributes<HTMLInputElement>` - Forwards native input props and refs.
 - `Textarea`: `TextareaHTMLAttributes<HTMLTextAreaElement>` - Forwards native textarea props and refs.
@@ -637,6 +641,7 @@ Usage:
 ```
 
 Props:
+- `required / disabled / form`: `boolean / boolean / string` - Apply native validation, disabled behaviour, and form ownership to the radios.
 - `name`: `string` required - Native radio group name.
 - `options`: `RadioGroupOption[]` required - Options rendered as radio inputs.
 - `value`: `string` - Controlled selected value.
@@ -685,6 +690,7 @@ Field
 ```
 
 Props:
+- `triggerRef`: `Ref<HTMLButtonElement>` - References the visible combobox for form-library focus and registration.
 - `options`: `SelectOption[]` required - Options shown in the dropdown list.
 - `value`: `string` - Controlled selected option value.
 - `defaultValue`: `string` - Initial selected option value when uncontrolled.

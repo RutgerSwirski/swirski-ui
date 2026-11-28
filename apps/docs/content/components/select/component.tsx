@@ -47,6 +47,11 @@ export const selectComponentDoc: ComponentDoc = {
   ),
   props: [
     {
+      name: "triggerRef",
+      type: "Ref<HTMLButtonElement>",
+      description: "References the visible combobox for form-library focus and registration.",
+    },
+    {
       name: "options",
       type: "SelectOption[]",
       required: true,

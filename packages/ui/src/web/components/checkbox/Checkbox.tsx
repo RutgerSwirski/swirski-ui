@@ -1,5 +1,8 @@
-import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
-import { cn, swirskiAttrs } from "../../system";
+"use client";
+
+import { InputHTMLAttributes, ReactNode, forwardRef, useEffect, useId, useMemo, useRef } from "react";
+import { useFieldControl } from "../../system/field";
+import { cn, composeRefs, swirskiAttrs } from "../../system";
 
 export type CheckboxVariant = "default" | "card";
 export type CheckboxSize = "sm" | "md" | "lg";
@@ -7,6 +10,10 @@ export type CheckboxTone = "yellow" | "blue" | "red";
 
 export type CheckboxProps = {
   label?: ReactNode;
+  /** Controlled native mixed state. It does not change the submitted checked value. */
+  indeterminate?: boolean;
+  /** Initial and reset mixed state for uncontrolled checkboxes. */
+  defaultIndeterminate?: boolean;
   description?: ReactNode;
   containerClassName?: string;
   inputClassName?: string;
@@ -28,9 +35,9 @@ const checkSizeStyles: Record<CheckboxSize, string> = {
 };
 
 const toneStyles: Record<CheckboxTone, string> = {
-  yellow: "peer-checked:bg-[var(--sw-color-yellow)]",
-  blue: "peer-checked:bg-[var(--sw-color-blue)]",
-  red: "peer-checked:bg-[var(--sw-color-red)]",
+  yellow: "peer-checked:bg-[var(--sw-color-yellow)] peer-indeterminate:bg-[var(--sw-color-yellow)]",
+  blue: "peer-checked:bg-[var(--sw-color-blue)] peer-indeterminate:bg-[var(--sw-color-blue)]",
+  red: "peer-checked:bg-[var(--sw-color-red)] peer-indeterminate:bg-[var(--sw-color-red)]",
 };
 
 const checkToneStyles: Record<CheckboxTone, string> = {
@@ -44,17 +51,49 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     {
       label,
       description,
+      indeterminate,
+      defaultIndeterminate = false,
+      onChange,
       className,
       containerClassName,
       inputClassName,
-      disabled,
       variant = "default",
-      size = "md",
+      size: sizeProp,
       tone = "yellow",
       ...props
     },
     ref,
   ) {
+    const { size: inheritedSize, readOnly: _readOnly, ...field } = useFieldControl(props, "composite");
+    const size = sizeProp ?? inheritedSize ?? "md";
+    const { disabled } = field;
+    const control = useRef<HTMLInputElement>(null);
+    const mergedRef = useMemo(() => composeRefs(control, ref), [ref]);
+    const initialMixed = useRef(defaultIndeterminate);
+    const descriptionId = useId();
+    const labelId = useId();
+    const describedBy = [field["aria-describedby"], description ? descriptionId : undefined].filter(Boolean).join(" ") || undefined;
+
+    useEffect(() => {
+      if (control.current) control.current.indeterminate = initialMixed.current;
+    }, []);
+    useEffect(() => {
+      if (control.current && indeterminate !== undefined) control.current.indeterminate = indeterminate;
+    }, [indeterminate]);
+    useEffect(() => {
+      const input = control.current;
+      if (!input) return;
+      const reset = (event: Event) => {
+        if (event.target !== input.form) return;
+        queueMicrotask(() => {
+          if (input.isConnected && !event.defaultPrevented) {
+            input.indeterminate = indeterminate ?? initialMixed.current;
+          }
+        });
+      };
+      input.ownerDocument.addEventListener("reset", reset);
+      return () => input.ownerDocument.removeEventListener("reset", reset);
+    }, [indeterminate]);
     return (
       <label
         className={cn(
@@ -75,34 +114,48 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         >
           <input
             type="checkbox"
-            ref={ref}
+            ref={mergedRef}
             className={cn("peer sr-only", inputClassName)}
-            disabled={disabled}
             {...swirskiAttrs("checkbox-input", { size, tone, variant })}
             {...props}
+            {...field}
+            aria-labelledby={field["aria-labelledby"] ?? (label && !props["aria-label"] ? labelId : undefined)}
+            aria-describedby={describedBy}
+            onChange={(event) => {
+              const input = event.currentTarget;
+              if (indeterminate !== undefined) input.indeterminate = indeterminate;
+              onChange?.(event);
+            }}
           />
           <span
             className={cn(
               "absolute inset-0 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] shadow-[var(--sw-shadow-sm)] sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] peer-focus-visible:shadow-[4px_4px_0_var(--sw-color-focus)]",
               toneStyles[tone],
+              "peer-aria-invalid:outline-2 peer-aria-invalid:outline-[color:var(--sw-color-red)]",
             )}
           />
           <span
             aria-hidden="true"
             className={cn(
-              "relative hidden font-black leading-none peer-checked:block",
+              "relative hidden font-black leading-none peer-checked:block peer-indeterminate:hidden",
               checkSizeStyles[size],
               checkToneStyles[tone],
             )}
           >
             x
           </span>
+          <span
+            aria-hidden="true"
+            className={cn("relative hidden font-black leading-none peer-indeterminate:block", checkSizeStyles[size], checkToneStyles[tone])}
+          >
+            −
+          </span>
         </span>
         {(label || description) && (
           <span className="grid gap-1">
-            {label && <span className="font-black leading-5">{label}</span>}
+            {label && <span id={labelId} className="font-black leading-5">{label}</span>}
             {description && (
-              <span className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
+              <span id={descriptionId} className="text-sm font-bold leading-5 text-[color:var(--sw-color-muted)]">
                 {description}
               </span>
             )}
