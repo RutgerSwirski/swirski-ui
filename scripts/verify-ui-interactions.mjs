@@ -7,9 +7,14 @@ async function audit(page, state) {
   }
   const violations = await page.evaluate(async () => (await window.axe.run()).violations
     .filter(({ impact }) => impact === "serious" || impact === "critical")
-    .map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) })));
+    .map(({ id, nodes }) => ({ id, nodes: nodes.map(({ target, failureSummary }) => ({ target, failureSummary })) })));
   assert.deepEqual(violations, [], `Serious or critical axe violations in ${state}`);
 }
+
+const tabColors = (tab) => tab.evaluate((element) => {
+  const { color, backgroundColor } = getComputedStyle(element);
+  return [color, backgroundColor];
+});
 
 const focused = (locator) => locator.and(locator.page().locator(":focus")).waitFor();
 
@@ -24,8 +29,10 @@ export async function verifyInteractions(browser, url, name) {
     await audit(page, "default controls");
 
     const firstTab = role("tab", "One");
+    const secondTab = role("tab", "Two");
     await firstTab.press("ArrowRight");
-    await focused(role("tab", "Two"));
+    await focused(secondTab);
+    assert.deepEqual(await tabColors(secondTab), ["rgb(255, 255, 255)", "rgb(0, 87, 255)"]);
     await role("tabpanel", "Two").waitFor();
     await role("checkbox", "Accept terms").press("Space");
     assert.equal(await role("checkbox", "Accept terms").isChecked(), true);
@@ -142,6 +149,13 @@ export async function verifyInteractions(browser, url, name) {
       assert.equal(await page.evaluate(() => document.body.style.overflow), "");
     }
 
+    await page.goto(`${url}?interactions`);
+    const themeToggle = role("switch", "Dark mode");
+    await themeToggle.press("Space");
+    assert.ok(await themeToggle.isChecked());
+    await secondTab.hover();
+    assert.deepEqual(await tabColors(secondTab), ["rgb(11, 11, 12)", "rgb(255, 212, 0)"]);
+
     if (name === "chromium") {
       await page.emulateMedia({ forcedColors: "active" });
       await page.goto(`${url}?interactions`);
@@ -150,7 +164,12 @@ export async function verifyInteractions(browser, url, name) {
       await press("Shift+Tab");
       await focused(trigger);
       await page.waitForFunction(() => {
-        const focused = document.activeElement;
+        const tabColors = (tab) => tab.evaluate((element) => {
+  const { color, backgroundColor } = getComputedStyle(element);
+  return [color, backgroundColor];
+});
+
+const focused = document.activeElement;
         return focused?.matches(":focus-visible") && getComputedStyle(focused).outlineStyle === "solid";
       });
       await trigger.press("Enter");
