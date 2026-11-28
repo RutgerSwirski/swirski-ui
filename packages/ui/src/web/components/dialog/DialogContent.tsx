@@ -21,14 +21,18 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     {
       className,
       children,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
-    const { describedById, labelledById, open, setOpen } = useDialog();
+    const styles = useDialog();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { describedById, labelledById, open, setOpen } = styles;
     const portalRoot = usePortalRoot();
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -52,9 +56,9 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         <div
           ref={composeRefs(contentRef, ref)}
           className={cn(
-            "relative z-10 w-full border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] shadow-[12px_12px_0_var(--sw-color-shadow)]",
+            "relative z-10 w-full border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
             dialogContentSizeStyles[size],
-            variant === "compact" && "shadow-[8px_8px_0_var(--sw-color-shadow)]",
+            variant === "compact" ? "shadow-[8px_8px_0_var(--sw-color-shadow)]" : "shadow-[12px_12px_0_var(--sw-color-shadow)]",
             className,
           )}
           role="dialog"
@@ -62,6 +66,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           aria-labelledby={labelledById ?? props["aria-labelledby"]}
           aria-describedby={describedById ?? props["aria-describedby"]}
           tabIndex={-1}
+          data-state="open"
           {...swirskiAttrs("dialog-content", { size, tone, variant })}
           {...props}
         >

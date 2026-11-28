@@ -3,7 +3,7 @@
 import type { HTMLAttributes } from "react";
 import { forwardRef, useEffect } from "react";
 import { Slot, cn, swirskiAttrs } from "../../system";
-import { useDialog } from "./DialogContext";
+import { useDialog, useDialogStyles } from "./DialogContext";
 import type { DialogSize, DialogTone, DialogVariant } from "./dialog-types";
 
 export type DialogHeaderProps = {
@@ -18,13 +18,17 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useDialogStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "div";
 
     return (
@@ -52,14 +56,18 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
-    const { setLabelledById, titleId } = useDialog();
+    const styles = useDialog();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { setLabelledById, titleId } = styles;
     const Component = asChild ? Slot : "h2";
     const id = props.id ?? titleId;
 
@@ -96,14 +104,18 @@ export const DialogDescription = forwardRef<
   {
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { descriptionId, setDescribedById } = useDialog();
+  const styles = useDialog();
+  const variant = variantProp ?? styles.variant ?? "default";
+  const size = sizeProp ?? styles.size ?? "md";
+  const tone = toneProp ?? styles.tone ?? "default";
+  const { descriptionId, setDescribedById } = styles;
   const Component = asChild ? Slot : "p";
   const id = props.id ?? descriptionId;
 
@@ -137,13 +149,17 @@ export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useDialogStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "div";
 
     return (

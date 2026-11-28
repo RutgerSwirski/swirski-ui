@@ -405,6 +405,13 @@ pnpm test:react-compatibility        # both React releases
 pnpm test:react-compatibility 18     # only React 18
 ```
 
+### Component APIs
+
+See the [component API contracts](docs/component-api-contracts.md) for styling
+inheritance, state conventions, disabled and loading behavior, and CSS
+overrides. The [baseline inventory](docs/component-api-inventory.md) records
+the public web and React Native surfaces at the start of the audit.
+
 ### Motion preferences
 
 Swirski UI follows `prefers-reduced-motion` as it changes. In reduced mode,

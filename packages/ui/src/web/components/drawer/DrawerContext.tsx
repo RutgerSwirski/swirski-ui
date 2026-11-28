@@ -1,10 +1,14 @@
 "use client";
 
+import { useControllableState } from "../../hooks/use-controllable-state/useControllableState";
 import type { ReactNode } from "react";
-import { createContext, useCallback, useContext, useId, useState } from "react";
+import { createContext, useContext, useId, useState } from "react";
 import type { DrawerSize, DrawerTone, DrawerVariant } from "./drawer-types";
 
 type DrawerContextValue = {
+  variant: DrawerVariant;
+  size: DrawerSize;
+  tone: DrawerTone;
   open: boolean;
   setOpen: (open: boolean) => void;
   titleId: string;
@@ -27,6 +31,10 @@ export type DrawerProps = {
   tone?: DrawerTone;
 };
 
+export function useDrawerStyles() {
+  return useContext(DrawerContext);
+}
+
 export function useDrawer() {
   const context = useContext(DrawerContext);
 
@@ -42,30 +50,24 @@ export function Drawer({
   open,
   defaultOpen = false,
   onOpenChange,
-  variant: _variant = "default",
-  size: _size = "md",
-  tone: _tone = "default",
+  variant = "default",
+  size = "md",
+  tone = "default",
 }: DrawerProps) {
   const titleId = useId();
   const descriptionId = useId();
-  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [currentOpen, setOpen] = useControllableState({
+    value: open,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
   const [labelledById, setLabelledById] = useState<string | undefined>();
   const [describedById, setDescribedById] = useState<string | undefined>();
-  const isControlled = open !== undefined;
-  const currentOpen = open ?? internalOpen;
-
-  const setOpen = useCallback((nextOpen: boolean) => {
-    if (!isControlled) {
-      setInternalOpen(nextOpen);
-    }
-
-    onOpenChange?.(nextOpen);
-  }, [isControlled, onOpenChange]);
 
   return (
     <DrawerContext.Provider
       value={{
-        open: currentOpen,
+        open: currentOpen, variant, size, tone,
         setOpen,
         titleId,
         descriptionId,

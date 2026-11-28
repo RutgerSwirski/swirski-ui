@@ -1,11 +1,16 @@
 "use client";
 
+import { useControllableState } from "../../hooks/use-controllable-state/useControllableState";
 import type { ReactNode } from "react";
-import { createContext, useContext, useId, useState } from "react";
+import { createContext, useContext, useId } from "react";
+import { useNavbarStyles } from "./Navbar";
 import type { NavbarSize, NavbarTone, NavbarVariant } from "./Navbar";
 
 type MobileMenuContextValue = {
   contentId: string;
+  variant: NavbarVariant;
+  size: NavbarSize;
+  tone: NavbarTone;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
@@ -22,6 +27,10 @@ export type MobileMenuProps = {
   tone?: NavbarTone;
 };
 
+export function useMobileMenuStyles() {
+  return useContext(MobileMenuContext);
+}
+
 export function useMobileMenu() {
   const context = useContext(MobileMenuContext);
 
@@ -37,26 +46,24 @@ export function MobileMenu({
   defaultOpen = false,
   open,
   onOpenChange,
-  variant: _variant = "default",
-  size: _size = "md",
-  tone: _tone = "default",
+  variant: variantProp,
+  size: sizeProp,
+  tone: toneProp,
 }: MobileMenuProps) {
+  const navbar = useNavbarStyles();
+  const variant = variantProp ?? navbar?.variant ?? "default";
+  const size = sizeProp ?? navbar?.size ?? "md";
+  const tone = toneProp ?? navbar?.tone ?? "default";
   const contentId = useId();
-  const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const isControlled = open !== undefined;
-  const currentOpen = open ?? internalOpen;
-
-  function setOpen(nextOpen: boolean) {
-    if (!isControlled) {
-      setInternalOpen(nextOpen);
-    }
-
-    onOpenChange?.(nextOpen);
-  }
+  const [currentOpen, setOpen] = useControllableState({
+    value: open,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  });
 
   return (
     <MobileMenuContext.Provider
-      value={{ contentId, open: currentOpen, setOpen }}
+      value={{ contentId, open: currentOpen, variant, size, tone, setOpen }}
     >
       {children}
     </MobileMenuContext.Provider>

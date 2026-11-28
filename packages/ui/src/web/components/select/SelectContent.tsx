@@ -58,6 +58,7 @@ export default function SelectContent({
       )}
       id={listboxId}
       role="listbox"
+      data-state="open"
       {...swirskiAttrs("select-content", { size, tone, variant })}
       style={contentStyle}
     >

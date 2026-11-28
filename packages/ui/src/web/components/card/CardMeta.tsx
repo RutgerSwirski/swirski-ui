@@ -1,4 +1,7 @@
-import { HTMLAttributes, ReactNode, forwardRef } from "react";
+"use client";
+
+import { HTMLAttributes, ReactNode, forwardRef, useContext } from "react";
+import { CardSizeContext } from "./CardSizeContext";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardMetaSize = "sm" | "md";
@@ -31,12 +34,14 @@ export const CardMeta = forwardRef<HTMLDivElement, CardMetaProps>(
       children,
       className,
       variant = "default",
-      size = "sm",
+      size: sizeProp,
       tone = "default",
       ...props
     },
     ref,
   ) {
+    const inheritedSize = useContext(CardSizeContext);
+    const size = sizeProp ?? (inheritedSize === "lg" ? "md" : inheritedSize) ?? "sm";
     const Component = asChild ? Slot : "div";
 
     return (

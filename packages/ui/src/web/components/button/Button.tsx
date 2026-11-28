@@ -39,6 +39,8 @@ type ButtonBaseProps = {
   tone?: ButtonTone;
   withShadow?: boolean;
   disabled?: boolean;
+  /** Prevent activation and expose a busy state while an action is pending. */
+  loading?: boolean;
   className?: string;
 };
 
@@ -114,13 +116,15 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
     size = "md",
     tone,
     withShadow = true,
-    disabled = false,
+    disabled: disabledProp = false,
+    loading = false,
     className,
     type,
     ...props
   }: ButtonProps,
   ref,
 ) {
+  const disabled = disabledProp || loading;
   const { variant: normalizedVariant, tone: normalizedTone } = resolveButtonStyleConfig({
     variant,
     tone,
@@ -152,6 +156,8 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
 
   const componentProps = {
     ...props,
+    "aria-busy": loading || props["aria-busy"],
+    "data-loading": loading ? "" : undefined,
     ...(href ? { href } : {}),
     ...(!href && !asChild ? { type: type ?? "button" } : type ? { type } : {}),
     ...swirskiAttrs("button", {

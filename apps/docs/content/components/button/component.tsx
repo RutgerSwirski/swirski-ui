@@ -16,6 +16,11 @@ export const buttonComponentDoc: ComponentDoc = {
   ),
   props: [
     {
+      name: "loading",
+      type: "boolean",
+      description: "Marks the button busy and prevents activation while keeping its label visible.",
+    },
+    {
       name: "children",
       type: "ReactNode",
       required: true,

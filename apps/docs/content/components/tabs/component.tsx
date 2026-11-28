@@ -12,7 +12,7 @@ export const tabsComponentDoc: ComponentDoc = {
   description: "Tabbed sections for settings, dashboards and previews.",
   category: "Interaction",
   importCode: `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";`,
-  usageCode: `<Tabs defaultValue="preview">
+  usageCode: `<Tabs defaultValue="preview" size="lg" tone="yellow">
   <TabsList aria-label="File views">
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>

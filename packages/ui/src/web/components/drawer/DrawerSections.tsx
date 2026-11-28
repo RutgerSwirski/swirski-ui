@@ -3,7 +3,7 @@
 import type { HTMLAttributes } from "react";
 import { forwardRef, useEffect } from "react";
 import { Slot, cn, swirskiAttrs } from "../../system";
-import { useDrawer } from "./DrawerContext";
+import { useDrawer, useDrawerStyles } from "./DrawerContext";
 import type { DrawerSize, DrawerTone, DrawerVariant } from "./drawer-types";
 
 export type DrawerHeaderProps = {
@@ -18,13 +18,17 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useDrawerStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "div";
 
     return (
@@ -52,14 +56,18 @@ export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
-    const { setLabelledById, titleId } = useDrawer();
+    const styles = useDrawer();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { setLabelledById, titleId } = styles;
     const Component = asChild ? Slot : "h2";
     const id = props.id ?? titleId;
 
@@ -96,14 +104,18 @@ export const DrawerDescription = forwardRef<
   {
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { descriptionId, setDescribedById } = useDrawer();
+  const styles = useDrawer();
+  const variant = variantProp ?? styles.variant ?? "default";
+  const size = sizeProp ?? styles.size ?? "md";
+  const tone = toneProp ?? styles.tone ?? "default";
+  const { descriptionId, setDescribedById } = styles;
   const Component = asChild ? Slot : "p";
   const id = props.id ?? descriptionId;
 

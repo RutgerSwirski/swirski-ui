@@ -26,15 +26,21 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
       asChild = false,
       className,
       children,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
+      disabled,
       onClick,
       ...props
     },
     ref,
   ) {
-    const { setOpen } = useDialog();
+    const styles = useDialog();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { open, setOpen } = styles;
+    const isDisabled = disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
     const Component = asChild ? Slot : "button";
 
     return (
@@ -50,6 +56,10 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
           className,
         )}
         onClick={(event) => {
+          if (isDisabled) {
+            event.preventDefault();
+            return;
+          }
           onClick?.(event);
 
           if (!event.defaultPrevented) {
@@ -57,8 +67,14 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
           }
         }}
         type={asChild ? undefined : "button"}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        data-state={open ? "open" : "closed"}
         {...swirskiAttrs("dialog-trigger", { size, tone, variant })}
         {...props}
+        disabled={asChild ? undefined : disabled}
+        aria-disabled={isDisabled || undefined}
+        tabIndex={asChild && isDisabled ? -1 : props.tabIndex}
       >
         {children}
       </Component>

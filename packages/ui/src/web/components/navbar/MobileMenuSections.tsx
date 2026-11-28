@@ -6,6 +6,7 @@ import type {
   HTMLAttributes,
   MouseEvent,
 } from "react";
+import { useMobileMenuStyles } from "./MobileMenuContext";
 import { forwardRef } from "react";
 import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 import type { NavbarSize, NavbarTone, NavbarVariant } from "./Navbar";
@@ -25,13 +26,17 @@ export const MobileMenuHeader = forwardRef<
   {
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
+  const styles = useMobileMenuStyles();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   const Component = asChild ? Slot : "div";
 
   return (
@@ -63,13 +68,17 @@ export const MobileMenuTitle = forwardRef<
   {
     asChild = false,
     className,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
+  const styles = useMobileMenuStyles();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   const Component = asChild ? Slot : "h2";
 
   return (
@@ -96,13 +105,17 @@ export const MobileMenuNav = forwardRef<HTMLElement, MobileMenuNavProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
+    const styles = useMobileMenuStyles();
+    const variant = variantProp ?? styles?.variant ?? "default";
+    const size = sizeProp ?? styles?.size ?? "md";
+    const tone = toneProp ?? styles?.tone ?? "default";
     const Component = asChild ? Slot : "nav";
 
     return (
@@ -139,14 +152,19 @@ export const MobileMenuLink = forwardRef<
     className,
     closeOnSelect = true,
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { setOpen } = styles;
   const ResolvedComponent = (asChild ? Slot : Component) as ElementType;
 
   return (

@@ -8,6 +8,7 @@ export type CardMediaProps = {
   asChild?: boolean;
   children?: ReactNode;
   variant?: CardMediaVariant;
+  /** @deprecated Use aspect or style for media dimensions. This prop only sets a data attribute. */
   size?: CardMediaSize;
   aspect?: string; // "4/3", "4/5"
 } & Omit<HTMLAttributes<HTMLDivElement>, "color">;

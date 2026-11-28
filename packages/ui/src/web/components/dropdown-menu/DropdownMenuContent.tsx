@@ -31,15 +31,19 @@ export const DropdownMenuContent = forwardRef<
   {
     className,
     align = "start",
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     onKeyDown,
     style,
     ...props
   },
   ref,
 ) {
+  const styles = useDropdownMenu();
+  const variant = variantProp ?? styles.variant ?? "default";
+  const size = sizeProp ?? styles.size ?? "md";
+  const tone = toneProp ?? styles.tone ?? "default";
   const {
     contentId,
     contentRef,
@@ -48,7 +52,7 @@ export const DropdownMenuContent = forwardRef<
     rootRef,
     setOpen,
     triggerRef,
-  } = useDropdownMenu();
+  } = styles;
   const typeahead = useRef({ value: "", time: 0 });
   const portalRoot = usePortalRoot();
   const floatingStyle = useFloatingPosition({
@@ -59,14 +63,14 @@ export const DropdownMenuContent = forwardRef<
   });
 
   useEffect(() => {
-    if (!open || !contentRef.current || !focusIntentRef.current) {
+    if (!open || !contentRef.current) {
       return;
     }
 
     // The parent registers the portal with the modal focus boundary after this effect.
     const frame = window.requestAnimationFrame(() => {
-      if (!contentRef.current || !focusIntentRef.current) return;
-      focusMenuItem(contentRef.current, focusIntentRef.current === "first" ? 0 : -1);
+      if (!contentRef.current) return;
+      focusMenuItem(contentRef.current, focusIntentRef.current === "last" ? -1 : 0);
       focusIntentRef.current = null;
     });
     return () => window.cancelAnimationFrame(frame);
@@ -140,14 +144,15 @@ export const DropdownMenuContent = forwardRef<
     <div
       ref={composeRefs(contentRef, ref)}
       className={cn(
-        "fixed z-[1000] min-w-48 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-1 shadow-[8px_8px_0_var(--sw-color-shadow)]",
-        variant === "compact" && "shadow-[4px_4px_0_var(--sw-color-shadow)]",
+        "fixed z-[1000] min-w-48 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-1",
+        variant === "compact" ? "shadow-[4px_4px_0_var(--sw-color-shadow)]" : "shadow-[8px_8px_0_var(--sw-color-shadow)]",
         className,
       )}
       id={contentId}
       aria-labelledby={props["aria-label"] ? undefined : triggerRef.current?.id}
       onKeyDown={handleKeyDown}
       role="menu"
+      data-state="open"
       {...swirskiAttrs("dropdown-menu-content", { size, tone, variant })}
       style={{
         ...floatingStyle,

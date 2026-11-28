@@ -25,15 +25,21 @@ export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
     {
       asChild = false,
       className,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
+      disabled,
       onClick,
       ...props
     },
     ref,
   ) {
-    const { setOpen } = useDrawer();
+    const styles = useDrawer();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { open, setOpen } = styles;
+    const isDisabled = disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
     const Component = asChild ? Slot : "button";
 
     return (
@@ -49,6 +55,10 @@ export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
           className,
         )}
         onClick={(event) => {
+          if (isDisabled) {
+            event.preventDefault();
+            return;
+          }
           onClick?.(event);
 
           if (!event.defaultPrevented) {
@@ -56,8 +66,14 @@ export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
           }
         }}
         type={asChild ? undefined : "button"}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        data-state={open ? "open" : "closed"}
         {...swirskiAttrs("drawer-trigger", { size, tone, variant })}
         {...props}
+        disabled={asChild ? undefined : disabled}
+        aria-disabled={isDisabled || undefined}
+        tabIndex={asChild && isDisabled ? -1 : props.tabIndex}
       />
     );
   },

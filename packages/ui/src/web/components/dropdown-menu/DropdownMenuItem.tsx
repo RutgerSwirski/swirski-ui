@@ -27,19 +27,25 @@ export const DropdownMenuItem = forwardRef<
     asChild = false,
     className,
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     active = false,
+    disabled,
     ...props
   },
   ref,
 ) {
-  const { setOpen, triggerRef } = useDropdownMenu();
+  const styles = useDropdownMenu();
+  const variant = variantProp ?? styles.variant ?? "default";
+  const size = sizeProp ?? styles.size ?? "md";
+  const tone = toneProp ?? styles.tone ?? "default";
+  const { setOpen, triggerRef } = styles;
+  const isDisabled = disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
   const Component = asChild ? Slot : "button";
 
   const baseStyles =
-    "block w-full text-left font-black uppercase sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] focus-visible:bg-[var(--sw-color-yellow)] focus-visible:text-[color:var(--sw-color-on-yellow)] focus-visible:outline-none forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid disabled:cursor-not-allowed disabled:text-black/35 disabled:hover:bg-transparent";
+    "block w-full text-left font-black uppercase sw-motion-transition transition duration-[var(--sw-motion-fast,150ms)] hover:bg-[var(--sw-color-yellow)] hover:text-[color:var(--sw-color-on-yellow)] focus-visible:bg-[var(--sw-color-yellow)] focus-visible:text-[color:var(--sw-color-on-yellow)] focus-visible:outline-none forced-colors:focus-visible:outline-2 forced-colors:focus-visible:outline-solid disabled:cursor-not-allowed disabled:text-black/35 disabled:hover:bg-transparent aria-disabled:cursor-not-allowed aria-disabled:opacity-60";
 
   return (
     <Component
@@ -51,7 +57,7 @@ export const DropdownMenuItem = forwardRef<
         className,
       )}
       onClick={(event) => {
-        if (props.disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true") {
+        if (isDisabled) {
           event.preventDefault();
           return;
         }
@@ -68,6 +74,8 @@ export const DropdownMenuItem = forwardRef<
       {...swirskiAttrs("dropdown-menu-item", { size, tone, variant })}
       data-active={active ? "" : undefined}
       {...props}
+      disabled={asChild ? undefined : disabled}
+      aria-disabled={isDisabled || undefined}
     />
   );
 });

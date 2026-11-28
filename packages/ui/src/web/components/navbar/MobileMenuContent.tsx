@@ -24,14 +24,19 @@ export const MobileMenuContent = forwardRef<
     children,
     className,
     side = "right",
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { contentId, open, setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { contentId, open, setOpen } = styles;
   const portalRoot = usePortalRoot();
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -65,6 +70,7 @@ export const MobileMenuContent = forwardRef<
         )}
         id={contentId}
         role="dialog"
+        data-state="open"
         {...swirskiAttrs("mobile-menu-content", { size, tone, variant })}
         {...props}
       >

@@ -267,6 +267,7 @@ Usage:
 ```
 
 Props:
+- `loading`: `boolean` - Marks the button busy and prevents activation while keeping its label visible.
 - `children`: `ReactNode` required - Button label or inline content.
 - `href`: `string` - Renders the button as an anchor when provided.
 - `as`: `ElementType` - Custom component used for the root element, such as Next.js Link.
@@ -795,7 +796,7 @@ Category: Interaction
 Docs: https://ui.swirski.dev/components/dialog
 Registry: https://ui.swirski.dev/r/dialog.json
 Source: `packages/ui/src/components/dialog`
-Copy dependencies: `use-portal-root`
+Copy dependencies: `use-portal-root`, `use-controllable-state`
 
 Import:
 ```tsx
@@ -844,7 +845,7 @@ Category: Interaction
 Docs: https://ui.swirski.dev/components/drawer
 Registry: https://ui.swirski.dev/r/drawer.json
 Source: `packages/ui/src/components/drawer`
-Copy dependencies: `use-portal-root`
+Copy dependencies: `use-portal-root`, `use-controllable-state`
 
 Import:
 ```tsx
@@ -890,7 +891,7 @@ Category: Interaction
 Docs: https://ui.swirski.dev/components/dropdown-menu
 Registry: https://ui.swirski.dev/r/dropdown-menu.json
 Source: `packages/ui/src/components/dropdown-menu`
-Copy dependencies: `use-portal-root`
+Copy dependencies: `use-portal-root`, `use-controllable-state`
 
 Import:
 ```tsx
@@ -904,7 +905,7 @@ import {
 
 Usage:
 ```tsx
-<DropdownMenu>
+<DropdownMenu size="lg" variant="compact">
   <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
   <DropdownMenuContent>
     <DropdownMenuItem>Edit</DropdownMenuItem>
@@ -924,6 +925,8 @@ DropdownMenu
 ```
 
 Props:
+- `open / defaultOpen`: `boolean` - Control disclosure with open and onOpenChange, or initialize it with defaultOpen.
+- `onOpenChange`: `(open: boolean) => void` - Called when an interaction requests an open state change.
 - `DropdownMenuTrigger`: `ButtonHTMLAttributes<HTMLButtonElement>` - Button props forwarded to the trigger.
 - `DropdownMenuContent.align`: `"start" | "end"` default "start" - Aligns the menu to the trigger.
 - `DropdownMenuItem`: `ButtonHTMLAttributes<HTMLButtonElement>` - Button props forwarded to each item.
@@ -936,7 +939,7 @@ Category: Interaction
 Docs: https://ui.swirski.dev/components/popover
 Registry: https://ui.swirski.dev/r/popover.json
 Source: `packages/ui/src/components/popover`
-Copy dependencies: `use-portal-root`
+Copy dependencies: `use-portal-root`, `use-controllable-state`
 
 Import:
 ```tsx
@@ -981,7 +984,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@swirski/ui";
 
 Usage:
 ```tsx
-<Tabs defaultValue="preview">
+<Tabs defaultValue="preview" size="lg" tone="yellow">
   <TabsList aria-label="File views">
     <TabsTrigger value="preview">Preview</TabsTrigger>
     <TabsTrigger value="code">Code</TabsTrigger>
@@ -1228,7 +1231,7 @@ Category: Layout
 Docs: https://ui.swirski.dev/components/navbar
 Registry: https://ui.swirski.dev/r/navbar.json
 Source: `packages/ui/src/components/navbar`
-Copy dependencies: `dropdown-menu`, `use-portal-root`
+Copy dependencies: `dropdown-menu`, `use-portal-root`, `use-controllable-state`
 
 Import:
 ```tsx

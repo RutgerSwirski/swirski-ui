@@ -1,4 +1,7 @@
+"use client";
+
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import { CardSizeContext } from "./CardSizeContext";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardVariant = "elevated" | "flat" | "outline";
@@ -56,35 +59,38 @@ export const Card = forwardRef<HTMLElement, CardProps>(function Card(
     className,
     interactive = true,
     variant = "elevated",
-    size = "md",
+    size: sizeProp,
     tone = "default",
     withShadow,
     ...props
   },
   ref,
 ) {
+  const size = sizeProp ?? "md";
   const Component = asChild ? Slot : "article";
   const resolvedWithShadow = withShadow ?? variant === "elevated";
 
   return (
-    <Component
-      ref={ref}
-      className={cn(
-        base,
-        variant === "outline"
-          ? outlineToneStyles[tone] ?? "text-[color:var(--sw-color-ink)]"
-          : toneStyles[tone],
-        variantStyles[variant],
-        resolvedWithShadow && shadowStyles[size],
-        interactive && interactiveStyles,
-        interactive && resolvedWithShadow && interactiveShadowStyles,
-        className,
-      )}
-      {...swirskiAttrs("card", { size, tone, variant })}
-      {...props}
-    >
-      {children}
-    </Component>
+    <CardSizeContext.Provider value={sizeProp}>
+      <Component
+        ref={ref}
+        className={cn(
+          base,
+          variant === "outline"
+            ? outlineToneStyles[tone] ?? "text-[color:var(--sw-color-ink)]"
+            : toneStyles[tone],
+          variantStyles[variant],
+          resolvedWithShadow && shadowStyles[size],
+          interactive && interactiveStyles,
+          interactive && resolvedWithShadow && interactiveShadowStyles,
+          className,
+        )}
+        {...swirskiAttrs("card", { size, tone, variant })}
+        {...props}
+      >
+        {children}
+      </Component>
+    </CardSizeContext.Provider>
   );
 });
 

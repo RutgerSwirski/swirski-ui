@@ -51,13 +51,32 @@
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
         {
+          "name": "AccordionItem.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "AccordionItem",
+          "sourceType": "AccordionItemProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Initially open in uncontrolled mode.",
+          "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
+        },
+        {
+          "name": "AccordionItem.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "AccordionItem",
+          "sourceType": "AccordionItemProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Reports native disclosure changes. Pair with open for controlled mode.",
+          "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
+        },
+        {
           "name": "AccordionItem.size",
           "prop": "size",
           "component": "AccordionItem",
           "sourceType": "AccordionItemProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from AccordionItemProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -68,7 +87,6 @@
           "sourceType": "AccordionItemProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from AccordionItemProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -79,7 +97,6 @@
           "sourceType": "AccordionItemProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from AccordionItemProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -100,7 +117,6 @@
           "sourceType": "AccordionTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from AccordionTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -111,7 +127,6 @@
           "sourceType": "AccordionTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from AccordionTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -122,7 +137,6 @@
           "sourceType": "AccordionTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from AccordionTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -133,7 +147,6 @@
           "sourceType": "AccordionContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from AccordionContentProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -144,7 +157,6 @@
           "sourceType": "AccordionContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from AccordionContentProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         },
@@ -155,7 +167,6 @@
           "sourceType": "AccordionContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from AccordionContentProps.",
           "sourceFile": "packages/ui/src/web/components/accordion/Accordion.tsx"
         }
@@ -1242,7 +1253,6 @@
           "sourceType": "ButtonProps",
           "type": "boolean",
           "required": false,
-          "defaultValue": "false",
           "description": "Generated from ButtonProps.",
           "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
         },
@@ -1275,6 +1285,17 @@
           "required": false,
           "defaultValue": "\"left\"",
           "description": "Generated from ButtonProps.",
+          "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
+        },
+        {
+          "name": "loading",
+          "prop": "loading",
+          "component": "Button",
+          "sourceType": "ButtonProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Prevent activation and expose a busy state while an action is pending.",
           "sourceFile": "packages/ui/src/web/components/button/Button.tsx"
         },
         {
@@ -1329,6 +1350,7 @@
         "packages/ui/src/web/components/card/CardContent.tsx",
         "packages/ui/src/web/components/card/CardMedia.tsx",
         "packages/ui/src/web/components/card/CardMeta.tsx",
+        "packages/ui/src/web/components/card/CardSizeContext.ts",
         "packages/ui/src/web/components/card/CardTitle.tsx"
       ],
       "props": [
@@ -1371,7 +1393,6 @@
           "sourceType": "CardProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from CardProps.",
           "sourceFile": "packages/ui/src/web/components/card/Card.tsx"
         },
@@ -1500,7 +1521,6 @@
           "sourceType": "CardContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from CardContentProps.",
           "sourceFile": "packages/ui/src/web/components/card/CardContent.tsx"
         },
@@ -1597,7 +1617,6 @@
           "sourceType": "CardMetaProps",
           "type": "'sm' | 'md'",
           "required": false,
-          "defaultValue": "\"sm\"",
           "description": "Generated from CardMetaProps.",
           "sourceFile": "packages/ui/src/web/components/card/CardMeta.tsx"
         },
@@ -1651,7 +1670,6 @@
           "sourceType": "CardTitleProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from CardTitleProps.",
           "sourceFile": "packages/ui/src/web/components/card/CardTitle.tsx"
         },
@@ -2218,7 +2236,6 @@
           "sourceType": "DialogCloseProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogCloseProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogClose.tsx"
         },
@@ -2229,7 +2246,6 @@
           "sourceType": "DialogCloseProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogCloseProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogClose.tsx"
         },
@@ -2240,7 +2256,6 @@
           "sourceType": "DialogCloseProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogCloseProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogClose.tsx"
         },
@@ -2251,7 +2266,6 @@
           "sourceType": "DialogContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogContentProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContent.tsx"
         },
@@ -2262,7 +2276,6 @@
           "sourceType": "DialogContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogContentProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContent.tsx"
         },
@@ -2273,7 +2286,6 @@
           "sourceType": "DialogContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogContentProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContent.tsx"
         },
@@ -2325,6 +2337,7 @@
           "sourceType": "DialogProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
+          "defaultValue": "\"md\"",
           "description": "Generated from DialogProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
@@ -2335,6 +2348,7 @@
           "sourceType": "DialogProps",
           "type": "'default'",
           "required": false,
+          "defaultValue": "\"default\"",
           "description": "Generated from DialogProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
@@ -2345,6 +2359,7 @@
           "sourceType": "DialogProps",
           "type": "'default' | 'compact'",
           "required": false,
+          "defaultValue": "\"default\"",
           "description": "Generated from DialogProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogContext.tsx"
         },
@@ -2366,7 +2381,6 @@
           "sourceType": "DialogHeaderProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2377,7 +2391,6 @@
           "sourceType": "DialogHeaderProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2388,7 +2401,6 @@
           "sourceType": "DialogHeaderProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2410,7 +2422,6 @@
           "sourceType": "DialogTitleProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogTitleProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2421,7 +2432,6 @@
           "sourceType": "DialogTitleProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogTitleProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2432,7 +2442,6 @@
           "sourceType": "DialogTitleProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogTitleProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2454,7 +2463,6 @@
           "sourceType": "DialogDescriptionProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogDescriptionProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2465,7 +2473,6 @@
           "sourceType": "DialogDescriptionProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogDescriptionProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2476,7 +2483,6 @@
           "sourceType": "DialogDescriptionProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogDescriptionProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2498,7 +2504,6 @@
           "sourceType": "DialogFooterProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogFooterProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2509,7 +2514,6 @@
           "sourceType": "DialogFooterProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogFooterProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2520,7 +2524,6 @@
           "sourceType": "DialogFooterProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogFooterProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogSections.tsx"
         },
@@ -2542,7 +2545,6 @@
           "sourceType": "DialogTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DialogTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogTrigger.tsx"
         },
@@ -2553,7 +2555,6 @@
           "sourceType": "DialogTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogTrigger.tsx"
         },
@@ -2564,7 +2565,6 @@
           "sourceType": "DialogTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DialogTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/dialog/DialogTrigger.tsx"
         }
@@ -2714,7 +2714,6 @@
           "sourceType": "DrawerCloseProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DrawerCloseProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerClose.tsx"
         },
@@ -2725,7 +2724,6 @@
           "sourceType": "DrawerCloseProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerCloseProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerClose.tsx"
         },
@@ -2736,7 +2734,6 @@
           "sourceType": "DrawerCloseProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerCloseProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerClose.tsx"
         },
@@ -2758,7 +2755,6 @@
           "sourceType": "DrawerContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DrawerContentProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerContent.tsx"
         },
@@ -2769,7 +2765,6 @@
           "sourceType": "DrawerContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerContentProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerContent.tsx"
         },
@@ -2780,7 +2775,6 @@
           "sourceType": "DrawerContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerContentProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerContent.tsx"
         },
@@ -2832,6 +2826,7 @@
           "sourceType": "DrawerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
+          "defaultValue": "\"md\"",
           "description": "Generated from DrawerProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerContext.tsx"
         },
@@ -2842,6 +2837,7 @@
           "sourceType": "DrawerProps",
           "type": "'default'",
           "required": false,
+          "defaultValue": "\"default\"",
           "description": "Generated from DrawerProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerContext.tsx"
         },
@@ -2852,6 +2848,7 @@
           "sourceType": "DrawerProps",
           "type": "'default' | 'compact'",
           "required": false,
+          "defaultValue": "\"default\"",
           "description": "Generated from DrawerProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerContext.tsx"
         },
@@ -2873,7 +2870,6 @@
           "sourceType": "DrawerHeaderProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DrawerHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2884,7 +2880,6 @@
           "sourceType": "DrawerHeaderProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2895,7 +2890,6 @@
           "sourceType": "DrawerHeaderProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2917,7 +2911,6 @@
           "sourceType": "DrawerTitleProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DrawerTitleProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2928,7 +2921,6 @@
           "sourceType": "DrawerTitleProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerTitleProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2939,7 +2931,6 @@
           "sourceType": "DrawerTitleProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerTitleProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2961,7 +2952,6 @@
           "sourceType": "DrawerDescriptionProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DrawerDescriptionProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2972,7 +2962,6 @@
           "sourceType": "DrawerDescriptionProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerDescriptionProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -2983,7 +2972,6 @@
           "sourceType": "DrawerDescriptionProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerDescriptionProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerSections.tsx"
         },
@@ -3005,7 +2993,6 @@
           "sourceType": "DrawerTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DrawerTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerTrigger.tsx"
         },
@@ -3016,7 +3003,6 @@
           "sourceType": "DrawerTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerTrigger.tsx"
         },
@@ -3027,7 +3013,6 @@
           "sourceType": "DrawerTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DrawerTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/drawer/DrawerTrigger.tsx"
         }
@@ -3044,6 +3029,37 @@
         "packages/ui/src/web/components/dropdown-menu/dropdown-menu-utils.ts"
       ],
       "props": [
+        {
+          "name": "DropdownMenu.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "DropdownMenu",
+          "sourceType": "DropdownMenuProps",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": "false",
+          "description": "Generated from DropdownMenuProps.",
+          "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenu.tsx"
+        },
+        {
+          "name": "DropdownMenu.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "DropdownMenu",
+          "sourceType": "DropdownMenuProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Generated from DropdownMenuProps.",
+          "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenu.tsx"
+        },
+        {
+          "name": "DropdownMenu.open",
+          "prop": "open",
+          "component": "DropdownMenu",
+          "sourceType": "DropdownMenuProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from DropdownMenuProps.",
+          "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenu.tsx"
+        },
         {
           "name": "DropdownMenu.size",
           "prop": "size",
@@ -3084,7 +3100,6 @@
           "sourceType": "DropdownMenuSeparatorProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DropdownMenuSeparatorProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenu.tsx"
         },
@@ -3095,7 +3110,6 @@
           "sourceType": "DropdownMenuSeparatorProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuSeparatorProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenu.tsx"
         },
@@ -3106,7 +3120,6 @@
           "sourceType": "DropdownMenuSeparatorProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuSeparatorProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenu.tsx"
         },
@@ -3128,7 +3141,6 @@
           "sourceType": "DropdownMenuContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DropdownMenuContentProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuContent.tsx"
         },
@@ -3139,7 +3151,6 @@
           "sourceType": "DropdownMenuContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuContentProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuContent.tsx"
         },
@@ -3150,7 +3161,6 @@
           "sourceType": "DropdownMenuContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuContentProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuContent.tsx"
         },
@@ -3183,7 +3193,6 @@
           "sourceType": "DropdownMenuItemProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DropdownMenuItemProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuItem.tsx"
         },
@@ -3194,7 +3203,6 @@
           "sourceType": "DropdownMenuItemProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuItemProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuItem.tsx"
         },
@@ -3205,7 +3213,6 @@
           "sourceType": "DropdownMenuItemProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuItemProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuItem.tsx"
         },
@@ -3227,7 +3234,6 @@
           "sourceType": "DropdownMenuTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from DropdownMenuTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuTrigger.tsx"
         },
@@ -3238,7 +3244,6 @@
           "sourceType": "DropdownMenuTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuTrigger.tsx"
         },
@@ -3249,7 +3254,6 @@
           "sourceType": "DropdownMenuTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from DropdownMenuTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/dropdown-menu/DropdownMenuTrigger.tsx"
         }
@@ -4005,7 +4009,6 @@
           "sourceType": "MobileMenuContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuContentProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuContent.tsx"
         },
@@ -4016,7 +4019,6 @@
           "sourceType": "MobileMenuContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuContentProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuContent.tsx"
         },
@@ -4027,7 +4029,6 @@
           "sourceType": "MobileMenuContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuContentProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuContent.tsx"
         },
@@ -4131,7 +4132,6 @@
           "sourceType": "MobileMenuTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuControls.tsx"
         },
@@ -4142,7 +4142,6 @@
           "sourceType": "MobileMenuTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuControls.tsx"
         },
@@ -4153,7 +4152,6 @@
           "sourceType": "MobileMenuTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuControls.tsx"
         },
@@ -4175,7 +4173,6 @@
           "sourceType": "MobileMenuCloseProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuCloseProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuControls.tsx"
         },
@@ -4186,7 +4183,6 @@
           "sourceType": "MobileMenuCloseProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuCloseProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuControls.tsx"
         },
@@ -4197,7 +4193,6 @@
           "sourceType": "MobileMenuCloseProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuCloseProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuControls.tsx"
         },
@@ -4219,7 +4214,6 @@
           "sourceType": "MobileMenuHeaderProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4230,7 +4224,6 @@
           "sourceType": "MobileMenuHeaderProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4241,7 +4234,6 @@
           "sourceType": "MobileMenuHeaderProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuHeaderProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4263,7 +4255,6 @@
           "sourceType": "MobileMenuTitleProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuTitleProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4274,7 +4265,6 @@
           "sourceType": "MobileMenuTitleProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuTitleProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4285,7 +4275,6 @@
           "sourceType": "MobileMenuTitleProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuTitleProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4307,7 +4296,6 @@
           "sourceType": "MobileMenuNavProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuNavProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4318,7 +4306,6 @@
           "sourceType": "MobileMenuNavProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuNavProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4329,7 +4316,6 @@
           "sourceType": "MobileMenuNavProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuNavProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4383,7 +4369,6 @@
           "sourceType": "MobileMenuLinkProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from MobileMenuLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4394,7 +4379,6 @@
           "sourceType": "MobileMenuLinkProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4405,7 +4389,6 @@
           "sourceType": "MobileMenuLinkProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from MobileMenuLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/MobileMenuSections.tsx"
         },
@@ -4481,7 +4464,6 @@
           "sourceType": "NavbarBrandProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarBrandProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4492,7 +4474,6 @@
           "sourceType": "NavbarBrandProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarBrandProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4503,7 +4484,6 @@
           "sourceType": "NavbarBrandProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarBrandProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4525,7 +4505,6 @@
           "sourceType": "NavbarNavProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarNavProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4536,7 +4515,6 @@
           "sourceType": "NavbarNavProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarNavProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4547,7 +4525,6 @@
           "sourceType": "NavbarNavProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarNavProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4590,7 +4567,6 @@
           "sourceType": "NavbarLinkProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4601,7 +4577,6 @@
           "sourceType": "NavbarLinkProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4612,8 +4587,37 @@
           "sourceType": "NavbarLinkProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarLinkProps.",
+          "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
+        },
+        {
+          "name": "NavbarDropdown.defaultOpen",
+          "prop": "defaultOpen",
+          "component": "NavbarDropdown",
+          "sourceType": "NavbarDropdownProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from NavbarDropdownProps.",
+          "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
+        },
+        {
+          "name": "NavbarDropdown.onOpenChange",
+          "prop": "onOpenChange",
+          "component": "NavbarDropdown",
+          "sourceType": "NavbarDropdownProps",
+          "type": "((open: boolean) => void)",
+          "required": false,
+          "description": "Generated from NavbarDropdownProps.",
+          "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
+        },
+        {
+          "name": "NavbarDropdown.open",
+          "prop": "open",
+          "component": "NavbarDropdown",
+          "sourceType": "NavbarDropdownProps",
+          "type": "boolean",
+          "required": false,
+          "description": "Generated from NavbarDropdownProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
         {
@@ -4623,7 +4627,6 @@
           "sourceType": "NavbarDropdownProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarDropdownProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4634,7 +4637,6 @@
           "sourceType": "NavbarDropdownProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4645,7 +4647,6 @@
           "sourceType": "NavbarDropdownProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4678,7 +4679,6 @@
           "sourceType": "NavbarDropdownTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarDropdownTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4689,7 +4689,6 @@
           "sourceType": "NavbarDropdownTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4700,7 +4699,6 @@
           "sourceType": "NavbarDropdownTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4721,7 +4719,6 @@
           "sourceType": "NavbarDropdownContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarDropdownContentProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4732,7 +4729,6 @@
           "sourceType": "NavbarDropdownContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownContentProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4743,7 +4739,6 @@
           "sourceType": "NavbarDropdownContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownContentProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4774,7 +4769,6 @@
           "sourceType": "NavbarDropdownItemProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarDropdownItemProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4785,7 +4779,6 @@
           "sourceType": "NavbarDropdownItemProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownItemProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4796,7 +4789,6 @@
           "sourceType": "NavbarDropdownItemProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownItemProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4839,7 +4831,6 @@
           "sourceType": "NavbarDropdownLinkProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarDropdownLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4850,7 +4841,6 @@
           "sourceType": "NavbarDropdownLinkProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4861,7 +4851,6 @@
           "sourceType": "NavbarDropdownLinkProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarDropdownLinkProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4883,7 +4872,6 @@
           "sourceType": "NavbarActionsProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from NavbarActionsProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4894,7 +4882,6 @@
           "sourceType": "NavbarActionsProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarActionsProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         },
@@ -4905,7 +4892,6 @@
           "sourceType": "NavbarActionsProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from NavbarActionsProps.",
           "sourceFile": "packages/ui/src/web/components/navbar/Navbar.tsx"
         }
@@ -5122,7 +5108,6 @@
           "sourceType": "PopoverTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from PopoverTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/popover/Popover.tsx"
         },
@@ -5133,7 +5118,6 @@
           "sourceType": "PopoverTriggerProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from PopoverTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/popover/Popover.tsx"
         },
@@ -5144,7 +5128,6 @@
           "sourceType": "PopoverTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from PopoverTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/popover/Popover.tsx"
         },
@@ -5166,7 +5149,6 @@
           "sourceType": "PopoverContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from PopoverContentProps.",
           "sourceFile": "packages/ui/src/web/components/popover/Popover.tsx"
         },
@@ -5177,7 +5159,6 @@
           "sourceType": "PopoverContentProps",
           "type": "'default'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from PopoverContentProps.",
           "sourceFile": "packages/ui/src/web/components/popover/Popover.tsx"
         },
@@ -5188,7 +5169,6 @@
           "sourceType": "PopoverContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from PopoverContentProps.",
           "sourceFile": "packages/ui/src/web/components/popover/Popover.tsx"
         }
@@ -6328,7 +6308,6 @@
           "sourceType": "TabsListProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from TabsListProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6339,7 +6318,6 @@
           "sourceType": "TabsListProps",
           "type": "'blue' | 'yellow' | 'black'",
           "required": false,
-          "defaultValue": "\"blue\"",
           "description": "Generated from TabsListProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6350,7 +6328,6 @@
           "sourceType": "TabsListProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from TabsListProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6372,7 +6349,6 @@
           "sourceType": "TabsTriggerProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from TabsTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6383,7 +6359,6 @@
           "sourceType": "TabsTriggerProps",
           "type": "'blue' | 'yellow' | 'black'",
           "required": false,
-          "defaultValue": "\"blue\"",
           "description": "Generated from TabsTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6404,7 +6379,6 @@
           "sourceType": "TabsTriggerProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from TabsTriggerProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6426,7 +6400,6 @@
           "sourceType": "TabsContentProps",
           "type": "'sm' | 'md' | 'lg'",
           "required": false,
-          "defaultValue": "\"md\"",
           "description": "Generated from TabsContentProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6437,7 +6410,6 @@
           "sourceType": "TabsContentProps",
           "type": "'blue' | 'yellow' | 'black'",
           "required": false,
-          "defaultValue": "\"blue\"",
           "description": "Generated from TabsContentProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         },
@@ -6458,7 +6430,6 @@
           "sourceType": "TabsContentProps",
           "type": "'default' | 'compact'",
           "required": false,
-          "defaultValue": "\"default\"",
           "description": "Generated from TabsContentProps.",
           "sourceFile": "packages/ui/src/web/components/tabs/Tabs.tsx"
         }

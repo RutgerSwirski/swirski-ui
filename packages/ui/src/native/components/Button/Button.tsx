@@ -21,6 +21,7 @@ export type NativeButtonProps = SharedButtonProps &
   Omit<PressableProps, "children" | "style"> & {
     children?: ReactNode;
     reduceMotion?: boolean;
+    loading?: boolean;
     style?: PressableProps["style"];
     textStyle?: StyleProp<TextStyle>;
   };
@@ -133,7 +134,9 @@ function getButtonStyles({
 
 export function NativeButton({
   children,
-  disabled,
+  disabled: disabledProp,
+  loading = false,
+  accessibilityState,
   size = "md",
   tone = "blue",
   variant = "solid",
@@ -146,6 +149,7 @@ export function NativeButton({
   textStyle: textStyleProp,
   ...props
 }: NativeButtonProps) {
+  const disabled = disabledProp || loading;
   const [isPressed, setIsPressed] = useState(false);
   const { progress: pressProgress, animate, reduced } = usePressMotion(!disabled, pressSpring, reduceMotion);
   const { containerStyle, textStyle } = getButtonStyles({
@@ -222,6 +226,7 @@ export function NativeButton({
     <AnimatedPressable
       accessibilityLabel={accessibilityLabel ?? (typeof children === "string" ? children : undefined)}
       accessibilityRole="button"
+      accessibilityState={{ ...accessibilityState, disabled: disabled || accessibilityState?.disabled, busy: loading || accessibilityState?.busy }}
       disabled={disabled}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}

@@ -30,15 +30,20 @@ export const MobileMenuTrigger = forwardRef<
     className,
     label = "Open navigation menu",
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     "aria-label": ariaLabel,
     ...props
   },
   ref,
 ) {
-  const { contentId, open, setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { contentId, open, setOpen } = styles;
   const Component = asChild ? Slot : "button";
 
   return (
@@ -62,6 +67,7 @@ export const MobileMenuTrigger = forwardRef<
         }
       }}
       type={asChild ? undefined : "button"}
+      data-state={open ? "open" : "closed"}
       {...swirskiAttrs("mobile-menu-trigger", { size, tone, variant })}
       {...props}
     >
@@ -94,14 +100,19 @@ export const MobileMenuClose = forwardRef<
     children = "Close",
     className,
     onClick,
-    variant = "default",
-    size = "md",
-    tone = "default",
+    variant: variantProp,
+    size: sizeProp,
+    tone: toneProp,
     ...props
   },
   ref,
 ) {
-  const { setOpen } = useMobileMenu();
+  const styles = useMobileMenu();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
+
+  const { setOpen } = styles;
   const Component = asChild ? Slot : "button";
 
   return (

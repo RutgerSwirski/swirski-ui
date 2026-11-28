@@ -133,6 +133,18 @@ function mergeSlotProps(
     }
   }
 
+  const ariaDisabled = [slotProps["aria-disabled"], childProps["aria-disabled"]]
+    .some((value) => value === true || value === "true");
+  if (ariaDisabled) {
+    const blockActivation: NonNullable<HTMLAttributes<HTMLElement>["onClickCapture"]> = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    mergedProps["aria-disabled"] = true;
+    mergedProps.onClickCapture = blockActivation;
+    mergedProps.onAuxClickCapture = blockActivation;
+  }
+
   return {
     ...mergedProps,
     "aria-describedby": mergeAriaIds(

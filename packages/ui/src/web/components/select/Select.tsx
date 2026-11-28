@@ -376,6 +376,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
         type="button"
+        data-state={popupVisible ? "open" : "closed"}
         {...swirskiAttrs("select-trigger", { size, tone, variant })}
       >
         <span id={valueLabelId} className={cn(!selectedOption && "text-[color:var(--sw-color-muted)]")}>

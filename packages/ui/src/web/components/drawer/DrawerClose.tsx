@@ -26,15 +26,21 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(
       asChild = false,
       className,
       children = "Close",
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
+      disabled,
       onClick,
       ...props
     },
     ref,
   ) {
-    const { setOpen } = useDrawer();
+    const styles = useDrawer();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { setOpen } = styles;
+    const isDisabled = disabled || props["aria-disabled"] === true || props["aria-disabled"] === "true";
     const Component = asChild ? Slot : "button";
 
     return (
@@ -48,6 +54,10 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(
           className,
         )}
         onClick={(event) => {
+          if (isDisabled) {
+            event.preventDefault();
+            return;
+          }
           onClick?.(event);
 
           if (!event.defaultPrevented) {
@@ -57,6 +67,9 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(
         type={asChild ? undefined : "button"}
         {...swirskiAttrs("drawer-close", { size, tone, variant })}
         {...props}
+        disabled={asChild ? undefined : disabled}
+        aria-disabled={isDisabled || undefined}
+        tabIndex={asChild && isDisabled ? -1 : props.tabIndex}
       >
         {children}
       </Component>

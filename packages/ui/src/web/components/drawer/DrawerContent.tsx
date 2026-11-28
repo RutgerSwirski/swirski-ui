@@ -13,7 +13,7 @@ import type {
   DrawerTone,
   DrawerVariant,
 } from "./drawer-types";
-import { drawerSideStyles } from "./drawer-utils";
+import { drawerSideStyles, drawerWidthStyles } from "./drawer-utils";
 
 export type DrawerContentProps = HTMLAttributes<HTMLDivElement> & {
   side?: DrawerSide;
@@ -28,14 +28,18 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       side = "right",
       className,
       children,
-      variant = "default",
-      size = "md",
-      tone = "default",
+      variant: variantProp,
+      size: sizeProp,
+      tone: toneProp,
       ...props
     },
     ref,
   ) {
-    const { describedById, labelledById, open, setOpen } = useDrawer();
+    const styles = useDrawer();
+    const variant = variantProp ?? styles.variant ?? "default";
+    const size = sizeProp ?? styles.size ?? "md";
+    const tone = toneProp ?? styles.tone ?? "default";
+    const { describedById, labelledById, open, setOpen } = styles;
     const portalRoot = usePortalRoot();
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -59,9 +63,12 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
         <div
           ref={composeRefs(contentRef, ref)}
           className={cn(
-            "absolute border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-6 shadow-[12px_12px_0_var(--sw-color-shadow)]",
+            "absolute border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)]",
             drawerSideStyles[side],
-            variant === "compact" && "p-5 shadow-[8px_8px_0_var(--sw-color-shadow)]",
+            (side === "left" || side === "right") && drawerWidthStyles[size],
+            variant === "compact"
+              ? "p-5 shadow-[8px_8px_0_var(--sw-color-shadow)]"
+              : "p-6 shadow-[12px_12px_0_var(--sw-color-shadow)]",
             className,
           )}
           role="dialog"
@@ -69,6 +76,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
           aria-labelledby={labelledById ?? props["aria-labelledby"]}
           aria-describedby={describedById ?? props["aria-describedby"]}
           tabIndex={-1}
+          data-state="open"
           {...swirskiAttrs("drawer-content", { size, tone, variant })}
           {...props}
         >

@@ -20,7 +20,7 @@ export const dropdownMenuComponentDoc: ComponentDoc = {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@swirski/ui";`,
-  usageCode: `<DropdownMenu>
+  usageCode: `<DropdownMenu size="lg" variant="compact">
   <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
   <DropdownMenuContent>
     <DropdownMenuItem>Edit</DropdownMenuItem>
@@ -45,6 +45,16 @@ export const dropdownMenuComponentDoc: ComponentDoc = {
     </DropdownMenu>
   ),
   props: [
+    {
+      name: "open / defaultOpen",
+      type: "boolean",
+      description: "Control disclosure with open and onOpenChange, or initialize it with defaultOpen.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description: "Called when an interaction requests an open state change.",
+    },
     {
       name: "DropdownMenuTrigger",
       type: "ButtonHTMLAttributes<HTMLButtonElement>",

@@ -1,10 +1,11 @@
 "use client";
 import { useOverlayLayer } from "../../system/overlay";
 
+import { useControllableState } from "../../hooks/use-controllable-state/useControllableState";
 import type { HTMLAttributes } from "react";
-import { forwardRef, useId, useRef, useState } from "react";
+import { forwardRef, useId, useRef } from "react";
 import { cn, composeRefs, swirskiAttrs } from "../../system";
-import { DropdownMenuContext } from "./DropdownMenuContext";
+import { DropdownMenuContext, useDropdownMenuStyles } from "./DropdownMenuContext";
 import type {
   DropdownMenuFocusIntent,
   DropdownMenuSize,
@@ -25,6 +26,9 @@ export type {
 } from "./dropdown-menu-types";
 
 export type DropdownMenuProps = {
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   variant?: DropdownMenuVariant;
   size?: DropdownMenuSize;
   tone?: DropdownMenuTone;
@@ -34,6 +38,9 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
   function DropdownMenu(
     {
       children,
+      open: openProp,
+      defaultOpen = false,
+      onOpenChange,
       className,
       variant = "default",
       size = "md",
@@ -47,7 +54,11 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     const triggerRef = useRef<HTMLButtonElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const focusIntentRef = useRef<DropdownMenuFocusIntent>(null);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useControllableState({
+      value: openProp,
+      defaultValue: defaultOpen,
+      onChange: onOpenChange,
+    });
 
     useOverlayLayer({
       open: open,
@@ -63,7 +74,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     return (
       <DropdownMenuContext.Provider
         value={{
-          open,
+          open, variant, size, tone,
           setOpen,
           rootRef,
           triggerRef,
@@ -75,6 +86,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
         <div
           ref={composeRefs(rootRef, ref)}
           className={cn("relative w-fit", className)}
+          data-state={open ? "open" : "closed"}
           {...swirskiAttrs("dropdown-menu", { size, tone, variant })}
           {...props}
         >
@@ -97,9 +109,13 @@ export const DropdownMenuSeparator = forwardRef<
   HTMLDivElement,
   DropdownMenuSeparatorProps
 >(function DropdownMenuSeparator(
-  { className, variant = "default", size = "md", tone = "default", ...props },
+  { className, variant: variantProp, size: sizeProp, tone: toneProp, ...props },
   ref,
 ) {
+  const styles = useDropdownMenuStyles();
+  const variant = variantProp ?? styles?.variant ?? "default";
+  const size = sizeProp ?? styles?.size ?? "md";
+  const tone = toneProp ?? styles?.tone ?? "default";
   return (
     <div
       ref={ref}
