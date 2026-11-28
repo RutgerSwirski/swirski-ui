@@ -21,6 +21,7 @@ export type DropdownMenuContentProps = HTMLAttributes<HTMLDivElement> & {
   align?: "start" | "end";
   variant?: DropdownMenuVariant;
   size?: DropdownMenuSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DropdownMenuTone;
 };
 
@@ -144,7 +145,8 @@ export const DropdownMenuContent = forwardRef<
     <div
       ref={composeRefs(contentRef, ref)}
       className={cn(
-        "fixed z-[1000] min-w-48 border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-1",
+        "fixed z-[1000] border-[length:var(--sw-border-width)] border-[color:var(--sw-color-ink)] bg-[var(--sw-color-surface)] text-[var(--sw-color-ink)] p-1",
+        size === "sm" ? "min-w-40" : size === "lg" ? "min-w-56" : "min-w-48",
         variant === "compact" ? "shadow-[4px_4px_0_var(--sw-color-shadow)]" : "shadow-[8px_8px_0_var(--sw-color-shadow)]",
         className,
       )}

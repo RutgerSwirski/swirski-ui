@@ -6,6 +6,7 @@ export type SliderSize = "sm" | "md" | "lg";
 export type SliderTone = "blue" | "yellow" | "red";
 
 export type SliderProps = {
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: SliderVariant;
   size?: SliderSize;
   tone?: SliderTone;

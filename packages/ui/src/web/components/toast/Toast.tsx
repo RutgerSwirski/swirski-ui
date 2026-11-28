@@ -40,8 +40,11 @@ const toneStyles: Record<ToastTone, string> = {
 
 export type ToastProviderProps = {
   children: ReactNode;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: ToastVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: ToastSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: ToastTone;
 };
 
@@ -116,8 +119,11 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
 Toast.displayName = "Toast";
 
 export type ToastTitleProps = HTMLAttributes<HTMLHeadingElement> & {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: ToastVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: ToastSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: ToastTone;
 };
 
@@ -140,8 +146,11 @@ export const ToastTitle = forwardRef<HTMLHeadingElement, ToastTitleProps>(
 ToastTitle.displayName = "ToastTitle";
 
 export type ToastDescriptionProps = HTMLAttributes<HTMLParagraphElement> & {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: ToastVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: ToastSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: ToastTone;
 };
 
@@ -165,8 +174,11 @@ export const ToastDescription = forwardRef<
 ToastDescription.displayName = "ToastDescription";
 
 export type ToastCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: ToastVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: ToastSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: ToastTone;
 };
 
@@ -190,8 +202,11 @@ export const ToastClose = forwardRef<HTMLButtonElement, ToastCloseProps>(
 ToastClose.displayName = "ToastClose";
 
 export type ToastViewportProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: ToastVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: ToastSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: ToastTone;
 } & HTMLAttributes<HTMLDivElement>;
 

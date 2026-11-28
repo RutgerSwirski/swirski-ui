@@ -12,8 +12,11 @@ export type TableSize = "sm" | "md" | "lg";
 export type TableTone = "default" | "inverted";
 
 export type TableProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: TableVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TableSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TableTone;
   wrapperClassName?: string;
 } & TableHTMLAttributes<HTMLTableElement>;
@@ -50,8 +53,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
 Table.displayName = "Table";
 
 export type TableHeadProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: TableVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TableSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TableTone;
 } & HTMLAttributes<HTMLTableSectionElement>;
 
@@ -94,8 +100,11 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
 TableBody.displayName = "TableBody";
 
 export type TableRowProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: TableVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TableSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TableTone;
 } & HTMLAttributes<HTMLTableRowElement>;
 
@@ -118,8 +127,10 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
 TableRow.displayName = "TableRow";
 
 export type TableHeaderProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: TableVariant;
   size?: TableSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TableTone;
 } & ThHTMLAttributes<HTMLTableCellElement>;
 
@@ -148,8 +159,10 @@ export const TableHeader = forwardRef<HTMLTableCellElement, TableHeaderProps>(
 TableHeader.displayName = "TableHeader";
 
 export type TableCellProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: TableVariant;
   size?: TableSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TableTone;
 } & TdHTMLAttributes<HTMLTableCellElement>;
 

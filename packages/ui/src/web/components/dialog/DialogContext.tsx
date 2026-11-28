@@ -30,6 +30,7 @@ export type DialogProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: DialogVariant;
   size?: DialogSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DialogTone;
 };
 

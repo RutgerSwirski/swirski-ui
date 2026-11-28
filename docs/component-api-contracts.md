@@ -5,9 +5,10 @@ See the [baseline inventory](component-api-inventory.md) for the public web and 
 ## Styling and composition
 
 - Use `size` for dimensions and density, `variant` for visual treatment, and `tone` for color. Use `sm`, `md`, and `lg` where a component offers those sizes. Components may expose additional values when they correspond to a real design choice.
-- Tabs, Dialog, Drawer, Popover, DropdownMenu, Accordion and Navbar families use the nearest compound root’s styling defaults. A part’s explicit props win. AccordionItem can supply defaults for its trigger and content. NavbarDropdown and MobileMenu can supply defaults for their own parts.
+- Tabs, Dialog, Drawer, Popover, DropdownMenu, Accordion, Navbar and AppShell families use the nearest compound root’s styling defaults. A part’s explicit props win. AccordionItem can supply defaults for its trigger and content. NavbarDropdown and MobileMenu can supply defaults for their own parts.
 - Card passes an explicitly supplied size to its content, title, and meta. Meta caps inherited large at its supported medium size. Card’s surface tone continues to supply the inherited text color. A part’s own variant or tone keeps its local meaning, such as flush media or muted text.
-- Treat single-value legacy styling props as compatibility fields where a part only emits a `data-swirski-*` attribute. New APIs should expose styling props only when there is a styling choice or inheritance contract. `CardMedia.size` is deprecated. Use `aspect` or `style` for media dimensions. Button color names in `variant` remain legacy aliases. Use `tone` for new usage.
+- AppShellBody can override inherited defaults for its region. Sidebar width follows the resolved size unless a width is supplied. AppShellContent has its own `width` contract.
+- The audit marks metadata-only and single-value styling props deprecated in the public types and generated docs. Existing values and component data attributes still work for CSS selectors. Omit these fields for built-in styling. Use `className`, `style` or the component’s supported dimension prop for customization. For example, use `aspect` for CardMedia dimensions and `width` for AppShellContent width. Button color names in `variant` remain legacy aliases. Use `tone` for new usage.
 
 ## Interaction
 
@@ -25,7 +26,16 @@ Button and NativeButton accept `loading`. They retain the visible label, expose 
 
 ## Refs and overrides
 
-A forwarded ref targets the public default element, such as the button, anchor, input or panel. With `asChild`, use one element that forwards its ref and DOM props. Attach a correctly typed ref to the child when its tag differs from the default. Slot composes both refs, runs the child handler first for enabled controls, and respects `preventDefault()`. Child inline styles override matching slotted inline styles.
+Default refs use the component’s declared element type. Explicit `as` infers
+the ref from the element or component supplied. With `asChild`, pass one
+element that forwards DOM props and a ref. The outer ref accepts an
+`HTMLElement` ref, including a concrete element ref for the rendered tag.
+JSX erases the child’s tag type at the parent boundary. Put the concrete ref
+on the child when you want the compiler to check the tag against that ref.
+Slot composes both refs, runs the child handler first for enabled controls,
+and respects `preventDefault()`. Child inline styles override matching
+slotted inline styles. NativeButton forwards a ref to its React Native
+Pressable, matching NativeCard.
 
 Consumer class names are composed with the built-in classes. Use a CSS Module, an application stylesheet outside the library layers, or the public inline `style` prop to override package styles. The class attribute’s order does not set CSS precedence. A plain React consumer must supply CSS for its own classes. Tailwind consumers must have their compiler emit any utilities they pass.
 

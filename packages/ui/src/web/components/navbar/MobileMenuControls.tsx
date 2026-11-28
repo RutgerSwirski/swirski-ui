@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -16,7 +17,9 @@ export type MobileMenuTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   label?: string;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -80,14 +83,16 @@ export const MobileMenuTrigger = forwardRef<
       )}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuTriggerProps, HTMLButtonElement>;
 
 MobileMenuTrigger.displayName = "MobileMenuTrigger";
 
 export type MobileMenuCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -139,6 +144,6 @@ export const MobileMenuClose = forwardRef<
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<MobileMenuCloseProps, HTMLButtonElement>;
 
 MobileMenuClose.displayName = "MobileMenuClose";

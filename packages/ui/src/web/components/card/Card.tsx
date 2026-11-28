@@ -2,6 +2,7 @@
 
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
 import { CardSizeContext } from "./CardSizeContext";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardVariant = "elevated" | "flat" | "outline";
@@ -92,6 +93,6 @@ export const Card = forwardRef<HTMLElement, CardProps>(function Card(
       </Component>
     </CardSizeContext.Provider>
   );
-});
+}) as unknown as PolymorphicComponent<CardProps, HTMLElement>;
 
 Card.displayName = "Card";

@@ -24,6 +24,7 @@ export type MobileMenuProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: NavbarVariant;
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 

@@ -1,4 +1,5 @@
 import { HTMLAttributes, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type FieldVariant = "default" | "inline";
@@ -9,6 +10,7 @@ export type FieldProps = {
   asChild?: boolean;
   variant?: FieldVariant;
   size?: FieldSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: FieldTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -43,6 +45,6 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(function Field(
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<FieldProps, HTMLDivElement>;
 
 Field.displayName = "Field";

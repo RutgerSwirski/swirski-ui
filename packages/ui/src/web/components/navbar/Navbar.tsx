@@ -18,6 +18,7 @@ import {
   type DropdownMenuProps,
 } from "../dropdown-menu/DropdownMenu";
 import { useDropdownMenu } from "../dropdown-menu/DropdownMenuContext";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -68,6 +69,7 @@ export type NavbarProps = {
   asChild?: boolean;
   variant?: NavbarVariant;
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -98,7 +100,7 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(function Navbar(
       />
     </NavbarStyles.Provider>
   );
-});
+}) as unknown as PolymorphicComponent<NavbarProps, HTMLElement>;
 
 Navbar.displayName = "Navbar";
 
@@ -106,7 +108,9 @@ export type NavbarBrandProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   as?: ElementType;
   asChild?: boolean;
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -142,14 +146,17 @@ export const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarBrandProps, HTMLAnchorElement>;
 
 NavbarBrand.displayName = "NavbarBrand";
 
 export type NavbarNavProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -180,7 +187,7 @@ export const NavbarNav = forwardRef<HTMLElement, NavbarNavProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarNavProps, HTMLElement>;
 
 NavbarNav.displayName = "NavbarNav";
 
@@ -190,6 +197,7 @@ export type NavbarLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   asChild?: boolean;
   variant?: NavbarVariant;
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 
@@ -224,7 +232,7 @@ export const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarLinkProps, HTMLAnchorElement>;
 
 NavbarLink.displayName = "NavbarLink";
 
@@ -265,6 +273,7 @@ export type NavbarDropdownTriggerProps =
     asChild?: boolean;
     variant?: NavbarVariant;
     size?: NavbarSize;
+    /** @deprecated Omit this prop. The component uses the only supported value by default. */
     tone?: NavbarTone;
   };
 
@@ -369,7 +378,7 @@ export const NavbarDropdownTrigger = forwardRef<
       )}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<NavbarDropdownTriggerProps, HTMLButtonElement>;
 
 NavbarDropdownTrigger.displayName = "NavbarDropdownTrigger";
 
@@ -432,7 +441,7 @@ export const NavbarDropdownItem = forwardRef<
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<NavbarDropdownItemProps, HTMLButtonElement>;
 
 NavbarDropdownItem.displayName = "NavbarDropdownItem";
 
@@ -443,6 +452,7 @@ export type NavbarDropdownLinkProps =
     asChild?: boolean;
     variant?: NavbarVariant;
     size?: NavbarSize;
+    /** @deprecated Omit this prop. The component uses the only supported value by default. */
     tone?: NavbarTone;
   };
 
@@ -486,14 +496,17 @@ export const NavbarDropdownLink = forwardRef<
       />
     </DropdownMenuItem>
   );
-});
+}) as unknown as PolymorphicComponent<NavbarDropdownLinkProps, HTMLAnchorElement>;
 
 NavbarDropdownLink.displayName = "NavbarDropdownLink";
 
 export type NavbarActionsProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -527,6 +540,6 @@ export const NavbarActions = forwardRef<HTMLDivElement, NavbarActionsProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<NavbarActionsProps, HTMLDivElement>;
 
 NavbarActions.displayName = "NavbarActions";

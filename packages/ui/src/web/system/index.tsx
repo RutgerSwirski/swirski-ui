@@ -6,7 +6,9 @@ import {
   isValidElement,
   useMemo,
   version,
+  type ComponentRef,
   type CSSProperties,
+  type ElementType,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
@@ -46,6 +48,24 @@ export type SwirskiPolymorphicProps = {
   asChild?: boolean;
   children?: ReactNode;
 };
+type PolymorphicProps<Props> = Props extends unknown
+  ? Omit<Props, "as" | "asChild" | "ref">
+  : never;
+
+/** Intrinsic refs follow the default or explicit tag. A JSX slot accepts an HTMLElement ref. */
+export type PolymorphicComponent<Props, DefaultElement extends HTMLElement> = {
+  <As extends ElementType | undefined = undefined, Slotted extends boolean = false>(
+    props: PolymorphicProps<Props>
+      & ("as" extends keyof Props ? { as?: As } : { as?: never })
+      & ("asChild" extends keyof Props ? { asChild?: Slotted } : { asChild?: never })
+      & { ref?: Ref<
+        true extends Slotted ? HTMLElement : As extends ElementType ? ComponentRef<As> : DefaultElement
+      > },
+  ): ReactNode;
+  displayName?: string;
+  readonly $$typeof: symbol;
+};
+
 // combines class names
 export function cn(...inputs: ClassValue[]) {
   return clsx(...inputs);

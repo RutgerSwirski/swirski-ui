@@ -19,8 +19,11 @@ export type CursorProviderProps = {
   defaultCursor?: CursorId;
   onCursorChange?: (cursorId: CursorId) => void;
   storageKey?: string | false;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: "default";
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   size?: "md";
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: "default";
 } & HTMLAttributes<HTMLDivElement>;
 

@@ -31,6 +31,7 @@ export type DropdownMenuProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: DropdownMenuVariant;
   size?: DropdownMenuSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DropdownMenuTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -100,8 +101,11 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
 DropdownMenu.displayName = "DropdownMenu";
 
 export type DropdownMenuSeparatorProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: DropdownMenuVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: DropdownMenuSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DropdownMenuTone;
 } & HTMLAttributes<HTMLDivElement>;
 

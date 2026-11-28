@@ -88,3 +88,21 @@ export function CompatibilityProbe() {
     </SwirskiProvider>
   );
 }
+
+
+// These examples are checked against the declarations from the packed package.
+function verifyPolymorphicRefs() {
+  const anchor = (element: HTMLAnchorElement | null) => { void element; };
+  const button = (element: HTMLButtonElement | null) => { void element; };
+  // @ts-expect-error The default dialog trigger renders a button.
+  const invalidDefault = <DialogTrigger ref={anchor}>Invalid</DialogTrigger>;
+  // @ts-expect-error The explicit anchor cannot receive a button ref.
+  const invalidExplicit = <Button as="a" href="#" ref={button}>Invalid</Button>;
+  return [
+    invalidDefault,
+    invalidExplicit,
+    <DialogTrigger asChild ref={anchor}><a href="#">Link trigger</a></DialogTrigger>,
+    <Button as="a" href="#" ref={anchor}>Link button</Button>,
+  ];
+}
+void verifyPolymorphicRefs;

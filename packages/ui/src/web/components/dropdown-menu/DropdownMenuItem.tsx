@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 import { useDropdownMenu } from "./DropdownMenuContext";
 import type {
@@ -15,6 +16,7 @@ export type DropdownMenuItemProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   variant?: DropdownMenuVariant;
   size?: DropdownMenuSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DropdownMenuTone;
   active?: boolean;
 };
@@ -78,6 +80,6 @@ export const DropdownMenuItem = forwardRef<
       aria-disabled={isDisabled || undefined}
     />
   );
-});
+}) as unknown as PolymorphicComponent<DropdownMenuItemProps, HTMLButtonElement>;
 
 DropdownMenuItem.displayName = "DropdownMenuItem";

@@ -13,6 +13,7 @@ import { dialogContentSizeStyles } from "./dialog-utils";
 export type DialogContentProps = {
   variant?: DialogVariant;
   size?: DialogSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DialogTone;
 } & HTMLAttributes<HTMLDivElement>;
 

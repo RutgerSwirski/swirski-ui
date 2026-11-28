@@ -16,6 +16,7 @@ import {
   type ButtonTone,
   type ButtonVariant,
 } from "../../../shared/contracts";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -206,7 +207,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
     ? (disabled ? disabledLinkProps : undefined)
     : { disabled: disabled || undefined };
   return <Component {...componentProps} {...disabledProps}>{content(children)}</Component>;
-});
+}) as unknown as PolymorphicComponent<ButtonProps, HTMLElement>;
 
 Button.displayName = "Button";
 

@@ -1,4 +1,5 @@
 import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardMediaVariant = "default" | "flush";
@@ -45,6 +46,6 @@ export const CardMedia = forwardRef<HTMLDivElement, CardMediaProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<CardMediaProps, HTMLDivElement>;
 
 CardMedia.displayName = "CardMedia";

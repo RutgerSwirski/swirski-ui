@@ -2,6 +2,7 @@
 
 import { HTMLAttributes, ReactNode, forwardRef, useContext } from "react";
 import { CardSizeContext } from "./CardSizeContext";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type CardTitleSize = "sm" | "md" | "lg";
@@ -62,6 +63,6 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<CardTitleProps, HTMLHeadingElement>;
 
 CardTitle.displayName = "CardTitle";

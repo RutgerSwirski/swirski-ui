@@ -1,4 +1,5 @@
 import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
@@ -70,6 +71,6 @@ export const Title = forwardRef<HTMLHeadingElement, TitleProps>(function Title(
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<TitleProps, HTMLHeadingElement>;
 
 Title.displayName = "Title";

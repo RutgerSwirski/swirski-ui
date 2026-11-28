@@ -9,6 +9,7 @@ import {
   useContext,
   useRef,
 } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 
 export type AccordionVariant = "default" | "compact";
@@ -25,6 +26,7 @@ export type AccordionProps = {
   asChild?: boolean;
   variant?: AccordionVariant;
   size?: AccordionSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: AccordionTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -59,7 +61,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       </AccordionStyles.Provider>
     );
   },
-);
+) as unknown as PolymorphicComponent<AccordionProps, HTMLDivElement>;
 
 Accordion.displayName = "Accordion";
 
@@ -70,6 +72,7 @@ export type AccordionItemProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: AccordionVariant;
   size?: AccordionSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: AccordionTone;
 } & DetailsHTMLAttributes<HTMLDetailsElement>;
 
@@ -124,8 +127,10 @@ AccordionItem.displayName = "AccordionItem";
 
 export type AccordionTriggerProps = {
   children?: ReactNode;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: AccordionVariant;
   size?: AccordionSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: AccordionTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -175,8 +180,10 @@ export const AccordionTrigger = forwardRef<HTMLElement, AccordionTriggerProps>(
 AccordionTrigger.displayName = "AccordionTrigger";
 
 export type AccordionContentProps = {
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: AccordionVariant;
   size?: AccordionSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: AccordionTone;
 } & HTMLAttributes<HTMLDivElement>;
 

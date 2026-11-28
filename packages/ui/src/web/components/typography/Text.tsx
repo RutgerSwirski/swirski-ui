@@ -1,4 +1,5 @@
 import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type TextSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
@@ -84,6 +85,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<TextProps, HTMLElement>;
 
 Text.displayName = "Text";

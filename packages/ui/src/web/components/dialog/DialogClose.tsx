@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -15,8 +16,10 @@ import { dialogButtonSizeStyles } from "./dialog-utils";
 
 export type DialogCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: DialogVariant;
   size?: DialogSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DialogTone;
 };
 
@@ -75,6 +78,6 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<DialogCloseProps, HTMLButtonElement>;
 
 DialogClose.displayName = "DialogClose";

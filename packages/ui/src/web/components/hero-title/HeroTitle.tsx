@@ -1,4 +1,5 @@
 import { forwardRef, type ReactNode } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { swirskiAttrs } from "../../system";
 import { Title } from "../typography";
 import type { TitleOrder, TitleProps, TitleSize } from "../typography";
@@ -39,6 +40,6 @@ export const HeroTitle = forwardRef<HTMLHeadingElement, HeroTitleProps>(
       </Title>
     );
   },
-);
+) as unknown as PolymorphicComponent<HeroTitleProps, HTMLHeadingElement>;
 
 HeroTitle.displayName = "HeroTitle";

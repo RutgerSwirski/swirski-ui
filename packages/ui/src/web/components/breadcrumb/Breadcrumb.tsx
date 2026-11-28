@@ -5,6 +5,7 @@ import {
   ReactNode,
   forwardRef,
 } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, focusVisibleStyles, swirskiAttrs } from "../../system";
 
 export type BreadcrumbVariant = "default" | "plain";
@@ -13,8 +14,11 @@ export type BreadcrumbTone = "default" | "muted";
 
 export type BreadcrumbProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: BreadcrumbVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: BreadcrumbSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: BreadcrumbTone;
 } & HTMLAttributes<HTMLElement>;
 
@@ -42,14 +46,17 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<BreadcrumbProps, HTMLElement>;
 
 Breadcrumb.displayName = "Breadcrumb";
 
 export type BreadcrumbListProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: BreadcrumbVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: BreadcrumbSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: BreadcrumbTone;
 } & HTMLAttributes<HTMLOListElement>;
 
@@ -79,14 +86,17 @@ export const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<BreadcrumbListProps, HTMLOListElement>;
 
 BreadcrumbList.displayName = "BreadcrumbList";
 
 export type BreadcrumbItemProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: BreadcrumbVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: BreadcrumbSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: BreadcrumbTone;
 } & HTMLAttributes<HTMLLIElement>;
 
@@ -113,7 +123,7 @@ export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<BreadcrumbItemProps, HTMLLIElement>;
 
 BreadcrumbItem.displayName = "BreadcrumbItem";
 
@@ -122,7 +132,9 @@ export type BreadcrumbLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   asChild?: boolean;
   children?: ReactNode;
   variant?: "default" | "plain";
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: BreadcrumbSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: "default" | "muted";
 };
 
@@ -156,13 +168,15 @@ export const BreadcrumbLink = forwardRef<
       {...props}
     />
   );
-});
+}) as unknown as PolymorphicComponent<BreadcrumbLinkProps, HTMLAnchorElement>;
 
 BreadcrumbLink.displayName = "BreadcrumbLink";
 
 export type BreadcrumbPageProps = {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: "default" | "plain";
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: BreadcrumbSize;
   tone?: "muted" | "default";
 } & HTMLAttributes<HTMLSpanElement>;
@@ -191,14 +205,16 @@ export const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<BreadcrumbPageProps, HTMLSpanElement>;
 
 BreadcrumbPage.displayName = "BreadcrumbPage";
 
 export type BreadcrumbSeparatorProps = {
   asChild?: boolean;
   children?: ReactNode;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: "default" | "plain";
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: BreadcrumbSize;
   tone?: "muted" | "default";
 } & HTMLAttributes<HTMLSpanElement>;
@@ -231,6 +247,6 @@ export const BreadcrumbSeparator = forwardRef<
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<BreadcrumbSeparatorProps, HTMLSpanElement>;
 
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator";

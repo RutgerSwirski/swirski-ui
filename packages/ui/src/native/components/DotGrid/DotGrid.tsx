@@ -25,8 +25,11 @@ export type NativeDotGridProps = Omit<ViewProps, "children" | "style"> & {
   accentColor?: string;
   accentEvery?: number;
   accentDotSize?: number;
+  /** @deprecated This has no effect on built-in styling. Use style to customize. */
   variant?: NativeDotGridVariant;
+  /** @deprecated This has no effect on built-in styling. Use style to customize. */
   size?: NativeDotGridSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NativeDotGridTone;
   style?: StyleProp<ViewStyle>;
 };

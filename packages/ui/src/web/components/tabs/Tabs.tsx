@@ -9,6 +9,7 @@ import {
   useId,
 } from "react";
 import { useControllableState } from "../../hooks/use-controllable-state";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -94,7 +95,9 @@ Tabs.displayName = "Tabs";
 export type TabsListProps = {
   asChild?: boolean;
   variant?: TabsVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TabsSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TabsTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -169,7 +172,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<TabsListProps, HTMLDivElement>;
 
 TabsList.displayName = "TabsList";
 
@@ -258,7 +261,7 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<TabsTriggerProps, HTMLButtonElement>;
 
 TabsTrigger.displayName = "TabsTrigger";
 
@@ -266,7 +269,9 @@ export type TabsContentProps = HTMLAttributes<HTMLDivElement> & {
   asChild?: boolean;
   value: string;
   variant?: TabsVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: TabsSize;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   tone?: TabsTone;
 };
 
@@ -314,6 +319,6 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<TabsContentProps, HTMLDivElement>;
 
 TabsContent.displayName = "TabsContent";

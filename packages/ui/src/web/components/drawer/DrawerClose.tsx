@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -15,8 +16,10 @@ import { drawerButtonSizeStyles } from "./drawer-utils";
 
 export type DrawerCloseProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: DrawerVariant;
   size?: DrawerSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DrawerTone;
 };
 
@@ -75,6 +78,6 @@ export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<DrawerCloseProps, HTMLButtonElement>;
 
 DrawerClose.displayName = "DrawerClose";

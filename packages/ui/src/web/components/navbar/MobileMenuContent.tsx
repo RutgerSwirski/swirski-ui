@@ -12,7 +12,9 @@ import { useMobileMenu } from "./MobileMenuContext";
 export type MobileMenuContentProps = HTMLAttributes<HTMLDivElement> & {
   side?: "left" | "right";
   variant?: NavbarVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: NavbarSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: NavbarTone;
 };
 

@@ -19,6 +19,7 @@ export type DrawerContentProps = HTMLAttributes<HTMLDivElement> & {
   side?: DrawerSide;
   variant?: DrawerVariant;
   size?: DrawerSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DrawerTone;
 };
 

@@ -9,8 +9,11 @@ export type CursorDockProps = {
   label?: string;
   position?: "fixed" | "absolute";
   side?: "left" | "right";
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   variant?: "default";
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   size?: "md";
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: "default";
 } & HTMLAttributes<HTMLDivElement>;
 

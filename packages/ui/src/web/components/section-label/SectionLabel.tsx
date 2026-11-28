@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type SectionLabelVariant = "default" | "flat";
@@ -58,6 +59,6 @@ export const SectionLabel = forwardRef<HTMLHeadingElement, SectionLabelProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<SectionLabelProps, HTMLHeadingElement>;
 
 SectionLabel.displayName = "SectionLabel";

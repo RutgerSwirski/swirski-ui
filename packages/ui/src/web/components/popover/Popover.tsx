@@ -13,6 +13,7 @@ import {
 } from "react";
 import { useControllableState } from "../../hooks/use-controllable-state/useControllableState";
 import { createPortal } from "react-dom";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -48,6 +49,7 @@ export type PopoverProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: PopoverVariant;
   size?: PopoverSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: PopoverTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -120,6 +122,7 @@ export type PopoverTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   variant?: PopoverVariant;
   size?: PopoverSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: PopoverTone;
 };
 
@@ -187,7 +190,7 @@ export const PopoverTrigger = forwardRef<
       tabIndex={asChild && isDisabled ? -1 : props.tabIndex}
     />
   );
-});
+}) as unknown as PolymorphicComponent<PopoverTriggerProps, HTMLButtonElement>;
 
 PopoverTrigger.displayName = "PopoverTrigger";
 
@@ -195,6 +198,7 @@ export type PopoverContentProps = HTMLAttributes<HTMLDivElement> & {
   align?: "start" | "end";
   variant?: PopoverVariant;
   size?: PopoverSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: PopoverTone;
 };
 

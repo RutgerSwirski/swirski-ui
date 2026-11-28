@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -17,6 +18,7 @@ export type DialogTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   variant?: DialogVariant;
   size?: DialogSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DialogTone;
 };
 
@@ -80,6 +82,6 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<DialogTriggerProps, HTMLButtonElement>;
 
 DialogTrigger.displayName = "DialogTrigger";

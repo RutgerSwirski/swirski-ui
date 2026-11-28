@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type ContainerVariant = "default" | "fluid";
@@ -10,6 +11,7 @@ export type ContainerProps = {
   children?: ReactNode;
   variant?: ContainerVariant;
   size?: ContainerSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: ContainerTone;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -51,6 +53,6 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
       </Component>
     );
   },
-);
+) as unknown as PolymorphicComponent<ContainerProps, HTMLDivElement>;
 
 Container.displayName = "Container";

@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -17,6 +18,7 @@ export type DrawerTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   asChild?: boolean;
   variant?: DrawerVariant;
   size?: DrawerSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DrawerTone;
 };
 
@@ -77,6 +79,6 @@ export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
       />
     );
   },
-);
+) as unknown as PolymorphicComponent<DrawerTriggerProps, HTMLButtonElement>;
 
 DrawerTrigger.displayName = "DrawerTrigger";

@@ -28,6 +28,7 @@ export type DrawerProps = {
   onOpenChange?: (open: boolean) => void;
   variant?: DrawerVariant;
   size?: DrawerSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: DrawerTone;
 };
 

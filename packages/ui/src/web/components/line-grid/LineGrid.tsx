@@ -21,8 +21,10 @@ export type LineGridProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
   accentColor?: string;
   accentEvery?: number;
   accentThickness?: number | string;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   variant?: LineGridVariant;
   size?: LineGridSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: LineGridTone;
 };
 

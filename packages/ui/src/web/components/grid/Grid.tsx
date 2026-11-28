@@ -1,4 +1,5 @@
 import { ElementType, HTMLAttributes, ReactNode, forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import { Slot, cn, swirskiAttrs } from "../../system";
 
 export type GridColumns = 1 | 2 | 3 | 4 | 5 | 6 | 12;
@@ -14,7 +15,9 @@ export type GridProps = {
   asChild?: boolean;
   children?: ReactNode;
   variant?: GridVariant;
+  /** @deprecated This only sets a data attribute. Omit it for built-in styling, or use className or style to customize. */
   size?: GridSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: GridTone;
   columns?: GridColumns;
   gap?: GridGap;
@@ -97,6 +100,6 @@ export const Grid = forwardRef<HTMLElement, GridProps>(function Grid(
       {children}
     </Component>
   );
-});
+}) as unknown as PolymorphicComponent<GridProps, HTMLElement>;
 
 Grid.displayName = "Grid";

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import type { ReactNode } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
+import type { ComponentRef, ReactNode } from "react";
 import type {
   GestureResponderEvent,
   PressableProps,
@@ -132,121 +132,129 @@ function getButtonStyles({
   };
 }
 
-export function NativeButton({
-  children,
-  disabled: disabledProp,
-  loading = false,
-  accessibilityState,
-  size = "md",
-  tone = "blue",
-  variant = "solid",
-  withShadow = true,
-  accessibilityLabel,
-  onPressIn,
-  onPressOut,
-  reduceMotion,
-  style,
-  textStyle: textStyleProp,
-  ...props
-}: NativeButtonProps) {
-  const disabled = disabledProp || loading;
-  const [isPressed, setIsPressed] = useState(false);
-  const { progress: pressProgress, animate, reduced } = usePressMotion(!disabled, pressSpring, reduceMotion);
-  const { containerStyle, textStyle } = getButtonStyles({
-    disabled,
-    size,
-    tone,
-    variant,
-    withShadow,
-  });
-  const { variant: normalizedVariant } = resolveButtonStyleConfig({
-    variant,
-    tone,
-  });
-  const usesShadowFeedback = withShadow && normalizedVariant !== "ghost";
-  const animatedFeedbackStyle = useMemo(
-    () => ({
-      transform: usesShadowFeedback
-        ? [
-            {
-              translateX: pressProgress.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 6],
-              }),
-            },
-            {
-              translateY: pressProgress.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 6],
-              }),
-            },
-            {
-              scale: pressProgress.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 0.99],
-              }),
-            },
-          ]
-        : [
-            {
-              scale: pressProgress.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 0.98],
-              }),
-            },
-          ],
-    }),
-    [pressProgress, usesShadowFeedback],
-  );
+export const NativeButton = forwardRef<ComponentRef<typeof Pressable>, NativeButtonProps>(
+  function NativeButton(
+    {
+      children,
+      disabled: disabledProp,
+      loading = false,
+      accessibilityState,
+      size = "md",
+      tone = "blue",
+      variant = "solid",
+      withShadow = true,
+      accessibilityLabel,
+      onPressIn,
+      onPressOut,
+      reduceMotion,
+      style,
+      textStyle: textStyleProp,
+      ...props
+    },
+    ref,
+  ) {
+    const disabled = disabledProp || loading;
+    const [isPressed, setIsPressed] = useState(false);
+    const { progress: pressProgress, animate, reduced } = usePressMotion(!disabled, pressSpring, reduceMotion);
+    const { containerStyle, textStyle } = getButtonStyles({
+      disabled,
+      size,
+      tone,
+      variant,
+      withShadow,
+    });
+    const { variant: normalizedVariant } = resolveButtonStyleConfig({
+      variant,
+      tone,
+    });
+    const usesShadowFeedback = withShadow && normalizedVariant !== "ghost";
+    const animatedFeedbackStyle = useMemo(
+      () => ({
+        transform: usesShadowFeedback
+          ? [
+              {
+                translateX: pressProgress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 6],
+                }),
+              },
+              {
+                translateY: pressProgress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 6],
+                }),
+              },
+              {
+                scale: pressProgress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 0.99],
+                }),
+              },
+            ]
+          : [
+              {
+                scale: pressProgress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 0.98],
+                }),
+              },
+            ],
+      }),
+      [pressProgress, usesShadowFeedback],
+    );
 
-  useEffect(() => {
-    if (disabled) setIsPressed(false);
-  }, [disabled]);
+    useEffect(() => {
+      if (disabled) setIsPressed(false);
+    }, [disabled]);
 
-  const handlePressIn = (event: GestureResponderEvent) => {
-    setIsPressed(true);
-    animate(1);
-    onPressIn?.(event);
-  };
+    const handlePressIn = (event: GestureResponderEvent) => {
+      setIsPressed(true);
+      animate(1);
+      onPressIn?.(event);
+    };
 
-  const handlePressOut = (event: GestureResponderEvent) => {
-    setIsPressed(false);
-    animate(0);
-    onPressOut?.(event);
-  };
+    const handlePressOut = (event: GestureResponderEvent) => {
+      setIsPressed(false);
+      animate(0);
+      onPressOut?.(event);
+    };
 
-  const pressableState = useMemo(
-    () => ({
-      pressed: isPressed,
-    }),
-    [isPressed],
-  );
+    const pressableState = useMemo(
+      () => ({
+        pressed: isPressed,
+      }),
+      [isPressed],
+    );
 
-  return (
-    <AnimatedPressable
-      accessibilityLabel={accessibilityLabel ?? (typeof children === "string" ? children : undefined)}
-      accessibilityRole="button"
-      accessibilityState={{ ...accessibilityState, disabled: disabled || accessibilityState?.disabled, busy: loading || accessibilityState?.busy }}
-      disabled={disabled}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      style={[
-        containerStyle,
-        !reduced && animatedFeedbackStyle,
-        reduced && isPressed && !disabled && { opacity: 0.88 },
-        isPressed && usesShadowFeedback
-          ? {
-              elevation: 0,
-              shadowOffset: { width: 0, height: 0 },
-            }
-          : undefined,
-        typeof style === "function" ? style(pressableState) : style,
-      ]}
-      {...props}
-    >
-      <Text style={[textStyle, textStyleProp]}>{children}</Text>
-    </AnimatedPressable>
-  );
-}
+    return (
+      <AnimatedPressable
+        ref={ref}
+        accessibilityLabel={accessibilityLabel ?? (typeof children === "string" ? children : undefined)}
+        accessibilityRole="button"
+        accessibilityState={{ ...accessibilityState, disabled: disabled || accessibilityState?.disabled, busy: loading || accessibilityState?.busy }}
+        disabled={disabled}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={[
+          containerStyle,
+          !reduced && animatedFeedbackStyle,
+          reduced && isPressed && !disabled && { opacity: 0.88 },
+          isPressed && usesShadowFeedback
+            ? {
+                elevation: 0,
+                shadowOffset: { width: 0, height: 0 },
+              }
+            : undefined,
+          typeof style === "function" ? style(pressableState) : style,
+        ]}
+        {...props}
+      >
+        <Text style={[textStyle, textStyleProp]}>{children}</Text>
+      </AnimatedPressable>
+    );
+  },
+);
+
+NativeButton.displayName = "NativeButton";
 
 export default NativeButton;

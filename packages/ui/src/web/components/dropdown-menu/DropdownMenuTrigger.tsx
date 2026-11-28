@@ -2,6 +2,7 @@
 
 import type { ButtonHTMLAttributes } from "react";
 import { forwardRef } from "react";
+import type { PolymorphicComponent } from "../../system";
 import {
   Slot,
   cn,
@@ -23,6 +24,7 @@ export type DropdownMenuTriggerProps =
     asChild?: boolean;
     variant?: DropdownMenuVariant;
     size?: DropdownMenuSize;
+    /** @deprecated Omit this prop. The component uses the only supported value by default. */
     tone?: DropdownMenuTone;
   };
 
@@ -115,6 +117,6 @@ export const DropdownMenuTrigger = forwardRef<
       tabIndex={asChild && isDisabled ? -1 : props.tabIndex}
     />
   );
-});
+}) as unknown as PolymorphicComponent<DropdownMenuTriggerProps, HTMLButtonElement>;
 
 DropdownMenuTrigger.displayName = "DropdownMenuTrigger";

@@ -61,6 +61,7 @@ export type SelectProps = {
   optionClassName?: string;
   variant?: SelectVariant;
   size?: SelectSize;
+  /** @deprecated Omit this prop. The component uses the only supported value by default. */
   tone?: SelectTone;
 } & Omit<HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange">;
 

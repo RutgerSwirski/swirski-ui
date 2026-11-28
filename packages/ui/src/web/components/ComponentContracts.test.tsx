@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createRef } from "react";
 import { expect, it, vi } from "vitest";
 import { Accordion, AccordionItem, AccordionTrigger } from "./accordion";
+import { AppShell, AppShellBody, AppShellMain, AppShellNavbar, AppShellSidebar } from "./app-shell";
 import { Button } from "./button";
 import { Card, CardContent, CardTitle } from "./card";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./dialog";
@@ -153,3 +154,50 @@ it("applies popover defaults and focuses the first item in an initially open men
   expect(screen.getByRole("dialog", { name: "Filter panel" })).toHaveClass("w-96", "p-3");
   await waitFor(() => expect(screen.getByRole("menuitem", { name: "First action" })).toHaveFocus());
 });
+
+it("inherits AppShell styling and resolves a nested region override", () => {
+  render(
+    <AppShell size="lg" tone="black">
+      <AppShellSidebar collapseBelow="never">Sidebar</AppShellSidebar>
+      <AppShellBody size="sm" variant="compact">
+        <AppShellNavbar tone="white">Navbar</AppShellNavbar>
+        <AppShellMain size="md">Main</AppShellMain>
+      </AppShellBody>
+    </AppShell>,
+  );
+  expect(screen.getByText("Sidebar")).toHaveClass("w-72", "bg-[var(--sw-color-ink)]");
+  expect(screen.getByText("Navbar")).toHaveAttribute("data-swirski-size", "sm");
+  expect(screen.getByText("Navbar")).toHaveAttribute("data-swirski-variant", "compact");
+  expect(screen.getByText("Navbar")).toHaveAttribute("data-swirski-tone", "white");
+  expect(screen.getByText("Main")).toHaveClass("[--sw-app-shell-content-padding:1.5rem]");
+});
+
+it("attaches outer refs to slotted and explicit polymorphic elements", () => {
+  const slotRef = createRef<HTMLAnchorElement>();
+  const explicitRef = createRef<HTMLAnchorElement>();
+  const buttonRef = createRef<HTMLButtonElement>();
+  render(
+    <>
+      <Dialog>
+        <DialogTrigger asChild ref={slotRef}><a href="#details">Details link</a></DialogTrigger>
+        <DialogTrigger ref={buttonRef}>Default trigger</DialogTrigger>
+      </Dialog>
+      <Button as="a" href="#open" ref={explicitRef}>Explicit link</Button>
+    </>,
+  );
+  expect(slotRef.current).toBe(screen.getByRole("link", { name: "Details link" }));
+  expect(buttonRef.current).toBe(screen.getByRole("button", { name: "Default trigger" }));
+  expect(explicitRef.current).toBe(screen.getByRole("link", { name: "Explicit link" }));
+});
+
+// Verify that the public default and explicit-tag ref contracts reject mismatched refs.
+function invalidRefExamples() {
+  const link = createRef<HTMLAnchorElement>();
+  const button = createRef<HTMLButtonElement>();
+  // @ts-expect-error The default DialogTrigger renders a button.
+  const invalidDefault = <DialogTrigger ref={link}>Invalid</DialogTrigger>;
+  // @ts-expect-error This Button explicitly renders an anchor.
+  const invalidExplicit = <Button as="a" href="/" ref={button}>Invalid</Button>;
+  return [invalidDefault, invalidExplicit];
+}
+void invalidRefExamples;
